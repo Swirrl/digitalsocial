@@ -11,5 +11,36 @@
     padding: 30px;
     background: $lblue;
     @include border-radius(6px);
+
+    p.intro {
+      color: $dblue;
+      font-size: 16px;
+    }
+
+    p.twitter {
+      background: url(image-path("icons/twitter.png")) no-repeat;
+      line-height: 30px;
+      padding-left: 48px;
+      margin-bottom: 18px;
+    }
+
+    p.mail {
+      background: url(image-path("icons/mail.png")) no-repeat;
+      line-height: 23px;
+      padding-left: 48px;
+      font-size: 17px;
+      margin-bottom: 36px;
+    }
+
+    a.button {
+      display: block;
+      text-align: center;
+      color: #fff;
+      @include border-radius(6px);
+      background: $dblue;
+      padding: 12px 0;
+      font-weight: bold;
+      font-size: 24px;
+    }
   }
 }

@@ -1,0 +1,74 @@
+#partners {
+  background: $lblue;
+  margin-top: 120px;
+  height: 210px;
+
+  .container {
+    position: relative;
+
+    a {
+      display: block;
+      position: absolute;
+      opacity: 0.4;
+      @include transition(opacity, 0.2s);
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &.nesta {
+        background: url(image-path("partners/nesta.png")) no-repeat;
+        width: 150px;
+        height: 35px;
+        left: 0;
+        top: 48px;
+      }
+
+      &.esade {
+        background: url(image-path("partners/esade.png")) no-repeat;
+        width: 146px;
+        height: 36px;
+        left: 320px;
+        top: 48px;
+      }
+
+      &.future-everything {
+        background: url(image-path("partners/future-everything.png")) no-repeat;
+        width: 132px;
+        height: 36px;
+        left: 650px;
+        top: 48px;
+      }
+
+      &.iri {
+        background: url(image-path("partners/iri.png")) no-repeat;
+        width: 100px;
+        height: 43px;
+        left: 180px;
+        top: 120px;
+      }
+
+      &.waag {
+        background: url(image-path("partners/waag.png")) no-repeat;
+        width: 118px;
+        height: 36px;
+        left: 510px;
+        top: 120px;
+      }
+
+      &.swirrl {
+        background: url(image-path("partners/swirrl.png")) no-repeat;
+        width: 130px;
+        height: 36px;
+        left: 820px;
+        top: 120px;
+      }
+    }
+  }
+}
+
+#footer {
+  color: #e9f6f9;
+  line-height: 72px;
+  background: $mblue;
+}
