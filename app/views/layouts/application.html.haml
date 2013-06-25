@@ -9,6 +9,9 @@
     
     .container
       = render "header"
-      = yield
+      
+      #main.clearfix
+        = yield
+        = render "sidebar"
 
     = render "footer"

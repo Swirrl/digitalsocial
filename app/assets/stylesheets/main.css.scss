@@ -1,0 +1,15 @@
+#main {
+  
+  #content {
+    float: left;
+    width: 540px;
+  }
+
+  #sidebar {
+    float: right;
+    width: 240px;
+    padding: 30px;
+    background: $lblue;
+    @include border-radius(6px);
+  }
+}

@@ -1,6 +1,10 @@
 #header {
-  padding: 72px 0;
+  padding: 60px 0;
   width: 100%;
+
+  a {
+    color: $black;
+  }
 
   .logo {
     float: left;
@@ -13,14 +17,15 @@
     line-height: 72px;
 
     a {
-      margin-left: 72px;
+      padding: 12px 18px;
+      margin-left: 36px;
       font-weight: bold;
-      color: $black;
       @include transition(all, 0.1s);
 
       &:hover {
         color: $dblue;
       }
+      
     }
   }
 }
