@@ -1,0 +1,26 @@
+#header {
+  padding: 72px 0;
+  width: 100%;
+
+  .logo {
+    float: left;
+    width: 240px;
+    font-size: 36px;
+  }
+
+  .menu {
+    float: right;
+    line-height: 72px;
+
+    a {
+      margin-left: 72px;
+      font-weight: bold;
+      color: $black;
+      @include transition(all, 0.1s);
+
+      &:hover {
+        color: $dblue;
+      }
+    }
+  }
+}
