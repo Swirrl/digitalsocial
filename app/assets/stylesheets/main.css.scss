@@ -1,4 +1,35 @@
 #main {
+
+  #banner {
+    width: 960px;
+    height: 400px;
+    @include border-radius(6px);
+    position: relative;
+    margin-bottom: 48px;
+
+    .text {
+      position: absolute;
+      left: 36px;
+      bottom: 36px;
+    }
+
+    h1, h2 {
+      color: #FFFFFF;
+      background: rgba(0, 0, 0, 0.5);
+      float: left;
+      display: inline;
+    }
+
+    h1 {
+      font-size: 48px;
+      padding: 12px 12px 6px;
+    }
+
+    h2 {
+      font-size: 24px;
+      padding: 6px 12px 12px;
+    }
+  }
   
   #content {
     float: left;
