@@ -74,7 +74,7 @@
           }
 
           p {
-            line-height: 16px;
+            line-height: 1.5;
             margin-bottom: 8px;
           }
 
@@ -105,11 +105,12 @@
       float: left;
 
       img {
-        margin-bottom: 12px;
+        margin: 6px 0 4px;
       }
 
-      > div {
-        margin-bottom: 6px;
+      > p {
+        margin-bottom: 0;
+        line-height: 28px;
       }
 
       .author {
