@@ -46,6 +46,16 @@ h1 + h2 {
   margin-bottom: 48px;
 }
 
+::selection {
+  background: $dblue;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: $dblue;
+  color: #fff;
+}
+
 .container {
   width: 960px;
   margin: 0 auto;
