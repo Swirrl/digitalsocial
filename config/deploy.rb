@@ -30,11 +30,6 @@ set :branch, "master"
 
 set :deploy_via, :remote_cache
 
-# delayed job hooks.
-after "deploy:stop",    "delayed_job:stop"
-after "deploy:start",   "delayed_job:start"
-after "deploy:restart", "delayed_job:restart"
-
 namespace :deploy do
 
   desc <<-DESC
