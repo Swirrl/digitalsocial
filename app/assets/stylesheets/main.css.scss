@@ -2,6 +2,22 @@
 
   width: 960px;
 
+  .title {
+    padding: 48px 18px 18px;
+    color: #fff;
+    @include border-radius(3px);
+    background: url(image-path("header-map.png")) no-repeat;
+    margin-bottom: 48px;
+
+    h1 {
+      display: inline;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0 12px;
+      @include border-radius(3px);
+      line-height: 48px;
+    }
+  }
+
   #banner {
     width: 960px;
     height: 400px;
@@ -39,7 +55,9 @@
     width: 540px;
 
     h1 {
-      margin-bottom: 48px;
+      background: none;
+      color: $black;
+      padding: 0;
     }
   }
 
