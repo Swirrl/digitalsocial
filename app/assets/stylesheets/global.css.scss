@@ -7,6 +7,7 @@ body {
 a {
   text-decoration: none;
   color: $dblue;
+  @include transition(all, 0.1s);
 
   &:hover {
     color: $dblue-hover;

@@ -46,6 +46,7 @@
     p.intro {
       color: $dblue;
       font-size: 16px;
+      line-height: 1.2;
     }
 
     p.twitter {
@@ -72,6 +73,10 @@
       padding: 12px 0;
       font-weight: bold;
       font-size: 24px;
+
+      &:hover {
+        background: $dblue-hover;
+      }
     }
   }
 }
