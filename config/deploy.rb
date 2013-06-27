@@ -1,5 +1,4 @@
 require 'bundler/capistrano' # enable bundler stuff!
-require "delayed/recipes"
 load 'deploy/assets'
 
 # rvm stuff

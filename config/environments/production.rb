@@ -11,6 +11,9 @@ Digitalsocial::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
+  config.assets.css_compressor = :yui # this requires java on the server. sudo apt-get install openjdk-6-jre
+  config.assets.js_compressor = :yui
+
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
