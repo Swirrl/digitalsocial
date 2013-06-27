@@ -1,7 +1,7 @@
 #partners {
   background: $lblue;
   margin-top: 120px;
-  height: 210px;
+  height: 320px;
 
   .container {
     position: relative;
@@ -11,57 +11,60 @@
       position: absolute;
       opacity: 0.4;
       @include transition(opacity, 0.2s);
+      padding: 36px;
+      background-position: 36px 36px;
+      background-repeat: no-repeat;
 
       &:hover {
         opacity: 1;
       }
 
       &.nesta {
-        background: url(image-path("partners/nesta.png")) no-repeat;
+        background-image: url(image-path("partners/nesta.png"));
         width: 150px;
         height: 35px;
-        left: 0;
-        top: 48px;
+        left: 60px;
+        top: 42px;
       }
 
       &.esade {
-        background: url(image-path("partners/esade.png")) no-repeat;
+        background-image: url(image-path("partners/esade.png"));
         width: 146px;
         height: 36px;
-        left: 320px;
-        top: 48px;
+        left: 371px;
+        top: 42px;
       }
 
       &.future-everything {
-        background: url(image-path("partners/future-everything.png")) no-repeat;
+        background-image: url(image-path("partners/future-everything.png"));
         width: 132px;
         height: 36px;
-        left: 650px;
-        top: 48px;
+        left: 676px;
+        top: 42px;
       }
 
       &.iri {
-        background: url(image-path("partners/iri.png")) no-repeat;
+        background-image: url(image-path("partners/iri.png"));
         width: 100px;
         height: 43px;
-        left: 180px;
-        top: 120px;
+        left: 80px;
+        top: 160px;
       }
 
       &.waag {
-        background: url(image-path("partners/waag.png")) no-repeat;
+        background-image: url(image-path("partners/waag.png"));
         width: 118px;
         height: 36px;
-        left: 510px;
-        top: 120px;
+        left: 385px;
+        top: 164px;
       }
 
       &.swirrl {
-        background: url(image-path("partners/swirrl.png")) no-repeat;
+        background-image: url(image-path("partners/swirrl.png"));
         width: 130px;
         height: 36px;
-        left: 820px;
-        top: 120px;
+        left: 676px;
+        top: 164px;
       }
     }
   }
