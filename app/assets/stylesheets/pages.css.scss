@@ -61,12 +61,11 @@
         padding-left: 82px;
         background: url(image-path("dot.png")) repeat-x 0 0;
         line-height: 16px;
-        margin-bottom: 48px;
+        margin-bottom: 56px;
 
         .event-content {
           background: #fff;
           padding: 0 0 0 6px; 
-          color: #ccc;         
 
           p.name {
             color: $black;
@@ -78,13 +77,13 @@
             margin-bottom: 8px;
           }
 
-          p.url {
-            margin-top: 0;
+          p.date {
+            margin-bottom: 0;
           }
         }
 
         + li.month {
-          margin-top: 96px;
+          margin-top: 88px;
         }
       }
     }
