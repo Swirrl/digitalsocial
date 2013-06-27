@@ -1,3 +1,14 @@
 #footer
-  .container
-    &copy; 2013 Digital Social Innovation
+  .container.clearfix
+    .copy
+      &copy; 2013 Digital Social Innovation
+    .links
+      %a{ href: "https://twitter.com/digi_si" }
+        = image_tag "icons/footer-twitter.png"
+      %a{ href: "mailto:contact@digitalsocial.eu" }
+        = image_tag "icons/footer-mail.png"
+
+      
+      %span
+        Made by
+        %a{ href: "http://www.swirrl.com" } Swirrl
