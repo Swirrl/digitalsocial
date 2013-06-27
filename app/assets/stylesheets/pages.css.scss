@@ -61,10 +61,6 @@
         line-height: 16px;
         margin-bottom: 56px;
 
-        &.last-of-month {
-          margin-bottom: 88px;
-        }
-
         .event-content {
           background: #fff;
           padding: 0 0 0 6px; 
@@ -84,6 +80,10 @@
           p.url {
             margin-top: -8px;
           }
+        }
+
+        + li.month {
+          margin-top: 88px;
         }
       }
     }
