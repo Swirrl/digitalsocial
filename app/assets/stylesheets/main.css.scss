@@ -7,7 +7,7 @@
     color: #fff;
     @include border-radius(3px);
     background: url(image-path("header-map.png")) no-repeat;
-    margin-bottom: 48px;
+    margin-bottom: 60px;
 
     h1 {
       display: inline;
@@ -51,8 +51,6 @@
   }
   
   #content {
-    float: left;
-    width: 540px;
 
     h1 {
       background: none;
@@ -62,8 +60,6 @@
   }
 
   #sidebar {
-    float: right;
-    width: 240px;
     padding: 30px;
     background: $lblue;
     @include border-radius(3px);
