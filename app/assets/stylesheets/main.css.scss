@@ -5,7 +5,7 @@
   #banner {
     width: 960px;
     height: 400px;
-    @include border-radius(6px);
+    @include border-radius(3px);
     position: relative;
     margin-bottom: 48px;
 
@@ -48,7 +48,7 @@
     width: 240px;
     padding: 30px;
     background: $lblue;
-    @include border-radius(6px);
+    @include border-radius(3px);
 
     p.intro {
       color: $dblue;
@@ -65,9 +65,8 @@
 
     p.mail {
       background: url(image-path("icons/mail.png")) no-repeat;
-      line-height: 23px;
+      line-height: 24px;
       padding-left: 48px;
-      font-size: 17px;
       margin-bottom: 36px;
     }
 
@@ -75,7 +74,7 @@
       display: block;
       text-align: center;
       color: #fff;
-      @include border-radius(6px);
+      @include border-radius(3px);
       background: $dblue;
       padding: 12px 0;
       font-weight: bold;

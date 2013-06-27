@@ -1,6 +1,6 @@
 #home {
   #banner {
-    background: url(image-path("home-map4.png")) no-repeat;
+    background: url(image-path("home-map.png")) no-repeat;
   }
 
   #content {
@@ -11,20 +11,10 @@
   }
 }
 
-#about {
-  #banner {
-    background: url(http://placehold.it/960x400) no-repeat;
-  }
-}
-
 #events {
-  #banner {
-    background: url(http://placehold.it/960x400) no-repeat;
-  }
 
   #content {
     
-
     ul.timeline {
       list-style-type: none;
       padding: 0 0 4px;
@@ -98,8 +88,4 @@
       }
     }
   }
-}
-
-#blog {
-
 }
