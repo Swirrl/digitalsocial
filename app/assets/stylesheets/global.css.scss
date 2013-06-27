@@ -7,6 +7,10 @@ body {
 a {
   text-decoration: none;
   color: $dblue;
+
+  &:hover {
+    color: $dblue-hover;
+  }
 }
 
 p {

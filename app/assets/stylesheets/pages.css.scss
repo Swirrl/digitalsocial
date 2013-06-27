@@ -16,3 +16,85 @@
     background: url(http://placehold.it/960x400) no-repeat;
   }
 }
+
+#events {
+  #banner {
+    background: url(http://placehold.it/960x400) no-repeat;
+  }
+
+  #content {
+    background: url(image-path("dot.png")) repeat-y 24px 0px;
+
+    ul.timeline {
+      list-style-type: none;
+      padding: 0;
+
+      li.year {
+        margin-bottom: 32px;
+
+        span {
+          background: $dblue;
+          color: #fff;
+          @include border-radius(50%);
+          display: inline-block;
+          height: 64px;
+          width: 64px;
+          text-align: center;
+          line-height: 64px;
+        }
+      }
+
+      li.month {
+        margin-left: 24px;
+        padding-left: 112px;
+        background: url(image-path("dot.png")) repeat-x 0 0;
+        line-height: 16px;
+        margin-bottom: 64px;
+
+        span {
+          background: #fff;
+          padding: 0 0 0 6px; 
+          font-size: 36px;
+          display: block;
+          font-weight: bold;
+          color: $lblue;
+          text-transform: uppercase;
+        }
+      }
+
+
+      li.event {
+        margin-left: 24px;
+        padding-left: 66px;
+        background: url(image-path("dot.png")) repeat-x 0 0;
+        line-height: 16px;
+        margin-bottom: 56px;
+
+        &.last-of-month {
+          margin-bottom: 88px;
+        }
+
+        .event-content {
+          background: #fff;
+          padding: 0 0 0 6px; 
+          color: #ccc;         
+
+          strong {
+            color: $black;
+            font-weight: bold;
+            margin-right: 6px;
+          }
+
+          p {
+            line-height: 16px;
+            margin-bottom: 16px;
+          }
+
+          p.url {
+            margin-top: -8px;
+          }
+        }
+      }
+    }
+  }
+}
