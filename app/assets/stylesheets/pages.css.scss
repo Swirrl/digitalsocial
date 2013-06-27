@@ -18,10 +18,12 @@
     ul.timeline {
       list-style-type: none;
       padding: 0 0 4px;
-      background: url(image-path("dot.png")) repeat-y 24px 0px;
+      background: url(image-path("dot.png")) repeat-y 288px 0px;
+      margin: 0 60px;
 
       li.year {
         margin-bottom: 32px;
+        margin-left: 264px;
 
         span {
           background: $dblue;
@@ -36,17 +38,17 @@
       }
 
       li.month {
-        margin-left: 24px;
-        padding-left: 112px;
+        width: 308px;
+        //padding-left: 112px;
         background: url(image-path("dot.png")) repeat-x 0 0;
-        line-height: 16px;
-        margin-bottom: 64px;
+        margin-bottom: 32px;
+        padding-top: 8px;
+        height: 8px;
 
         span {
           background: #fff;
           padding: 0 0 0 6px; 
           font-size: 36px;
-          display: block;
           font-weight: bold;
           color: $lblue;
           text-transform: uppercase;
@@ -55,35 +57,34 @@
 
 
       li.event {
-        margin-left: 24px;
-        padding-left: 66px;
+        margin-left: 288px;
+        padding-left: 82px;
         background: url(image-path("dot.png")) repeat-x 0 0;
         line-height: 16px;
-        margin-bottom: 56px;
+        margin-bottom: 48px;
 
         .event-content {
           background: #fff;
           padding: 0 0 0 6px; 
           color: #ccc;         
 
-          strong {
+          p.name {
             color: $black;
             font-weight: bold;
-            margin-right: 6px;
           }
 
           p {
             line-height: 16px;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
           }
 
           p.url {
-            margin-top: -8px;
+            margin-top: 0;
           }
         }
 
         + li.month {
-          margin-top: 88px;
+          margin-top: 96px;
         }
       }
     }
