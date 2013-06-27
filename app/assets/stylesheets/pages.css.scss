@@ -23,11 +23,12 @@
   }
 
   #content {
-    background: url(image-path("dot.png")) repeat-y 24px 0px;
+    
 
     ul.timeline {
       list-style-type: none;
-      padding: 0;
+      padding: 0 0 4px;
+      background: url(image-path("dot.png")) repeat-y 24px 0px;
 
       li.year {
         margin-bottom: 32px;
@@ -97,4 +98,8 @@
       }
     }
   }
+}
+
+#blog {
+
 }

@@ -9,7 +9,11 @@
   .logo {
     float: left;
     width: 240px;
-    font-size: 36px;
+    
+    h1 {
+      font-size: 36px;
+      margin: 0;
+    }
   }
 
   .menu {
