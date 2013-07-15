@@ -3,5 +3,45 @@ body.admin {
   #header .menu {
     line-height: 36px;
   }
+
+  table.index {
+    width: 100%;
+
+    th, td {
+      padding: 12px 24px;
+
+      &.left {
+        text-align: left;
+      }
+
+      &.center {
+        text-align: center;
+      }
+    }
+
+    th {
+      color: #ccc;
+    }
+
+    td.actions {
+      a {
+        margin-left: 12px;
+      }
+    }
+
+    tr:nth-child(even) {
+      td {
+        background: #f8f8f8;
+      }
+    }
+  }
+
+  .edit {
+    form {
+      label {
+        display: block;
+      }
+    }
+  }
 	
 }
