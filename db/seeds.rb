@@ -1,6 +1,9 @@
 # Seed admins
 Admin.create(email: 'admin@test.com', password: 'password')
 
+# Seed events
+Event.create(name: 'The GovLab Experiment, New York', start_date: '18 April 2013', end_date: '19 April 2013', url: 'http://www.thegovlab.org')
+
 # Seed pages
 Page.create(name: 'home', body: <<eos)
 The internet is playing an ever increasing role in how we work, play, and relate to each other.

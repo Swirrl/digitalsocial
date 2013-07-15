@@ -1,0 +1,19 @@
+%table.index.events
+  %tr
+    %th Name
+    %th.center Start
+    %th.center End
+    %th URL
+    %th
+
+  - @events.each do |event|
+    %tr
+      %td= event.name
+      %td.center= event.start_date.strftime("%-d %B %Y")
+      %td.center= event.end_date.strftime("%-d %B %Y")
+      %td= link_to 'Link', event.url
+      %td.actions
+        = link_to "Edit", [:edit, :admin, event]
+        = link_to "Delete", [:admin, event], method: :delete, confirm: "Are you sure you wish to delete this event?"
+
+= link_to "New event", [:new, :admin, :event]
