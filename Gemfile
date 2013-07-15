@@ -5,6 +5,8 @@ gem 'rails', '3.2.13'
 gem 'jquery-rails'
 gem 'haml'
 gem 'redcarpet'
+gem 'mongoid'
+gem 'devise'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
