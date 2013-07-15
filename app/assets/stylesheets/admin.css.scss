@@ -9,7 +9,7 @@ body.admin {
     margin-bottom: 36px;
 
     th, td {
-      padding: 12px 24px;
+      padding: 12px 12px;
       text-align: left;
 
       &.center {
@@ -33,11 +33,6 @@ body.admin {
       }
     }
 
-    &.events {
-      th, td {
-        padding: 12px 12px;
-      }
-    }
   }
 
   .edit, .new {
