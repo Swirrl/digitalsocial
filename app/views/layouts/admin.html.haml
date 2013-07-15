@@ -6,8 +6,10 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
 
-  %body
+  %body.admin
     
     .container
+      = render "header"
+
       #main.clearfix
         = yield

@@ -1,0 +1,10 @@
+#header.clearfix
+  .logo
+    %a{ href: '/' }
+      %h1 Admin
+
+  .menu
+    = link_to "Pages", [:admin, :pages]
+    = link_to "Blog", [:admin, :blog_posts]
+    = link_to "Events", [:admin, :events]
+    = link_to "Sign out", destroy_admin_session_path, method: :delete
