@@ -1,0 +1,17 @@
+%table.index
+  %tr
+    %th Blog post
+    %th Status
+    %th Publish at
+    %th Author
+    %th
+
+  - Page.all.each do |page|
+    %tr
+      %td
+      %td
+      %td
+      %td
+      %td.actions
+        = link_to "Edit", [:edit, :admin, page]
+        =# link_to "Delete", [:admin, page], method: :delete
