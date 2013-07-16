@@ -8,4 +8,6 @@ class BlogPost
   field :status, type: String
   field :body, type: String
 
+  belongs_to :admin
+
 end

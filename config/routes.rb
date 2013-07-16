@@ -1,8 +1,6 @@
 Digitalsocial::Application.routes.draw do
 
-  devise_for :admins do
-    root to: 'admin::pages#index'
-  end
+  devise_for :admins
 
   namespace :admin do
     resources :pages

@@ -1,5 +1,5 @@
 # Seed admins
-Admin.create(email: 'admin@test.com', password: 'password')
+Admin.create(email: 'admin@test.com', password: 'password', name: 'Test Admin', job_title: 'Tester', organisation: 'Swirrl', organisation_url: 'http://swirrl.com')
 
 # Seed events
 Event.create(name: 'The GovLab Experiment, New York', start_date: '18 April 2013', end_date: '19 April 2013', url: 'http://www.thegovlab.org')
