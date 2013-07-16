@@ -1,6 +1,8 @@
 class Admin
 
   include Mongoid::Document
+  include Mongoid::Paperclip
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -26,10 +28,11 @@ class Admin
 
   field :name, type: String
   field :job_title, type: String
-  field :organisation, type: String
+  field :organisation_name, type: String
   field :organisation_url, type: String
 
   has_many :blog_posts
+  has_mongoid_attached_file :photo, styles: { small: '96x96#' }
 
   def to_s
     name
