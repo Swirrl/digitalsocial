@@ -39,4 +39,34 @@ class Organisation
 
   validates :name, :contact_name, :email, :lat, :lng, presence: true
 
+  after_create :create_tripod_organisation
+  after_save :update_tripod_organisation
+
+  def tripod_organisation
+    TripodOrganisation.find(tripod_organisation_uri)
+  end
+
+  def tripod_organisation_uri
+    "http://example.com/organisations/#{slug}"
+  end
+
+  def tripod_organisation_attributes
+    {
+      name: name,
+      lat: lat,
+      lng: lng
+    }
+  end
+
+  private
+
+  def create_tripod_organisation
+    to = TripodOrganisation.new(tripod_organisation_uri)
+    to.save
+  end
+
+  def update_tripod_organisation
+    tripod_organisation.update_attributes(tripod_organisation_attributes)
+  end
+
 end

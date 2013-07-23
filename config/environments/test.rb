@@ -34,4 +34,10 @@ Digitalsocial::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  Tripod.configure do |config|
+    config.update_endpoint = 'http://127.0.0.1:3030/dsitest/update'
+    config.query_endpoint = 'http://127.0.0.1:3030/dsitest/sparql'
+    config.timeout_seconds = 30
+  end
 end
