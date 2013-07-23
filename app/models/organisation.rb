@@ -35,7 +35,7 @@ class Organisation
   field :lat,          type: String
   field :lng,          type: String
   
-  slug :name
+  slug :name, permanent: true
 
   validates :name, :contact_name, :email, :lat, :lng, presence: true
 

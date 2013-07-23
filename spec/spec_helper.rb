@@ -34,5 +34,22 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = "random"
+  #config.order = "random"
+
+  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.orm = "mongoid"
+
+  config.before(:suite) do
+    # delete everything
+    Tripod::SparqlClient::Update.update('
+      # delete from default graph:
+      DELETE {?s ?p ?o} WHERE {?s ?p ?o};
+      # delete from named graphs:
+      DELETE {graph ?g {?s ?p ?o}} WHERE {graph ?g {?s ?p ?o}};
+    ')
+
+    # clean mongo
+    DatabaseCleaner.clean
+  end
+
 end
