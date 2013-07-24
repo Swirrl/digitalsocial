@@ -1,0 +1,6 @@
+= simple_form_for @user, url: users_path do |f|
+  = f.input :first_name, required: false
+  = f.input :email, required: false
+  = f.input :password, required: false
+
+  = f.submit 'Submit'

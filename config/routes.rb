@@ -12,6 +12,8 @@ Digitalsocial::Application.routes.draw do
     root to: 'pages#index'
   end
 
+  resources :users, only: [:new, :create]
+
   match ':action' => 'site'
   root to: 'site#index'
 

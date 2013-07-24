@@ -33,4 +33,6 @@ class User
 
   field :first_name
 
+  validates :first_name, presence: true
+
 end
