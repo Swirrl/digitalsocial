@@ -13,7 +13,7 @@ class Signup
   validate :user_email_must_be_unique
 
   def self.name
-    'User'
+    User.name
   end
 
   def attributes=(values)
@@ -37,7 +37,6 @@ class Signup
 
     true
   rescue => e
-    Rails.logger.debug e.inspect
     false
   end
 
