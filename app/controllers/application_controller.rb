@@ -19,4 +19,10 @@ class ApplicationController < ActionController::Base
 	  end
 	end
 
+	# Need to allow the current_user's "organisation scope"
+	# to be set in the UI
+	def current_organisation
+		current_user.organisations.first
+	end
+
 end

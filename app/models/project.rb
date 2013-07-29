@@ -37,4 +37,11 @@ class Project
     TimeInterval.find(self.duration)
   end
 
+  def create_lead_membership!(organisation)
+    lead_membership = ProjectMembership.new
+    lead_membership.organisation = organisation.uri.to_s
+    lead_membership.project      = self.uri.to_s
+    lead_membership.save
+  end
+
 end
