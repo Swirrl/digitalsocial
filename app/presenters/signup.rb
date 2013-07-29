@@ -61,10 +61,20 @@ class Signup
   def save
     return false if invalid?
     
-    self.site.save
-    self.organisation.save
-    self.user.save
-    self.organisation_membership.save
+    transaction = Tripod::Persistence::Transaction.new
+    if self.site.save(transaction: transaction) && self.organisation.save(transaction: transaction)
+      transaction.commit
+      
+      self.user.save
+      self.organisation_membership.save
+    else
+      transaction.abort
+    end
+
+    # self.site.save
+    # self.organisation.save
+    # self.user.save
+    # self.organisation_membership.save
 
     true
   rescue
