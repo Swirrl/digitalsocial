@@ -25,27 +25,39 @@ class Signup
     end
   end
 
-  def user
-    @user ||= User.new do |user|
-      user.first_name = self.first_name
-      user.email      = self.email
-      user.password   = self.password
-    end
+  def site
+    return @site unless @site.nil?
+
+    @site = Site.new("http://example.com/site/#{Guid.new}")
+    @site.lat = self.organisation_lat
+    @site.lng = self.organisation_lng
+    @site
   end
 
   def organisation
     return @organisation unless @organisation.nil?
 
     @organisation = Organisation.new("http://example.com/organisation/#{Guid.new}")
-    @organisation.name = self.organisation_name
+    @organisation.name         = self.organisation_name
+    @organisation.primary_site = self.site.uri
     @organisation
+  end
+
+  def user
+    @user ||= User.new do |user|
+      user.first_name = self.first_name
+      user.email      = self.email
+      user.password   = self.password
+      user.organisation_uri = self.organisation.uri
+    end
   end
 
   def save
     return false if invalid?
     
-    self.user.save
+    self.site.save
     self.organisation.save
+    self.user.save
 
     true
   rescue

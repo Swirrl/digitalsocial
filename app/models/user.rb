@@ -31,8 +31,13 @@ class User
   ## Token authenticatable
   field :authentication_token, type: String
 
-  field :first_name
+  field :first_name, type: String
+  field :organisation_uri, type: String
 
   validates :first_name, presence: true
+
+  def organisation
+    Organisation.find(self.organisation_uri)
+  end
 
 end
