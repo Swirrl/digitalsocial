@@ -9,9 +9,9 @@ class UsersController < ApplicationController
     @user.attributes = params[:user]
 
     if @user.save
-      render text: "Successfully signed up"
+      sign_in @user.user
+      redirect_to :projects
     else
-      Rails.logger.debug @user.inspect
       render :new
     end
   end

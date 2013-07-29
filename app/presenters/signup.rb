@@ -71,11 +71,6 @@ class Signup
       transaction.abort
     end
 
-    # self.site.save
-    # self.organisation.save
-    # self.user.save
-    # self.organisation_membership.save
-
     true
   rescue
     false
