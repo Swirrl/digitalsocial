@@ -5,10 +5,13 @@ class Signup
   include ActiveModel::Model
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :user, :first_name, :email, :password
-  attr_accessible :first_name, :email, :password
+  attr_accessor :user, :first_name, :email, :password, :organisation_name,
+                :organisation_lat, :organisation_lng
+  attr_accessible :first_name, :email, :password, :organisation_name,
+                  :organisation_lat, :organisation_lng
 
-  validates :first_name, :email, :password, presence: true
+  validates :first_name, :email, :password, :organisation_name,
+            :organisation_lat, :organisation_lng, presence: true
   validates :email, format: { with: Devise.email_regexp }
   validate :user_email_must_be_unique
 
@@ -30,13 +33,22 @@ class Signup
     end
   end
 
+  def organisation
+    return @organisation unless @organisation.nil?
+
+    @organisation = Organisation.new("http://example.com/organisation/#{Guid.new}")
+    @organisation.name = self.organisation_name
+    @organisation
+  end
+
   def save
     return false if invalid?
     
-    self.user.save!
+    self.user.save
+    self.organisation.save
 
     true
-  rescue => e
+  rescue
     false
   end
 

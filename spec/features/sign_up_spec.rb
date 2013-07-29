@@ -14,6 +14,9 @@ feature 'Signing up' do
     fill_in 'First name', with: 'John'
     fill_in 'Email', with: 'john@example.com'
     fill_in 'Password', with: 'password123'
+    fill_in 'Organisation name', with: 'Example'
+    fill_in 'Organisation lat', with: '1.23'
+    fill_in 'Organisation lng', with: '-1.23'
     click_button 'Submit'
 
     page.should have_content 'Successfully signed up'
