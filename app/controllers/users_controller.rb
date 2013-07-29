@@ -11,6 +11,7 @@ class UsersController < ApplicationController
     if @user.save
       render text: "Successfully signed up"
     else
+      Rails.logger.debug @user.inspect
       render :new
     end
   end

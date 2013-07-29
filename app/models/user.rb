@@ -2,8 +2,6 @@ class User
 
   include Mongoid::Document
 
-  has_many :organisation_memberships
-
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -32,12 +30,13 @@ class User
   field :authentication_token, type: String
 
   field :first_name, type: String
-  field :organisation_uri, type: String
 
+  has_many :organisation_memberships
+  
   validates :first_name, presence: true
 
-  def organisation
-    Organisation.find(self.organisation_uri)
+  def organisation_resources
+    organisation_memberships.collect(&:organisation_resource)
   end
 
 end

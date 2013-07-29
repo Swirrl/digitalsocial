@@ -48,7 +48,13 @@ class Signup
       user.first_name = self.first_name
       user.email      = self.email
       user.password   = self.password
-      user.organisation_uri = self.organisation.uri
+    end
+  end
+
+  def organisation_membership
+    @organisation_membership || OrganisationMembership.new do |om|
+      om.user             = self.user
+      om.organisation_uri = self.organisation.uri.to_s
     end
   end
 
@@ -58,6 +64,7 @@ class Signup
     self.site.save
     self.organisation.save
     self.user.save
+    self.organisation_membership.save
 
     true
   rescue

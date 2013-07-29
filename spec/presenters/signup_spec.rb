@@ -57,15 +57,6 @@ describe Signup do
 
   describe "resource creation" do
 
-    it "must create a user with the correct details" do
-      signup.save
-
-      signup.user.should be_persisted
-      signup.user.first_name.should == signup.first_name
-      signup.user.email.should      == signup.email
-      signup.user.password.should   == signup.password
-    end
-
     it "must create an organisation with the correct details" do
       signup.save
 
@@ -81,6 +72,15 @@ describe Signup do
       signup.site.lng.should == signup.organisation_lng
     end
 
+    it "must create a user with the correct details" do
+      signup.save
+
+      signup.user.should be_persisted
+      signup.user.first_name.should == signup.first_name
+      signup.user.email.should      == signup.email
+      signup.user.password.should   == signup.password
+    end
+
   end
 
   describe "resource associations" do
@@ -94,7 +94,7 @@ describe Signup do
     it "must associate the user with the organisation" do
       signup.save
 
-      signup.user.organisation.should == signup.organisation
+      signup.user.organisation_resources.should include(signup.organisation)
     end
 
   end
