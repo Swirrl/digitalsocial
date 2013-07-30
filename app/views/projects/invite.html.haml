@@ -1,16 +1,18 @@
 %h1 Invite to project
 
+%h3 New organisation
 = simple_form_for @project_invite, url: [:invite_new_organisation, @project] do |f|
   = f.input :organisation_name, required: false
   = f.input :user_first_name, required: false
   = f.input :user_email, required: false
   = f.input :nature_uri, as: :select, collection: project_membership_nature_options, required: false
-  = f.submit 'Invite'
+  = f.button :submit, 'Invite'
 
 %br/
 %br/
 
+%h3 Existing organisation
 = simple_form_for @project_invite, url: [:invite_existing_organisation, @project] do |f|
   = f.input :organisation_uri, as: :select, collection: Organisation.all.resources.collect { |o| [o.name, o.uri] }
   = f.input :nature_uri, as: :select, collection: project_membership_nature_options
-  = f.submit 'Invite'
+  = f.button :submit, 'Invite'
