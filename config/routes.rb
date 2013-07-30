@@ -13,7 +13,13 @@ Digitalsocial::Application.routes.draw do
   end
 
   resources :users, only: [:new, :create]
-  resources :projects, only: [:new, :create, :index]
+  resources :projects, only: [:new, :create, :index] do
+    member do
+      get 'invite'
+      post 'invite_new_organisation'
+      post 'invite_existing_organisation'
+    end
+  end
 
   match ':action' => 'site'
   root to: 'site#index'

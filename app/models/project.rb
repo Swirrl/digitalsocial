@@ -22,6 +22,14 @@ class Project
     self.rdf_type ||= Project.rdf_type
   end
 
+  def guid
+    self.uri.to_s.split("/").last
+  end
+
+  def to_param
+    guid
+  end
+
   # Temporary
   def tags_list=(list)
     self.tags = list.split(", ")
@@ -66,6 +74,10 @@ class Project
 
   def any_organisations?
     organisations.count > 0
+  end
+
+  def invite_new_organisation!
+    false
   end
 
 end
