@@ -1,0 +1,10 @@
+%h1 Your projects
+
+%table
+  - @projects.each do |project|
+    %tr
+      %td= project.label
+      %td= link_to "Invite", "#"
+
+      - if current_organisation.can_edit_project?(project)
+        %td= link_to "Edit", "#"

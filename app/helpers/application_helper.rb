@@ -4,4 +4,8 @@ module ApplicationHelper
     ProjectMembershipNature.all.resources.collect { |pmn| [pmn.label, pmn.uri] }
   end
 
+  def current_organisation
+    current_user.organisation_resources.first
+  end
+
 end

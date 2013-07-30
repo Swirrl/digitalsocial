@@ -8,7 +8,6 @@ class ProjectMembership
   field :organisation, 'http://example.com/def/project_membership/organisation', is_uri: true
   field :project, 'http://example.com/def/project_membership/project', is_uri: true
   field :nature, 'http://example.com/def/project_membership/nature', is_uri: true
-  field :is_creator, 'http://example.com/def/project_membership/is_creator', datatype: RDF::XSD.boolean
 
    # override initialise
   def initialize(uri=nil, graph_uri=nil)

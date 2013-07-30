@@ -39,8 +39,4 @@ class User
     organisation_memberships.collect(&:organisation_resource)
   end
 
-  def projects
-    []
-  end
-
 end

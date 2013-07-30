@@ -9,6 +9,7 @@ class Project
   field :webpage, 'http://example.com/webpage'
   field :tags, 'http://example.com/tag', multivalued: true
   field :duration, 'http://example.com/time_interval'
+  field :creator, 'http://example.com/def/project/creator', is_uri: true
 
   attr_accessor :tags_list, :start_date, :end_date, :creator_role
 
@@ -40,13 +41,15 @@ class Project
     TimeInterval.find(self.duration)
   end
 
-  def create_lead_membership!(organisation)
-    lead_membership = ProjectMembership.new
-    lead_membership.organisation = organisation.uri.to_s
-    lead_membership.project      = self.uri.to_s
-    lead_membership.nature       = self.creator_role
-    lead_membership.is_creator   = true
-    lead_membership.save
+  def add_creator_membership!(organisation)
+    creator_membership = ProjectMembership.new
+    creator_membership.organisation = organisation.uri.to_s
+    creator_membership.project      = self.uri.to_s
+    creator_membership.nature       = self.creator_role
+    creator_membership.save
+
+    self.creator = organisation.uri.to_s
+    self.save
   end
 
   def organisations
@@ -55,7 +58,14 @@ class Project
     Organisation
       .where("?pm_uri <#{project_membership_project_predicate}> <#{self.uri}>")
       .where("?pm_uri <#{project_membership_org_predicate}> ?uri")
-      .resources
+  end
+
+  def organisation_resources
+    organisations.resources
+  end
+
+  def any_organisations?
+    organisations.count > 0
   end
 
 end

@@ -7,7 +7,9 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    redirect_to [:new, :project] unless current_user.projects.any?
+    redirect_to [:new, :project] unless current_organisation.any_projects?
+
+    @projects = current_organisation.projects.resources
   end
 
   def create
@@ -15,8 +17,8 @@ class ProjectsController < ApplicationController
 
     if @project.update_attributes(params[:project])
       @project.create_time_interval!
-      @project.create_lead_membership!(current_organisation)
-      render text: "Success"
+      @project.add_creator_membership!(current_organisation)
+      redirect_to :projects
     else
       render :new
     end
