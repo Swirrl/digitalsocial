@@ -10,7 +10,9 @@ class ProjectInvite
   
   validates :organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation? }
   validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation? }
+  validates :organisation_uri, presence: { unless: :new_organisation? }
   validate :user_email_must_be_unique, if: :new_organisation?
+  # TODO validate project isn't already member of project
 
   validates :nature_uri, presence: true
 
@@ -27,8 +29,13 @@ class ProjectInvite
   def organisation
     return @organisation unless @organisation.nil?
 
-    @organisation = Organisation.new
-    @organisation.name = self.organisation_name
+    if self.organisation_uri.present?
+      @organisation = Organisation.find(self.organisation_uri)
+    else  
+      @organisation = Organisation.new
+      @organisation.name = self.organisation_name
+    end
+
     @organisation
   end
 
@@ -63,6 +70,17 @@ class ProjectInvite
     self.organisation.save
     self.user.save
     self.organisation_membership.save
+    self.project_membership.save
+
+    true
+  rescue => e
+    false
+  end
+
+  def save_for_existing_organisation
+    return false if invalid?
+
+    # TODO Add transactions
     self.project_membership.save
 
     true

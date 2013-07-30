@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :find_project, only: [:invite, :invite_new_organisation]
+  before_filter :find_project, only: [:invite, :invite_new_organisation, :invite_existing_organisation]
 
   def new
     @project = Project.new
@@ -38,6 +38,19 @@ class ProjectsController < ApplicationController
     if @project_invite.save_for_new_organisation
       # TODO Send invitation email
       render text: "Invited new organisation!"
+    else
+      render :invite
+    end
+  end
+
+  def invite_existing_organisation
+    @project_invite = ProjectInvite.new
+    @project_invite.attributes   = params[:project_invite]
+    @project_invite.project_uri  = @project.uri
+
+    if @project_invite.save_for_existing_organisation
+      # TODO Send invitation email
+      render text: "Invited existing organisation!"
     else
       render :invite
     end
