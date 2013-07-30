@@ -66,11 +66,15 @@ class ProjectInvite
   def save_for_new_organisation
     return false if invalid?
 
-    # TODO Add transactions
-    self.organisation.save
-    self.user.save
-    self.organisation_membership.save
-    self.project_membership.save
+    transaction = Tripod::Persistence::Transaction.new
+    if self.organisation.save(transaction: transaction) && self.project_membership.save(transaction: transaction)
+      transaction.commit
+      
+      self.user.save
+      self.organisation_membership.save
+    else
+      transaction.abort
+    end
 
     true
   rescue => e
@@ -80,7 +84,6 @@ class ProjectInvite
   def save_for_existing_organisation
     return false if invalid?
 
-    # TODO Add transactions
     self.project_membership.save
 
     true
