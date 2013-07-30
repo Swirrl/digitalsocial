@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 	# Need to allow the current_user's "organisation scope"
 	# to be set in the UI
 	def current_organisation
-		current_user.organisations.first
+		current_user.organisation_resources.first
 	end
 
 end

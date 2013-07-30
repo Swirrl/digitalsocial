@@ -3,10 +3,12 @@ class ProjectMembership
   include Tripod::Resource
 
   rdf_type 'http://example.com/project_membership'
-  graph_uri 'http://example.com/project_memberships'
+  graph_uri 'http://example.com/dsi_data'
 
-  field :organisation, 'http://example.com/organisation'
-  field :project, 'http://example.com/project'
+  field :organisation, 'http://example.com/def/project_membership/organisation', is_uri: true
+  field :project, 'http://example.com/def/project_membership/project', is_uri: true
+  field :nature, 'http://example.com/def/project_membership/nature', is_uri: true
+  field :is_creator, 'http://example.com/def/project_membership/is_creator', datatype: RDF::XSD.boolean
 
    # override initialise
   def initialize(uri=nil, graph_uri=nil)
@@ -20,6 +22,10 @@ class ProjectMembership
 
   def organisation_resource
     Organisation.find(self.organisation)
+  end
+
+  def nature_resource
+    ProjectMembershipNature.find(self.nature)
   end
 
 end

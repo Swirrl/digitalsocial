@@ -3,7 +3,7 @@ class Organisation
   include Tripod::Resource
 
   rdf_type 'http://example.com/organisation'
-  graph_uri 'http://example.com/organisations'
+  graph_uri 'http://example.com/dsi_data'
 
   field :name, 'http://example.com/name'
   field :primary_site, 'http://example.com/site', is_uri: true

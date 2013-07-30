@@ -1,3 +1,9 @@
+["Lead", "Funder", "Collaborator"].each do |label|
+  pmn = ProjectMembershipNature.new
+  pmn.label = label
+  pmn.save
+end
+
 # Seed admins
 Admin.create(email: 'admin@test.com', password: 'password', name: 'Test Admin', job_title: 'Tester', organisation: 'Swirrl', organisation_url: 'http://swirrl.com')
 
