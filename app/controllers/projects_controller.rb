@@ -1,7 +1,8 @@
 class ProjectsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :find_project, only: [:invite, :invite_new_organisation, :invite_existing_organisation]
+  before_filter :find_project, only: [:invite, :create_invite]
+  before_filter :set_project_invite, only: [:create_invite]
 
   def new
     @project = Project.new
@@ -29,28 +30,9 @@ class ProjectsController < ApplicationController
     @project_invite = ProjectInvite.new
   end
 
-  def invite_new_organisation
-    @project_invite = ProjectInvite.new
-    @project_invite.attributes       = params[:project_invite]
-    @project_invite.new_organisation = true
-    @project_invite.project_uri      = @project.uri
-
-    if @project_invite.save_for_new_organisation
-      # TODO Send invitation email
-      render text: "Invited new organisation!"
-    else
-      render :invite
-    end
-  end
-
-  def invite_existing_organisation
-    @project_invite = ProjectInvite.new
-    @project_invite.attributes   = params[:project_invite]
-    @project_invite.project_uri  = @project.uri
-
-    if @project_invite.save_for_existing_organisation
-      # TODO Send invitation email
-      render text: "Invited existing organisation!"
+  def create_invite
+    if @project_invite.save
+      render text: "Invited organisation!"
     else
       render :invite
     end
@@ -64,6 +46,13 @@ class ProjectsController < ApplicationController
 
   def set_project_attributes
     params[:project].each { |k, v| @project.send("#{k}=", v) }
+  end
+
+  def set_project_invite
+    @project_invite = ProjectInvite.new
+    @project_invite.attributes   = params[:project_invite]
+    @project_invite.sender       = current_organisation_membership
+    @project_invite.project_uri  = @project.uri
   end
   
 end

@@ -16,8 +16,7 @@ Digitalsocial::Application.routes.draw do
   resources :projects, only: [:new, :create, :index] do
     member do
       get 'invite'
-      post 'invite_new_organisation'
-      post 'invite_existing_organisation'
+      post 'create_invite'
     end
   end
 

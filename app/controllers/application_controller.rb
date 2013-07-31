@@ -25,4 +25,8 @@ class ApplicationController < ActionController::Base
 		current_user.organisation_resources.first
 	end
 
+	def current_organisation_membership
+    current_user.organisation_memberships.where(organisation_uri: current_organisation.uri.to_s).first
+	end
+
 end
