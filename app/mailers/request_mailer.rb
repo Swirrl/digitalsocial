@@ -3,11 +3,11 @@ class RequestMailer < ActionMailer::Base
 
   def project_new_organisation_invite(request)
     @request = request
-    Rails.logger.debug "Sending project_new_organisation_invite email for Request ##{@request.id}"
+    mail to: @request.receiver.user.email, subject: "Invitation"
   end
 
   def project_existing_organisation_invite(request)
     @request = request
-    Rails.logger.debug "Sending project_existing_organisation_invite email for Request ##{@request.id}"
+    mail to: @request.receiver.user.email, subject: "Invitation"
   end
 end

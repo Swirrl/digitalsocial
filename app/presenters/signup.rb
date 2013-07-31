@@ -6,7 +6,7 @@ class Signup
   include ActiveModel::MassAssignmentSecurity
 
   attr_accessor :user, :first_name, :email, :password, :organisation_name,
-                :organisation_lat, :organisation_lng
+                :organisation_lat, :organisation_lng, :organisation, :user
   attr_accessible :first_name, :email, :password, :organisation_name,
                   :organisation_lat, :organisation_lng
 
@@ -52,7 +52,7 @@ class Signup
   end
 
   def organisation_membership
-    @organisation_membership || OrganisationMembership.new do |om|
+    @organisation_membership ||= OrganisationMembership.new do |om|
       om.user             = self.user
       om.organisation_uri = self.organisation.uri.to_s
       om.owner            = true
@@ -84,7 +84,11 @@ class Signup
   private
 
   def user_email_must_be_unique
-    errors.add(:email, 'has already been taken') if User.where(email: self.email).any?
+    duplicate_user = User.where(email: self.email).first
+
+    if duplicate_user.present? && duplicate_user != self.user
+      errors.add(:email, 'has already been taken')
+    end
   end
 
 end

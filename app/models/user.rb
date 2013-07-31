@@ -35,6 +35,8 @@ class User
   
   validates :first_name, presence: true
 
+  before_save :ensure_authentication_token
+
   def organisation_resources
     organisation_memberships.collect(&:organisation_resource)
   end

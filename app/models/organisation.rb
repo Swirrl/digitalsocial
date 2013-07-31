@@ -13,6 +13,10 @@ class Organisation
     super(uri || "http://example.com/organisation/#{Guid.new}")
     self.rdf_type ||= Organisation.rdf_type
   end
+
+  def guid
+    self.uri.to_s.split("/").last
+  end
   
   def primary_site_resource
     Site.find(self.primary_site)

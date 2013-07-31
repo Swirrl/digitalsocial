@@ -22,7 +22,11 @@ class ApplicationController < ActionController::Base
 	# TODO Need to allow the current_user's "organisation scope"
 	# to be set in the UI
 	def current_organisation
-		current_user.organisation_resources.first
+		session[:org_id] ||= params[:org_id]
+
+		@current_organisation ||=
+		  current_user.organisation_resources.find { |o| o.uri == "http://example.com/organisation/#{session[:org_id]}" } ||
+		  current_user.organisation_resources.first
 	end
 
 	def current_organisation_membership

@@ -52,12 +52,13 @@ class ProjectInvite
   end
 
   def organisation_membership
-    return @organisation_membership unless @organisation.nil?
+    return @organisation_membership unless @organisation_membership.nil?
 
     if new_organisation?
       @organisation_membership ||= OrganisationMembership.new do |om|
         om.user             = self.user
         om.organisation_uri = self.organisation.uri.to_s
+        om.owner            = true
       end
     else
       @organisation_membership = OrganisationMembership.where(organisation_uri: self.organisation_uri, owner: true).first
