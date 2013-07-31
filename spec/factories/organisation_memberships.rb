@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :organisation_membership do
-    owner { [true, false].sample }
-    organisation_uri { "http://example.com/organisations/foobar" }
+    owner { true }
+    organisation_uri { FactoryGirl.create(:organisation).uri.to_s }
     user
   end
 end

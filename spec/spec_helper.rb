@@ -52,4 +52,13 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.include Warden::Test::Helpers, type: :feature
+
+  config.before :all, type: :feature do
+    Warden.test_mode!
+  end
+  config.after :all, type: :feature do
+    Warden.test_reset!
+  end
+
 end
