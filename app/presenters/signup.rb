@@ -55,6 +55,7 @@ class Signup
     @organisation_membership || OrganisationMembership.new do |om|
       om.user             = self.user
       om.organisation_uri = self.organisation.uri.to_s
+      om.owner            = true
     end
   end
 
