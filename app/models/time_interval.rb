@@ -11,7 +11,6 @@ class TimeInterval
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
     super(uri || "http://example.com/time_interval/#{Guid.new}")
-    self.rdf_type ||= TimeInterval.rdf_type
   end
 
 end

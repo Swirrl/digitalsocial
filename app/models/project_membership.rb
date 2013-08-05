@@ -12,7 +12,6 @@ class ProjectMembership
    # override initialise
   def initialize(uri=nil, graph_uri=nil)
     super(uri || "http://example.com/project_membership/#{Guid.new}")
-    self.rdf_type ||= ProjectMembership.rdf_type
   end
 
   def project_resource

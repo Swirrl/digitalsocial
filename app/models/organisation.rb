@@ -11,7 +11,6 @@ class Organisation
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
     super(uri || "http://example.com/organisation/#{Guid.new}")
-    self.rdf_type ||= Organisation.rdf_type
   end
 
   def guid
