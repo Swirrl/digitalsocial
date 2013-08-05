@@ -19,7 +19,7 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
-  resources :projects, only: [:new, :create, :index] do
+  resources :projects, only: [:new, :create, :index, :edit, :update] do
     member do
       get 'invite'
       post 'create_invite'

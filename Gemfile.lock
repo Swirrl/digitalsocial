@@ -119,7 +119,7 @@ GEM
       mongoid (> 3.0)
       stringex (~> 1.4)
     moped (1.5.0)
-    multi_json (1.7.7)
+    multi_json (1.7.8)
     net-scp (1.1.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -170,7 +170,7 @@ GEM
     rdf-rdfxml (1.0.2)
       rdf (>= 1.0)
       rdf-xsd (>= 1.0)
-    rdf-turtle (1.0.8)
+    rdf-turtle (1.0.9)
       ebnf (>= 0.3.0)
       rdf (>= 1.0.7)
     rdf-xsd (1.0.2.1)
@@ -219,7 +219,7 @@ GEM
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
-    tripod (0.7.20)
+    tripod (0.7.21)
       activemodel (~> 3.2)
       dalli (~> 2.6)
       equivalent-xml

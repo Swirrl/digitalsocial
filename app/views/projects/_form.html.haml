@@ -1,0 +1,12 @@
+= simple_form_for project, html: { novalidate: true } do |f|
+  = f.input :label
+  = f.input :webpage
+  = f.input :tags_list
+  
+  = f.input :start_date
+  = f.input :end_date
+
+  - if project.new_record?
+    = f.input :creator_role, as: :select, collection: project_membership_nature_options
+
+  = f.submit "Submit"

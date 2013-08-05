@@ -12,4 +12,8 @@ module ApplicationHelper
     current_user.organisation_memberships.where(organisation_uri: current_organisation.uri.to_s).first
   end
 
+  def can_edit_project?(project)
+    current_organisation_membership.owner? && current_organisation.can_edit_project?(project)
+  end
+
 end

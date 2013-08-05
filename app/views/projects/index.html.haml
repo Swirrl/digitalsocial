@@ -22,15 +22,13 @@
             = simple_form_for [:reject, invite] do |f|
               = f.button :submit, "Reject"
 
-
-
 %table
   - @projects.each do |project|
     %tr
       %td= project.label
       %td= link_to "Invite", [:invite, project]
 
-      - if current_organisation.can_edit_project?(project)
-        %td= link_to "Edit", "#"
+      - if can_edit_project?(project)
+        %td= link_to "Edit", [:edit, project]
 
 = link_to "Add a project", [:new, :project]

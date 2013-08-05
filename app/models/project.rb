@@ -16,6 +16,8 @@ class Project
   validates :label, :webpage, presence: true
   validates :start_date, :end_date, :creator_role, presence: { if: :new_record? }
 
+  #after_save :test
+
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
     super(uri || "http://example.com/project/#{Guid.new}")
@@ -34,6 +36,10 @@ class Project
     self.tags = list.split(", ")
   end
 
+  def tags_list
+    self.tags.join(", ")
+  end
+
   def create_time_interval!
     new_time_interval = TimeInterval.new
     new_time_interval.start_date = start_date
@@ -46,6 +52,14 @@ class Project
 
   def duration_resource
     TimeInterval.find(self.duration)
+  end
+
+  def start_date
+    duration_resource.try(:start_date)
+  end
+
+  def end_date
+    duration_resource.try(:end_date)
   end
 
   def add_creator_membership!(organisation)
