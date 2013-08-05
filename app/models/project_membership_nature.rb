@@ -10,7 +10,6 @@ class ProjectMembershipNature
    # override initialise
   def initialize(uri=nil, graph_uri=nil)
     super(uri || "http://example.com/project_membership_nature/#{Guid.new}")
-    self.rdf_type ||= ProjectMembershipNature.rdf_type
   end
 
   def self.lead
