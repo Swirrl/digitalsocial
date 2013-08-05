@@ -1,0 +1,14 @@
+- if user_signed_in?
+  .logged-in
+    Logged in as
+    = current_user.first_name
+    = "(#{current_user.email})"
+    &middot;
+    = link_to "Log out", destroy_user_session_path
+
+  .current-organisation
+    - current_user.organisation_resources.each do |o|
+      - if o.uri == current_organisation.uri
+        %span= o.name
+      - else
+        = link_to o.name, url_for(org_id: o.guid)

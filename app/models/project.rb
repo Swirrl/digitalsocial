@@ -55,11 +55,11 @@ class Project
   end
 
   def start_date
-    duration_resource.try(:start_date)
+    duration_resource.start_date if duration.present?
   end
 
   def end_date
-    duration_resource.try(:end_date)
+    duration_resource.end_date if duration.present?
   end
 
   def add_creator_membership!(organisation)
