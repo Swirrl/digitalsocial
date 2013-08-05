@@ -39,6 +39,8 @@ class UsersController < ApplicationController
     @user.organisation.name         = @user.organisation_name
     @user.organisation.primary_site = @user.site.uri
 
+    @user.organisation_membership = current_organisation_membership
+
     if @user.save
       sign_in @user.user, bypass: true
       redirect_to :projects

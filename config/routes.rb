@@ -26,6 +26,13 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
+  resources :requests do
+    member do
+      put 'accept'
+      put 'reject'
+    end
+  end
+
   match ':action' => 'site'
   root to: 'site#index'
 

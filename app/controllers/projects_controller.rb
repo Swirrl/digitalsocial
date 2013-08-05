@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    redirect_to [:new, :project] unless current_organisation.any_projects?
+    #redirect_to [:new, :project] unless current_organisation.any_projects?
 
     @projects = current_organisation.projects.resources
   end

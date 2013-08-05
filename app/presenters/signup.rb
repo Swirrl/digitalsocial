@@ -6,7 +6,8 @@ class Signup
   include ActiveModel::MassAssignmentSecurity
 
   attr_accessor :user, :first_name, :email, :password, :organisation_name,
-                :organisation_lat, :organisation_lng, :organisation, :user
+                :organisation_lat, :organisation_lng, :organisation, :user,
+                :organisation_membership
   attr_accessible :first_name, :email, :password, :organisation_name,
                   :organisation_lat, :organisation_lng
 
