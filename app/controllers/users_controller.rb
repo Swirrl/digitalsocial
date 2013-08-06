@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!, only: [:edit_invited, :update_invited]
+  before_filter :authenticate_user!, only: [:edit_invited, :update_invited, :edit, :update]
 
   def new
     @user = Signup.new
