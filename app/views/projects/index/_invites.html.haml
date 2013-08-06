@@ -1,0 +1,21 @@
+- if current_organisation_membership.pending_project_invites.any?
+  %h3 Invitations
+
+  %table
+    - current_organisation_membership.pending_project_invites.each do |invite|
+      %tbody
+        
+        %tr
+          %td= invite.requestable.label
+          %td
+            Invited by
+            = invite.sender.user.first_name
+            = "(#{invite.sender.organisation_resource.name})"
+            
+          %td
+            = simple_form_for [:accept, invite] do |f|
+              = select_tag "[request][data][project_membership_nature_uri]", options_for_select(project_membership_nature_options, invite.data['project_membership_nature_uri'])
+              = f.button :submit, "Accept"
+
+            = simple_form_for [:reject, invite] do |f|
+              = f.button :submit, "Reject"

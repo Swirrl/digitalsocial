@@ -4,6 +4,10 @@ module ApplicationHelper
     ProjectMembershipNature.all.resources.collect { |pmn| [pmn.label, pmn.uri] }
   end
 
+  def project_options
+    Project.all.resources.collect { |p| [p.label, p.uri] }
+  end
+
   def current_organisation
     session[:org_id] = params[:org_id] if params[:org_id]
 

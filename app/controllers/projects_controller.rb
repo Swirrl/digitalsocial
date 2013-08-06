@@ -7,12 +7,11 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    @project_request = ProjectRequest.new
   end
 
   def index
     #redirect_to [:new, :project] unless current_organisation.any_projects?
-
-    @projects = current_organisation.projects.resources
   end
 
   def create
@@ -48,6 +47,20 @@ class ProjectsController < ApplicationController
       redirect_to :projects, notice: "Project updated."
     else
       render :edit
+    end
+  end
+
+  def create_request
+    @project_request = ProjectRequest.new
+    @project_request.attributes   = params[:project_request]
+    @project_request.organisation = current_organisation
+    @project_request.sender       = current_organisation_membership
+
+    if @project_request.save
+      render text: "Requested to be part of project"
+    else
+      @project = Project.new
+      render :new
     end
   end
 

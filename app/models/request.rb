@@ -31,6 +31,8 @@ class Request
   def accept!
     if ['project_new_organisation_invite', 'project_existing_organisation_invite'].include?(request_type) # Clean me
       accept_project_invite!
+    elsif request_type == 'project_request'
+      accept_project_request!
     end
   end
 
@@ -42,10 +44,18 @@ class Request
   end
 
   def accept_project_invite!
+    create_project_membership(self.receiver)
+  end
+
+  def accept_project_request!
+    create_project_membership(self.sender)
+  end
+
+  def create_project_membership(organisation_membership)
     transaction = Tripod::Persistence::Transaction.new
 
     project_membership = ProjectMembership.new
-    project_membership.organisation = self.receiver.organisation_resource.uri.to_s
+    project_membership.organisation = organisation_membership.organisation_resource.uri.to_s
     project_membership.project      = self.requestable.uri.to_s
     project_membership.nature       = self.data['project_membership_nature_uri']
 

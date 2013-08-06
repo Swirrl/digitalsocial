@@ -1,0 +1,10 @@
+%h3 Existing
+
+%table
+  - current_organisation.projects.resources.each do |project|
+    %tr
+      %td= project.label
+      %td= link_to "Invite", [:invite, project]
+
+      - if current_organisation.can_edit_project?(project)
+        %td= link_to "Edit", [:edit, project]

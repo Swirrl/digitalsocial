@@ -1,0 +1,21 @@
+- if current_organisation_membership.pending_project_requests.any?
+  %h3 Requests
+
+  %table
+    - current_organisation_membership.pending_project_requests.each do |request|
+      %tbody
+        
+        %tr
+          %td= request.requestable.label
+          %td
+            Requested by
+            = request.sender.user.first_name
+            = "(#{request.sender.organisation_resource.name})"
+            
+          %td
+            = simple_form_for [:accept, request] do |f|
+              = select_tag "[request][data][project_membership_nature_uri]", options_for_select(project_membership_nature_options, request.data['project_membership_nature_uri'])
+              = f.button :submit, "Accept"
+
+            = simple_form_for [:reject, request] do |f|
+              = f.button :submit, "Reject"

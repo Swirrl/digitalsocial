@@ -10,4 +10,9 @@ class RequestMailer < ActionMailer::Base
     @request = request
     mail to: @request.receiver.user.email, subject: "Invitation"
   end
+
+  def project_request(request)
+    @request = request
+    mail to: @request.receiver.user.email, subject: "Project request"
+  end
 end

@@ -62,6 +62,10 @@ class Project
     duration_resource.end_date if duration.present?
   end
 
+  def creator_resource
+    Organisation.find(self.creator)
+  end
+
   def add_creator_membership!(organisation)
     creator_membership = ProjectMembership.new
     creator_membership.organisation = organisation.uri.to_s

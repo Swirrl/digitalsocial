@@ -5,9 +5,9 @@ class RequestsController < ApplicationController
   
   def accept
     if @request.accept!
-      redirect_to @request.requestable
+      redirect_to :back, notice: "The request has been accepted."
     else
-      redirect_to :back, alert: "Your request could not be accepted"
+      redirect_to :back, alert: "The request could not be accepted"
     end
   end
 
@@ -15,7 +15,7 @@ class RequestsController < ApplicationController
     if @request.reject!
       redirect_to :back, notice: "The request has been rejected."
     else
-      redirect_to :back, alert: "Your request could not be reject."
+      redirect_to :back, alert: "The request could not be rejected."
     end
   end
 

@@ -24,6 +24,9 @@ Digitalsocial::Application.routes.draw do
       get 'invite'
       post 'create_invite'
     end
+    collection do
+      post 'create_request'
+    end
   end
 
   resources :requests do
