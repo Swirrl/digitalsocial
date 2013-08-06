@@ -7,8 +7,6 @@ class ProjectRequest
 
   attr_accessor :project_uri, :nature_uri, :sender, :organisation
 
-  # TODO validate project isn't already member of project
-
   validates :project_uri, :nature_uri, presence: true
   validate :organisation_is_not_already_member_of_project
 
@@ -22,7 +20,6 @@ class ProjectRequest
     @project ||= Project.find(self.project_uri)
   end
 
-  # Owner of the organisation that created the project
   def creator_organisation_owner_membership
     OrganisationMembership.owners.where(organisation_uri: self.project.creator.to_s).first
   end
