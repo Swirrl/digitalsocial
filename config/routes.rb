@@ -36,7 +36,12 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
-  resources :organisations, only: [:edit, :update]
+  resources :organisations, only: [:edit, :update] do
+    member do
+      get 'user_invite'
+      post 'create_user_invite'
+    end
+  end
 
   match ':action' => 'site'
   root to: 'site#index'

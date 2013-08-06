@@ -7,6 +7,8 @@ class Organisation
 
   field :name, 'http://example.com/name'
   field :primary_site, 'http://example.com/site', is_uri: true
+
+  validates :name, presence: true
   
   # override initialise
   def initialize(uri=nil, graph_uri=nil)

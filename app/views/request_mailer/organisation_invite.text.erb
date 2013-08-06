@@ -1,0 +1,9 @@
+Hello <%= @request.receiver.user.first_name %>,
+
+<%= @request.sender.user.first_name %> from <%= @request.sender.organisation_resource.name %> has added you to their team.
+
+<% if @request.receiver.user.organisation_memberships.count == 1 %>
+Click the link below to sign in and set your password.
+
+<%= edit_user_url('_', auth_token: @request.receiver.user.authentication_token, org_id: @request.receiver.organisation_resource.guid, p: 1) %>
+<% end %>

@@ -1,5 +1,9 @@
 = simple_form_for @user do |f|
-  = f.input :first_name, required: false
-  = f.input :email, required: false
+  = f.input :first_name, required: true
+  = f.input :email, required: true
+
+  - if params[:p]
+    = f.input :password, required: true
+    = hidden_field_tag :p, params[:p]
   
   = f.button :submit, 'Save changes'
