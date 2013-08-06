@@ -69,9 +69,7 @@ class ProjectsController < ApplicationController
   end
 
   def check_project_can_be_edited
-    unless current_organisation_membership.owner? && current_organisation.can_edit_project?(@project)
-      redirect_to :projects
-    end
+    redirect_to :projects unless current_organisation.can_edit_project?(@project)
   end
 
   def update_project

@@ -28,7 +28,7 @@
       %td= project.label
       %td= link_to "Invite", [:invite, project]
 
-      - if can_edit_project?(project)
+      - if current_organisation.can_edit_project?(project)
         %td= link_to "Edit", [:edit, project]
 
 = link_to "Add a project", [:new, :project]
