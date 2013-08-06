@@ -36,6 +36,8 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
+  resources :organisations, only: [:edit, :update]
+
   match ':action' => 'site'
   root to: 'site#index'
 

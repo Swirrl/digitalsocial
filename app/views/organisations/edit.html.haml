@@ -1,0 +1,11 @@
+%h1 Edit organisation
+
+= simple_form_for @organisation, url: organisation_path(@organisation.guid, method: :put) do |f|
+  = f.input :name
+  .input
+    = label_tag 'Lat'
+    = text_field_tag 'lat', @organisation.primary_site_resource.lat
+  .input
+    = label_tag 'Lng'
+    = text_field_tag 'lng', @organisation.primary_site_resource.lng
+  = f.button :submit, 'Save'
