@@ -10,6 +10,7 @@ class ProjectRequest
   # TODO validate project isn't already member of project
 
   validates :project_uri, :nature_uri, presence: true
+  validate :organisation_is_not_already_member_of_project
 
   def attributes=(values)
     sanitize_for_mass_assignment(values).each do |attr, value|
@@ -22,7 +23,7 @@ class ProjectRequest
   end
 
   # Owner of the organisation that created the project
-  def organisation_membership
+  def creator_organisation_owner_membership
     OrganisationMembership.owners.where(organisation_uri: self.project.creator.to_s).first
   end
 
@@ -30,7 +31,7 @@ class ProjectRequest
     @request ||= Request.new do |r|
       r.requestable  = self.project
       r.sender       = self.sender
-      r.receiver     = self.organisation_membership
+      r.receiver     = self.creator_organisation_owner_membership
       r.request_type = 'project_request'
       r.data         = { project_membership_nature_uri: self.nature_uri }
     end
@@ -46,8 +47,24 @@ class ProjectRequest
     false
   end
 
-  def persisted?  
-    false  
+  def persisted?
+    false
+  end
+
+  def existing_project_membership?
+    project_membership_org_predicate = ProjectMembership.fields[:organisation].predicate.to_s
+    project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
+
+    ProjectMembership
+      .where("?uri <#{project_membership_org_predicate}> <#{self.sender.organisation_resource.uri}>")
+      .where("?uri <#{project_membership_project_predicate}> <#{self.project_uri}>")
+      .count > 0
+  end
+
+  private
+
+  def organisation_is_not_already_member_of_project
+    errors.add(:project_uri, "already a member of this project") if existing_project_membership?
   end
 
 end
