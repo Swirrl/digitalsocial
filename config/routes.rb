@@ -12,7 +12,7 @@ Digitalsocial::Application.routes.draw do
     root to: 'pages#index'
   end
 
-  resources :users, only: [:new, :create, :edit] do
+  resources :users, only: [:new, :create, :edit, :update] do
     member do
       get 'edit_invited'
       post 'update_invited'

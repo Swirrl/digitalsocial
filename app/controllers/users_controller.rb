@@ -18,6 +18,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+
+    if @user.update_attributes(params[:user])
+      redirect_to :projects
+    else
+      render :edit
+    end
+  end
+
   def edit_invited
     @user = Signup.new
     @user.first_name        = current_user.first_name
