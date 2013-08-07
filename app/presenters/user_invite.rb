@@ -54,7 +54,6 @@ class UserInvite
 
     true
   rescue => e
-    Rails.logger.debug e
     false
   end
 

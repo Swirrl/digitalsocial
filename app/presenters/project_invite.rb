@@ -14,7 +14,7 @@ class ProjectInvite
   validate :user_email_must_be_unique, if: :new_organisation?
   # TODO validate project isn't already member of project
 
-  validates :nature_uri, presence: true
+  validates :project_uri, :nature_uri, :sender, presence: true
 
   def attributes=(values)
     sanitize_for_mass_assignment(values).each do |attr, value|

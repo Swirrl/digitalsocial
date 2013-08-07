@@ -20,13 +20,13 @@ describe Project do
 
   end
 
-  describe "create_lead_membership!" do
+  describe "add_creator_membership!" do
 
     it "must create the project membership" do
       organisation = FactoryGirl.create(:organisation)
 
       project.save
-      project.create_lead_membership!(organisation)
+      project.add_creator_membership!(organisation)
 
       project_membership = ProjectMembership.first
       project_membership.project_resource.should == project

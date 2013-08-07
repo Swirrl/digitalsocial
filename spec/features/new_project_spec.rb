@@ -9,7 +9,8 @@ feature 'Creating a new project' do
   end
 
   # scenario 'Logged in user visits projects page' do
-
+  #   visit new_project_path
+  #   save_and_open_page
   # end
   
 end

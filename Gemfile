@@ -25,4 +25,5 @@ group :development, :test do
   gem 'capybara'
   gem 'faker'
   gem 'database_cleaner'
+  gem 'launchy'
 end

@@ -54,13 +54,13 @@ class Project
     TimeInterval.find(self.duration)
   end
 
-  def start_date
-    duration_resource.start_date if duration.present?
-  end
+  # def start_date
+  #   duration_resource.start_date if duration.present?
+  # end
 
-  def end_date
-    duration_resource.end_date if duration.present?
-  end
+  # def end_date
+  #   duration_resource.end_date if duration.present?
+  # end
 
   def creator_resource
     Organisation.find(self.creator)

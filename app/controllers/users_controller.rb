@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
     if @user.save
       sign_in @user.user
-      redirect_to :projects
+      redirect_to :projects, notice: 'Successfully signed up.'
     else
       render :new
     end

@@ -10,6 +10,7 @@
     
     .container
       = render "header"
+      = render "flash", flash: flash
       
       #main.clearfix
         = yield
