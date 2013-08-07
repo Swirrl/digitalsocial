@@ -7,7 +7,7 @@ class ProjectRequest
 
   attr_accessor :project_uri, :nature_uri, :sender, :organisation
 
-  validates :project_uri, :nature_uri, presence: true
+  validates :project_uri, :nature_uri, :sender, presence: true
   validate :organisation_is_not_already_member_of_project
 
   def attributes=(values)
@@ -61,7 +61,7 @@ class ProjectRequest
   private
 
   def organisation_is_not_already_member_of_project
-    errors.add(:project_uri, "already a member of this project") if existing_project_membership?
+    errors.add(:project_uri, "already a member of this project") if self.sender.present? && existing_project_membership?
   end
 
 end
