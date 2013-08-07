@@ -1,13 +1,13 @@
-require 'active_model/model'
-
 class ProjectInvite
 
-  include ActiveModel::Model
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
   attr_accessor :organisation_name, :user_first_name, :user_email, :nature_uri,
     :organisation_uri, :project_uri, :new_organisation, :sender
-  
+
   validates :organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation? }
   validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation? }
   validates :organisation_uri, presence: { unless: :new_organisation? }
@@ -35,7 +35,7 @@ class ProjectInvite
 
     if self.organisation_uri.present?
       @organisation = Organisation.find(self.organisation_uri)
-    else  
+    else
       @organisation = Organisation.new
       @organisation.name = self.organisation_name
     end
@@ -103,7 +103,7 @@ class ProjectInvite
     transaction = Tripod::Persistence::Transaction.new
     if self.organisation.save(transaction: transaction)
       transaction.commit
-      
+
       self.user.save
       self.organisation_membership.save
       self.request.save
@@ -126,8 +126,8 @@ class ProjectInvite
     false
   end
 
-  def persisted?  
-    false  
+  def persisted?
+    false
   end
 
   private

@@ -11,6 +11,7 @@ gem 'devise'
 gem 'simple_form'
 gem 'mongoid-paperclip', require: 'mongoid_paperclip'
 gem 'mongoid_slug'
+gem 'activemodel', require: 'active_model'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

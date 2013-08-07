@@ -1,8 +1,8 @@
-require 'active_model/model'
-
 class ProjectRequest
 
-  include ActiveModel::Model
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
   attr_accessor :project_uri, :nature_uri, :sender, :organisation
