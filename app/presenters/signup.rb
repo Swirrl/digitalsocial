@@ -1,8 +1,8 @@
-require 'active_model/model'
-
 class Signup
 
-  include ActiveModel::Model
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
   attr_accessor :user, :first_name, :email, :password, :organisation_name,
@@ -62,11 +62,11 @@ class Signup
 
   def save
     return false if invalid?
-    
+
     transaction = Tripod::Persistence::Transaction.new
     if self.site.save(transaction: transaction) && self.organisation.save(transaction: transaction)
       transaction.commit
-      
+
       self.user.save
       self.organisation_membership.save
     else
@@ -78,8 +78,8 @@ class Signup
     false
   end
 
-  def persisted?  
-    false  
+  def persisted?
+    false
   end
 
   private

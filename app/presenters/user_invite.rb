@@ -1,8 +1,8 @@
-require 'active_model/model'
-
 class UserInvite
 
-  include ActiveModel::Model
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
   attr_accessor :user_first_name, :user_email, :sender
