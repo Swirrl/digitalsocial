@@ -1,7 +1,7 @@
-Hello <%= @request.receiver.user.first_name %>,
+Hello <%= @user.first_name %>,
 
-<%= @request.sender.user.first_name %> from <%= @request.sender.organisation_resource.name %> has invited you to join a project on DSI.
+You have been invited to join a project on DSI.
 
-Click the link below to sign up and accept <%= @request.sender.user.first_name %>'s invitation:
+Click the link below to sign up and accept the invitation:
 
-<%= edit_invited_user_url(@request.receiver.user, auth_token: @request.receiver.user.authentication_token, org_id: @request.receiver.organisation_resource.guid) %>
+<%= edit_invited_user_url(@user, auth_token: @user.authentication_token, org_id: @request.requestor.guid) %>

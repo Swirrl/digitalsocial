@@ -2,15 +2,15 @@ class Request
 
   include Mongoid::Document
 
-  field :sender_uri, type: String
-  field :receiver_uri, type: String
+  field :requestor_id, type: String
+  field :requestor_type, type: String
 
   field :requestable_id, type: String
   field :requestable_type, type: String
 
-  field :request_type, type: String
   field :data, type: Hash
 
+  field :is_invite, type: Boolean, default: false
   field :responded_to, type: Boolean, default: false
 
   def requestable
@@ -22,23 +22,18 @@ class Request
     self.requestable_type = resource.class
   end
 
-  def sender
-    Organisation.find(self.sender_uri)
+  def requestor
+    requestor_type.constantize.send("find", requestor_id)
   end
 
-  def receiver
-    Organisation.find(self.receiver_uri)
+  def requestor=(resource)
+    self.requestor_id   = resource.respond_to?(:uri) ? resource.uri : resource.id
+    self.requestor_type = resource.class
   end
-
-  # def deliver_notification
-  #   RequestMailer.send(request_type, self).deliver
-  # end
 
   def accept!
-    if ['project_new_organisation_invite', 'project_existing_organisation_invite'].include?(request_type) # Clean me
-      accept_project_invite!
-    elsif request_type == 'project_request'
-      accept_project_request!
+    if requestable.is_a?(Project)
+      create_project_membership!
     end
   end
 
@@ -49,19 +44,11 @@ class Request
     self.save
   end
 
-  def accept_project_invite!
-    create_project_membership(self.receiver)
-  end
-
-  def accept_project_request!
-    create_project_membership(self.sender)
-  end
-
-  def create_project_membership(organisation_membership)
+  def create_project_membership!
     transaction = Tripod::Persistence::Transaction.new
 
     project_membership = ProjectMembership.new
-    project_membership.organisation = organisation_membership.organisation_resource.uri.to_s
+    project_membership.organisation = self.requestor.uri.to_s
     project_membership.project      = self.requestable.uri.to_s
     project_membership.nature       = self.data['project_membership_nature_uri']
 

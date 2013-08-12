@@ -54,7 +54,6 @@ class ProjectsController < ApplicationController
     @project_request = ProjectRequest.new
     @project_request.attributes   = params[:project_request]
     @project_request.organisation = current_organisation
-    @project_request.sender       = current_organisation_membership
 
     if @project_request.save
       render text: "Requested to be part of project"
@@ -77,7 +76,6 @@ class ProjectsController < ApplicationController
   def set_project_invite
     @project_invite = ProjectInvite.new
     @project_invite.attributes   = params[:project_invite]
-    @project_invite.sender       = current_organisation_membership
     @project_invite.project_uri  = @project.uri
   end
 

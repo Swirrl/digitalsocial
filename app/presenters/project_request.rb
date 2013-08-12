@@ -5,9 +5,9 @@ class ProjectRequest
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :project_uri, :nature_uri, :sender, :organisation
+  attr_accessor :project_uri, :nature_uri, :organisation
 
-  validates :project_uri, :nature_uri, :sender, presence: true
+  validates :project_uri, :nature_uri, :organisation, presence: true
   validate :organisation_is_not_already_member_of_project
 
   def attributes=(values)
@@ -27,9 +27,7 @@ class ProjectRequest
   def request
     @request ||= Request.new do |r|
       r.requestable  = self.project
-      r.sender_uri   = self.sender.uri.to_s
-      r.receiver_uri = self.creator_organisation.uri.to_s
-      r.request_type = 'project_request'
+      r.requestor    = self.organisation
       r.data         = { project_membership_nature_uri: self.nature_uri }
     end
   end
@@ -57,7 +55,7 @@ class ProjectRequest
     project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
 
     ProjectMembership
-      .where("?uri <#{project_membership_org_predicate}> <#{self.sender.uri}>")
+      .where("?uri <#{project_membership_org_predicate}> <#{self.organisation.uri}>")
       .where("?uri <#{project_membership_project_predicate}> <#{self.project_uri}>")
       .count > 0
   end
@@ -65,7 +63,7 @@ class ProjectRequest
   private
 
   def organisation_is_not_already_member_of_project
-    errors.add(:project_uri, "already a member of this project") if self.sender.present? && existing_project_membership?
+    errors.add(:project_uri, "already a member of this project") if self.organisation.present? && existing_project_membership?
   end
 
 end

@@ -22,7 +22,8 @@ class RequestsController < ApplicationController
   private
 
   def set_request
-    @request = current_organisation_membership.requests.find(params[:id])
+    # TODO Need to check current_organisation is allowed to accept/reject this request
+    @request = Request.find(params[:id])
   end
 
 end
