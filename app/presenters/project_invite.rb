@@ -81,8 +81,8 @@ class ProjectInvite
 
   def request
     @request ||= Request.new do |r|
-      r.sender       = self.sender
-      r.receiver     = self.organisation_membership
+      r.sender_uri   = self.sender.uri.to_s
+      r.receiver_uri = self.organisation.uri.to_s
       r.requestable  = self.project
       r.request_type = self.request_type
       r.data         = { project_membership_nature_uri: self.nature_uri }

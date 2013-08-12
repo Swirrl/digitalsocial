@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :project_invite do
     project_uri { FactoryGirl.create(:project).uri.to_s }
     nature_uri  { FactoryGirl.create(:project_membership_nature).uri.to_s }
-    sender      { FactoryGirl.create(:organisation_membership) }
+    sender      { FactoryGirl.create(:organisation) }
 
     factory :project_invite_for_new_organisation do
       organisation_name { Faker::Company.name }

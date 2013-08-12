@@ -39,6 +39,18 @@ class Organisation
     projects.count > 0
   end
 
+  def requests
+    Request.or({ sender: self.uri.to_s }, { receiver: self.uri.to_s })
+  end
+
+  def pending_project_invites
+    Request.where(receiver: self.uri.to_s, responded_to: false, request_type: /project.*invite/) # Clean me
+  end
+
+  def pending_project_requests
+    Request.where(receiver: self.uri.to_s, responded_to: false, request_type: 'project_request')
+  end
+
   def can_edit_project?(project)
     project_creator_predicate = Project.fields[:creator].predicate.to_s
     

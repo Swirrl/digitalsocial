@@ -44,7 +44,7 @@ describe ProjectInvite do
       it "must create a request with the correct details" do
         project_invite.request.should be_persisted
         project_invite.request.sender.should == project_invite.sender
-        project_invite.request.receiver.should == project_invite.organisation_membership
+        project_invite.request.receiver.should == project_invite.organisation
         project_invite.request.requestable.should == project_invite.project
         project_invite.request.request_type.should == 'project_new_organisation_invite'
         project_invite.request.data[:project_membership_nature_uri].should == project_invite.nature_uri
@@ -71,7 +71,7 @@ describe ProjectInvite do
       it "must create a request with the correct details" do
         project_invite.request.should be_persisted
         project_invite.request.sender.should == project_invite.sender
-        project_invite.request.receiver.should == project_invite.organisation_membership
+        project_invite.request.receiver.should == project_invite.organisation
         project_invite.request.requestable.should == project_invite.project
         project_invite.request.request_type.should == 'project_existing_organisation_invite'
         project_invite.request.data[:project_membership_nature_uri].should == project_invite.nature_uri

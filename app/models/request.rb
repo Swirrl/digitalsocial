@@ -2,8 +2,8 @@ class Request
 
   include Mongoid::Document
 
-  belongs_to :sender, class_name: 'OrganisationMembership'
-  belongs_to :receiver, class_name: 'OrganisationMembership'
+  field :sender_uri, type: String
+  field :receiver_uri, type: String
 
   field :requestable_id, type: String
   field :requestable_type, type: String
@@ -12,8 +12,6 @@ class Request
   field :data, type: Hash
 
   field :responded_to, type: Boolean, default: false
-
-  after_create :deliver_notification
 
   def requestable
     requestable_type.constantize.send("find", requestable_id)
@@ -24,9 +22,17 @@ class Request
     self.requestable_type = resource.class
   end
 
-  def deliver_notification
-    RequestMailer.send(request_type, self).deliver
+  def sender
+    Organisation.find(self.sender_uri)
   end
+
+  def receiver
+    Organisation.find(self.receiver_uri)
+  end
+
+  # def deliver_notification
+  #   RequestMailer.send(request_type, self).deliver
+  # end
 
   def accept!
     if ['project_new_organisation_invite', 'project_existing_organisation_invite'].include?(request_type) # Clean me

@@ -20,15 +20,15 @@ class ProjectRequest
     @project ||= Project.find(self.project_uri)
   end
 
-  def creator_organisation_owner_membership
-    OrganisationMembership.owners.where(organisation_uri: self.project.creator.to_s).first
+  def creator_organisation
+    Organisation.find(self.project.creator.to_s)
   end
 
   def request
     @request ||= Request.new do |r|
       r.requestable  = self.project
-      r.sender       = self.sender
-      r.receiver     = self.creator_organisation_owner_membership
+      r.sender_uri   = self.sender.uri.to_s
+      r.receiver_uri = self.creator_organisation.uri.to_s
       r.request_type = 'project_request'
       r.data         = { project_membership_nature_uri: self.nature_uri }
     end
@@ -44,6 +44,10 @@ class ProjectRequest
     false
   end
 
+  def save!
+    self.save
+  end
+
   def persisted?
     false
   end
@@ -53,7 +57,7 @@ class ProjectRequest
     project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
 
     ProjectMembership
-      .where("?uri <#{project_membership_org_predicate}> <#{self.sender.organisation_resource.uri}>")
+      .where("?uri <#{project_membership_org_predicate}> <#{self.sender.uri}>")
       .where("?uri <#{project_membership_project_predicate}> <#{self.project_uri}>")
       .count > 0
   end
