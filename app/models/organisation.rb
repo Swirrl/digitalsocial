@@ -35,6 +35,10 @@ class Organisation
     projects.resources
   end
 
+  def project_resource_uris
+    projects.resources.collect { |p| p.uri.to_s }
+  end
+
   def any_projects?
     projects.count > 0
   end
@@ -49,6 +53,10 @@ class Organisation
 
   def pending_project_requests
     Request.where(requestor_type: 'Organisation', requestor_id: self.uri.to_s, responded_to: false, is_invite: false)
+  end
+
+  def respondable_project_requests
+    Request.where(requestable_type: 'Project', responded_to: false, is_invite: false).in(requestable_id: project_resource_uris)
   end
 
   def can_edit_project?(project)

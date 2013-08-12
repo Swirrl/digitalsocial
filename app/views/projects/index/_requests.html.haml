@@ -1,8 +1,8 @@
-- if current_organisation.pending_project_requests.any?
+- if current_organisation.respondable_project_requests.any?
   %h3 Requests
 
   %table
-    - current_organisation.pending_project_requests.each do |request|
+    - current_organisation.respondable_project_requests.each do |request|
       %tbody
         
         %tr
