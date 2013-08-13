@@ -75,8 +75,8 @@ class ProjectInvitePresenter
   #   @project_membership
   # end
 
-  def request
-    @request ||= ProjectRequest.new do |r|
+  def project_request
+    @project_request ||= ProjectRequest.new do |r|
       r.requestor    = self.organisation
       r.requestable  = self.project
       r.is_invite    = true
@@ -101,7 +101,7 @@ class ProjectInvitePresenter
 
       self.user.save
       self.organisation_membership.save
-      self.request.save
+      self.project_request.save
 
       RequestMailer.project_new_organisation_invite(request, user).deliver
     else
@@ -117,7 +117,7 @@ class ProjectInvitePresenter
   def save_for_existing_organisation
     return false if invalid?
 
-    self.request.save
+    self.project_request.save
 
     true
   rescue => e

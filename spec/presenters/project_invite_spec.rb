@@ -42,11 +42,11 @@ describe ProjectInvitePresenter do
       end
 
       it "must create a request with the correct details" do
-        project_invite_presenter.request.should be_persisted
-        project_invite_presenter.request.requestor.should == project_invite_presenter.organisation
-        project_invite_presenter.request.requestable.should == project_invite_presenter.project
-        project_invite_presenter.request.is_invite.should be_true
-        project_invite_presenter.request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
+        project_invite_presenter.project_request.should be_persisted
+        project_invite_presenter.project_request.requestor.should == project_invite_presenter.organisation
+        project_invite_presenter.project_request.requestable.should == project_invite_presenter.project
+        project_invite_presenter.project_request.is_invite.should be_true
+        project_invite_presenter.project_request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
       end
 
     end
@@ -68,11 +68,11 @@ describe ProjectInvitePresenter do
       end
 
       it "must create a request with the correct details" do
-        project_invite_presenter.request.should be_persisted
-        project_invite_presenter.request.requestor.should == project_invite_presenter.organisation
-        project_invite_presenter.request.requestable.should == project_invite_presenter.project
-        project_invite_presenter.request.is_invite.should be_true
-        project_invite_presenter.request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
+        project_invite_presenter.project_request.should be_persisted
+        project_invite_presenter.project_request.requestor.should == project_invite_presenter.organisation
+        project_invite_presenter.project_request.requestable.should == project_invite_presenter.project
+        project_invite_presenter.project_request.is_invite.should be_true
+        project_invite_presenter.project_request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
       end
 
     end

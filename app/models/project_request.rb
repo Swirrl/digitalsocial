@@ -1,7 +1,5 @@
 class ProjectRequest < Request
 
-  field :contact_first_name, type: String
-  field :contact_email, type: String
   field :project_membership_nature_uri, type: String
 
   def create_project_membership!
