@@ -11,4 +11,9 @@ class RequestMailer < ActionMailer::Base
     @request = request
     mail to: @request.receiver.user.email, subject: "You have been added to an organisation"
   end
+
+  def request_digest(user)
+    @user = user
+    mail to: @user.email, subject: "You have pending requests"
+  end
 end

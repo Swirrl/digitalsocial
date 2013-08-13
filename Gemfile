@@ -27,4 +27,6 @@ group :development, :test do
   gem 'faker'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'email_spec'
+  gem 'debugger'
 end
