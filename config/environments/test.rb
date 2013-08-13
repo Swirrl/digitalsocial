@@ -37,7 +37,7 @@ Digitalsocial::Application.configure do
 
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = { host: "localhost", port: 1025 }
-  # config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   Tripod.configure do |config|
     config.update_endpoint = 'http://127.0.0.1:3030/dsitest/update'

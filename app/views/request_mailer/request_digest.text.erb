@@ -1,3 +1,21 @@
 Hi <%= @user.first_name %>,
 
-You have pending requests.
+<% if @organisation.has_respondable_project_invites? %>
+You have pending project invites to the following projects:
+
+<% @organisation.respondable_project_invites.each do |invite| %>
+* <%= invite.requestable.label %>
+<% end %>
+<% end %>
+
+<% if @organisation.has_respondable_project_requests? %>
+You have pending project requests to join projects from the following organisations:
+
+<% @organisation.respondable_project_requests.each do |request| %>
+* <%= request.requestor.name %> (<%= request.requestable.label %>)
+<% end %>
+<% end %>
+
+Use the link below to respond to these requests:
+
+<%= projects_url(auth_token: @user.authentication_token, org_id: @organisation.guid) %>
