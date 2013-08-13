@@ -45,12 +45,12 @@ class Organisation
 
   # Pending project invites for this organisation that can be responded to
   def respondable_project_invites
-    Request.where(requestor_type: 'Organisation', requestor_id: self.uri.to_s, responded_to: false, is_invite: true)
+    ProjectRequest.where(requestor_type: 'Organisation', requestor_id: self.uri.to_s, responded_to: false, is_invite: true)
   end
 
   # Pending project requests made by another organisation to join one of this organisation's projects
   def respondable_project_requests
-    Request.where(requestable_type: 'Project', responded_to: false, is_invite: false).in(requestable_id: project_resource_uris)
+    ProjectRequest.where(requestable_type: 'Project', responded_to: false, is_invite: false).in(requestable_id: project_resource_uris)
   end
 
   def has_respondable_project_invites_or_requests?

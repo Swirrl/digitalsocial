@@ -76,11 +76,11 @@ class ProjectInvitePresenter
   # end
 
   def request
-    @request ||= Request.new do |r|
+    @request ||= ProjectRequest.new do |r|
       r.requestor    = self.organisation
       r.requestable  = self.project
       r.is_invite    = true
-      r.data         = { project_membership_nature_uri: self.nature_uri }
+      r.project_membership_nature_uri = self.nature_uri
     end
   end
 

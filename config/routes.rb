@@ -29,7 +29,7 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
-  resources :requests do
+  resources :project_requests do
     member do
       put 'accept'
       put 'reject'

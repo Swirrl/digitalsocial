@@ -46,7 +46,7 @@ describe ProjectInvitePresenter do
         project_invite_presenter.request.requestor.should == project_invite_presenter.organisation
         project_invite_presenter.request.requestable.should == project_invite_presenter.project
         project_invite_presenter.request.is_invite.should be_true
-        project_invite_presenter.request.data[:project_membership_nature_uri].should == project_invite_presenter.nature_uri
+        project_invite_presenter.request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
       end
 
     end
@@ -72,7 +72,7 @@ describe ProjectInvitePresenter do
         project_invite_presenter.request.requestor.should == project_invite_presenter.organisation
         project_invite_presenter.request.requestable.should == project_invite_presenter.project
         project_invite_presenter.request.is_invite.should be_true
-        project_invite_presenter.request.data[:project_membership_nature_uri].should == project_invite_presenter.nature_uri
+        project_invite_presenter.request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
       end
 
     end

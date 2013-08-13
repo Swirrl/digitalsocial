@@ -25,10 +25,10 @@ class ProjectRequestPresenter
   end
 
   def request
-    @request ||= Request.new do |r|
+    @request ||= ProjectRequest.new do |r|
       r.requestable  = self.project
       r.requestor    = self.organisation
-      r.data         = { project_membership_nature_uri: self.nature_uri }
+      r.project_membership_nature_uri = self.nature_uri
     end
   end
 
@@ -39,6 +39,7 @@ class ProjectRequestPresenter
 
     true
   rescue => e
+    Rails.logger.debug e
     false
   end
 

@@ -13,7 +13,7 @@
             
           %td
             = simple_form_for [:accept, invite] do |f|
-              = select_tag "[request][data][project_membership_nature_uri]", options_for_select(project_membership_nature_options, invite.data['project_membership_nature_uri'])
+              = select_tag "[request][project_membership_nature_uri]", options_for_select(project_membership_nature_options, invite.project_membership_nature_uri)
               = f.button :submit, "Accept"
 
             = simple_form_for [:reject, invite] do |f|

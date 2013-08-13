@@ -25,7 +25,7 @@ describe ProjectRequestPresenter do
       project_request_presenter.request.should be_persisted
       project_request_presenter.request.requestable.should == project_request_presenter.project
       project_request_presenter.request.requestor.should == project_request_presenter.organisation
-      project_request_presenter.request.data[:project_membership_nature_uri].should == project_request_presenter.nature_uri
+      project_request_presenter.request.project_membership_nature_uri.should == project_request_presenter.nature_uri
     end
 
   end

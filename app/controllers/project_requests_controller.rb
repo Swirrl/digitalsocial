@@ -1,4 +1,4 @@
-class RequestsController < ApplicationController
+class ProjectRequestsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :set_request, only: [:accept, :reject]
@@ -23,7 +23,7 @@ class RequestsController < ApplicationController
 
   def set_request
     # TODO Need to check current_organisation is allowed to accept/reject this request
-    @request = Request.find(params[:id])
+    @request = ProjectRequest.find(params[:id])
   end
 
 end
