@@ -6,7 +6,7 @@ class ProjectInvite
   include ActiveModel::MassAssignmentSecurity
 
   attr_accessor :organisation_name, :user_first_name, :user_email, :nature_uri,
-    :organisation_uri, :project_uri, :new_organisation, :sender
+    :organisation_uri, :project_uri, :new_organisation
 
   validates :organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation? }
   validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation? }
@@ -14,7 +14,7 @@ class ProjectInvite
   validate :user_email_must_be_unique, if: :new_organisation?
   # TODO validate project isn't already member of project
 
-  validates :project_uri, :nature_uri, :sender, presence: true
+  validates :project_uri, :nature_uri, presence: true
 
   def attributes=(values)
     sanitize_for_mass_assignment(values).each do |attr, value|
@@ -24,10 +24,6 @@ class ProjectInvite
 
   def new_organisation?
     self.new_organisation.present?
-  end
-
-  def request_type
-    new_organisation? ? 'project_new_organisation_invite' : 'project_existing_organisation_invite'
   end
 
   def organisation
@@ -81,10 +77,9 @@ class ProjectInvite
 
   def request
     @request ||= Request.new do |r|
-      r.sender       = self.sender
-      r.receiver     = self.organisation_membership
+      r.requestor    = self.organisation
       r.requestable  = self.project
-      r.request_type = self.request_type
+      r.is_invite    = true
       r.data         = { project_membership_nature_uri: self.nature_uri }
     end
   end
@@ -107,12 +102,15 @@ class ProjectInvite
       self.user.save
       self.organisation_membership.save
       self.request.save
+
+      RequestMailer.project_new_organisation_invite(request, user).deliver
     else
       transaction.abort
     end
 
     true
   rescue => e
+    Rails.logger.debug e.inspect
     false
   end
 

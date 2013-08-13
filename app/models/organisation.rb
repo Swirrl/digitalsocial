@@ -35,8 +35,34 @@ class Organisation
     projects.resources
   end
 
+  def project_resource_uris
+    projects.resources.collect { |p| p.uri.to_s }
+  end
+
   def any_projects?
     projects.count > 0
+  end
+
+  # Pending project invites for this organisation that can be responded to
+  def respondable_project_invites
+    Request.where(requestor_type: 'Organisation', requestor_id: self.uri.to_s, responded_to: false, is_invite: true)
+  end
+
+  # Pending project requests made by another organisation to join one of this organisation's projects
+  def respondable_project_requests
+    Request.where(requestable_type: 'Project', responded_to: false, is_invite: false).in(requestable_id: project_resource_uris)
+  end
+
+  def has_respondable_project_invites_or_requests?
+    has_respondable_project_invites? || has_respondable_project_requests?
+  end
+
+  def has_respondable_project_invites?
+    respondable_project_invites.count > 0
+  end
+
+  def has_respondable_project_requests?
+    respondable_project_requests.count > 0
   end
 
   def can_edit_project?(project)

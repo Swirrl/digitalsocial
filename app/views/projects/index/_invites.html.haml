@@ -1,16 +1,15 @@
-- if current_organisation_membership.pending_project_invites.any?
+- if current_organisation.respondable_project_invites.count > 0
   %h3 Invitations
 
   %table
-    - current_organisation_membership.pending_project_invites.each do |invite|
+    - current_organisation.respondable_project_invites.each do |invite|
       %tbody
         
         %tr
           %td= invite.requestable.label
           %td
             Invited by
-            = invite.sender.user.first_name
-            = "(#{invite.sender.organisation_resource.name})"
+            
             
           %td
             = simple_form_for [:accept, invite] do |f|

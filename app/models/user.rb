@@ -41,4 +41,16 @@ class User
     organisation_memberships.collect(&:organisation_resource)
   end
 
+  def send_request_digest(organisation)
+    RequestMailer.request_digest(self, organisation).deliver
+  end
+
+  def self.send_request_digests
+    User.all.each do |user|
+      user.organisation_resources.each do |organisation|
+        user.send_request_digest(organisation) if organisation.has_respondable_project_invites_or_requests?
+      end
+    end
+  end
+
 end
