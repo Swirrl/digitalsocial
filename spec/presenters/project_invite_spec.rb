@@ -63,16 +63,40 @@ describe ProjectInvitePresenter do
 
     describe ".save" do
 
-      before do
-        project_invite_presenter.save
+      context "without user details" do
+
+        before do
+          project_invite_presenter.save
+        end
+
+        it "must create a request with the correct details" do
+          project_invite_presenter.project_request.should be_persisted
+          project_invite_presenter.project_request.requestor.should == project_invite_presenter.organisation
+          project_invite_presenter.project_request.requestable.should == project_invite_presenter.project
+          project_invite_presenter.project_request.is_invite.should be_true
+          project_invite_presenter.project_request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
+        end
+
+        it "must not create a user request if they are not provided" do
+          project_invite_presenter.user_request.should_not be_persisted
+        end
+
       end
 
-      it "must create a request with the correct details" do
-        project_invite_presenter.project_request.should be_persisted
-        project_invite_presenter.project_request.requestor.should == project_invite_presenter.organisation
-        project_invite_presenter.project_request.requestable.should == project_invite_presenter.project
-        project_invite_presenter.project_request.is_invite.should be_true
-        project_invite_presenter.project_request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
+      context "with user details" do
+
+        before do
+          project_invite_presenter.user_first_name = "Foo"
+          project_invite_presenter.user_email = "foo@bar.com"
+          project_invite_presenter.save
+        end
+
+        it "must create a user request with the correct details if they are provided" do
+          project_invite_presenter.user_request.should be_persisted
+          project_invite_presenter.user_request.user_first_name.should == "Foo"
+          project_invite_presenter.user_request.user_email.should == "foo@bar.com"
+        end
+
       end
 
     end

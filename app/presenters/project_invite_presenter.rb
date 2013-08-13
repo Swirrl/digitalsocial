@@ -84,6 +84,14 @@ class ProjectInvitePresenter
     end
   end
 
+  def user_request
+    @user_request ||= UserRequest.new do |r|
+      r.requestable     = self.organisation
+      r.user_first_name = self.user_first_name
+      r.user_email      = self.user_email
+    end
+  end
+
   def save
     if new_organisation?
       save_for_new_organisation
@@ -118,6 +126,7 @@ class ProjectInvitePresenter
     return false if invalid?
 
     self.project_request.save
+    self.user_request.save if self.user_request.valid?
 
     true
   rescue => e
