@@ -1,17 +1,23 @@
 class Project
 
   include Tripod::Resource
+  include TagFields
 
   rdf_type 'http://example.com/project'
   graph_uri 'http://example.com/dsi_data'
 
   field :label, 'http://example.com/label'
   field :webpage, 'http://example.com/webpage'
-  field :tags, 'http://example.com/tag', multivalued: true
+
   field :duration, 'http://example.com/time_interval'
   field :creator, 'http://example.com/def/project/creator', is_uri: true
 
-  attr_accessor :tags_list, :start_date, :end_date, :creator_role
+  # tag-like fields (tag_field method from TagFields module)
+  tag_field :activity_types, 'http://example.com/def/activity-types', ActivityType
+  tag_field :areas_of_society, 'http://example.com/def/areas-of-soc', AreaOfSociety
+  tag_field :tech_types, 'http://example.com/def/tech-types', TechType
+
+  attr_accessor :start_date, :end_date, :creator_role
 
   validates :label, :webpage, presence: true
   validates :start_date, :end_date, :creator_role, presence: { if: :new_record? }
@@ -29,15 +35,6 @@ class Project
 
   def to_param
     guid
-  end
-
-  # Temporary
-  def tags_list=(list)
-    self.tags = list.split(", ")
-  end
-
-  def tags_list
-    self.tags.join(", ")
   end
 
   def create_time_interval!
