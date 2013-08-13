@@ -9,7 +9,7 @@ feature 'Approving a project request' do
     background do
       login_as user, scope: :user
       pm = FactoryGirl.create(:project_membership, organisation: user.organisation_resources.first.uri.to_s)
-      FactoryGirl.create(:project_request, project_uri: pm.project.to_s)
+      FactoryGirl.create(:project_request_presenter, project_uri: pm.project.to_s)
     end
 
     scenario 'Accepting a project request' do
@@ -35,7 +35,7 @@ feature 'Approving a project request' do
     background do
       login_as user, scope: :user
       pm = FactoryGirl.create(:project_membership, organisation: user.organisation_resources.first.uri.to_s)
-      FactoryGirl.create(:project_request, project_uri: pm.project.to_s)
+      FactoryGirl.create(:project_request_presenter, project_uri: pm.project.to_s)
     end
 
     scenario 'Accepting a project request' do

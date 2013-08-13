@@ -1,56 +1,56 @@
 require 'spec_helper'
 
-describe Signup do
+describe SignupPresenter do
 
-  let(:signup) { FactoryGirl.build(:signup) }
+  let(:signup_presenter) { FactoryGirl.build(:signup_presenter) }
 
   describe "validations" do
 
     it "must have a valid factory" do
-      signup.should be_valid
+      signup_presenter.should be_valid
     end
 
     it "must have a first name" do
-      signup.first_name = ""
-      signup.should_not be_valid
+      signup_presenter.first_name = ""
+      signup_presenter.should_not be_valid
     end
 
     it "must have an email" do
-      signup.email = ''
-      signup.should_not be_valid
+      signup_presenter.email = ''
+      signup_presenter.should_not be_valid
     end
 
     it "must have a password" do
-      signup.password = ''
-      signup.should_not be_valid
+      signup_presenter.password = ''
+      signup_presenter.should_not be_valid
     end
 
     it "must have a valid email" do
-      signup.email = 'test@example'
-      signup.should_not be_valid
+      signup_presenter.email = 'test@example'
+      signup_presenter.should_not be_valid
     end
 
     it "must have a unique email" do
-      signup_with_same_email = FactoryGirl.build(:signup, email: "name@example.com")
-      signup_with_same_email.save
+      signup_presenter_with_same_email = FactoryGirl.build(:signup_presenter, email: "name@example.com")
+      signup_presenter_with_same_email.save
       
-      signup.email = 'name@example.com'
-      signup.should_not be_valid
+      signup_presenter.email = 'name@example.com'
+      signup_presenter.should_not be_valid
     end
 
     it "must have an organisation name" do
-      signup.organisation_name = ''
-      signup.should_not be_valid
+      signup_presenter.organisation_name = ''
+      signup_presenter.should_not be_valid
     end
 
     it "must have an organisation lat" do
-      signup.organisation_lat = nil
-      signup.should_not be_valid
+      signup_presenter.organisation_lat = nil
+      signup_presenter.should_not be_valid
     end
 
     it "must have an organisation lng" do
-      signup.organisation_lng = nil
-      signup.should_not be_valid
+      signup_presenter.organisation_lng = nil
+      signup_presenter.should_not be_valid
     end
 
   end
@@ -58,27 +58,27 @@ describe Signup do
   describe "resource creation" do
 
     it "must create an organisation with the correct details" do
-      signup.save
+      signup_presenter.save
 
-      signup.organisation.should be_persisted
-      signup.organisation.name.should == signup.organisation_name
+      signup_presenter.organisation.should be_persisted
+      signup_presenter.organisation.name.should == signup_presenter.organisation_name
     end
 
     it "must create a site with the correct details" do
-      signup.save
+      signup_presenter.save
 
-      signup.site.should be_persisted
-      signup.site.lat.should == signup.organisation_lat
-      signup.site.lng.should == signup.organisation_lng
+      signup_presenter.site.should be_persisted
+      signup_presenter.site.lat.should == signup_presenter.organisation_lat
+      signup_presenter.site.lng.should == signup_presenter.organisation_lng
     end
 
     it "must create a user with the correct details" do
-      signup.save
+      signup_presenter.save
 
-      signup.user.should be_persisted
-      signup.user.first_name.should == signup.first_name
-      signup.user.email.should      == signup.email
-      signup.user.password.should   == signup.password
+      signup_presenter.user.should be_persisted
+      signup_presenter.user.first_name.should == signup_presenter.first_name
+      signup_presenter.user.email.should      == signup_presenter.email
+      signup_presenter.user.password.should   == signup_presenter.password
     end
 
   end
@@ -86,15 +86,15 @@ describe Signup do
   describe "resource associations" do
 
     it "must associate the organisation with the site" do
-      signup.save
+      signup_presenter.save
 
-      signup.organisation.primary_site_resource.should == signup.site
+      signup_presenter.organisation.primary_site_resource.should == signup_presenter.site
     end
 
     it "must associate the user with the organisation" do
-      signup.save
+      signup_presenter.save
 
-      signup.user.organisation_resources.should include(signup.organisation)
+      signup_presenter.user.organisation_resources.should include(signup_presenter.organisation)
     end
 
   end

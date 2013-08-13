@@ -1,4 +1,4 @@
-class ProjectRequest
+class ProjectRequestPresenter
 
   include ActiveModel::Validations
   include ActiveModel::Conversion

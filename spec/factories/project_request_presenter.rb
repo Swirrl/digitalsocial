@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :project_request do
+  factory :project_request_presenter do
     organisation { FactoryGirl.create(:organisation) }
     project_uri  { FactoryGirl.create(:project).uri.to_s }
     nature_uri   { FactoryGirl.create(:project_membership_nature).uri.to_s }

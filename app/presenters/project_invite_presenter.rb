@@ -1,4 +1,4 @@
-class ProjectInvite
+class ProjectInvitePresenter
 
   include ActiveModel::Validations
   include ActiveModel::Conversion

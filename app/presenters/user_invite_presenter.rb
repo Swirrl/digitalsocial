@@ -1,4 +1,4 @@
-class UserInvite
+class UserInvitePresenter
 
   include ActiveModel::Validations
   include ActiveModel::Conversion
