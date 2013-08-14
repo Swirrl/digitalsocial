@@ -15,7 +15,17 @@ You have pending project requests to join projects from the following organisati
 * <%= request.requestor.name %> (<%= request.requestable.label %>)
 <% end %>
 <% end %>
-
-Use the link below to respond to these requests:
+<% if @organisation.has_respondable_project_invites? || @organisation.has_respondable_project_requests? %>
+Use the link below to respond to these project requests:
 
 <%= projects_url(auth_token: @user.authentication_token, org_id: @organisation.guid) %>
+
+<% end %>
+<% if @organisation.has_respondable_user_requests? %>
+You have pending users to invite to your organisation:
+
+<% @organisation.respondable_user_requests.each do |request| %>
+* <%= request.user_first_name %> (<%= request.user_email %>)
+<% end %>
+
+<% end %>

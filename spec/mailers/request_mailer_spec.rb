@@ -31,6 +31,20 @@ describe RequestMailer do
       RequestMailer.request_digest(user, organisation).should have_body_text("/projects?auth_token=#{user.authentication_token}&org_id=#{organisation.guid}")
     end
 
+    it 'should contain the details of users to be added' do
+      request = FactoryGirl.create(:user_request, requestable: organisation, user_first_name: 'Bob', user_email: 'bob@swirrl.com', responded_to: false)
+
+      RequestMailer.request_digest(user, organisation).should have_body_text('Bob')
+      RequestMailer.request_digest(user, organisation).should have_body_text('bob@swirrl.com')
+    end
+
+    it 'should not contain the details of users whose requests have been responded to' do
+      request = FactoryGirl.create(:user_request, requestable: organisation, user_first_name: 'Fred', user_email: 'fred@swirrl.com', responded_to: true)
+
+      RequestMailer.request_digest(user, organisation).should_not have_body_text('Fred')
+      RequestMailer.request_digest(user, organisation).should_not have_body_text('fred@swirrl.com')
+    end
+
   end
 
 end

@@ -57,6 +57,12 @@ describe User do
           lambda { User.send_request_digests }.should_not change(ActionMailer::Base.deliveries, :count)
         end
 
+        it 'should send an email if a user has pending user requests' do
+          FactoryGirl.create(:user_request, requestable: organisation, user_first_name: 'Bob', user_email: 'bob@swirrl.com', responded_to: false)
+
+          lambda { User.send_request_digests }.should change(ActionMailer::Base.deliveries, :count).by(1)
+        end
+
       end
 
       context 'multiple organisations' do
