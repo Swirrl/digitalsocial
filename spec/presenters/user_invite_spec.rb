@@ -8,6 +8,14 @@ describe UserInvitePresenter do
     user_invite_presenter.should be_valid
   end
 
+  it 'must not be valid if the user already belongs to the organisation' do
+    user = FactoryGirl.create(:user, email: 'test@test.com')
+    FactoryGirl.create(:organisation_membership, user: user, organisation_uri: user_invite_presenter.organisation.uri.to_s)
+    user_invite_presenter.user_email = 'test@test.com'
+
+    user_invite_presenter.should_not be_valid
+  end
+
   describe '.save' do
 
     it 'must create a user with the correct details' do
