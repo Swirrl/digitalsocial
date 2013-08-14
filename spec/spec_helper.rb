@@ -40,7 +40,7 @@ RSpec.configure do |config|
   DatabaseCleaner.strategy = :truncation
   DatabaseCleaner.orm = "mongoid"
 
-  config.before(:suite) do
+  config.before(:each) do
     # delete everything
     Tripod::SparqlClient::Update.update('
       # delete from default graph:
