@@ -17,15 +17,35 @@ describe ProjectRequestPresenter do
 
   describe '.save' do
 
-    before do
-      project_request_presenter.save
+    context "without user details" do
+
+      before do
+        project_request_presenter.save
+      end
+
+      it "must create a project request with the correct details" do
+        project_request_presenter.project_request.should be_persisted
+        project_request_presenter.project_request.requestable.should == project_request_presenter.project
+        project_request_presenter.project_request.requestor.should == project_request_presenter.organisation
+        project_request_presenter.project_request.project_membership_nature_uri.should == project_request_presenter.nature_uri
+      end
+
     end
 
-    it "must create a request with the correct details" do
-      project_request_presenter.request.should be_persisted
-      project_request_presenter.request.requestable.should == project_request_presenter.project
-      project_request_presenter.request.requestor.should == project_request_presenter.organisation
-      project_request_presenter.request.project_membership_nature_uri.should == project_request_presenter.nature_uri
+    context "with user details" do
+
+      before do
+        project_request_presenter.user_first_name = "Foo"
+        project_request_presenter.user_email = "foo@bar.com"
+        project_request_presenter.save
+      end
+
+      it "must create a user request with the correct details if they are provided" do
+        project_request_presenter.user_request.should be_persisted
+        project_request_presenter.user_request.user_first_name.should == "Foo"
+        project_request_presenter.user_request.user_email.should == "foo@bar.com"
+      end
+
     end
 
   end
