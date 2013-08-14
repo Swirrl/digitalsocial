@@ -1,0 +1,5 @@
+= simple_form_for user_invite, url: [:create_invite, :user_requests] do |f|
+  = f.input :user_first_name
+  = f.input :user_email
+
+  = f.button :submit, 'Add user'

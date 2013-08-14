@@ -2,6 +2,10 @@ class ProjectRequest < Request
 
   field :project_membership_nature_uri, type: String
 
+  def accept!
+    create_project_membership!
+  end
+
   def create_project_membership!
     transaction = Tripod::Persistence::Transaction.new
 
@@ -23,10 +27,6 @@ class ProjectRequest < Request
       transaction.abort
       false
     end
-  end
-
-  def accept!
-    create_project_membership!
   end
 
 end

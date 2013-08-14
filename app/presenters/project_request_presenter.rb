@@ -6,7 +6,7 @@ class ProjectRequestPresenter
   include ActiveModel::MassAssignmentSecurity
 
   attr_accessor :project_uri, :nature_uri, :organisation, :user_first_name,
-    :user_email
+    :user_email, :user_organisation_uri
 
   validates :project_uri, :nature_uri, :organisation, presence: true
   validate :organisation_is_not_already_member_of_project
@@ -21,8 +21,8 @@ class ProjectRequestPresenter
     @project ||= Project.find(self.project_uri)
   end
 
-  def creator_organisation
-    Organisation.find(self.project.creator.to_s)
+  def user_organisation
+    Organisation.find(self.user_organisation_uri)
   end
 
   def project_request
@@ -35,7 +35,7 @@ class ProjectRequestPresenter
 
   def user_request
     @user_request ||= UserRequest.new do |r|
-      r.requestable     = self.organisation
+      r.requestable     = self.user_organisation
       r.user_first_name = self.user_first_name
       r.user_email      = self.user_email
     end

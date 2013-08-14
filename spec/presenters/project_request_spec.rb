@@ -35,15 +35,21 @@ describe ProjectRequestPresenter do
     context "with user details" do
 
       before do
-        project_request_presenter.user_first_name = "Foo"
-        project_request_presenter.user_email = "foo@bar.com"
-        project_request_presenter.save
+        
       end
 
       it "must create a user request with the correct details if they are provided" do
+        organisation = FactoryGirl.create(:organisation)
+
+        project_request_presenter.user_first_name = "Foo"
+        project_request_presenter.user_email = "foo@bar.com"
+        project_request_presenter.user_organisation_uri = organisation.uri.to_s
+        project_request_presenter.save
+
         project_request_presenter.user_request.should be_persisted
         project_request_presenter.user_request.user_first_name.should == "Foo"
         project_request_presenter.user_request.user_email.should == "foo@bar.com"
+        project_request_presenter.user_request.requestable.should == organisation
       end
 
     end

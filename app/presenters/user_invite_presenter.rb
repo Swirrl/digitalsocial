@@ -38,6 +38,8 @@ class UserInvitePresenter
     self.user.save
     self.organisation_membership.save
 
+    RequestMailer.organisation_invite(user, organisation).deliver
+
     true
   rescue => e
     false

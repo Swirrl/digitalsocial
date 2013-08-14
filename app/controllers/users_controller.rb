@@ -26,6 +26,7 @@ class UsersController < ApplicationController
     @user = current_user
 
     if @user.update_attributes(params[:user])
+      sign_in @user, bypass: true
       redirect_to :projects
     else
       render :edit
