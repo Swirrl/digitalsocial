@@ -1,4 +1,4 @@
-class Signup
+class SignupPresenter
 
   include ActiveModel::Validations
   include ActiveModel::Conversion

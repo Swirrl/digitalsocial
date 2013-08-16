@@ -1,7 +1,17 @@
 FactoryGirl.define do
   factory :project_request do
-    organisation { FactoryGirl.create(:organisation) }
-    project_uri  { FactoryGirl.create(:project).uri.to_s }
-    nature_uri   { FactoryGirl.create(:project_membership_nature).uri.to_s }
+
+    ignore do
+      requestable { FactoryGirl.create(:project) }
+      requestor { FactoryGirl.create(:organisation) }
+    end
+
+    requestor_type   { requestor.class }
+    requestor_id     { requestor.respond_to?(:uri) ? requestor.uri.to_s : requestor.id }
+    requestable_type { requestable.class }
+    requestable_id   { requestable.respond_to?(:uri) ? requestable.uri.to_s : requestable.id }
+    
+    is_invite false
+    responded_to false
   end
 end

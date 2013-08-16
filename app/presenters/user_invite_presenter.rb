@@ -1,11 +1,11 @@
-class UserInvite
+class UserInvitePresenter
 
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :user_first_name, :user_email, :sender
+  attr_accessor :user_first_name, :user_email, :organisation
 
   validates :user_first_name, :user_email, presence: true
   validate :user_is_not_already_member_of_organisation
@@ -13,15 +13,6 @@ class UserInvite
   def attributes=(values)
     sanitize_for_mass_assignment(values).each do |attr, value|
       public_send("#{attr}=", value)
-    end
-  end
-
-  def request
-    @request ||= Request.new do |r|
-      r.requestable  = self.sender.organisation_resource
-      r.sender       = self.sender
-      r.receiver     = self.organisation_membership
-      r.request_type = 'organisation_invite'
     end
   end
 
@@ -35,14 +26,10 @@ class UserInvite
 
   def organisation_membership
     @organisation_membership ||= OrganisationMembership.new do |om|
-      om.organisation_uri = self.sender.organisation_resource.uri.to_s
+      om.organisation_uri = self.organisation.uri.to_s
       om.user             = self.user
       om.owner            = false
     end
-  end
-
-  def organisation
-    self.sender.organisation_resource
   end
 
   def save
@@ -50,7 +37,8 @@ class UserInvite
 
     self.user.save
     self.organisation_membership.save
-    self.request.save
+
+    RequestMailer.organisation_invite(user, organisation).deliver
 
     true
   rescue => e

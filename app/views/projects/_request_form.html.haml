@@ -1,4 +1,7 @@
 = simple_form_for @project_request, url: [:create_request, :projects] do |f|
   = f.input :project_uri, collection: project_options, include_blank: false
   = f.input :nature_uri, collection: project_membership_nature_options, include_blank: false
+  = f.input :user_first_name
+  = f.input :user_email
+  = f.input :user_organisation_uri, collection: organisation_options, include_blank: false
   = f.button :submit, 'Request membership'

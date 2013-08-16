@@ -17,11 +17,11 @@ class OrganisationsController < ApplicationController
   end
 
   def user_invite
-    @user_invite = UserInvite.new
+    @user_invite = UserInvitePresenter.new
   end
 
   def create_user_invite
-    @user_invite = UserInvite.new
+    @user_invite = UserInvitePresenter.new
     @user_invite.attributes   = params[:user_invite]
     @user_invite.sender = current_organisation_membership
 

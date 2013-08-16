@@ -1,11 +1,12 @@
-class ProjectRequest
+class ProjectRequestPresenter
 
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :project_uri, :nature_uri, :organisation
+  attr_accessor :project_uri, :nature_uri, :organisation, :user_first_name,
+    :user_email, :user_organisation_uri
 
   validates :project_uri, :nature_uri, :organisation, presence: true
   validate :organisation_is_not_already_member_of_project
@@ -20,25 +21,35 @@ class ProjectRequest
     @project ||= Project.find(self.project_uri)
   end
 
-  def creator_organisation
-    Organisation.find(self.project.creator.to_s)
+  def user_organisation
+    Organisation.find(self.user_organisation_uri)
   end
 
-  def request
-    @request ||= Request.new do |r|
+  def project_request
+    @project_request ||= ProjectRequest.new do |r|
       r.requestable  = self.project
       r.requestor    = self.organisation
-      r.data         = { project_membership_nature_uri: self.nature_uri }
+      r.project_membership_nature_uri = self.nature_uri
+    end
+  end
+
+  def user_request
+    @user_request ||= UserRequest.new do |r|
+      r.requestable     = self.user_organisation
+      r.user_first_name = self.user_first_name
+      r.user_email      = self.user_email
     end
   end
 
   def save
     return false if invalid?
 
-    self.request.save
+    self.project_request.save
+    self.user_request.save if self.user_request.valid?
 
     true
   rescue => e
+    Rails.logger.debug e
     false
   end
 

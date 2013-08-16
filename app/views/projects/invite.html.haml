@@ -4,6 +4,8 @@
 = simple_form_for @project_invite, url: [:create_invite, @project] do |f|
   = f.input :organisation_uri, as: :select, collection: Organisation.all.resources.collect { |o| [o.name, o.uri] }
   = f.input :nature_uri, as: :select, collection: project_membership_nature_options
+  = f.input :user_first_name, required: false
+  = f.input :user_email, required: false
   = f.button :submit, 'Invite'
 
 %br/

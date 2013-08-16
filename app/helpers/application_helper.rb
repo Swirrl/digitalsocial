@@ -8,6 +8,10 @@ module ApplicationHelper
     Project.all.resources.collect { |p| [p.label, p.uri] }
   end
 
+  def organisation_options
+    Organisation.all.resources.collect { |o| [o.name, o.uri] }
+  end
+
   def current_organisation
     session[:org_id] = params[:org_id] if params[:org_id]
 

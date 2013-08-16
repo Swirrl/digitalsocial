@@ -8,8 +8,6 @@ class Request
   field :requestable_id, type: String
   field :requestable_type, type: String
 
-  field :data, type: Hash
-
   field :is_invite, type: Boolean, default: false
   field :responded_to, type: Boolean, default: false
 
@@ -31,40 +29,11 @@ class Request
     self.requestor_type = resource.class
   end
 
-  def accept!
-    if requestable.is_a?(Project)
-      create_project_membership!
-    end
-  end
-
   def reject!
     # TODO Send rejection notification
 
     self.responded_to = true
     self.save
-  end
-
-  def create_project_membership!
-    transaction = Tripod::Persistence::Transaction.new
-
-    project_membership = ProjectMembership.new
-    project_membership.organisation = self.requestor.uri.to_s
-    project_membership.project      = self.requestable.uri.to_s
-    project_membership.nature       = self.data['project_membership_nature_uri']
-
-    if project_membership.save(transaction: transaction)
-      transaction.commit
-
-      # TODO Send acceptance notification
-
-      self.responded_to = true
-      self.save
-
-      true
-    else
-      transaction.abort
-      false
-    end
   end
 
 end

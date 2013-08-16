@@ -1,7 +1,11 @@
-class RequestsController < ApplicationController
+class UserRequestsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :set_request, only: [:accept, :reject]
+  
+  def index
+    @user_invite = UserInvitePresenter.new
+  end
   
   def accept
     if @request.accept!
@@ -19,11 +23,23 @@ class RequestsController < ApplicationController
     end
   end
 
+  def create_invite
+    @user_invite = UserInvitePresenter.new
+    @user_invite.attributes   = params[:user_invite_presenter]
+    @user_invite.organisation = current_organisation
+
+    if @user_invite.save
+      render text: "User invited"
+    else
+      render :index
+    end
+  end
+
   private
 
   def set_request
     # TODO Need to check current_organisation is allowed to accept/reject this request
-    @request = Request.find(params[:id])
+    @request = UserRequest.find(params[:id])
   end
 
 end

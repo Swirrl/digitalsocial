@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :signup do
+  factory :signup_presenter do
     first_name { Faker::Name.first_name }
     email      { Faker::Internet.email }
     password   { "password" }

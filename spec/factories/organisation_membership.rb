@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :organisation_membership do
     owner { true }
     organisation_uri { FactoryGirl.create(:organisation).uri.to_s }
-    user
+    user { FactoryGirl.create(:user) }
   end
 end

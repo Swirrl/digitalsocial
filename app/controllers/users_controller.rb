@@ -3,11 +3,11 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!, only: [:edit_invited, :update_invited, :edit, :update]
 
   def new
-    @user = Signup.new
+    @user = SignupPresenter.new
   end
 
   def create
-    @user = Signup.new
+    @user = SignupPresenter.new
     @user.attributes = params[:user]
 
     if @user.save
@@ -26,6 +26,7 @@ class UsersController < ApplicationController
     @user = current_user
 
     if @user.update_attributes(params[:user])
+      sign_in @user, bypass: true
       redirect_to :projects
     else
       render :edit
@@ -33,14 +34,14 @@ class UsersController < ApplicationController
   end
 
   def edit_invited
-    @user = Signup.new
+    @user = SignupPresenter.new
     @user.first_name        = current_user.first_name
     @user.email             = current_user.email
     @user.organisation_name = current_organisation.name
   end
 
   def update_invited
-    @user = Signup.new
+    @user = SignupPresenter.new
     @user.attributes = params[:user]
 
     # TODO Move this into presenter

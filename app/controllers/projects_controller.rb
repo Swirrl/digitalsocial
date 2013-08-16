@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
-    @project_request = ProjectRequest.new
+    @project_request = ProjectRequestPresenter.new
   end
 
   def index
@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
   end
 
   def invite
-    @project_invite = ProjectInvite.new
+    @project_invite = ProjectInvitePresenter.new
   end
 
   def create_invite
@@ -51,8 +51,8 @@ class ProjectsController < ApplicationController
   end
 
   def create_request
-    @project_request = ProjectRequest.new
-    @project_request.attributes   = params[:project_request]
+    @project_request = ProjectRequestPresenter.new
+    @project_request.attributes   = params[:project_request_presenter]
     @project_request.organisation = current_organisation
 
     if @project_request.save
@@ -74,8 +74,8 @@ class ProjectsController < ApplicationController
   end
 
   def set_project_invite
-    @project_invite = ProjectInvite.new
-    @project_invite.attributes   = params[:project_invite]
+    @project_invite = ProjectInvitePresenter.new
+    @project_invite.attributes   = params[:project_invite_presenter]
     @project_invite.project_uri  = @project.uri
   end
 

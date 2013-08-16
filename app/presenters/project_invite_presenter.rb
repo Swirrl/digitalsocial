@@ -1,4 +1,4 @@
-class ProjectInvite
+class ProjectInvitePresenter
 
   include ActiveModel::Validations
   include ActiveModel::Conversion
@@ -75,12 +75,20 @@ class ProjectInvite
   #   @project_membership
   # end
 
-  def request
-    @request ||= Request.new do |r|
+  def project_request
+    @project_request ||= ProjectRequest.new do |r|
       r.requestor    = self.organisation
       r.requestable  = self.project
       r.is_invite    = true
-      r.data         = { project_membership_nature_uri: self.nature_uri }
+      r.project_membership_nature_uri = self.nature_uri
+    end
+  end
+
+  def user_request
+    @user_request ||= UserRequest.new do |r|
+      r.requestable     = self.organisation
+      r.user_first_name = self.user_first_name
+      r.user_email      = self.user_email
     end
   end
 
@@ -101,7 +109,7 @@ class ProjectInvite
 
       self.user.save
       self.organisation_membership.save
-      self.request.save
+      self.project_request.save
 
       RequestMailer.project_new_organisation_invite(request, user).deliver
     else
@@ -117,7 +125,8 @@ class ProjectInvite
   def save_for_existing_organisation
     return false if invalid?
 
-    self.request.save
+    self.project_request.save
+    self.user_request.save if self.user_request.valid?
 
     true
   rescue => e
