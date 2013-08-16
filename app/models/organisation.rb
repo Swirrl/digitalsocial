@@ -2,14 +2,17 @@ class Organisation
 
   include Tripod::Resource
 
-  rdf_type 'http://example.com/organisation'
-  graph_uri 'http://example.com/dsi_data'
+  rdf_type 'http://www.w3.org/ns/org#Organisation'
+  graph_uri Digitalsocial::DATA_GRAPH
 
-  field :name, 'http://example.com/name'
-  field :primary_site, 'http://example.com/site', is_uri: true
+  field :name, 'http://www.w3.org/2000/01/rdf-schema#label'
+  field :primary_site, 'http://www.w3.org/ns/org#hasPrimarySite', is_uri: true
+
+  field :no_of_staff, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', datatype: RDF::XSD.integer
+  field :twitter, 'http://data.digitalsocial.eu/def/ontology/twitterAccount', is_uri: true # this should be the full URL http://twitter.com/blah
 
   validates :name, presence: true
-  
+
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
     super(uri || "http://example.com/organisation/#{Guid.new}")
@@ -18,7 +21,7 @@ class Organisation
   def guid
     self.uri.to_s.split("/").last
   end
-  
+
   def primary_site_resource
     Site.find(self.primary_site)
   end
@@ -67,7 +70,7 @@ class Organisation
 
   def can_edit_project?(project)
     project_creator_predicate = Project.fields[:creator].predicate.to_s
-    
+
     Project
       .where("?uri <#{project_creator_predicate}> <#{self.uri}>")
       .where("FILTER (?uri = <#{project.uri}>)")

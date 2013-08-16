@@ -2,10 +2,11 @@ class Site
 
   include Tripod::Resource
 
-  rdf_type 'http://example.com/site'
-  graph_uri 'http://example.com/dsi_data'
+  rdf_type 'http://www.w3.org/ns/org#Site'
+  graph_uri Digitalsocial::DATA_GRAPH
 
-  field :lat, 'http://example.com/lat'
-  field :lng, 'http://example.com/lng'
+  field :lat, 'http://www.w3.org/2003/01/geo/wgs84_pos#lat'
+  field :lng, 'http://www.w3.org/2003/01/geo/wgs84_pos#long'
+  field :address, 'http://www.w3.org/ns/org#siteAddress', is_uri: true
 
 end

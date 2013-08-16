@@ -2,10 +2,10 @@ class ProjectMembershipNature
 
   include Tripod::Resource
 
-  rdf_type 'http://example.com/project_membership_nature'
-  graph_uri 'http://example.com/dsi_data'
+  rdf_type 'http://data.digitalsocial.eu/def/ontology/Role'
+  graph_uri Digitalsocial::DATA_GRAPH
 
-  field :label, 'http://example.com/label'
+  field :label, 'http://www.w3.org/2000/01/rdf-schema#label'
 
    # override initialise
   def initialize(uri=nil, graph_uri=nil)
