@@ -3,19 +3,20 @@ class Project
   include Tripod::Resource
   include TagFields
 
-  rdf_type 'http://example.com/project'
-  graph_uri 'http://example.com/dsi_data'
+  rdf_type 'http://xmlns.com/foaf/0.1/Project'
+  graph_uri 'http://data.digitalsoclal.eu/graph/data'
 
-  field :label, 'http://example.com/label'
-  field :webpage, 'http://example.com/webpage'
+  field :label, 'http://www.w3.org/2000/01/rdf-schema#label'
+  field :webpage, 'http://xmlns.com/foaf/0.1/page'
 
-  field :duration, 'http://example.com/time_interval'
+  field :duration, 'http://purl.org/NET/c4dm/event.owl#time'
   field :creator, 'http://example.com/def/project/creator', is_uri: true
 
   # tag-like fields (tag_field method from TagFields module)
-  tag_field :activity_types, 'http://example.com/def/activity-types', ActivityType
-  tag_field :areas_of_society, 'http://example.com/def/areas-of-soc', AreaOfSociety
-  tag_field :tech_types, 'http://example.com/def/tech-types', TechType
+  tag_field :activity_type, 'http://data.digitalsocial.eu/def/ontology/activityType', ActivityType
+  tag_field :areas_of_society, 'http://data.digitalsocial.eu/def/ontology/areaOfSociety', AreaOfSociety, multivalued: true
+  tag_field :technology_focus, 'http://data.digitalsocial.eu/def/ontology/technologyFocus', TechnologyFocus, multivalued: true
+  tag_field :technology_method, 'http://data.digitalsocial.eu/def/ontology/technologyMethod', TechnologyMethod, multivalued: true
 
   attr_accessor :start_date, :end_date, :creator_role
 

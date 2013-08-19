@@ -14,7 +14,8 @@ class TestModel
   include Tripod::Resource
   include TagFields
 
-  tag_field :taggy, 'http://example.com/def/taggy', TestTag
+  tag_field :taggy, 'http://example.com/def/taggy', TestTag, :multivalued => true
+  tag_field :taggy2, 'http://example.com/def/taggy', TestTag
 end
 
 describe TagFields do
@@ -28,14 +29,21 @@ describe TagFields do
       TestModel.fields[:taggy].options[:is_uri].should be_true
     end
 
-    it "should set the multivalued option" do
+    it "should set the multivalued option passed" do
       TestModel.fields[:taggy].options[:multivalued].should be_true
+      TestModel.fields[:taggy2].options[:multivalued].should be_false
     end
 
-    it "should create a getter and setter for the list" do
+    it "should create a list getter and setter for the multivalued fields" do
       t = TestModel.new('http://test.model')
       t.taggy_list = "abc, def"
       t.taggy_list.should == "abc, def"
+    end
+
+    it "should create a label getter and setter for the single valued fields" do
+      t = TestModel.new('http://test.model')
+      t.taggy2_label = "foo"
+      t.taggy2_label.should == "foo"
     end
   end
 
@@ -48,6 +56,15 @@ describe TagFields do
       end
       t.taggy.first.to_s.should == "http://example.com/def/concept/test/abc"
       t.taggy.last.to_s.should == "http://example.com/def/concept/test/def"
+    end
+  end
+
+  describe "tag label setter" do
+    it "should set the uri against the field" do
+      t = TestModel.new('http://test.model')
+      t.taggy2_label = "baz"
+      t.taggy2.class.should == RDF::URI
+      t.taggy2.to_s.should == "http://example.com/def/concept/test/baz"
     end
   end
 

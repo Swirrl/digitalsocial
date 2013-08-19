@@ -9,13 +9,34 @@ module TagFields
 
   module ClassMethods
 
-    def tag_field(name, predicate, tag_class)
+    def tag_field(name, predicate, tag_class, opts={})
       # make a field
-      field name, predicate, {is_uri: true, multivalued: true}
+      field name, predicate, opts.merge({is_uri: true})
 
       # make getters and setters for string lists.
-      create_list_getter(name, tag_class)
-      create_list_setter(name, tag_class)
+      if opts[:multivalued]
+        create_list_getter(name, tag_class)
+        create_list_setter(name, tag_class)
+      else
+        create_label_getter(name, tag_class)
+        create_label_setter(name, tag_class)
+      end
+
+    end
+
+    def create_label_getter(field_name, tag_class)
+      re_define_method("#{field_name}_label") do
+        uri = self.send(field_name)
+        tag_class.find(uri).label if uri
+      end
+    end
+
+    def create_label_setter(field_name, tag_class)
+      re_define_method("#{field_name}_label=") do |label_str|
+        tag = label_str.strip
+        uri = tag_class.from_label(tag).uri
+        self.send("#{field_name}=", uri)
+      end
     end
 
     def create_list_getter(field_name, tag_class)
