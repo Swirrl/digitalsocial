@@ -58,6 +58,7 @@ Digitalsocial::Application.routes.draw do
       get 'new_user'
       post 'create_user'
       get 'new_organisation'
+      post 'create_organisation'
     end
   end
 

@@ -18,7 +18,7 @@ class Organisations::BuildController < ApplicationController
   end
 
   def new_organisation
-    
+    @organisation = Organisation.new
   end
 
 end
