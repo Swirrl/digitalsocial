@@ -3,16 +3,14 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!, only: [:edit_invited, :update_invited, :edit, :update]
 
   def new
-    @user = SignupPresenter.new
+    @user = User.new
   end
 
   def create
-    @user = SignupPresenter.new
-    @user.attributes = params[:user]
+    @user = User.new(params[:user])
 
     if @user.save
-      sign_in @user.user
-      redirect_to :projects, notice: 'Successfully signed up.'
+      redirect_to new_organisation_index_path
     else
       render :new
     end

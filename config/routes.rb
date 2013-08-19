@@ -53,6 +53,14 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
+  namespace :organisations do
+    namespace :build do
+      get 'new_user'
+      post 'create_user'
+      get 'new_organisation'
+    end
+  end
+
   match ':action' => 'site'
   root to: 'site#index'
 

@@ -33,7 +33,7 @@ class User
 
   has_many :organisation_memberships
   
-  validates :first_name, presence: true
+  validates :first_name, :email, presence: true
 
   before_save :ensure_authentication_token
 
