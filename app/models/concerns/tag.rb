@@ -38,7 +38,7 @@ module Tag
 
     # these are just the top-concepts
     def top_level_tags
-      self.where("<#{self.resource_concept_scheme.to_s} <#{RDF::SKOS.hasTopConcept}> ?uri")
+      self.where("<#{self.resource_concept_scheme.to_s}> <#{RDF::SKOS.hasTopConcept}> ?uri").resources
     end
 
     # makes or finds an instance of this type
@@ -65,6 +65,7 @@ module Tag
 
         if (opts[:top_level])
           # add this as a top level concept to the concept scheme
+          # (ONLY USED FOR SEEDING)
 
           # find the concept scheme, or make it if it doesn't exist
           cs = nil
@@ -76,20 +77,19 @@ module Tag
 
           # add to the top concepts
           cs.has_top_concept = cs.has_top_concept << resource.uri.to_s
-          cs.save!
+          cs.save!(:transaction => transaction)
 
-        else
+        elsif self.broad_concept
           # set the broader/narrower relation up for non-top-level ones
-          # (only if the broad concept is set at class level)
-          if self.broad_concept
-            broad_concept = self.find( self.broad_concept ) # this should always exist
-            broad_concept.narrower = broad_concept.narrower << resource.uri
-            broad_concept.save!
-            resource.broader = self.broad_concept
-          end
+          # (only if the broad concept is set at class level
+          broad_concept = self.find( self.broad_concept ) # this should always exist
+          broad_concept.narrower = broad_concept.narrower << resource.uri
+          broad_concept.save!(:transaction => transaction)
+          resource.broader = self.broad_concept
         end
 
         resource.save!(:transaction => transaction)
+
         transaction.commit
 
         resource
