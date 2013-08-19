@@ -16,7 +16,7 @@ module ApplicationHelper
     session[:org_id] = params[:org_id] if params[:org_id]
 
     @current_organisation ||=
-      current_user.organisation_resources.find { |o| o.uri == "http://example.com/organisation/#{session[:org_id]}" } ||
+      current_user.organisation_resources.find { |o| o.uri == "http://data.digitalsocial.eu/id/organization/#{session[:org_id]}" } ||
       current_user.organisation_resources.first
   end
 

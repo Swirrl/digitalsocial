@@ -66,7 +66,7 @@ class ProjectsController < ApplicationController
   private
 
   def find_project
-    @project = Project.find("http://example.com/project/#{params[:id]}")
+    @project = Project.find("http://data.digitalsocial.eu/id/activity/#{params[:id]}")
   end
 
   def set_project_attributes
@@ -85,7 +85,7 @@ class ProjectsController < ApplicationController
 
   def update_project
     transaction = Tripod::Persistence::Transaction.new
-    
+
     @duration = @project.duration_resource
     @duration.start_date = params[:project][:start_date]
     @duration.end_date   = params[:project][:end_date]
@@ -98,5 +98,5 @@ class ProjectsController < ApplicationController
       false
     end
   end
-  
+
 end

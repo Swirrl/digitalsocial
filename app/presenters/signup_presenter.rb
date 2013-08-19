@@ -29,7 +29,7 @@ class SignupPresenter
   def site
     return @site unless @site.nil?
 
-    @site = Site.new("http://example.com/site/#{Guid.new}")
+    @site = Site.new
     @site.lat = self.organisation_lat
     @site.lng = self.organisation_lng
     @site
@@ -38,7 +38,7 @@ class SignupPresenter
   def organisation
     return @organisation unless @organisation.nil?
 
-    @organisation = Organisation.new("http://example.com/organisation/#{Guid.new}")
+    @organisation = Organisation.new
     @organisation.name         = self.organisation_name
     @organisation.primary_site = self.site.uri
     @organisation
