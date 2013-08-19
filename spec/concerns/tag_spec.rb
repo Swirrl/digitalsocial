@@ -7,9 +7,12 @@ class TestTag
   include Tag
   uri_root 'http://example.com/def/concept/test/'
   concept_scheme 'http://example.com/def/concept-scheme/test'
+  broad_concept_uri (resource_uri_root + 'other')
 end
 
 describe Tag do
+
+  before { TestTag.all.resources.map &:destroy}
 
   describe ".new" do
     it "should set the concept scheme" do
@@ -19,6 +22,11 @@ describe Tag do
   end
 
   describe ".from_label" do
+
+    before do
+      # create an 'other' tag as a broad top level concept
+      other = TestTag.from_label('Other', top_level:true)
+    end
 
     let(:label){ 'hello world' }
 
@@ -32,7 +40,7 @@ describe Tag do
 
     context "when the slug doesn't already exist" do
       it "should make a new tag" do
-        expect { TestTag.from_label(label) }.to change{ TestTag.count }.from(0).to(1)
+        expect { TestTag.from_label(label) }.to change{ TestTag.count }.by(1)
       end
     end
 
