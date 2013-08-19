@@ -3,7 +3,7 @@ class ConceptScheme
   include Tripod::Resource
 
   field :label, RDF::RDFS.label
-  field :has_top_concept, RDF::SKOS.hasTopConcept, uri: true, multivalued: true
+  field :has_top_concept, RDF::SKOS.hasTopConcept, is_uri: true, multivalued: true
 
   rdf_type RDF::SKOS.ConceptScheme
 

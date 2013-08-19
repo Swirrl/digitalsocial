@@ -38,7 +38,18 @@ module Tag
 
     # these are just the top-concepts
     def top_level_tags
-      self.where("<#{self.resource_concept_scheme.to_s}> <#{RDF::SKOS.hasTopConcept}> ?uri").resources
+      # need a custom query here as the concept scheme in diff. graph
+      self.find_by_sparql("
+        SELECT ?uri (<#{self.get_graph_uri}> as ?graph) WHERE {
+
+          <#{self.resource_concept_scheme.to_s}> <#{RDF::SKOS.hasTopConcept}> ?uri .
+
+          GRAPH <#{self.get_graph_uri}> {
+            ?uri ?p ?o .
+          }
+
+        }"
+      )
     end
 
     # makes or finds an instance of this type
@@ -47,16 +58,11 @@ module Tag
 
       slug = self.slugify_label_text(label)
 
-      # If there's a slug match, it's near enough that they meant the same thing.
-      resource = self
-        .where("?uri ?p ?o")
-        .where("FILTER(?uri = <#{self.uri_from_slug(slug)}>)") #same URI
-        .first
-
-      if resource
-        # found one - return it.
-        resource
-      else
+      # If there's a slug match, it's near enough that they meant the same thing so
+      # just look up by uri
+      begin
+        resource = self.find( self.uri_from_slug(slug) )
+      rescue Tripod::Errors::ResourceNotFound
         # if don't find one, make one
         transaction = Tripod::Persistence::Transaction.new
 
@@ -76,7 +82,7 @@ module Tag
           end
 
           # add to the top concepts
-          cs.has_top_concept = cs.has_top_concept << resource.uri.to_s
+          cs.has_top_concept = cs.has_top_concept << resource.uri
           cs.save!(:transaction => transaction)
 
         elsif self.broad_concept
@@ -92,8 +98,7 @@ module Tag
 
         transaction.commit
 
-        resource
-
+        resource #return the res.
       end
 
     end
