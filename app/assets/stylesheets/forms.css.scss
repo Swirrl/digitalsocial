@@ -32,6 +32,15 @@ form {
         &::-webkit-input-placeholder { /* WebKit browsers */
           color: #fad399;
         }
+        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color: #fad399;
+        }
+        &::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color: #fad399;
+        }
+        &:-ms-input-placeholder { /* Internet Explorer 10+ */
+          color: #fad399;
+        }
       }
       
     }
@@ -59,11 +68,11 @@ form {
   color: #ccc;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color: $orange;
+  color: #ccc;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color: $orange;
+  color: #ccc;
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-  color: $orange;
+  color: #ccc;
 }
