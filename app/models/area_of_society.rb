@@ -1,10 +1,10 @@
 class AreaOfSociety
 
   include Tripod::Resource
-  graph_uri 'http://example.com/graph/concept-scheme/area-of-society'
+  rdf_type 'http://data.digitalsocial.eu/def/ontology/AreaOfSociety'
 
   include Tag
-  uri_root 'http://example.com/def/concept/area-of-society/'
-  concept_scheme 'http://example.com/def/concept-scheme/area-of-society'
+  uri_root 'http://data.digitalsocial.eu/def/concept/area-of-society/'
+  concept_scheme 'http://data.digitalsocial.eu/def/concept-scheme/area-of-society'
 
 end

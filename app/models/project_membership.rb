@@ -2,7 +2,7 @@ class ProjectMembership
 
   include Tripod::Resource
 
-  rdf_type 'http://data.digitalsocial.eu/def/ontology/Membership'
+  rdf_type 'http://data.digitalsocial.eu/def/ontology/ActivityMembership'
   graph_uri Digitalsocial::DATA_GRAPH
 
   field :organisation, 'http://data.digitalsocial.eu/def/ontology/organisation', is_uri: true
@@ -11,7 +11,7 @@ class ProjectMembership
 
    # override initialise
   def initialize(uri=nil, graph_uri=nil)
-    super(uri || "http://example.com/project_membership/#{Guid.new}")
+    super(uri || "http://data.digitalsocial.eu/id/activity-membership/#{Guid.new}")
   end
 
   def project_resource

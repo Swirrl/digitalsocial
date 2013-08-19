@@ -10,7 +10,7 @@ class Site
   field :address, 'http://www.w3.org/ns/org#siteAddress', is_uri: true
 
   def initialize(uri=nil, graph_uri=nil)
-    super(uri || "http://example.com/site/#{Guid.new}")
+    super(uri || "http://data.digitalsocial.eu/id/site/#{Guid.new}")
   end
 
 end

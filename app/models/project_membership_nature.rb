@@ -6,14 +6,12 @@ class ProjectMembershipNature
   graph_uri Digitalsocial::DATA_GRAPH
 
   field :label, 'http://www.w3.org/2000/01/rdf-schema#label'
+  field :sub_class_of, RDF::RDFS.subClassOf, is_uri: true
 
-   # override initialise
+  # override initialise
   def initialize(uri=nil, graph_uri=nil)
-    super(uri || "http://example.com/project_membership_nature/#{Guid.new}")
-  end
-
-  def self.lead
-    self.where("?uri <http://www.w3.org/2000/01/rdf-schema#label> 'Lead'")
+    super(uri || "http://data.digitalsocial.eu/def/concept/activity-role/#{Guid.new}")
+    self.sub_class_of = RDF::SKOS.Concept
   end
 
 end

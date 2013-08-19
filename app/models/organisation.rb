@@ -15,7 +15,7 @@ class Organisation
 
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
-    super(uri || "http://example.com/organisation/#{Guid.new}")
+    super(uri || "http://data.digitalsocial.eu/id/organization/#{Guid.new}")
   end
 
   def guid

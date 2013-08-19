@@ -1,10 +1,10 @@
 class TechnologyFocus
 
   include Tripod::Resource
-  graph_uri 'http://example.com/graph/concept-scheme/tech-focus'
+  rdf_type 'http://data.digitalsocial.eu/def/ontology/TechnologyFocus'
 
   include Tag
-  uri_root 'http://example.com/def/concept/tech-focus/'
-  concept_scheme 'http://example.com/def/concept-scheme/tech-focus'
+  uri_root 'http://data.digitalsocial.eu/def/concept/technology-focus/'
+  concept_scheme 'http://data.digitalsocial.eu/def/concept-scheme/technology-focus'
 
 end

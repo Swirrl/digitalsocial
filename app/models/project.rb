@@ -10,7 +10,7 @@ class Project
   field :webpage, 'http://xmlns.com/foaf/0.1/page'
 
   field :duration, 'http://purl.org/NET/c4dm/event.owl#time'
-  field :creator, 'http://example.com/def/project/creator', is_uri: true
+  field :creator, 'http://data.digitalsocial.eu/def/ontology/recordedBy', is_uri: true
 
   # tag-like fields (tag_field method from TagFields module)
   tag_field :activity_type, 'http://data.digitalsocial.eu/def/ontology/activityType', ActivityType
@@ -27,7 +27,7 @@ class Project
 
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
-    super(uri || "http://example.com/project/#{Guid.new}")
+    super(uri || "http://data.digitalsocial.eu/id/activity/#{Guid.new}")
   end
 
   def guid
@@ -71,7 +71,7 @@ class Project
     creator_membership.nature       = self.creator_role
     creator_membership.save
 
-    self.creator = organisation.uri.to_s
+    self.creator = organisation.uri
     self.save
   end
 

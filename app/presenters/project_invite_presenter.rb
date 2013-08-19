@@ -65,16 +65,6 @@ class ProjectInvitePresenter
     @project ||= Project.find(self.project_uri)
   end
 
-  # def project_membership
-  #   return @project_membership unless @project_membership.nil?
-
-  #   @project_membership = ProjectMembership.new
-  #   @project_membership.organisation = self.organisation.uri.to_s
-  #   @project_membership.project      = self.project_uri
-  #   @project_membership.nature       = self.nature_uri
-  #   @project_membership
-  # end
-
   def project_request
     @project_request ||= ProjectRequest.new do |r|
       r.requestor    = self.organisation
