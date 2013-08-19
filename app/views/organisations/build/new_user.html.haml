@@ -1,4 +1,4 @@
-= render "breadcrumbs"
+= render "breadcrumbs", active_index: 0
 
 = simple_form_for @user, url: [:organisations, :build, :create_user] do |f|
   = f.input :first_name, placeholder: 'Enter your first name'

@@ -24,4 +24,27 @@ module ApplicationHelper
     current_user.organisation_memberships.where(organisation_uri: current_organisation.uri.to_s).first
   end
 
+  def build_organisation_breadcrumbs(active_index)
+    list_content = []
+    build_organisation_steps.each_with_index do |label, n|
+      list_content.push(content_tag(:li, content_tag(:span, label), class: build_organisation_breadcrumb_class(n, active_index)))
+    end
+
+    content_tag :ol, list_content.join(" ").html_safe, class: "breadcrumbs"
+  end
+
+  def build_organisation_steps
+    ["About you", "Org basics", "Org details", "Invite team", "First project", "Project details"]
+  end
+
+  def build_organisation_breadcrumb_class(n, active_index)
+    if n < active_index
+      "complete"
+    elsif n == active_index
+      "active"
+    else
+      "incomplete"
+    end
+  end
+
 end

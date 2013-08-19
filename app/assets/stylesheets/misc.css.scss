@@ -92,7 +92,7 @@
       }
     }
 
-    &.current {
+    &.active {
       span {
         background: $orange;
         &:after { border-left-color: $orange; }
