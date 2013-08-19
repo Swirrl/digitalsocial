@@ -8,6 +8,7 @@
   height: 46px;
   line-height: 38px;
   margin-bottom: 60px;
+  font-weight: 300;
 
   li {
     float: left;
@@ -43,7 +44,7 @@
       }
 
       &:before {
-        margin-left: 3px; /* margin-left = spacing between arrows */
+        margin-left: 6px; /* margin-left = spacing between arrows */
         z-index: 1;
       }
     }

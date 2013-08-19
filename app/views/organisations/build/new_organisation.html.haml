@@ -1,3 +1,5 @@
+= render "breadcrumbs", active_index: 1
+
 = simple_form_for @organisation, url: [:organisations, :build, :create_organisation] do |f|
   = f.input :name
   = f.input :lat
