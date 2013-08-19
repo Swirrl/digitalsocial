@@ -1,16 +1,17 @@
 body {
-  font-family: $lato;
-  font-size: 18px;
+  font-family: $chaparral;
+  font-size: 20px;
   color: $black;
+  background: #fff url(image-path("backgrounds/bg.png")) repeat-y center top;
 }
 
 a {
   text-decoration: none;
-  color: $dblue;
+  color: $orange;
   @include transition(all, 0.1s);
 
   &:hover {
-    color: $dblue-hover;
+    color: $orange;
   }
 }
 
@@ -47,17 +48,17 @@ h1 + h2 {
 }
 
 ::selection {
-  background: $dblue;
+  background: $orange;
   color: #fff;
 }
 
 ::-moz-selection {
-  background: $dblue;
+  background: $orange;
   color: #fff;
 }
 
 .container {
-  width: 960px;
+  width: 850px;
   margin: 0 auto;
 }
 
@@ -83,4 +84,12 @@ h1 + h2 {
 .rcol {
   float: right;
   width: 300px;
+}
+
+.hr3 {
+  display: block;
+  background-color: $orange;
+  height: 9px;
+  width: 100%;
+  margin-bottom: 36px;
 }

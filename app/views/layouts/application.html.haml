@@ -5,7 +5,7 @@
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
-
+    = render "typekit"
   %body
     
     .container
@@ -17,7 +17,9 @@
 
         = render "temp_user_info"
 
-    = render "partners"
-    = render "footer"
+    =# render "partners"
+    =# render "footer"
     = render "analytics"
+    
+    #baseline
 
