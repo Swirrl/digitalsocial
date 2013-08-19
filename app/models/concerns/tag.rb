@@ -38,7 +38,7 @@ module Tag
 
     # these are just the top-concepts
     def top_level_tags
-      self.where('<#{self.resource_concept_scheme.to_s} <#{RDF::SKOS.hasTopConcept}> ?uri')
+      self.where("<#{self.resource_concept_scheme.to_s} <#{RDF::SKOS.hasTopConcept}> ?uri")
     end
 
     # makes or finds an instance of this type
