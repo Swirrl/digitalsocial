@@ -1,0 +1,69 @@
+form {
+
+  label {
+    display: block;
+
+    abbr[title] {
+      color: $orange;
+      border-bottom: 0;
+    }
+  }
+
+  .input {
+    margin-bottom: 36px;
+
+    input[type=text], input[type=email], input[type=password] {
+      padding: 12px;
+      font-size: 100%;
+      font-family: $chaparral;
+      border: 0;
+      background: #f2f2f2;
+      border: 2px solid transparent;
+      outline: none;
+      @include transition(all, 0.15s);
+      display: block;
+      margin-bottom: 0;
+      border-top: 2px solid #ddd;
+
+      &:focus {
+        border: 2px solid $orange;
+        background: rgba(243, 146, 0, 0.1);
+
+        &::-webkit-input-placeholder { /* WebKit browsers */
+          color: #fad399;
+        }
+      }
+      
+    }
+
+    span.error {
+      display: inline-block;
+      background-color: $red;
+      color: #fff;
+      padding: 6px 12px;
+      margin-left: 2px;
+      font-size: 16px;
+    }
+
+    &.field_with_errors {
+      input[type=text], input[type=email], input[type=password] {
+        border-color: $red;  
+      }
+      
+    }
+  }
+
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: #ccc;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: $orange;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: $orange;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: $orange;
+}
