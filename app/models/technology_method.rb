@@ -1,10 +1,10 @@
 class TechnologyMethod
 
   include Tripod::Resource
-  graph_uri 'http://example.com/graph/concept-scheme/tech-method'
+  rdf_type 'http://data.digitalsocial.eu/def/ontology/TechnologyMethod'
 
   include Tag
-  uri_root 'http://example.com/def/concept/tech-method/'
-  concept_scheme 'http://example.com/def/concept-scheme/tech-method'
+  uri_root 'http://data.digitalsocial.eu/def/concept/technology-method/'
+  concept_scheme 'http://data.digitalsocial.eu/def/concept-scheme/technology-method'
 
 end

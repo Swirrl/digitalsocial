@@ -6,13 +6,14 @@ module Tag
     class_attribute :resource_uri_root
     class_attribute :resource_concept_scheme
 
-    rdf_type RDF::SKOS.Concept
     field :in_scheme, RDF::SKOS.inScheme, :is_uri => true
     field :label, RDF::RDFS.label
+    field :sub_class_of, RDF::SKOS.subClassOf, :is_uri => true
 
     def initialize(uri, graph_uri=nil)
       super
       self.in_scheme = self.class.resource_concept_scheme
+      self.sub_class_of = RDF::SKOS.Concept
     end
   end
 
@@ -20,6 +21,7 @@ module Tag
 
     def concept_scheme(cs)
       self.resource_concept_scheme = cs
+      graph_uri cs.gsub('/def/', '/graph/')
     end
 
     def uri_root(root)

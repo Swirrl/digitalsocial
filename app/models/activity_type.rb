@@ -1,10 +1,10 @@
 class ActivityType
 
   include Tripod::Resource
-  graph_uri 'http://example.com/graph/concept-scheme/activity-type'
+  rdf_type 'http://data.digitalsocial.eu/def/ontology/ActivityType'
 
   include Tag
-  uri_root 'http://example.com/def/concept/activity-type/'
-  concept_scheme 'http://example.com/def/concept-scheme/activity-type'
+  uri_root 'http://data.digitalsocial.eu/def/concept/activity-type/'
+  concept_scheme 'http://data.digitalsocial.eu/def/concept-scheme/activity-type'
 
 end
