@@ -3,19 +3,20 @@
 .breadcrumbs {
   list-style: none;
   overflow: hidden;
-  font-size: 18px;
+  font-size: 20px;
   margin-left: 0;
   height: 46px;
   line-height: 38px;
   margin-bottom: 60px;
   font-weight: 300;
+  font-style: italic;
 
   li {
     float: left;
     margin-bottom: 0;
 
     span {
-      padding: 5px 0 5px 55px;
+      padding: 5px 5px 5px 60px;
       position: relative;
       display: block;
       float: left;
@@ -50,7 +51,7 @@
     }
 
     &:first-child span {
-      padding-left: 20px;
+      padding-left: 25px;
     }
 
     &:last-child span {
@@ -97,6 +98,8 @@
       span {
         background: $orange;
         &:after { border-left-color: $orange; }
+        font-style: normal;
+        font-weight: normal;
       }
     }
 
