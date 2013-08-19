@@ -27,8 +27,8 @@ class ApplicationController < ActionController::Base
 		session[:org_id] = params[:org_id] if params[:org_id]
 
 		@current_organisation ||=
-		  current_user.organisation_resources.find { |o| o.uri == "http://example.com/organisation/#{session[:org_id]}" } ||
-		  current_user.organisation_resources.first
+		  current_user.organisation_resources.reject(&:new_record?).find { |o| o.uri == "http://example.com/organisation/#{session[:org_id]}" } ||
+		  current_user.organisation_resources.reject(&:new_record?).first
 	end
 
 	def current_organisation_membership

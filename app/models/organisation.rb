@@ -23,7 +23,7 @@ class Organisation
   end
 
   def primary_site_resource
-    Site.find(self.primary_site)
+    Site.find(self.primary_site) if self.primary_site
   end
 
   def projects

@@ -34,6 +34,8 @@ class User
   has_many :organisation_memberships
   
   validates :first_name, :email, presence: true
+  validates :email, uniqueness: true
+  validates :email, format: { with: Devise.email_regexp }
 
   before_save :ensure_authentication_token
 

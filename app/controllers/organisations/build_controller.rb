@@ -18,7 +18,19 @@ class Organisations::BuildController < ApplicationController
   end
 
   def new_organisation
-    @organisation = Organisation.new
+    @organisation = SignupPresenter.new
+  end
+
+  def create_organisation
+    @organisation = SignupPresenter.new
+    @organisation.attributes = params[:signup_presenter]
+    @organisation.user       = current_user
+
+    if @organisation.save
+      render text: 'Saved'
+    else
+      render :new_organisation
+    end
   end
 
 end

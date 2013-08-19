@@ -9,4 +9,8 @@ class Site
   field :lng, 'http://www.w3.org/2003/01/geo/wgs84_pos#long'
   field :address, 'http://www.w3.org/ns/org#siteAddress', is_uri: true
 
+  def initialize(uri=nil, graph_uri=nil)
+    super(uri || "http://example.com/site/#{Guid.new}")
+  end
+
 end
