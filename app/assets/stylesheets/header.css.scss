@@ -1,33 +1,29 @@
 #header {
-  padding: 60px 0;
+  padding: 48px 0;
   width: 100%;
 
   a {
-    color: $black;
+    color: $orange;
   }
 
   .logo {
     float: left;
-    width: 240px;
-    
-    h1 {
-      font-size: 36px;
-      margin: 0;
-    }
+    width: 279px;
+    height: 79px;
+    background: url(image-path("logo/dsi-logo.png")) no-repeat;
+    display: block;
+    margin-left: -100px;
   }
 
   .menu {
     float: right;
-    line-height: 72px;
+    padding-top: 55px;
 
     a {
       padding: 12px 18px;
+      font-size: 24px;
       margin-left: 36px;
-      font-weight: bold;
-      
-      &:hover {
-        color: $dblue;
-      }
+      font-weight: 400;
       
     }
   }
