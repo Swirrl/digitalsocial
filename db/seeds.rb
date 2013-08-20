@@ -74,6 +74,16 @@ end
   TechnologyMethod.from_label(label, top_level:true)
 end
 
+# Organisation Type
+["Government And Public Sector",
+  "Business",
+  "Academia And Research",
+  "Social Enterprise Charity Or Foundation",
+  "Grass Roots Organization Or Community Network"
+].each do |label|
+  OrganisationType.from_label(label, top_level:true)
+end
+
 
 # Seed admins
 Admin.create(email: 'admin@test.com', password: 'password', name: 'Test Admin', job_title: 'Tester', organisation: 'Swirrl', organisation_url: 'http://swirrl.com')

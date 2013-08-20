@@ -38,6 +38,16 @@ class Organisations::BuildController < ApplicationController
     @organisation = current_organisation
   end
 
+  def update_organisation
+    @organisation = current_organisation
+
+    if @organisation.update_attributes(params[:organisation])
+      render "Saved"
+    else
+      render :edit_organisation
+    end
+  end
+
   private
 
   def redirect_to_new_organisation_if_logged_in

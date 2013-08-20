@@ -8,6 +8,20 @@ form {
       color: $orange;
       border-bottom: 0;
     }
+
+    &.radio_buttons {
+      margin-bottom: 18px;
+    }
+
+    &.radio {
+      padding-left: 6px;
+      margin-bottom: 12px;
+      font-style: normal;
+
+      input {
+        margin: 0 6px 0 0;
+      }
+    }
   }
 
   .input {

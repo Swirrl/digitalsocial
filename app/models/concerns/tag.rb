@@ -18,6 +18,10 @@ module Tag
       self.in_scheme = self.class.resource_concept_scheme_uri
       self.sub_class_of = RDF::SKOS.Concept
     end
+
+    def to_s
+      label
+    end
   end
 
   module ClassMethods

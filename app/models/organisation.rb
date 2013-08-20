@@ -1,6 +1,7 @@
 class Organisation
 
   include Tripod::Resource
+  include TagFields
 
   rdf_type 'http://www.w3.org/ns/org#Organisation'
   graph_uri Digitalsocial::DATA_GRAPH
@@ -11,6 +12,8 @@ class Organisation
   field :no_of_staff, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', datatype: RDF::XSD.integer
   field :twitter, 'http://data.digitalsocial.eu/def/ontology/twitterAccount', is_uri: true # this should be the full URL http://twitter.com/blah
   field :webpage, 'http://xmlns.com/foaf/0.1/page', is_uri: true
+
+  tag_field :organisation_type, 'http://data.digitalsocial.eu/def/ontology/organizationType', OrganisationType
 
   validates :name, presence: true
 
@@ -98,6 +101,16 @@ class Organisation
   def self.search_by_name(search)
     name_predicate = self.fields[:name].predicate.to_s
     self.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
+  end
+
+  def twitter_username=(username)
+    username.strip!
+    username.gsub!(/^@/, "")
+    self.twitter = "http://twitter.com/#{username}"
+  end
+
+  def twitter_username
+    "@#{self.twitter.to_s.split("/").last}" if self.twitter.present?
   end
 
 end

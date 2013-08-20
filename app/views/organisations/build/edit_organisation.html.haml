@@ -8,6 +8,8 @@
     = link_to "Skip this step &raquo;".html_safe, '#', class: 'button'
 
   = f.input :webpage, label: 'Website URL'
-  = f.input :twitter
+  = f.input :twitter_username, label: 'Twitter'
+
+  = f.input :organisation_type, as: :radio, collection: OrganisationType.all.resources, value_method: :uri
 
   = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'
