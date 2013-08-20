@@ -82,7 +82,8 @@ class Organisation
 
   def as_json(options = nil)
     json = {
-      name: self.name
+      name: self.name,
+      image_url: "/assets/asteroids/#{rand(5)+1}_70x70.png"
     }
     json
   end

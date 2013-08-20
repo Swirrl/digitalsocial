@@ -35,9 +35,9 @@ class OrganisationsController < ApplicationController
   def index
     if params[:q].present?
       # TODO Find orgs by name/location etc.
-      @organisations = Organisation.all.resources
+      @organisations = Organisation.all.resources.to_a
     else
-      @organisations = Organisation.all.resources
+      @organisations = Organisation.all.resources.to_a
     end
 
     respond_to do |format|

@@ -112,18 +112,19 @@
   }
 }
 
-.suggestion-results {
+.suggestions {
 
   margin-bottom: 60px;
+  display: none;
 
-  .suggestion-result {
+  .suggestion {
 
     display: block;
     padding: 12px;
-    background: #fffaf4;
+    background: #fff2e3;
 
     &:nth-child(even) {
-      background: #fff2e3;
+      background: #fffaf4;
     }
 
     .image {
@@ -131,6 +132,7 @@
       width: 70px;
       height: 70px;
       margin-right: 12px;
+      background: rgba(255, 255, 255, 0.75);
     }
 
     .details {
@@ -160,6 +162,10 @@
       }
     }
 
+  }
+
+  .suggestion-template {
+    display: none;
   }
 
 }

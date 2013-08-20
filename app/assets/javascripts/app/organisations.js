@@ -29,9 +29,11 @@ $(function(){
     getSuggestions: function() {
       var $oas = $('input.organisation-auto-suggest');
       var str = $oas.val();
-      //if (!force && str.length < 3) return;
 
-      if (str.length < 3) return;
+      if (str.length < 3) {
+        organisations.hideSuggestions();
+        return;
+      }
         
       else {    
         $.ajax({
@@ -40,7 +42,6 @@ $(function(){
           data: {
             q: str
           },
-          dataType: 'JSON',
           beforeSend: function(){
             $oas.addClass('loading');
           },
@@ -51,13 +52,40 @@ $(function(){
             alert('error');
           },
           success: function(data){
-            console.log(data);
-
-            // });
+            $('.suggestions').slideUp('fast', function(){
+              organisations.clearSuggestions();
+              organisations.buildSuggestions(data);
+              organisations.showSuggestions();
+            });
           },
           dataType: 'json'
         });
       }
+    },
+
+    buildSuggestions: function(data) {
+      $.each(data, function(index, org){
+        var $suggestion = $('.suggestion-template').clone()
+        $suggestion.removeClass('suggestion-template').addClass('suggestion');
+        $suggestion.find('.header').text(org.name);
+        $suggestion.find('.subheader').text('The address will appear here');
+        $suggestion.find('.image img').attr('src', org.image_url);
+        $('.suggestions').append($suggestion);
+      });
+    },
+
+    clearSuggestions: function() {
+      $('.suggestion').remove();
+    },
+
+    showSuggestions: function() {
+      $('.suggestions').slideDown('fast');
+    },
+
+    hideSuggestions: function() {
+      $('.suggestions').slideUp('fast', function(){
+        organisations.clearSuggestions();
+      });
     }
 
   }

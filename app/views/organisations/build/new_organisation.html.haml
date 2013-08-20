@@ -2,20 +2,19 @@
 
 = simple_form_for @organisation, url: [:organisations, :build, :create_organisation] do |f|
   = f.input :name, label: 'Name of your organisation', input_html: { class: 'organisation-auto-suggest' }
-  .suggestion-results
+  .suggestions
     %p Did you mean...
 
-    - 3.times do
-      .suggestion-result.clearfix
-        .image
-          = image_tag 'http://placehold.it/70x70'
+    .suggestion-template.clearfix
+      .image
+        = image_tag 'http://placehold.it/70x70'
 
-        .details
-          .header= Faker::Company.name
-          .subheader= Faker::Address.street_address
-        
-        .action
-          = link_to 'Request to join', '#', class: 'button'
+      .details
+        .header
+        .subheader
+      
+      .action
+        = link_to 'Request to join', '#', class: 'button'
 
 
   = f.input :lat
