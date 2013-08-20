@@ -1,5 +1,26 @@
 form {
 
+  .field-with-notes {
+    @include row;
+    margin-bottom:0;
+
+    .field, .fields {
+      @include columns(8);
+      clear:left;
+      @include clearfix;
+      input {
+        width: 90%;
+      }
+    }
+    .notes {
+      padding-top:20px;
+      color: $dark-grey;
+      line-height: 1.5;
+      @include columns(7);
+      @include offset(1);
+    }
+  }
+
   label {
     display: block;
     font-style: italic;
@@ -57,7 +78,7 @@ form {
           color: #fad399;
         }
       }
-      
+
     }
 
     span.error {
@@ -71,9 +92,9 @@ form {
 
     &.field_with_errors {
       input[type=text], input[type=email], input[type=password] {
-        border-color: $red;  
+        border-color: $red;
       }
-      
+
     }
   }
 

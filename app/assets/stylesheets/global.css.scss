@@ -1,8 +1,12 @@
 body {
   font-family: $chaparral;
-  font-size: 20px;
+  font-size: 18px;
   color: $black;
   background: #fff url(image-path("backgrounds/bg.png")) repeat-y center top;
+}
+
+.row {
+  @include row; // the grid mixin.
 }
 
 a {
@@ -58,8 +62,7 @@ h1 + h2 {
 }
 
 .container {
-  width: 960px;
-  margin: 0 auto;
+  @include container;
 }
 
 .clearfix {

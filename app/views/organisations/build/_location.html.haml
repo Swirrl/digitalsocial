@@ -1,8 +1,16 @@
-= f.input :street_address, as: :string, input_html: { class: 'geo' }
-= f.input :locality, as: :string, input_html: { class: 'geo' }, label: 'Locality (e.g. town or city)'
-= f.input :region, as: :string, input_html: { class: 'geo' }, label: 'Region (e.g. county or province)'
-= f.input :country,  collection: Digitalsocial::EU_COUNTRIES, input_html: { class: 'geo' }
-= f.input :postal_code, as: :string
+
+.field-with-notes
+  .fields
+    = f.input :street_address, as: :string, input_html: { class: 'geo' }
+    = f.input :locality, as: :string, input_html: { class: 'geo' }, label: 'Locality (e.g. town or city)'
+    = f.input :region, as: :string, input_html: { class: 'geo' }, label: 'Region (e.g. county or province)'
+    = f.input :country,  collection: Digitalsocial::EU_COUNTRIES, input_html: { class: 'geo' }
+    = f.input :postal_code, as: :string
+  .notes
+    :markdown
+      Please tell us where your organisation is based. If in doubt please use the head office address.
+
+      We'll automatically try and find you on the map based on the address you enter.
 
 :scss
   #map-messages {

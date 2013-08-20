@@ -1,9 +1,14 @@
 = render "breadcrumbs", active_index: 1
 
 = simple_form_for @organisation, url: [:organisations, :build, :create_organisation] do |f|
-  = f.input :name, label: 'Name of your organisation', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
-  
-  = render 'suggestions'
+
+  .field-with-notes
+    .fields
+      = f.input :name, label: 'Name of your organisation', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
+      = render 'suggestions'
+    .notes
+      We are interested in hearing from both formal and informal groups.
+
   = render 'location', f: f
 
   = f.button :submit, 'Next step &raquo;'.html_safe
