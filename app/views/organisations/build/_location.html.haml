@@ -1,6 +1,6 @@
 = f.input :street_address, as: :string, input_html: { class: 'geo' }
-= f.input :locality, as: :string, input_html: { class: 'geo' }
-= f.input :region, as: :string, input_html: { class: 'geo' }
+= f.input :locality, as: :string, input_html: { class: 'geo' }, label: 'Locality (e.g. town or city)'
+= f.input :region, as: :string, input_html: { class: 'geo' }, label: 'Region (e.g. county or province)'
 = f.input :country,  collection: Digitalsocial::EU_COUNTRIES, input_html: { class: 'geo' }
 = f.input :postal_code, as: :string
 
@@ -22,12 +22,12 @@
   }
 
 :ruby
-  messages_class = @organisation.errors.include?(:lat) ? 'error' : 'normal'
+  messages_class = @organisation.errors.include?(:lat) || @organisation.errors.include?(:lng) ? 'error' : 'normal'
 
 = content_tag :div, id: 'map-messages', class: messages_class do
   Click to place a pin at the location of your organisation's main office.
 
-#map{style:"width:100%; height:600px"}
+#map
 
 #lat-lng
   = f.input :lat
@@ -36,13 +36,21 @@
 :javascript
   $(function() {
 
+    var lat = #{@organisation.lat.present? ? @organisation.lat : 'null'};
+    var lng = #{@organisation.lng.present? ? @organisation.lng : 'null'};
+
     // hide the lat long fields
     $("#lat-lng").hide();
 
     var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_MAP_ID}')
       .setView([50,10], 4);
-
     var marker = null;
+
+    // if we've got a lat lng, drop a pin
+    if(lat && lng) {
+      dropPin(lat, lng);
+    }
+
     map.on('click', onMapClick);
 
 
