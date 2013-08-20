@@ -10,8 +10,10 @@
   //border-bottom: 5px solid $orange-shadow;
   font-weight: 500;
   margin-left: 9px;
+
   &:hover {
     background: $orange-hover;
+    color: #fff;
   }
 
   @include button-box-shadow($orange-shadow);
