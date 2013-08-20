@@ -1,8 +1,79 @@
-["Lead", "Funder", "Collaborator"].each do |label|
-  pmn = ProjectMembershipNature.new
-  pmn.label = label
-  pmn.save
+# concept schemes
+
+# Project Membership Natures - all top level. We don't allow other here.
+["Sole Funder",
+  "CoFunder",
+  "Delivery Lead",
+  "Delivery Partner",
+  "Advisory Group Member"
+  # note no other
+  ].each do |label|
+  ProjectMembershipNature.from_label(label, top_level:true)
 end
+
+# Activity Types
+["Research Project",
+  "Event",
+  "Network",
+  "Incubators and Accelerators",
+  "Maker and Hacker Spaces",
+  "Education And Training",
+  "Service Delivery",
+  "Investment And Funding",
+  "Advocating And Campaigning",
+  "Advisory or Expert Body",
+  "Other" # Will be used as a special broad top-level concept scheme to hang narrower ones off.
+].each do |label|
+  ActivityType.from_label(label, top_level:true)
+end
+
+# Areas of Society
+["Work And Employment",
+  "Health And Wellbeing",
+  "Participation And Democracy",
+  "Education And Skills",
+  "Science",
+  "Culture And Arts",
+  "Finance",
+  "Energy And Environment",
+  "Neighbourhood Regeneration",
+  "Other"  # Will be used as a special broad top-level concept scheme to hang narrower ones off.
+].each do |label|
+  AreaOfSociety.from_label(label, top_level:true)
+end
+
+# Technology Focus
+["Open Networks",
+  "Open Data",
+  "Open Knowledge",
+  "Open Hardware"
+  # Note: no 'other'
+].each do |label|
+  TechnologyFocus.from_label(label, top_level:true)
+end
+
+# Technology Method
+["Citizen Science",
+  "Collaborative Consumption",
+  "CrowdFunding",
+  "CrowdSourcing",
+  "CrowdMapping",
+  "Citizen Journalism",
+  "Data Visualisation",
+  "Makers Clubs",
+  "e-democracy",
+  "Geotagging",
+  "Online Learning",
+  "Online Notice Board",
+  "Open Data",
+  "Personal Monitoring",
+  "Peer Support",
+  "Social Networks",
+  "Other"
+].each do |label|
+  TechnologyMethod.from_label(label, top_level:true)
+end
+
 
 # Seed admins
 Admin.create(email: 'admin@test.com', password: 'password', name: 'Test Admin', job_title: 'Tester', organisation: 'Swirrl', organisation_url: 'http://swirrl.com')
@@ -20,15 +91,15 @@ From their project the Safecast team learned that most of the different Geiger c
 
 However, the team were short the minimum $4,000 it would take to develop this new model. The team [once again turned to the crowds](http://www.kickstarter.com/projects/seanbonner/safecast-x-kickstarter-geiger-counter/comments), who responded with both feedback on what they would like from the Geiger counter in addition to what the team proposed, such as a USB connection and the ability to use it with mobile apps. Within the close of its campaign the Geiger counter had raised $104,2681. This money will provide for 250 Geiger counters to be used all over the world by Safecast's volunteers.
 
-To date, the volunteers have mapped radiation levels of more than 3 million data points, providing a comprehensive and accurate dataset that was inconceivable before the Safecast project. 
+To date, the volunteers have mapped radiation levels of more than 3 million data points, providing a comprehensive and accurate dataset that was inconceivable before the Safecast project.
 
 Through the use of crowdfunding, crowdsourcing, open and user generated data the Geiger counter is in many ways a mini study of some of the many projects and campaigns that use the internet to bring people together to solve social problems in new ways.
 
-Over the last couple of months we have been working on identifying examples of Digital Social Innovations (DSI)  like the Safecast Geiger counter, that use digital technologies to bring people together to solve social challenges. Despite this great example of people coming together, the majority of DSI projects are still relatively small scale. A few, like [www.avaaz.org](http://www.avaaz.org) and [www.change.org](www.change.org) are just beginning to achieve mainstream success. 
+Over the last couple of months we have been working on identifying examples of Digital Social Innovations (DSI)  like the Safecast Geiger counter, that use digital technologies to bring people together to solve social challenges. Despite this great example of people coming together, the majority of DSI projects are still relatively small scale. A few, like [www.avaaz.org](http://www.avaaz.org) and [www.change.org](www.change.org) are just beginning to achieve mainstream success.
 
 Through the next 18 months of research we hope to shine a light on the potential for digital social innovation, who the people and organisations are that are fostering its growth and finally what policy makers and others might do to encourage more digital innovation for social good.
 
-We are still looking for great examples of DSI and to learn more about the organisations working on DSI, from grassroots networks to foundations and government departments. If you know of a great case study or if you are working on DSI then please send us a [mail](mailto:contact@digitalsocial.eu) or [tweet](https://twitter.com/digi_si). 
+We are still looking for great examples of DSI and to learn more about the organisations working on DSI, from grassroots networks to foundations and government departments. If you know of a great case study or if you are working on DSI then please send us a [mail](mailto:contact@digitalsocial.eu) or [tweet](https://twitter.com/digi_si).
 
 **Here are our criteria:**
 
@@ -67,7 +138,7 @@ The main areas we will focus on are:
 * A clear definition of Digital Social Innovation (DSI)
 * A set of example DSI services which will grow over time
 * An understanding of DSI practitioners and organisations that currently support them
-* How Digital Social Innovation can be supported within the EU 
+* How Digital Social Innovation can be supported within the EU
 
 Our work on understanding DSI begins with looking at the many inspiring types of digital technologies being used around the world to facilitate new types of collaboration and create social innovations, from crowdfunding and citizen apps to open sensors and social networks. Here are some of the case studies that inspire us.
 
