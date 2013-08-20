@@ -28,9 +28,23 @@ class Organisations::BuildController < ApplicationController
     @organisation.user       = current_user
 
     if @organisation.save
-      render text: 'Saved'
+      redirect_to [:organisations, :build, :edit_organisation]
     else
       render :new_organisation
+    end
+  end
+
+  def edit_organisation
+    @organisation = current_organisation
+  end
+
+  def update_organisation
+    @organisation = current_organisation
+
+    if @organisation.update_attributes(params[:organisation])
+      redirect_to [:organisations, :build, :invite_users]
+    else
+      render :edit_organisation
     end
   end
 

@@ -1,0 +1,16 @@
+= render "breadcrumbs", active_index: 2
+
+= simple_form_for @organisation, url: [:organisations, :build, :update_organisation] do |f|
+  
+  .skip-wizard.clearfix
+    %span The following questions about your organisation can be filled in later on.
+
+    = link_to "Skip this step &raquo;".html_safe, [:organisations, :build, :invite_users], class: 'button'
+
+  = f.input :webpage, label: 'Website URL'
+  = f.input :twitter_username, label: 'Twitter'
+
+  = f.input :fte_range, as: :radio, collection: FTERange.all.resources, value_method: :uri, label: 'Number of staff'
+  = f.input :organisation_type, as: :radio, collection: OrganisationType.all.resources, value_method: :uri
+
+  = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'
