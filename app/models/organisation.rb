@@ -10,6 +10,7 @@ class Organisation
 
   field :no_of_staff, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', datatype: RDF::XSD.integer
   field :twitter, 'http://data.digitalsocial.eu/def/ontology/twitterAccount', is_uri: true # this should be the full URL http://twitter.com/blah
+  field :webpage, 'http://xmlns.com/foaf/0.1/page', is_uri: true
 
   validates :name, presence: true
 

@@ -60,6 +60,8 @@ Digitalsocial::Application.routes.draw do
       post 'create_user'
       get 'new_organisation'
       post 'create_organisation'
+      get 'edit_organisation'
+      post 'update_organisation'
     end
   end
 

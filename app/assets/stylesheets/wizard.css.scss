@@ -16,7 +16,7 @@
     margin-bottom: 0;
 
     span {
-      padding: 5px 5px 5px 60px;
+      padding: 5px 10px 5px 65px;
       position: relative;
       display: block;
       float: left;
@@ -51,13 +51,13 @@
     }
 
     &:first-child span {
-      padding-left: 25px;
+      padding-left: 30px;
     }
 
     &:last-child span {
       pointer-events: none;
       cursor: default;
-      padding-right: 25px;
+      padding-right: 30px;
 
       &:after {
         border: 0;
@@ -168,4 +168,23 @@
     display: none;
   }
 
+}
+
+.skip-wizard {
+  display: block;
+  padding: 12px;
+  background: #ffffe0;
+  margin-top: -18px;
+  margin-bottom: 48px;
+
+  span {
+    line-height: 44px;
+    padding-left: 12px;
+    color: #b2b2a0;
+  }
+
+  .button {
+    float: right;
+    font-size: 20px;
+  }
 }
