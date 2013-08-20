@@ -4,7 +4,30 @@
 = f.input :country, as: :string, input_html: { class: 'geo' }
 = f.input :postal_code, as: :string
 
-#map{style:"width:100%; height:500px"}
+:scss
+  #map-messages {
+    padding: 6px 12px;
+    font-style:italic;
+    background: #f2f2f2;
+
+    &.error {
+      background: #be1622;
+      color: #fff;
+    }
+  }
+
+  #map {
+    width: 100%;
+    height: 600px;
+  }
+
+:ruby
+  messages_class = @organisation.errors.include?(:lat) ? 'error' : 'normal'
+
+= content_tag :div, id: 'map-messages', class: messages_class do
+  Click to place a pin at the location of your organisation's main office.
+
+#map{style:"width:100%; height:600px"}
 
 #lat-lng
   = f.input :lat
@@ -16,8 +39,10 @@
     // hide the lat long fields
     $("#lat-lng").hide();
 
-    var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_MAP_ID}');
-    var marker;
+    var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_MAP_ID}')
+      .setView([50,10], 4);
+
+    var marker = null;
     map.on('click', onMapClick);
 
 
@@ -28,6 +53,7 @@
       var region = $('#signup_presenter_region').val();
       var country = $('#signup_presenter_country').val();
 
+      // if we've got a street address, locality and country, then do the geo coding...
       if(streetAddress.length > 0 &&
           (locality.length > 0) &&
           country.length > 0 ) {
@@ -58,6 +84,8 @@
       url += '&format=json';
       url += '&limit=1';
 
+      setGeoCodingWorking();
+
       $.ajax({
         dataType: 'jsonp',
         jsonp: 'json_callback',
@@ -68,7 +96,13 @@
             dropPin(result.lat, result.lon);
             map.setZoom(16);
             map.panTo(new L.LatLng(result.lat, result.lon));
+            $("#map-messages").html("We've placed a pin based on the address you entered above. Please check the location and move the pin if necessary.");
+          } else {
+            clearLatLong();
           }
+        },
+        error: function() {
+          clearLatLong();
         }
       });
     }
@@ -92,16 +126,23 @@
       }
     }
 
+    function clearLatLong() {
+      if (marker) { map.removeLayer(marker); marker = null; }
+      $("#map-messages").html("We couldn't find a location for the address you entered. Please click on the map to place a pin.");
+      $("input#signup_presenter_lat").val('');
+      $("input#signup_presenter_lng").val('');
+    }
+
+    function setGeoCodingWorking() {
+      $("#map-messages").html('working...');
+    }
 
     function updateLatLngFields(lat, lng) {
-      // also update the text boxes.
       $("input#signup_presenter_lat").val(lat);
       $("input#signup_presenter_lng").val(lng);
     }
 
-    //  $("#lat-lng").hide();
     function onMapClick(e) {
-      // drop a pin on the map
       dropPin( e.latlng.lat, e.latlng.lng );
     }
 
