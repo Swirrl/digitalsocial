@@ -52,10 +52,11 @@ $(function(){
             alert('error');
           },
           success: function(data){
+
+
             $('.suggestions').slideUp('fast', function(){
               organisations.clearSuggestions();
-              organisations.buildSuggestions(data);
-              organisations.showSuggestions();
+              organisations.addSuggestions(data);
             });
           },
           dataType: 'json'
@@ -63,16 +64,20 @@ $(function(){
       }
     },
 
-    buildSuggestions: function(data) {
-      $.each(data, function(index, org){
-        var $suggestion = $('.suggestion-template').clone()
-        $suggestion.removeClass('suggestion-template').addClass('suggestion');
-        $suggestion.find('.header').text(org.name);
-        $suggestion.find('.subheader').text('The address will appear here');
-        $suggestion.find('.image img').attr('src', org.image_url);
-        $suggestion.find('.action a').attr('href', '/organisations/'+org.guid+'/request_to_join')
-        $('.suggestions').append($suggestion);
-      });
+    addSuggestions: function(data) {
+      if (data.length > 0) {
+        $.each(data, function(index, org){
+          var $suggestion = $('.suggestion-template').clone()
+          $suggestion.removeClass('suggestion-template').addClass('suggestion');
+          $suggestion.find('.header').text(org.name);
+          $suggestion.find('.subheader').text('The address will appear here');
+          $suggestion.find('.image img').attr('src', org.image_url);
+          $suggestion.find('.action a').attr('href', '/organisations/'+org.guid+'/request_to_join')
+          $('.suggestions').append($suggestion);
+        });
+        
+        organisations.showSuggestions();
+      }
     },
 
     clearSuggestions: function() {
