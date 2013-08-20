@@ -84,6 +84,18 @@ end
   OrganisationType.from_label(label, top_level:true)
 end
 
+# FTE Range
+["0-5",
+  "6-10",
+  "11-25",
+  "26-50",
+  "51-100",
+  "101-500",
+  "501-1000",
+  "over-1000"
+].each do |label|
+  FTERange.from_label(label, top_level:true)
+end
 
 # Seed admins
 Admin.create(email: 'admin@test.com', password: 'password', name: 'Test Admin', job_title: 'Tester', organisation: 'Swirrl', organisation_url: 'http://swirrl.com')

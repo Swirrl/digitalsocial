@@ -14,6 +14,7 @@ class Organisation
   field :webpage, 'http://xmlns.com/foaf/0.1/page', is_uri: true
 
   tag_field :organisation_type, 'http://data.digitalsocial.eu/def/ontology/organizationType', OrganisationType
+  tag_field :fte_range, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', FTERange
 
   validates :name, presence: true
 

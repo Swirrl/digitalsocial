@@ -42,7 +42,7 @@ class Organisations::BuildController < ApplicationController
     @organisation = current_organisation
 
     if @organisation.update_attributes(params[:organisation])
-      render "Saved"
+      redirect_to [:organisations, :build, :invite_users]
     else
       render :edit_organisation
     end
