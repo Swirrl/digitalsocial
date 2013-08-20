@@ -94,4 +94,9 @@ class Organisation
     "/assets/asteroids/#{rand(5)+1}_70x70.png"
   end
 
+  def self.search_by_name(search)
+    name_predicate = self.fields[:name].predicate.to_s
+    self.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
+  end
+
 end
