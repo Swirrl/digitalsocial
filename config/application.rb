@@ -18,6 +18,7 @@ end
 module Digitalsocial
 
   DATA_GRAPH = 'http://data.digitalsoclal.eu/graph/data'
+  MAPBOX_MAP_ID = 'swirrl.map-fur94vuh'
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

@@ -2,8 +2,9 @@
 
 = simple_form_for @organisation, url: [:organisations, :build, :create_organisation] do |f|
   = f.input :name, label: 'Name of your organisation'
+
   .organisation-results
-  = f.input :lat
-  = f.input :lng
+
+  = render 'location', f: f
 
   = f.button :submit, 'Next step &raquo;'.html_safe
