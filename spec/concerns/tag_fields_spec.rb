@@ -6,7 +6,8 @@ class TestTag
 
   include Tag
   uri_root 'http://example.com/def/concept/test/'
-  concept_scheme 'http://example.com/def/concept-scheme/test'
+  concept_scheme_uri 'http://example.com/def/concept-scheme/test'
+  broad_concept_uri (resource_uri_root + 'other')
 end
 
 
@@ -19,6 +20,11 @@ class TestModel
 end
 
 describe TagFields do
+
+  before do
+    # create an 'other' tag as a broad top level concept
+    other = TestTag.from_label('Other', top_level:true)
+  end
 
   describe 'tag_field' do
     it "should create a field with the symbol" do

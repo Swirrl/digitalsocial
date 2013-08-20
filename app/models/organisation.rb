@@ -77,12 +77,7 @@ class Organisation
   end
 
   def can_edit_project?(project)
-    project_creator_predicate = Project.fields[:creator].predicate.to_s
-
-    Project
-      .where("?uri <#{project_creator_predicate}> <#{self.uri}>")
-      .where("FILTER (?uri = <#{project.uri}>)")
-      .count > 0
+    true # everyone can edit project for now.
   end
 
   def as_json(options = nil)

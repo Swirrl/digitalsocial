@@ -40,14 +40,56 @@ RSpec.configure do |config|
   DatabaseCleaner.strategy = :truncation
   DatabaseCleaner.orm = "mongoid"
 
-  config.before(:each) do
-    # delete everything
+  config.before(:suite) do
+    #delete everything from fuseki
     Tripod::SparqlClient::Update.update('
       # delete from default graph:
       DELETE {?s ?p ?o} WHERE {?s ?p ?o};
       # delete from named graphs:
       DELETE {graph ?g {?s ?p ?o}} WHERE {graph ?g {?s ?p ?o}};
     ')
+
+    # seed everything.
+    puts 'seeding'
+    load "#{Rails.root}/db/seeds.rb"
+  end
+
+  config.before(:each) do
+
+    # delete anything from our 'data graph'
+    Tripod::SparqlClient::Update.update("
+      DELETE {graph <#{Digitalsocial::DATA_GRAPH}> {?s ?p ?o}} WHERE {graph <#{Digitalsocial::DATA_GRAPH}> {?s ?p ?o}};
+    ")
+
+    # delete triples for narrower (for broad-narrow relations).
+    # when we set a narrow concept (we also add a triple to the top concept).
+    Tripod::SparqlClient::Update.update("
+      DELETE {
+        graph ?g {
+          ?s <#{RDF::SKOS.narrower}> ?o .
+        }
+      }
+      WHERE {
+        graph ?g {
+          ?s <#{RDF::SKOS.narrower}> ?o .
+        }
+      };
+    ")
+
+    # delete non top concepts. These will have a broader triple.
+    Tripod::SparqlClient::Update.update("
+      DELETE {
+        graph ?g {
+          ?s ?p ?o .
+        }
+      }
+      WHERE {
+        graph ?g {
+          ?s ?p ?o .
+          ?s <#{RDF::SKOS.broader}> ?o .
+        }
+      };
+    ")
 
     # clean mongo
     DatabaseCleaner.clean
