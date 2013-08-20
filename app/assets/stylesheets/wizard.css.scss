@@ -179,3 +179,17 @@
     font-size: 20px;
   }
 }
+
+form .input.invite-row {
+
+  display: none;
+
+  input[type=text], input[type=email] {
+    display: inline-block;
+  }
+
+  &.invite-row-0, &.invite-row-1 {
+    display: block;
+  }
+
+}

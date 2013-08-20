@@ -7,9 +7,13 @@
 
     = link_to "Skip this step &raquo;".html_safe, [:organisations, :build, :new_project], class: 'button'
 
-  - 10.times do |n|
-    .invite-row
-      = text_field_tag "organisation[invited_users][#{n}][first_name]"
-      = text_field_tag "organisation[invited_users][#{n}][email]"
+  %p Enter the first names and email address of your team members.
+
+  - 50.times do |n|
+    .invite-row.input.revealable{ class: "invite-row-#{n}" }
+      = text_field_tag "organisation[invited_users][#{n}][first_name]", nil, placeholder: "First name", size: 15
+      = text_field_tag "organisation[invited_users][#{n}][email]", nil, placeholder: "Email address", class: 'email', size: 30
+
+  %p= link_to "Add another team member", "#", class: 'reveal-next'
 
   = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'

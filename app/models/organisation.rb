@@ -16,6 +16,8 @@ class Organisation
   tag_field :organisation_type, 'http://data.digitalsocial.eu/def/ontology/organizationType', OrganisationType
   tag_field :fte_range, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', FTERange
 
+  attr_accessor :invited_users
+
   validates :name, presence: true
 
   # override initialise
@@ -112,6 +114,19 @@ class Organisation
 
   def twitter_username
     "@#{self.twitter.to_s.split("/").last}" if self.twitter.present?
+  end
+
+  def invited_users=(ary)
+    ary.reject! { |_, u| u[:first_name].blank? || u[:email].blank? }
+
+    ary.each do |_, u|
+      uip = UserInvitePresenter.new
+      uip.user_first_name = u[:first_name]
+      uip.user_email      = u[:email]
+      uip.organisation    = self
+      uip.save
+    end
+    
   end
 
 end
