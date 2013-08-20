@@ -1,2 +1,109 @@
-= f.input :lat
-= f.input :lng
+= f.input :street_address, as: :string, input_html: { class: 'geo' }
+= f.input :locality, as: :string, input_html: { class: 'geo' }
+= f.input :region, as: :string, input_html: { class: 'geo' }
+= f.input :country, as: :string, input_html: { class: 'geo' }
+= f.input :postal_code, as: :string
+
+#map{style:"width:100%; height:500px"}
+
+#lat-lng
+  = f.input :lat
+  = f.input :lng
+
+:javascript
+  $(function() {
+
+    $("#lat-lng").hide();
+
+    var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_MAP_ID}');
+    var marker;
+    map.on('click', onMapClick);
+
+
+    // handle forms changing
+    $("input.geo").on('blur', function() {
+      var streetAddress = $('#signup_presenter_street_address').val();
+      var locality = $('#signup_presenter_locality').val();
+      var region = $('#signup_presenter_region').val();
+      var country = $('#signup_presenter_country').val();
+
+      if(streetAddress.length > 0 &&
+          (locality.length > 0) &&
+          country.length > 0 ) {
+        geoCode(streetAddress, locality, region, country);
+      }
+    });
+
+    function addSectionToGeoQuery(geoQuery, section) {
+      if (section.length > 0) {
+        if (geoQuery.length > 0) {geoQuery += ', '; }
+        geoQuery += section;
+      }
+      return geoQuery;
+    }
+
+    function geoCode(streetAddress, locality, region, country, postalCode) {
+
+      var url = 'http://nominatim.openstreetmap.org/search';
+
+      geoQuery = '';
+      geoQuery = addSectionToGeoQuery(geoQuery, streetAddress);
+      geoQuery = addSectionToGeoQuery(geoQuery, locality);
+      geoQuery = addSectionToGeoQuery(geoQuery, region);
+      geoQuery = addSectionToGeoQuery(geoQuery, country);
+
+      url += '?q=' + encodeURIComponent(geoQuery);
+      url += '&email=#{Digitalsocial::NOMINATIM_EMAIL}';
+      url += '&format=json';
+      url += '&limit=1';
+
+      $.ajax({
+        dataType: 'jsonp',
+        jsonp: 'json_callback',
+        url: url,
+        success: function(data, textStatus, jqXHR) {
+          if (data && data.length > 0) {
+            var result = data[0];
+            dropPin(result.lat, result.lon);
+            map.setZoom(13);
+            map.panTo(new L.LatLng(result.lat, result.lon));
+          }
+        }
+      });
+    }
+
+    function dropPin(lat, lng) {
+      if (marker) {
+        marker.setLatLng( new L.LatLng(lat, lng) )
+        marker.update();
+      } else {
+        marker = L.marker( new L.LatLng(lat, lng), {
+          draggable: true,
+          icon: L.mapbox.marker.icon({'marker-color': '000'}),
+        });
+        // wire up events to move
+        marker.on('move', function(e) {
+          updateLatLngFields(e.target.getLatLng().lat, e.target.getLatLng().lng);
+        });
+        // set the initial lat long fields
+        updateLatLngFields(lat,lng);
+        marker.addTo(map);
+      }
+    }
+
+
+    function updateLatLngFields(lat, lng) {
+      // also update the text boxes.
+      $("input#signup_presenter_lat").val(lat);
+      $("input#signup_presenter_lng").val(lng);
+    }
+
+    //  $("#lat-lng").hide();
+    function onMapClick(e) {
+      // drop a pin on the map
+      dropPin( e.latlng.lat, e.latlng.lng );
+    }
+
+
+  });
+

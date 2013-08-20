@@ -4,14 +4,24 @@
     %title= [@title, "Digital Social Innovation"].compact.join(" | ")
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
+
+    %link{rel:"stylesheet", href:"//cdn.leafletjs.com/leaflet-0.6.4/leaflet.css"}
+    %link{rel:"stylesheet", href:"//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.css"}
+
+    /[if lte IE 8]
+      %link{rel: "stylesheet", href:"//cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css"}
+
+    %script{src: "//cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"}
+    %script{src: "//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.js"}
+
     = csrf_meta_tags
     = render "typekit"
   %body
-    
+
     .container
       = render "header"
       = render "flash", flash: flash
-      
+
       #main.clearfix
         = yield
 

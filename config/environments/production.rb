@@ -1,4 +1,7 @@
 Digitalsocial::Application.configure do
+
+  Digitalsocial::NOMINATIM_EMAIL = 'nominatim@digitalsocial.eu'
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests

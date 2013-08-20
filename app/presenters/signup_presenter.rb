@@ -5,10 +5,12 @@ class SignupPresenter
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :name, :lat, :lng, :organisation, :user, :organisation_membership
-  attr_accessible :name, :lat, :lng
+  attr_accessor :name, :organisation, :user, :organisation_membership,
+    :lat, :lng, :street_address, :locality, :region, :country, :postal_code # location related fields
 
-  validates :name, :lat, :lng, presence: true
+  attr_accessible :name, :lat, :lng, :street_address, :locality, :region, :country, :postal_code
+
+  validates :name, :lat, :lng,  :street_address, :locality, :country, presence: true
 
   # def self.name
   #   User.name
@@ -27,6 +29,19 @@ class SignupPresenter
     @site.lat = self.lat
     @site.lng = self.lng
     @site
+  end
+
+  def address
+    return @address unless @address.nil?
+
+    @address = Address.new
+    @address.street_address = self.street_address
+    @address.locality = self.locality
+    @address.region = self.region
+    @address.country = self.country
+    @address.postal_code = self.postal_code
+
+    @address
   end
 
   def organisation
@@ -50,9 +65,12 @@ class SignupPresenter
     return false if invalid?
 
     transaction = Tripod::Persistence::Transaction.new
-    if self.site.save(transaction: transaction) && self.organisation.save(transaction: transaction)
-      transaction.commit
 
+    if (self.address.save(transaction: transaction) &&
+      self.site.save(transaction: transaction) &&
+      self.organisation.save(transaction: transaction)
+    )
+      transaction.commit
       self.organisation_membership.save
     else
       transaction.abort

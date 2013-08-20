@@ -1,4 +1,7 @@
 Digitalsocial::Application.configure do
+
+  Digitalsocial::NOMINATIM_EMAIL = 'nominatim-dev@digitalsocial.eu'
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -44,5 +47,5 @@ Digitalsocial::Application.configure do
     config.query_endpoint = 'http://127.0.0.1:3030/dsidev/sparql'
     config.timeout_seconds = 30
   end
-  
+
 end
