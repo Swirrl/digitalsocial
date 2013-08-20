@@ -13,6 +13,7 @@
 :javascript
   $(function() {
 
+    // hide the lat long fields
     $("#lat-lng").hide();
 
     var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_MAP_ID}');
@@ -65,7 +66,7 @@
           if (data && data.length > 0) {
             var result = data[0];
             dropPin(result.lat, result.lon);
-            map.setZoom(13);
+            map.setZoom(16);
             map.panTo(new L.LatLng(result.lat, result.lon));
           }
         }

@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :project_invite_presenter do
     project_uri { FactoryGirl.create(:project).uri.to_s }
-    nature_uri  { ProjectMembershipNature.all.first.uri }
+    nature_uri  { Concepts::ProjectMembershipNature.all.first.uri }
 
     factory :project_invite_presenter_for_new_organisation do
       organisation_name { Faker::Company.name }

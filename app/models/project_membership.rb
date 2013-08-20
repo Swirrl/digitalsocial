@@ -23,7 +23,7 @@ class ProjectMembership
   end
 
   def nature_resource
-    ProjectMembershipNature.find(self.nature)
+    Concepts::ProjectMembershipNature.find(self.nature)
   end
 
 end

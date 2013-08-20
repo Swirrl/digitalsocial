@@ -6,6 +6,6 @@ FactoryGirl.define do
     start_date   { rand(5.years).ago.to_date }
     end_date     { rand(2.years).from_now.to_date }
     creator      { FactoryGirl.create(:organisation).uri.to_s }
-    creator_role { ProjectMembershipNature.all.first.uri }
+    creator_role { Concepts::ProjectMembershipNature.all.first.uri }
   end
 end

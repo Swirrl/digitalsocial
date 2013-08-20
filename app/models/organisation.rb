@@ -1,7 +1,7 @@
 class Organisation
 
   include Tripod::Resource
-  include TagFields
+  include ConceptFields
 
   rdf_type 'http://www.w3.org/ns/org#Organisation'
   graph_uri Digitalsocial::DATA_GRAPH
@@ -13,8 +13,8 @@ class Organisation
   field :twitter, 'http://data.digitalsocial.eu/def/ontology/twitterAccount', is_uri: true # this should be the full URL http://twitter.com/blah
   field :webpage, 'http://xmlns.com/foaf/0.1/page', is_uri: true
 
-  tag_field :organisation_type, 'http://data.digitalsocial.eu/def/ontology/organizationType', OrganisationType
-  tag_field :fte_range, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', FTERange
+  concept_field :organisation_type, 'http://data.digitalsocial.eu/def/ontology/organizationType', Concepts::OrganisationType
+  concept_field :fte_range, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', Concepts::FTERange
 
   validates :name, presence: true
 

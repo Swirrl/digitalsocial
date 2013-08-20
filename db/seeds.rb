@@ -8,7 +8,7 @@
   "Advisory Group Member"
   # note no other
   ].each do |label|
-  ProjectMembershipNature.from_label(label, top_level:true)
+  Concepts::ProjectMembershipNature.from_label(label, top_level:true)
 end
 
 # Activity Types
@@ -24,7 +24,7 @@ end
   "Advisory or Expert Body",
   "Other" # Will be used as a special broad top-level concept scheme to hang narrower ones off.
 ].each do |label|
-  ActivityType.from_label(label, top_level:true)
+  Concepts::ActivityType.from_label(label, top_level:true)
 end
 
 # Areas of Society
@@ -39,7 +39,7 @@ end
   "Neighbourhood Regeneration",
   "Other"  # Will be used as a special broad top-level concept scheme to hang narrower ones off.
 ].each do |label|
-  AreaOfSociety.from_label(label, top_level:true)
+  Concepts::AreaOfSociety.from_label(label, top_level:true)
 end
 
 # Technology Focus
@@ -49,7 +49,7 @@ end
   "Open Hardware"
   # Note: no 'other'
 ].each do |label|
-  TechnologyFocus.from_label(label, top_level:true)
+  Concepts::TechnologyFocus.from_label(label, top_level:true)
 end
 
 # Technology Method
@@ -71,7 +71,7 @@ end
   "Social Networks",
   "Other"
 ].each do |label|
-  TechnologyMethod.from_label(label, top_level:true)
+  Concepts::TechnologyMethod.from_label(label, top_level:true)
 end
 
 # Organisation Type
@@ -81,7 +81,7 @@ end
   "Social Enterprise Charity Or Foundation",
   "Grass Roots Organization Or Community Network"
 ].each do |label|
-  OrganisationType.from_label(label, top_level:true)
+  Concepts::OrganisationType.from_label(label, top_level:true)
 end
 
 # FTE Range
@@ -94,7 +94,7 @@ end
   "501-1000",
   "over-1000"
 ].each do |label|
-  FTERange.from_label(label, top_level:true)
+  Concepts::FTERange.from_label(label, top_level:true)
 end
 
 # Seed admins

@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def project_membership_nature_options
-    ProjectMembershipNature.top_level_tags.collect { |pmn| [pmn.label, pmn.uri] }
+    Concepts::ProjectMembershipNature.top_level_concepts.collect { |pmn| [pmn.label, pmn.uri] }
   end
 
   def project_options

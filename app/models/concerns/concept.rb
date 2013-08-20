@@ -1,4 +1,4 @@
-module Tag
+module Concept
 
   extend ActiveSupport::Concern
 
@@ -41,7 +41,7 @@ module Tag
     end
 
     # these are just the top-concepts
-    def top_level_tags
+    def top_level_concepts
       # need a custom query here as the concept scheme in diff. graph
       self.find_by_sparql("
         SELECT ?uri (<#{self.get_graph_uri}> as ?graph) WHERE {
@@ -102,7 +102,7 @@ module Tag
       cs.save!(:transaction => opts[:transaction])
     end
 
-    # set the broader/narrower relation up for non-top-level tags
+    # set the broader/narrower relation up for non-top-level
     def add_narrow_concept(resource, opts={})
       broad_concept_res = self.find( self.resource_broad_concept_uri ) # this should always exist
       broad_concept_res.narrower = broad_concept_res.narrower << resource.uri
