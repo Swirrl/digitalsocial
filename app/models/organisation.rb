@@ -85,4 +85,11 @@ class Organisation
       .count > 0
   end
 
+  def as_json(options = nil)
+    json = {
+      name: self.name
+    }
+    json
+  end
+
 end

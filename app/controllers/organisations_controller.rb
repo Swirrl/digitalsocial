@@ -32,6 +32,19 @@ class OrganisationsController < ApplicationController
     end
   end
 
+  def index
+    if params[:q].present?
+      # TODO Find orgs by name/location etc.
+      @organisations = Organisation.all.resources
+    else
+      @organisations = Organisation.all.resources
+    end
+
+    respond_to do |format|
+      format.json { render json: @organisations }
+    end
+  end
+
   private
 
   def set_organisation
