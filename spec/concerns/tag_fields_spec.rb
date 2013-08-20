@@ -6,7 +6,7 @@ class TestTag
 
   include Tag
   uri_root 'http://example.com/def/concept/test/'
-  concept_scheme 'http://example.com/def/concept-scheme/test'
+  concept_scheme_uri 'http://example.com/def/concept-scheme/test'
   broad_concept_uri (resource_uri_root + 'other')
 end
 

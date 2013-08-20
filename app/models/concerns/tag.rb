@@ -4,8 +4,8 @@ module Tag
 
   included do
     class_attribute :resource_uri_root
-    class_attribute :resource_concept_scheme
-    class_attribute :broad_concept
+    class_attribute :resource_concept_scheme_uri
+    class_attribute :resource_broad_concept_uri
 
     field :in_scheme, RDF::SKOS.inScheme, :is_uri => true
     field :label, RDF::RDFS.label
@@ -15,20 +15,20 @@ module Tag
 
     def initialize(uri, graph_uri=nil)
       super
-      self.in_scheme = self.class.resource_concept_scheme
+      self.in_scheme = self.class.resource_concept_scheme_uri
       self.sub_class_of = RDF::SKOS.Concept
     end
   end
 
   module ClassMethods
 
-    def concept_scheme(cs_uri)
-      self.resource_concept_scheme = cs_uri
+    def concept_scheme_uri(cs_uri)
+      self.resource_concept_scheme_uri = cs_uri
       graph_uri cs_uri.to_s.gsub('/def/', '/graph/')
     end
 
     def broad_concept_uri(uri)
-      self.broad_concept = uri
+      self.resource_broad_concept_uri = uri
     end
 
     def uri_root(root)
@@ -42,7 +42,7 @@ module Tag
       self.find_by_sparql("
         SELECT ?uri (<#{self.get_graph_uri}> as ?graph) WHERE {
 
-          <#{self.resource_concept_scheme.to_s}> <#{RDF::SKOS.hasTopConcept}> ?uri .
+          <#{self.resource_concept_scheme_uri.to_s}> <#{RDF::SKOS.hasTopConcept}> ?uri .
 
           GRAPH <#{self.get_graph_uri}> {
             ?uri ?p ?o .
@@ -69,38 +69,41 @@ module Tag
         resource = self.new(self.uri_from_slug(slug))
         resource.label = label
 
-        if (opts[:top_level])
-          # add this as a top level concept to the concept scheme
-          # (ONLY USED FOR SEEDING)
-
-          # find the concept scheme, or make it if it doesn't exist
-          cs = nil
-          begin
-            cs = ConceptScheme.find(self.resource_concept_scheme.to_s)
-          rescue Tripod::Errors::ResourceNotFound
-            cs = ConceptScheme.new(self.resource_concept_scheme.to_s, self.get_graph_uri)
-          end
-
-          # add to the top concepts
-          cs.has_top_concept = cs.has_top_concept << resource.uri
-          cs.save!(:transaction => transaction)
-
-        elsif self.broad_concept
-          # set the broader/narrower relation up for non-top-level ones
-          # (only if the broad concept is set at class level
-          broad_concept = self.find( self.broad_concept ) # this should always exist
-          broad_concept.narrower = broad_concept.narrower << resource.uri
-          broad_concept.save!(:transaction => transaction)
-          resource.broader = self.broad_concept
+        if (opts[:top_level]) # (ONLY USED FOR SEEDING)
+          add_top_level_concept(resource, transaction: transaction)
+        elsif self.resource_broad_concept_uri # (only if the broad concept is set at class level)
+          self.add_narrow_concept(resource, transaction: transaction)
         end
 
         resource.save!(:transaction => transaction)
-
         transaction.commit
-
-        resource #return the res.
       end
 
+      resource #return the resource.
+
+    end
+
+    # add res as a top level concept to the concept scheme
+    def add_top_level_concept(resource, opts={})
+      # find the concept scheme, or make it if it doesn't exist
+      cs = nil
+      begin
+        cs = ConceptScheme.find(self.resource_concept_scheme_uri.to_s)
+      rescue Tripod::Errors::ResourceNotFound
+        cs = ConceptScheme.new(self.resource_concept_scheme_uri.to_s, self.get_graph_uri)
+      end
+
+      # add to the top concepts
+      cs.has_top_concept = cs.has_top_concept << resource.uri
+      cs.save!(:transaction => opts[:transaction])
+    end
+
+    # set the broader/narrower relation up for non-top-level tags
+    def add_narrow_concept(resource, opts={})
+      broad_concept_res = self.find( self.resource_broad_concept_uri ) # this should always exist
+      broad_concept_res.narrower = broad_concept_res.narrower << resource.uri
+      broad_concept_res.save!(:transaction => opts[:transaction])
+      resource.broader = self.resource_broad_concept_uri
     end
 
     def slug_from_uri(uri)
