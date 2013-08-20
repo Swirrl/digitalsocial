@@ -48,6 +48,14 @@ class Organisations::BuildController < ApplicationController
     end
   end
 
+  def invite_users
+    @organisation = current_organisation
+  end
+
+  def create_user_invites
+    @organisation = current_organisation
+  end
+
   private
 
   def redirect_to_new_organisation_if_logged_in

@@ -1,0 +1,15 @@
+= render "breadcrumbs", active_index: 3
+
+= simple_form_for @organisation, url: [:organisations, :build, :create_user_invites] do |f|
+  
+  .skip-wizard.clearfix
+    %span Your team members can be invited later on.
+
+    = link_to "Skip this step &raquo;".html_safe, [:organisations, :build, :new_project], class: 'button'
+
+  - 10.times do |n|
+    .invite-row
+      = text_field_tag "organisation[invited_users][#{n}][first_name]"
+      = text_field_tag "organisation[invited_users][#{n}][email]"
+
+  = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'
