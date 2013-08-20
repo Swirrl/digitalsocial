@@ -19,6 +19,11 @@ module Digitalsocial
 
   DATA_GRAPH = 'http://data.digitalsoclal.eu/graph/data'
   MAPBOX_MAP_ID = 'swirrl.map-fur94vuh'
+  EU_COUNTRIES = ["Austria", "Belgium", "Bulgaria", "Cyprus", "Czech Republic",
+    "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary",
+    "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands",
+    "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "United Kingdom"
+  ]
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

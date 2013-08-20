@@ -1,7 +1,7 @@
 = f.input :street_address, as: :string, input_html: { class: 'geo' }
 = f.input :locality, as: :string, input_html: { class: 'geo' }
 = f.input :region, as: :string, input_html: { class: 'geo' }
-= f.input :country, as: :string, input_html: { class: 'geo' }
+= f.input :country,  collection: Digitalsocial::EU_COUNTRIES, input_html: { class: 'geo' }
 = f.input :postal_code, as: :string
 
 :scss
