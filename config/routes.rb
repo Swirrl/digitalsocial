@@ -50,6 +50,7 @@ Digitalsocial::Application.routes.draw do
     member do
       get 'user_invite'
       post 'create_user_invite'
+      get 'request_to_join'
     end
   end
 

@@ -2,22 +2,8 @@
 
 = simple_form_for @organisation, url: [:organisations, :build, :create_organisation] do |f|
   = f.input :name, label: 'Name of your organisation', input_html: { class: 'organisation-auto-suggest' }
-  .suggestions
-    %p Did you mean...
-
-    .suggestion-template.clearfix
-      .image
-        = image_tag 'http://placehold.it/70x70'
-
-      .details
-        .header
-        .subheader
-      
-      .action
-        = link_to 'Request to join', '#', class: 'button'
-
-
-  = f.input :lat
-  = f.input :lng
+  
+  = render 'suggestions'
+  = render 'location', f: f
 
   = f.button :submit, 'Next step &raquo;'.html_safe

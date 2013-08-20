@@ -70,6 +70,7 @@ $(function(){
         $suggestion.find('.header').text(org.name);
         $suggestion.find('.subheader').text('The address will appear here');
         $suggestion.find('.image img').attr('src', org.image_url);
+        $suggestion.find('.action a').attr('href', '/organisations/'+org.guid+'/request_to_join')
         $('.suggestions').append($suggestion);
       });
     },

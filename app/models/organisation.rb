@@ -83,9 +83,15 @@ class Organisation
   def as_json(options = nil)
     json = {
       name: self.name,
-      image_url: "/assets/asteroids/#{rand(5)+1}_70x70.png"
+      guid: self.guid,
+      image_url: self.image_url
     }
     json
+  end
+
+  def image_url
+    # TODO allow logo upload
+    "/assets/asteroids/#{rand(5)+1}_70x70.png"
   end
 
 end
