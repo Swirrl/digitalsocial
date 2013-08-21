@@ -65,6 +65,8 @@ Digitalsocial::Application.routes.draw do
       get 'invite_users'
       put 'create_user_invites'
       get 'new_project'
+      post 'create_project'
+      get 'edit_project'
     end
   end
 

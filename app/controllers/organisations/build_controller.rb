@@ -2,6 +2,7 @@ class Organisations::BuildController < ApplicationController
 
   before_filter :authenticate_user!, except: [:new_user, :create_user]
   before_filter :redirect_to_new_organisation_if_logged_in, only: [:new_user, :create_user]
+  # before_filter { |c| c.override_with_other_params scopes: [:project, :organisation] }
 
   def new_user
     @user = User.new
@@ -60,6 +61,30 @@ class Organisations::BuildController < ApplicationController
     else
       render :invite_users
     end
+  end
+
+  def new_project
+    if (@project = current_organisation.project_resources.first).present?
+      redirect_to [:organisations, :build, :edit_project, @project]
+    end
+
+    @project = Project.new
+  end
+
+  def create_project
+    @project = Project.new
+    @project.creator = current_organisation.uri
+
+    if @project.update_attributes(params[:project])
+      render text: 'Saved'
+    else
+      Rails.logger.debug @project.errors.inspect
+      render :new_project
+    end
+  end
+
+  def edit_project
+    @project = Project.find(params[:id])
   end
 
   private

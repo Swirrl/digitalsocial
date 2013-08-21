@@ -11,7 +11,17 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    #redirect_to [:new, :project] unless current_organisation.any_projects?
+    if params[:q].present?
+      # TODO Find orgs by name/location etc.
+      #@projects = Organisation.search_by_name(params[:q]).to_a
+      @projects = Project.all.resources.to_a
+    else
+      @projects = Project.all.resources.to_a
+    end
+
+    respond_to do |format|
+      format.json { render json: @projects }
+    end
   end
 
   def create

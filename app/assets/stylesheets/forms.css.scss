@@ -9,11 +9,11 @@ form {
       border-bottom: 0;
     }
 
-    &.radio_buttons {
+    &.radio_buttons, &.check_boxes {
       margin-bottom: 18px;
     }
 
-    &.radio {
+    &.radio, &.checkbox {
       padding-left: 6px;
       margin-bottom: 12px;
       font-style: normal;
