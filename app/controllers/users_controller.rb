@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!, only: [:edit_invited, :update_invited, :edit, :update]
+  before_filter :authenticate_user!, only: [:show, :edit_invited, :update_invited, :edit, :update]
 
+  # user dashboard
   def show
 
   end

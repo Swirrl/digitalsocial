@@ -3,10 +3,9 @@
 .skip-wizard.clearfix
   %span The following questions about your project can be filled in later on.
 
-  = link_to "Skip this step &raquo;".html_safe, '/dashboard', class: 'button'
+  = link_to "Skip this step &raquo;".html_safe, user_path, class: 'button'
 
 = simple_form_for @project, url: [:organisations, :build, :update_project] do |f|
   = hidden_field_tag :id, @project.guid
-
 
   = f.button :submit, 'Next step &raquo;'.html_safe

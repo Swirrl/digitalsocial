@@ -16,8 +16,6 @@ class Organisation
   concept_field :organisation_type, 'http://data.digitalsocial.eu/def/ontology/organizationType', Concepts::OrganisationType
   concept_field :fte_range, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', Concepts::FTERange
 
-  attr_accessor :invited_users
-
   validates :name, presence: true
 
   # override initialise
@@ -63,16 +61,22 @@ class Organisation
 
   # Pending project invites for this organisation that can be responded to
   def respondable_project_invites
-    ProjectRequest.where(requestor_type: 'Organisation', requestor_id: self.uri.to_s, responded_to: false, is_invite: true)
+    ProjectRequest.where(requestor_type: 'Organisation', requestor_id: self.uri.to_s, responded_to: false, is_invite: true).all
   end
 
   # Pending project requests made by another organisation to join one of this organisation's projects
   def respondable_project_requests
-    ProjectRequest.where(requestable_type: 'Project', responded_to: false, is_invite: false).in(requestable_id: project_resource_uris)
+    ProjectRequest.where(requestable_type: 'Project', responded_to: false, is_invite: false).in(requestable_id: project_resource_uris).all
   end
 
+  # People who've requested to join this org
   def respondable_user_requests
-    UserRequest.where(responded_to: false, requestable_id: self.uri.to_s)
+    UserRequest.where(responded_to: false, is_invite: false, requestable_id: self.uri.to_s)
+  end
+
+  # People who we've asked to join this org
+  def respondable_user_invites
+    UserRequest.where(responded_to: false, is_invite: true, requestable_id: self.uri.to_s)
   end
 
   def has_respondables?
@@ -89,6 +93,10 @@ class Organisation
 
   def has_respondable_user_requests?
     respondable_user_requests.count > 0
+  end
+
+  def has_respondable_user_invites?
+    respondable_user_invites.count > 0
   end
 
   def can_edit_project?(project)
@@ -124,6 +132,10 @@ class Organisation
     "@#{self.twitter.to_s.split("/").last}" if self.twitter.present?
   end
 
+  def users
+    OrganisationMembership.all.select{ |om| om.organisation_uri == self.uri  }.map { |om| User.find(om.user_id) }
+  end
+
   def invited_users=(ary)
     ary.reject! { |_, u| u[:first_name].blank? || u[:email].blank? }
 
@@ -134,7 +146,7 @@ class Organisation
       uip.organisation    = self
       uip.save
     end
-    
+
   end
 
 end

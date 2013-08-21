@@ -16,12 +16,12 @@
             - current_user.organisation_resources.each do |org|
               - is_current_org = (current_organisation.uri == org.uri)
               = content_tag :li, class: is_current_org ? 'current' : '' do
-                = link_to "/?org_id=#{org.guid}" do
+                = link_to user_path(org_id: org.guid) do
                   = org.name
                   - if is_current_org
                     %i.icon-check
       .links
-        = link_to "Dashboard", "#", class: 'button'
+        = link_to "Dashboard", user_path, class: 'button'
         = link_to "Log out", destroy_user_session_path
 
   :javascript

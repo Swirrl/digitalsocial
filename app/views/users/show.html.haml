@@ -1,0 +1,104 @@
+%h1 Dashboard
+
+:markdown
+  You are currently logged in as **#{current_user.first_name}** from **#{current_organisation.name}**.
+
+%h2 Organisations
+
+%p Your organisations
+
+%ul
+  - current_user.organisation_resources.each do |org|
+    %li
+      = org.name
+      - if org.uri == current_organisation.uri
+        (current)
+        = link_to "Edit", edit_organisation_path(org.guid)
+      - else
+        = link_to "switch", user_path(:org_id => org.guid)
+
+= link_to "Add another organisation", "#"
+
+%hr
+
+%h2 Projects
+
+%h3 #{current_organisation.name}'s Projects
+
+%ul
+  - current_organisation.projects.resources.each do |proj|
+    %li
+      = proj.name
+      = link_to "Edit", edit_project_path(proj.guid)
+
+
+%h3 Pending invites for you to join a project
+
+- if current_organisation.has_respondable_project_invites?
+  %ul
+    - current_organisation.respondable_project_invites.each do |inv|
+      %li
+        You've been invited to #{inv.requestable.name} by #{inv.requestor}.
+      = link_to "accept", "#"
+
+- else
+  %ul
+    %li
+      [none]
+
+%h3 Pending requests by others to join one of your projects
+
+- if current_organisation.has_respondable_project_requests?
+  %ul
+    - current_organisation.respondable_project_requests.each do |req|
+      %li
+        #{inv.requestor} wants to join #{inv.requestable.name}.
+        = link_to "accept", "#"
+- else
+  %ul
+    %li
+      [none]
+
+= link_to "add a project for this organisation", new_project_path
+
+%hr
+
+%h2 Users
+
+%h3 Users in #{current_organisation.name}
+
+%ul
+  - current_organisation.users.each do |u|
+    %li
+      = u.first_name
+      = "(you)." if u.id == current_user.id
+      = link_to "Edit your user profile", edit_user_path(current_user.id)
+
+%h3 Users requesting membership to #{current_organisation.name}
+
+- if current_organisation.has_respondable_user_requests?
+  - current_organisation.respondable_user_requests.each do |req|
+    %ul
+      %li
+        #{req.requestor}
+        = link_to "accept", "#"
+
+- else
+  %ul
+    %li
+      [none]
+
+%h3 Users who have been invited to #{current_organisation.name} but not accepted yet.
+
+- if current_organisation.has_respondable_user_invites?
+  - current_organisation.respondable_user_invites.each do |u|
+    %ul
+      %li
+        = u.user_first_name
+
+- else
+  %ul
+    %li
+      [none]
+
+= link_to "invite another user to this organisation", user_invite_organisation_path(current_organisation.guid)
