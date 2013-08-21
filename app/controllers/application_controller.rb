@@ -35,4 +35,17 @@ class ApplicationController < ActionController::Base
     current_user.organisation_memberships.where(organisation_uri: current_organisation.uri.to_s).first
 	end
 
+	def override_with_other_params(opts={})
+    opts[:scopes].each do |scope|
+      next if params[scope].nil?
+
+      params[scope].each do |label, value|
+        if (other_value = params[scope]["#{label}_other"]).present?
+          params[scope][label] = other_value
+        end
+      end
+      
+    end
+  end
+
 end

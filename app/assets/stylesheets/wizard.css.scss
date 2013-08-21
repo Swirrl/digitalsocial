@@ -4,6 +4,8 @@
 
   @include columns(16);
 
+  float: none;
+  display: block;
   list-style: none;
   overflow: hidden;
   font-size: 20px;
@@ -141,6 +143,7 @@
     display: block;
     padding: 12px;
     background: #fff2e3;
+    width: 936px;
 
     &:nth-child(even) {
       background: #fffaf4;
@@ -156,7 +159,7 @@
 
     .details {
       float: left;
-      width: 480px;
+      width: 600px;
       line-height: 1.5;
 
       .header {

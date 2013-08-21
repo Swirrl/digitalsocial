@@ -22,6 +22,10 @@ module Concept
     def to_s
       label
     end
+
+    def top_level?
+      self.class.top_level_concepts.collect(&:uri).include? self.uri
+    end
   end
 
   module ClassMethods

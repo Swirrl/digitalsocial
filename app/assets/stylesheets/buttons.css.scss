@@ -10,6 +10,8 @@
   //border-bottom: 5px solid $orange-shadow;
   font-weight: 500;
   display: inline-block;
+  @include border-radius(3px);
+  @include transition(all, 0.15s);
 
   &:hover {
     background: $orange-hover;

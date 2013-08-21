@@ -2,7 +2,9 @@
   #user-info
     %a.current-user{href:"#"}
       %i.icon-user
-      #{current_user.first_name} @ #{current_organisation.name}
+      #{current_user.first_name}
+      - if current_organisation.present?
+        @ #{current_organisation.name}
       %i.icon-triangle-down
       %i.icon-triangle-up{style:"display:none"}
     .expanded{style:"display:none"}
