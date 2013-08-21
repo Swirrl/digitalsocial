@@ -1,10 +1,10 @@
 require "spec_helper"
 
-class TestTag
+class TestConcept
   include Tripod::Resource
   graph_uri 'http://example.com/graph/concept-scheme/test'
 
-  include Tag
+  include Concept
   uri_root 'http://example.com/def/concept/test/'
   concept_scheme_uri 'http://example.com/def/concept-scheme/test'
   broad_concept_uri (resource_uri_root + 'other')
@@ -13,20 +13,20 @@ end
 
 class TestModel
   include Tripod::Resource
-  include TagFields
+  include ConceptFields
 
-  tag_field :taggy, 'http://example.com/def/taggy', TestTag, :multivalued => true
-  tag_field :taggy2, 'http://example.com/def/taggy', TestTag
+  concept_field :taggy, 'http://example.com/def/taggy', TestConcept, :multivalued => true
+  concept_field :taggy2, 'http://example.com/def/taggy', TestConcept
 end
 
-describe TagFields do
+describe ConceptFields do
 
   before do
     # create an 'other' tag as a broad top level concept
-    other = TestTag.from_label('Other', top_level:true)
+    other = TestConcept.from_label('Other', top_level:true)
   end
 
-  describe 'tag_field' do
+  describe 'concept_field' do
     it "should create a field with the symbol" do
       TestModel.fields.keys.should include(:taggy)
     end

@@ -19,6 +19,11 @@ module Digitalsocial
 
   DATA_GRAPH = 'http://data.digitalsoclal.eu/graph/data'
   MAPBOX_MAP_ID = 'swirrl.map-fur94vuh'
+  EU_COUNTRIES = ["Austria", "Belgium", "Bulgaria", "Cyprus", "Czech Republic",
+    "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary",
+    "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands",
+    "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "United Kingdom"
+  ]
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -53,6 +58,7 @@ module Digitalsocial
     config.active_support.escape_html_entities_in_json = true
 
     config.autoload_paths << "#{config.root}/app/models/concerns"
+    config.autoload_paths << "#{config.root}/app/models/concepts"
 
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
