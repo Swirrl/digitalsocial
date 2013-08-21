@@ -9,7 +9,7 @@
   = hidden_field_tag :id, @project.guid
 
   = f.input :areas_of_society_list
-  = f.input :technology_focus_list, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources
+  = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources
   = f.input :technology_method_list
 
   = f.button :submit, 'Next step &raquo;'.html_safe
