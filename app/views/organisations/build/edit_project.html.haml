@@ -1,14 +1,14 @@
 = render "breadcrumbs", active_index: 5
 
 .skip-wizard.clearfix
-  %span The following questions about your project can be filled in later on.
+  %span The following details about your activity can completed later.
 
   = link_to "Skip this step &raquo;".html_safe, user_path, class: 'button'
 
 = simple_form_for @project, url: [:organisations, :build, :update_project] do |f|
   = hidden_field_tag :id, @project.guid
 
-  = f.input :name, label: 'Name of your project', input_html: { class: 'project-auto-suggest', autocomplete: :off }
+  = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }
   = render 'suggestions'
 
   = f.input :activity_type_label, label: 'Type of activity', as: :radio, collection: Concepts::ActivityType.top_level_concepts

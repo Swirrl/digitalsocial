@@ -34,7 +34,7 @@ module ApplicationHelper
   end
 
   def build_organisation_steps
-    ["About you", "Org basics", "Org details", "Invite team", "First project", "Project details"]
+    ["About you", "Org basics", "Org details", "Team", "1st activity", "Activity details"]
   end
 
   def build_organisation_breadcrumb_class(n, active_index)

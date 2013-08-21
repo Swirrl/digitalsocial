@@ -1,7 +1,7 @@
 = render "breadcrumbs", active_index: 4
 
 = simple_form_for @project, url: [:organisations, :build, :create_project] do |f|
-  = f.input :name, label: 'Name of your project', input_html: { class: 'project-auto-suggest', autocomplete: :off }
+  = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }
   = render 'suggestions'
 
   = f.input :activity_type_label, label: 'Type of activity', as: :radio, collection: Concepts::ActivityType.top_level_concepts
