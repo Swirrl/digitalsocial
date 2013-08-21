@@ -9,7 +9,7 @@
       - if current_user.organisation_resources.many?
         .orgs
           %p
-            Switch organisation:
+            Switch Organisation
           %ul
             - current_user.organisation_resources.each do |org|
               - is_current_org = (current_organisation.uri == org.uri)
@@ -18,8 +18,9 @@
                   = org.name
                   - if is_current_org
                     %i.icon-check
-      .log-out
-        = link_to "Log out", destroy_user_session_path, class: 'button'
+      .links
+        = link_to "Dashboard", "#", class: 'button'
+        = link_to "Log out", destroy_user_session_path
 
   :javascript
     $("#user-info a.current-user").click( function(e) {
