@@ -40,7 +40,8 @@ form {
       font-style: normal;
 
       input {
-        margin: 0 6px 0 0;
+        margin: 0 8px 0 0;
+        vertical-align: top;
       }
     }
   }
@@ -79,6 +80,12 @@ form {
         }
       }
 
+    }
+
+    &.other {
+      display: none;
+      margin-top: -24px;
+      padding-left: 24px;
     }
 
     span.error {

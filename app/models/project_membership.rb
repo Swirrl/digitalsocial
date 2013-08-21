@@ -7,7 +7,7 @@ class ProjectMembership
 
   field :organisation, 'http://data.digitalsocial.eu/def/ontology/organisation', is_uri: true
   field :project, 'http://data.digitalsocial.eu/def/ontology/activity', is_uri: true
-  field :nature, 'http://data.digitalsocial.eu/def/ontology/role', is_uri: true, multivalued: true
+  field :nature, 'http://data.digitalsocial.eu/def/ontology/role', is_uri: true
 
    # override initialise
   def initialize(uri=nil, graph_uri=nil)

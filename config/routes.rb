@@ -67,6 +67,7 @@ Digitalsocial::Application.routes.draw do
       get 'new_project'
       post 'create_project'
       get 'edit_project'
+      put 'update_project'
     end
   end
 

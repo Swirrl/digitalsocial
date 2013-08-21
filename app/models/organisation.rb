@@ -53,6 +53,14 @@ class Organisation
     projects.count > 0
   end
 
+  def project_memberships_for_project(project)
+    project_membership_org_predicate = ProjectMembership.fields[:organisation].predicate.to_s
+    project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
+    ProjectMembership
+      .where("?uri <#{project_membership_org_predicate}> <#{self.uri}>")
+      .where("?uri <#{project_membership_project_predicate}> <#{project.uri}>")
+  end
+
   # Pending project invites for this organisation that can be responded to
   def respondable_project_invites
     ProjectRequest.where(requestor_type: 'Organisation', requestor_id: self.uri.to_s, responded_to: false, is_invite: true)

@@ -12,9 +12,7 @@ class ProjectsController < ApplicationController
 
   def index
     if params[:q].present?
-      # TODO Find orgs by name/location etc.
-      #@projects = Organisation.search_by_name(params[:q]).to_a
-      @projects = Project.all.resources.to_a
+      @projects = Project.search_by_name(params[:q]).to_a
     else
       @projects = Project.all.resources.to_a
     end

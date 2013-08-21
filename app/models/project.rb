@@ -17,12 +17,10 @@ class Project
   concept_field :technology_focus, 'http://data.digitalsocial.eu/def/ontology/technologyFocus', Concepts::TechnologyFocus, multivalued: true
   concept_field :technology_method, 'http://data.digitalsocial.eu/def/ontology/technologyMethod', Concepts::TechnologyMethod, multivalued: true
 
-  attr_accessor :start_date, :end_date, :creator_natures
+  attr_accessor :start_date, :end_date, :scoped_organisation
 
   validates :name, presence: true
-  validates :creator_natures, presence: { if: :new_record? }
-
-  #after_save :test
+  validates :organisation_natures, presence: { if: :new_record? }
 
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
@@ -63,8 +61,8 @@ class Project
     Organisation.find(self.creator)
   end
 
-  def creator_natures=(natures)
-    natures.reject(&:blank?).each do |nature|
+  def add_creator_memberships!
+    creator_natures.reject(&:blank?).each do |nature|
       creator_membership = ProjectMembership.new
       creator_membership.project      = self.uri.to_s
       creator_membership.organisation = self.creator_resource.uri.to_s
@@ -75,8 +73,28 @@ class Project
     end
   end
 
-  def creator_natures
-    
+  def organisation_natures
+    scoped_project_membership_resources.collect { |pm| pm.nature.to_s }
+  end
+
+  def scoped_project_membership_resources
+    return unless scoped_organisation.present?
+
+    scoped_organisation.project_memberships_for_project(self).resources
+  end
+
+  def organisation_natures=(natures)
+    scoped_project_membership_resources.each(&:destroy)
+
+    natures.reject(&:blank?).each do |nature|
+      pm = ProjectMembership.new
+      pm.project      = self.uri.to_s
+      pm.organisation = self.creator_resource.uri.to_s
+      pm.nature       = nature
+      pm.save
+
+      self.save
+    end
   end
 
   def organisations
@@ -93,10 +111,6 @@ class Project
 
   def any_organisations?
     organisations.count > 0
-  end
-
-  def invite_new_organisation!
-    false
   end
 
   def image_url
@@ -118,12 +132,21 @@ class Project
     json
   end
 
+  def self.search_by_name(search)
+    name_predicate = self.fields[:name].predicate.to_s
+    self.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
+  end
+
   def activity_type_label_other=(other)
-    self.activity_type_label = other
+    self.activity_type_label = other if other.present?
   end
 
   def activity_type_label_other
-    nil
+    self.activity_type_label unless activity_type_resource.top_level?
+  end
+
+  def activity_type_resource
+    Concepts::ActivityType.find(self.activity_type)
   end
 
 end

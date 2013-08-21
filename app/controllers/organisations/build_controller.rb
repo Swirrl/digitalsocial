@@ -65,7 +65,7 @@ class Organisations::BuildController < ApplicationController
 
   def new_project
     if (@project = current_organisation.project_resources.first).present?
-      redirect_to [:organisations, :build, :edit_project, @project]
+      redirect_to organisations_build_edit_project_path(id: @project.guid)
     end
 
     @project = Project.new
@@ -73,18 +73,31 @@ class Organisations::BuildController < ApplicationController
 
   def create_project
     @project = Project.new
-    @project.creator = current_organisation.uri
+    @project.scoped_organisation = current_organisation
+    @project.creator             = current_organisation.uri
 
     if @project.update_attributes(params[:project])
-      render text: 'Saved'
+      redirect_to organisations_build_edit_project_path(id: @project.guid)
     else
-      Rails.logger.debug @project.errors.inspect
       render :new_project
     end
   end
 
   def edit_project
-    @project = Project.find(params[:id])
+    # TODO Ensure organisation is a member of the retrieved project
+    @project = Project.find("http://data.digitalsocial.eu/id/activity/#{params[:id]}")
+    @project.scoped_organisation = current_organisation
+  end
+
+  def update_project
+    @project = Project.find("http://data.digitalsocial.eu/id/activity/#{params[:id]}")
+    @project.scoped_organisation = current_organisation
+
+    if @project.update_attributes(params[:project])
+      redirect_to organisations_build_edit_project_path(id: @project.guid)
+    else
+      render :edit_project
+    end
   end
 
   private
