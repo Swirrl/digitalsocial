@@ -35,19 +35,21 @@ $(function(){
       $('input.radio_buttons').change(function(){
         var $label = $(this).parents('label');
         var name = $(this).attr('name');
-        var other_name = name.replace('label', 'label_other')
-        var $other_input = $('input[name="'+other_name+'"]');
+        var other_name = name.replace('label', 'label_other');
 
-        if ($label.is(':last-child')) {
-          $other_input.parents('.input').slideDown('fast', function(){
-            $other_input.focus();
-          });
-        } else {
-          $other_input.parents('.input').slideUp('fast', function(){
-            $other_input.val("");
-          });
+        if (name != other_name) {
+          var $other_input = $('input[name="'+other_name+'"]');
+
+          if ($label.is(':last-child')) {
+            $other_input.parents('.input').slideDown('fast', function(){
+              $other_input.focus();
+            });
+          } else {
+            $other_input.parents('.input').slideUp('fast', function(){
+              $other_input.val("");
+            });
+          }
         }
-
       })
     }
   }

@@ -74,6 +74,8 @@ class Project
   end
 
   def organisation_natures
+    return unless scoped_organisation.present?
+    
     scoped_project_membership_resources.collect { |pm| pm.nature.to_s }
   end
 
@@ -142,11 +144,13 @@ class Project
   end
 
   def activity_type_label_other
-    self.activity_type_label unless activity_type_resource.top_level?
+    if activity_type_resource.present? && !activity_type_resource.top_level?
+      self.activity_type_label
+    end
   end
 
   def activity_type_resource
-    Concepts::ActivityType.find(self.activity_type)
+    Concepts::ActivityType.find(self.activity_type) if self.activity_type.present?
   end
 
 end

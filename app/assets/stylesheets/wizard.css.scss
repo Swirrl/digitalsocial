@@ -4,6 +4,8 @@
 
   @include columns(16);
 
+  float: none;
+  display: block;
   list-style: none;
   overflow: hidden;
   font-size: 20px;
