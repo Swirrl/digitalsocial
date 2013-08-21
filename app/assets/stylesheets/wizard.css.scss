@@ -1,6 +1,9 @@
 /* Structure */
 
 .breadcrumbs {
+
+  @include columns(16);
+
   list-style: none;
   overflow: hidden;
   font-size: 20px;
@@ -60,6 +63,31 @@
     }
   }
 
+}
+
+// non-desktop breadcrumbs
+@include media-smaller-than-desktop {
+  .breadcrumbs {
+
+    height:auto;
+    margin-bottom: 30px;
+    li {
+      line-height:29px;
+      float:none;
+      display:inline-block;
+      overflow: visible;
+
+      span {
+        padding: 5px !important;
+        float: none;
+        display:inline;
+        overflow: visible;
+        &:after, &:before {
+          display:none;
+        }
+      }
+    }
+  }
 }
 
 /* Colours */
@@ -180,6 +208,15 @@
   }
 }
 
+.wizard-button-wrapper {
+
+  @include columns(16);
+
+  input.button {
+    float:right;
+  }
+}
+
 form .input.invite-row {
 
   display: none;
@@ -192,4 +229,27 @@ form .input.invite-row {
     display: block;
   }
 
+}
+
+
+#map {
+  @include columns(16);
+  height: 500px;
+  margin-bottom:20px;
+  @include media-all-mobile {
+    height: 300px;
+  }
+}
+
+#map-messages-wrapper {
+  @include columns(16);
+  background: #f2f2f2;
+  &.error {
+    background: #be1622;
+    color: #fff;
+  }
+  #map-messages {
+    margin: 6px 12px;
+    font-style:italic;
+  }
 }

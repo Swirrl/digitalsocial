@@ -8,16 +8,32 @@ form {
       @include columns(8);
       clear:left;
       @include clearfix;
-      input {
-        width: 90%;
+
+      div.input {
+        input {
+          width: 90%;
+        }
       }
     }
     .notes {
-      padding-top:20px;
-      color: $dark-grey;
-      line-height: 1.5;
+
+      p + p {
+        margin-bottom:0; // dont margin the last p.
+      }
       @include columns(7);
       @include offset(1);
+
+      font-size: 16px;
+      padding-top:20px;
+      @include media-all-mobile {
+        // as it's underneath
+        margin-top:-30px;
+        padding-top:0;
+        margin-bottom:20px;
+      }
+      color: $dark-grey;
+      line-height: 1.5;
+
     }
   }
 

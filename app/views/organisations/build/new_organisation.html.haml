@@ -11,4 +11,5 @@
 
   = render 'location', f: f
 
-  = f.button :submit, 'Next step &raquo;'.html_safe
+  .wizard-button-wrapper
+    = f.button :submit, 'Next step &raquo;'.html_safe
