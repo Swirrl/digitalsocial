@@ -65,7 +65,7 @@ class Organisations::BuildController < ApplicationController
 
   def new_project
     if (@project = current_organisation.project_resources.first).present?
-      redirect_to organisations_build_edit_project_path(id: @project.guid)
+      #redirect_to organisations_build_edit_project_path(id: @project.guid)
     end
 
     @project = Project.new
@@ -94,7 +94,7 @@ class Organisations::BuildController < ApplicationController
     @project.scoped_organisation = current_organisation
 
     if @project.update_attributes(params[:project])
-      redirect_to organisations_build_edit_project_path(id: @project.guid)
+      redirect_to "/dashboard"
     else
       render :edit_project
     end

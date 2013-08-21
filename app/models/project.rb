@@ -153,4 +153,12 @@ class Project
     Concepts::ActivityType.find(self.activity_type) if self.activity_type.present?
   end
 
+  def technology_focus_array=(array)
+    self.technology_focus_list = array.reject(&:blank?).join(",")
+  end
+
+  def technology_focus_array
+    self.technology_focus_list.split(",").collect(&:strip)
+  end
+
 end
