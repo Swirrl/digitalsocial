@@ -8,11 +8,8 @@
 = simple_form_for @project, url: [:organisations, :build, :update_project] do |f|
   = hidden_field_tag :id, @project.guid
 
-  = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }
-  = render 'suggestions'
-
-  = f.input :activity_type_label, label: 'Type of activity', as: :radio, collection: Concepts::ActivityType.top_level_concepts
-  = f.input :activity_type_label_other, label: false, as: :string, placeholder: 'Other - please state', wrapper_html: { class: 'other' }
-  = f.input :organisation_natures, label: 'Relationship in activity', as: :check_boxes, collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
+  = f.input :areas_of_society_list
+  = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources
+  = f.input :technology_method_list
 
   = f.button :submit, 'Next step &raquo;'.html_safe
