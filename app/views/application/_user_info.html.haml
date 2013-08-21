@@ -1,0 +1,30 @@
+- if user_signed_in?
+  #user-info
+    %a.current-user{href:"#"}
+      %i.icon-user
+      #{current_user.first_name} @ #{current_organisation.name}
+      %i.icon-triangle-down
+      %i.icon-triangle-up{style:"display:none"}
+    .expanded{style:"display:none"}
+      - if current_user.organisation_resources.many?
+        .orgs
+          %p
+            Switch organisation:
+          %ul
+            - current_user.organisation_resources.each do |org|
+              - is_current_org = (current_organisation.uri == org.uri)
+              = content_tag :li, class: is_current_org ? 'current' : '' do
+                = link_to "/?org_id=#{org.guid}" do
+                  = org.name
+                  - if is_current_org
+                    %i.icon-check
+      .log-out
+        = link_to "Log out", destroy_user_session_path, class: 'button'
+
+  :javascript
+    $("#user-info a.current-user").click( function(e) {
+      e.preventDefault();
+      $("#user-info .expanded").toggle();
+      $("#user-info i.icon-triangle-down").toggle();
+      $("#user-info i.icon-triangle-up").toggle();
+    });

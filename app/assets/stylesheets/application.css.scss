@@ -1,11 +1,15 @@
+@charset "UTF-8";
+
 @import url("http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic");
 
 @import "reset";
 @import "grid";
+@import "entypo.css.scss";
 @import "variables";
 @import "mixins";
 @import "global";
 
+@import "user_info";
 @import "header";
 @import "footer";
 @import "pages";

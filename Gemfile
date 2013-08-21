@@ -13,6 +13,7 @@ gem 'mongoid-paperclip', require: 'mongoid_paperclip'
 gem 'mongoid_slug'
 gem 'activemodel', require: 'active_model'
 gem 'country_select'
+gem 'entypo-rails'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

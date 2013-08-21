@@ -1,8 +1,10 @@
 #header {
-  padding: 48px 0;
+  padding-top: 48px;
+  padding-bottom: 48px;
 
   @include media-all-mobile {
-    padding: 24px 0 12px 0;
+    padding-top:24px;
+    padding-bottom: 12px
   }
 
   width: 100%;

@@ -243,7 +243,7 @@ form .input.invite-row {
 
 #map-messages-wrapper {
   @include columns(16);
-  background: #f2f2f2;
+  background: $very-light-grey;
   &.error {
     background: #be1622;
     color: #fff;
