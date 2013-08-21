@@ -6,7 +6,7 @@
   = render 'suggestions'
 
   = f.input :activity_type_label, label: 'Type of activity', as: :radio, collection: Concepts::ActivityType.top_level_concepts, value_method: :uri
-  = f.input :activity_type_label_other, as: :string, label: 'Other type of activity'
+  = f.input :activity_type_label_other, as: :string, label: false, placeholder: 'Other - please state', wrapper_html: { class: 'other' }
   
   = f.input :organisation_natures, label: 'Relationship in activity', as: :check_boxes, collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
 
