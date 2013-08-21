@@ -19,7 +19,7 @@ class Project
 
   attr_accessor :start_date, :end_date, :scoped_organisation
 
-  validates :name, presence: true
+  validates :name, :activity_type, presence: true
   validates :organisation_natures, presence: { if: :new_record? }
 
   # override initialise
@@ -75,7 +75,7 @@ class Project
 
   def organisation_natures
     return unless scoped_organisation.present?
-    
+
     scoped_project_membership_resources.collect { |pm| pm.nature.to_s }
   end
 
