@@ -235,7 +235,7 @@ form .input.invite-row {
 #map {
   @include columns(16);
   height: 500px;
-  margin-bottom:20px;
+  margin-bottom:20px !important;
   @include media-all-mobile {
     height: 300px;
   }
