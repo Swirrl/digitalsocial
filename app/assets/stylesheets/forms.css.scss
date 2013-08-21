@@ -70,7 +70,7 @@ form {
       font-size: 100%;
       font-family: $chaparral;
       border: 0;
-      background: #f2f2f2;
+      background: $very-light-grey;
       border: 2px solid transparent;
       outline: none;
       @include transition(all, 0.15s);
