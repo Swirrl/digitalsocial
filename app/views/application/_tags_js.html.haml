@@ -1,0 +1,19 @@
+:javascript
+  $(function() {
+
+    var tagField = $("#{tag_field_selector}");
+
+    tagField.tagit({
+      tagSource: "#{tag_source_url}",
+      autocomplete: {delay: 100, minLength: 2},
+      readOnly: #{ (!!local_assigns.has_key?(:read_only) && read_only).to_s }
+    });
+
+    $("#{suggested_tags_selector}").click(function(e) {
+      e.preventDefault();
+      var tagText = $(this).text();
+      tagField.tagit("createTag", tagText);
+      var ul = $(this).closest('div').find('ul.tagit');
+      ul.animate({scrollTop: (ul.height()-2)});
+    });
+  });

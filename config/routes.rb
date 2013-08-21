@@ -27,6 +27,7 @@ Digitalsocial::Application.routes.draw do
       post 'create_invite'
     end
     collection do
+      get 'tags'
       post 'create_request'
     end
   end

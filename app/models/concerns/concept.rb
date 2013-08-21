@@ -44,6 +44,11 @@ module Concept
       self.resource_uri_root += "/" unless resource_uri_root[-1] == "/"
     end
 
+    # search existing concepts
+    def search_for_label_starting_with(term)
+      self.where("?uri <#{RDF::RDFS.label}> ?label").where("FILTER regex(?label, \"^#{term}\", \"i\")").resources
+    end
+
     # these are just the top-concepts
     def top_level_concepts
       # need a custom query here as the concept scheme in diff. graph

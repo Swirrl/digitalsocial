@@ -94,7 +94,7 @@ class Organisations::BuildController < ApplicationController
     @project.scoped_organisation = current_organisation
 
     if @project.update_attributes(params[:project])
-      redirect_to "/dashboard"
+      redirect_to user_path #dashboard
     else
       render :edit_project
     end

@@ -4,7 +4,6 @@ class UsersController < ApplicationController
 
   # user dashboard
   def show
-
   end
 
   def new

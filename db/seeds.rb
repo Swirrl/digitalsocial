@@ -55,9 +55,9 @@ end
 # Technology Method
 ["Citizen Science",
   "Collaborative Consumption",
-  "CrowdFunding",
-  "CrowdSourcing",
-  "CrowdMapping",
+  "Crowd Funding",
+  "Crowd Sourcing",
+  "Crowd Mapping",
   "Citizen Journalism",
   "Data Visualisation",
   "Makers Clubs",

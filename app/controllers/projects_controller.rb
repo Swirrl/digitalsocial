@@ -5,6 +5,15 @@ class ProjectsController < ApplicationController
   before_filter :set_project_invite, only: [:create_invite]
   before_filter :check_project_can_be_edited, only: [:edit, :update]
 
+  # return tags for the tagit controls
+  # expects a tag_class param with the name of the tag class to query
+  # expects a term param with the search term
+  def tags
+    klass = Object.const_get("Concepts").const_get(params[:tag_class])
+    results = klass.search_for_label_starting_with(params[:term]).map &:label
+    render :json => results.uniq.sort
+  end
+
   def new
     @project = Project.new
     @project_request = ProjectRequestPresenter.new

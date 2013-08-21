@@ -1,0 +1,3 @@
+= content_tag :p, :id => p_id do
+  Suggested tags (click to add):
+  = tag_class.top_level_concepts.map(&:label).reject{|tag| tag.downcase == "other" }.map { |tag| "<a href='#'>#{tag}</a>" }.join(", ").html_safe

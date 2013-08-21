@@ -2,8 +2,6 @@
 %html
   %head
     %title= [@title, "Digital Social Innovation"].compact.join(" | ")
-    = stylesheet_link_tag    "application"
-    = javascript_include_tag "application"
 
     %link{rel:"stylesheet", href:"//cdn.leafletjs.com/leaflet-0.6.4/leaflet.css"}
     %link{rel:"stylesheet", href:"//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.css"}
@@ -11,8 +9,18 @@
     /[if lte IE 8]
       %link{rel: "stylesheet", href:"//cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css"}
 
+    =# jquery ui style for tagit.
+    %link{rel:"stylesheet", href:"//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css"}
+
+    = stylesheet_link_tag    "application"
+
+    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
+    %script{src: "//code.jquery.com/ui/1.10.3/jquery-ui.js"}
+
     %script{src: "//cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"}
     %script{src: "//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.js"}
+
+    = javascript_include_tag "application"
 
     = csrf_meta_tags
     = render "typekit"

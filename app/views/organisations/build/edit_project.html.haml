@@ -8,8 +8,16 @@
 = simple_form_for @project, url: [:organisations, :build, :update_project] do |f|
   = hidden_field_tag :id, @project.guid
 
-  = f.input :areas_of_society_list
+  %div.tag-field
+    = f.input :areas_of_society_list
+    = render 'suggested_tags', tag_class: Concepts::AreaOfSociety, p_id: 'areas-of-society-suggested-tags'
+    = render 'tags_js', tag_field_selector: "#project_areas_of_society_list", suggested_tags_selector: "p#areas-of-society-suggested-tags a", tag_source_url: tags_projects_url(tag_class: "AreaOfSociety")
+
   = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources
-  = f.input :technology_method_list
+
+  %div.tag-field
+    = f.input :technology_method_list
+    = render 'suggested_tags', tag_class: Concepts::TechnologyMethod, p_id: 'technology-method-suggested_tags'
+    = render 'tags_js', tag_field_selector: "#project_technology_method_list", suggested_tags_selector: "p#technology-method-suggested_tags a", tag_source_url: tags_projects_url(tag_class: "AreaOfSociety")
 
   = f.button :submit, 'Next step &raquo;'.html_safe
