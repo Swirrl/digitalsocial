@@ -3,7 +3,7 @@ class Project
   include Tripod::Resource
   include ConceptFields
 
-  rdf_type 'http://xmlns.com/foaf/0.1/Project'
+  rdf_type 'http://data.digitalsocial.eu/def/ontology/Activity'
   graph_uri 'http://data.digitalsoclal.eu/graph/data'
 
   field :label, 'http://www.w3.org/2000/01/rdf-schema#label'
