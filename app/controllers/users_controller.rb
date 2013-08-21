@@ -2,6 +2,10 @@ class UsersController < ApplicationController
 
   before_filter :authenticate_user!, only: [:edit_invited, :update_invited, :edit, :update]
 
+  def show
+
+  end
+
   def new
     @user = User.new
   end
@@ -61,5 +65,5 @@ class UsersController < ApplicationController
       render :edit_invited
     end
   end
-  
+
 end
