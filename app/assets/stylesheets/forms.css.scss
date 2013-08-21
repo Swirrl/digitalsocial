@@ -46,17 +46,18 @@ form {
       border-bottom: 0;
     }
 
-    &.radio_buttons {
+    &.radio_buttons, &.check_boxes {
       margin-bottom: 18px;
     }
 
-    &.radio {
+    &.radio, &.checkbox {
       padding-left: 6px;
       margin-bottom: 12px;
       font-style: normal;
 
       input {
-        margin: 0 6px 0 0;
+        margin: 0 8px 0 0;
+        vertical-align: top;
       }
     }
   }
@@ -95,6 +96,12 @@ form {
         }
       }
 
+    }
+
+    &.other {
+      display: none;
+      margin-top: -24px;
+      padding-left: 24px;
     }
 
     span.error {

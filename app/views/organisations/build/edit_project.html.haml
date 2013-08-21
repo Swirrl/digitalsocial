@@ -1,0 +1,18 @@
+= render "breadcrumbs", active_index: 5
+
+.skip-wizard.clearfix
+  %span The following questions about your project can be filled in later on.
+
+  = link_to "Skip this step &raquo;".html_safe, '/dashboard', class: 'button'
+
+= simple_form_for @project, url: [:organisations, :build, :update_project] do |f|
+  = hidden_field_tag :id, @project.guid
+
+  = f.input :name, label: 'Name of your project', input_html: { class: 'project-auto-suggest', autocomplete: :off }
+  
+  = f.input :activity_type_label, label: 'Type of activity', as: :radio, collection: Concepts::ActivityType.top_level_concepts
+  = f.input :activity_type_label_other, as: :string, label: false, placeholder: 'Other - please state', wrapper_html: { class: 'other' }
+  
+  = f.input :organisation_natures, label: 'Relationship in activity', as: :check_boxes, collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
+
+  = f.button :submit, 'Next step &raquo;'.html_safe
