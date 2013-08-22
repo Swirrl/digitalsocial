@@ -82,6 +82,10 @@ class SignupPresenter
     false
   end
 
+  def organisation_guid
+    self.organisation.guid
+  end
+
   def persisted?
     false
   end

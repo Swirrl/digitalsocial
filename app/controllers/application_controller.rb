@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
+  helper_method :current_organisation
+
 	protected
 
 	def layout_by_resource
@@ -21,10 +23,15 @@ class ApplicationController < ActionController::Base
 	  end
 	end
 
+  # given the last bit of the URI, set the org into the sesh
+  def set_current_organisation(org_id)
+    session[:org_id] = org_id
+  end
+
 	# TODO Need to allow the current_user's "organisation scope"
 	# to be set in the UI
 	def current_organisation
-		session[:org_id] = params[:org_id] if params[:org_id]
+    set_current_organisation(params[:org_id]) if params[:org_id]
 
 		@current_organisation ||=
 		  current_user.organisation_resources.find { |o| o.uri == "http://data.digitalsocial.eu/id/organization/#{session[:org_id]}" } ||
@@ -44,7 +51,7 @@ class ApplicationController < ActionController::Base
           params[scope][label] = other_value
         end
       end
-      
+
     end
   end
 

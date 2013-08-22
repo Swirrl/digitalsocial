@@ -29,6 +29,7 @@ class Organisations::BuildController < ApplicationController
     @organisation.user       = current_user
 
     if @organisation.save
+      set_current_organisation( @organisation.organisation_guid ) # so that the following steps are for the righ org.
       redirect_to [:organisations, :build, :edit_organisation]
     else
       render :new_organisation
