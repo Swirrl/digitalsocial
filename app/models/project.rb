@@ -7,6 +7,7 @@ class Project
   graph_uri 'http://data.digitalsoclal.eu/graph/data'
 
   field :name, 'http://www.w3.org/2000/01/rdf-schema#label'
+  field :description, 'http://purl.org/dc/terms/description'
   field :webpage, 'http://xmlns.com/foaf/0.1/page', is_uri: true
 
   field :duration, 'http://purl.org/NET/c4dm/event.owl#time'

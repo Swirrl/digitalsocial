@@ -12,7 +12,7 @@
   margin-left: 0;
   height: 46px;
   line-height: 38px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   font-weight: 300;
   font-style: italic;
 
@@ -133,6 +133,16 @@
   }
 }
 
+.wizard-intro {
+  p {
+    @include columns(16);
+    font-size: 16px;
+    color: $dark-grey;
+  }
+  margin-bottom:6px;
+  @include clearfix;
+}
+
 .suggestions {
 
   margin-bottom: 60px;
@@ -196,7 +206,6 @@
   display: block;
   padding: 12px;
   background: #ffffe0;
-  margin-top: -18px;
   margin-bottom: 48px;
 
   span {

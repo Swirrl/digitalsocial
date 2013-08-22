@@ -2,9 +2,14 @@
 
 @import url("http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic");
 
+
 @import "reset";
-@import "grid";
+
 @import "entypo.css.scss";
+
+
+@import "grid";
+
 @import "variables";
 @import "mixins";
 @import "global";
@@ -18,7 +23,9 @@
 @import "admin";
 
 @import "forms";
+@import "tag-it.css.scss"; // from vendor
+@import "tag_fields"; // our css to tweak the tag it stuff.
+
 @import "buttons";
 @import "wizard";
 
-@import "tag-it.css"

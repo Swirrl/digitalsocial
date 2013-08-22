@@ -5,35 +5,43 @@ form {
     margin-bottom:0;
 
     .field, .fields {
+
       @include columns(8);
-      clear:left;
-      @include clearfix;
+      @include offset(1);
+
+
 
       div.input {
-        input {
+        textarea,
+        input[type="text"],
+        input[type="email"],
+        input[type="password"]  {
           width: 90%;
         }
       }
     }
+
+
     .notes {
 
-      p + p {
+      clear:left;
+      @include clearfix;
+
+      p:last-child {
         margin-bottom:0; // dont margin the last p.
       }
+
       @include columns(7);
-      @include offset(1);
 
       font-size: 16px;
       padding-top:20px;
       @include media-all-mobile {
         // as it's underneath
-        margin-top:-30px;
-        padding-top:0;
+        // margin-top:-30px;
+        // padding-top:0;
         margin-bottom:20px;
       }
       color: $dark-grey;
-      line-height: 1.5;
-
     }
   }
 
@@ -65,7 +73,7 @@ form {
   .input {
     margin-bottom: 36px;
 
-    input[type=text], input[type=email], input[type=password] {
+    input[type=text], input[type=email], input[type=password], textarea {
       padding: 12px;
       font-size: 100%;
       font-family: $chaparral;
@@ -120,7 +128,11 @@ form {
 
     }
   }
+}
 
+p.suggested-tags {
+  margin-top:-30px;
+  font-size:16px;
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */

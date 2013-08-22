@@ -1,13 +1,19 @@
 = render "breadcrumbs", active_index: 1
 
+.wizard-intro
+  :markdown
+    To add you to the map, we need to collect some information about your organisation and its activities.
+
+    Some information is optional (mandatory fields are indicated with an asterisk), but the more you can provide, the better. We'll add you to the map as soon as we have some basic data, but you will be able to edit and expand on your answers later.
+
 = simple_form_for @organisation, url: [:organisations, :build, :create_organisation] do |f|
 
   .field-with-notes
+    .notes
+      %p We are interested in hearing from both formal and informal groups.
     .fields
       = f.input :name, label: 'Name of your organisation', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
       = render 'suggestions'
-    .notes
-      We are interested in hearing from both formal and informal groups.
 
   = render 'location', f: f
 

@@ -3,21 +3,13 @@
 = simple_form_for @user, url: [:organisations, :build, :create_user] do |f|
 
   .field-with-notes
-    .field
+    .notes
+      %p Please tell us how we should address you, and let us know an email and password that you'd like to use to log in. You'll only have to do this once.
+    .fields
       = f.input :first_name, placeholder: 'Enter your first name'
-    .notes
-      So we know how to address you.
-
-  .field-with-notes
-    .field
       = f.input :email, placeholder: 'Enter your email address'
-    .notes
-      You'll use this to log in, and so we can contact you.
-
-  .field-with-notes
-    .field
       = f.input :password, placeholder: 'Enter a new password', required: true
-    .notes
-      For a bit of privacy.
 
-  = f.button :submit, 'Next step &raquo;'.html_safe
+
+  .wizard-button-wrapper
+    = f.button :submit, 'Next step &raquo;'.html_safe
