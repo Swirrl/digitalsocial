@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(params[:user])
       sign_in @user, bypass: true
-      redirect_to :projects
+      redirect_to user_url # dashboard
     else
       render :edit
     end
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
 
     if @user.save
       sign_in @user.user, bypass: true
-      redirect_to :projects
+      redirect_to user_url # dashboard
     else
       render :edit_invited
     end

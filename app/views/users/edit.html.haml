@@ -1,6 +1,6 @@
 %h1 Edit User Profile
 
-= simple_form_for @user do |f|
+= simple_form_for @user, url: user_path do |f|
   = f.input :first_name, required: true
   = f.input :email, required: true
 

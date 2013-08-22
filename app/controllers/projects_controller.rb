@@ -37,7 +37,7 @@ class ProjectsController < ApplicationController
     if @project.update_attributes(params[:project])
       @project.create_time_interval!
       @project.add_creator_membership!(current_organisation)
-      redirect_to :projects
+      redirect_to user_url # dashboard
     else
       render :new
     end
@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
 
   def update
     if update_project
-      redirect_to :projects, notice: "Project updated."
+      redirect_to user_url, notice: "Project updated."
     else
       render :edit
     end
@@ -97,7 +97,7 @@ class ProjectsController < ApplicationController
   end
 
   def check_project_can_be_edited
-    redirect_to :projects unless current_organisation.can_edit_project?(@project)
+    redirect_to user_url unless current_organisation.can_edit_project?(@project)
   end
 
   def update_project

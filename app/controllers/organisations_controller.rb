@@ -8,9 +8,21 @@ class OrganisationsController < ApplicationController
 
   end
 
+  # issue a request for the current user to join the org passed in the id.
+  def request_to_join
+    build_user_request(current_user, @organisation)
+
+    if user_request.save
+      # TODO send email.
+      render :text => 'worked!'
+    else
+      render :text => "failed! #{user_request.errors.inspect}"
+    end
+  end
+
   def update
     if update_organisation
-      redirect_to :projects
+      redirect_to user_url # dashboard
     else
       render :edit
     end
@@ -22,8 +34,11 @@ class OrganisationsController < ApplicationController
 
   def create_user_invite
     @user_invite = UserInvitePresenter.new
-    @user_invite.attributes   = params[:user_invite]
-    @user_invite.sender = current_organisation_membership
+    user_invite_parameters = params[:user_invite_presenter]
+
+    @user_invite.user_first_name = user_invite_parameters[:user_first_name]
+    @user_invite.user_email = user_invite_parameters[:user_email]
+    @user_invite.organisation = @organisation
 
     if @user_invite.save
       render text: "User added"
@@ -48,7 +63,11 @@ class OrganisationsController < ApplicationController
   private
 
   def set_organisation
-    @organisation = current_organisation
+    if params[:id].present?
+      @organisation = Organisation.find("http://data.digitalsocial.eu/id/organization/#{params[:id]}")
+    else
+      @organisation = current_organisation
+    end
   end
 
   def update_organisation
@@ -68,7 +87,7 @@ class OrganisationsController < ApplicationController
   end
 
   def ensure_user_is_organisation_owner
-    redirect_to :projects unless current_organisation_membership.owner?
+    redirect_to user_url unless current_organisation_membership.owner?
   end
 
 end

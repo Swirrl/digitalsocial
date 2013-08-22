@@ -1,5 +1,6 @@
-- if user_signed_in?
-  #user-info
+
+#user-info
+  - if user_signed_in?
     %a.current-user{href:"#"}
       %i.icon-user
       #{current_user.first_name}
@@ -24,10 +25,15 @@
         = link_to "Dashboard", user_path, class: 'button'
         = link_to "Log out", destroy_user_session_path
 
-  :javascript
-    $("#user-info a.current-user").click( function(e) {
-      e.preventDefault();
-      $("#user-info .expanded").toggle();
-      $("#user-info i.icon-triangle-down").toggle();
-      $("#user-info i.icon-triangle-up").toggle();
-    });
+    :javascript
+      $("#user-info a.current-user").click( function(e) {
+        e.preventDefault();
+        $("#user-info .expanded").toggle();
+        $("#user-info i.icon-triangle-down").toggle();
+        $("#user-info i.icon-triangle-up").toggle();
+      });
+
+  - else
+    %a.current-user{href: new_user_session_path}
+      %i.icon-login
+      Log In

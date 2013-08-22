@@ -11,7 +11,7 @@ class User
   ## Database authenticatable
   field :email,              type: String, default: ""
   field :encrypted_password, type: String, default: ""
-  
+
   ## Recoverable
   field :reset_password_token,   type: String
   field :reset_password_sent_at, type: Time
@@ -32,7 +32,7 @@ class User
   field :first_name, type: String
 
   has_many :organisation_memberships
-  
+
   validates :first_name, :email, presence: true
   validates :email, uniqueness: true
   validates :email, format: { with: Devise.email_regexp }
@@ -45,6 +45,11 @@ class User
 
   def send_request_digest(organisation)
     RequestMailer.request_digest(self, organisation).deliver
+  end
+
+  # requests for this user to join another org
+  def pending_join_org_requests
+    UserRequest.where(responded_to: false, is_invite: false, requestor_id: self.id)
   end
 
   def self.send_request_digests

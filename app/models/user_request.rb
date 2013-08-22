@@ -13,7 +13,7 @@ class UserRequest < Request
 
   def invite_user!
     user_invite = build_user_invite
-    
+
     if user_invite.save
       self.responded_to = true
       self.save
@@ -22,6 +22,16 @@ class UserRequest < Request
     else
       false
     end
+  end
+
+  def build_user_request(user, org)
+    user_request = UserRequest.new
+    user_request.user_email = user.email
+    user_request.user_first_name = user.first_name
+    user_request.is_invite = false
+    user_request.requestor = user
+    user_request.requestable = org
+    user_request
   end
 
   def build_user_invite

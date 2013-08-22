@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 	  if resource.is_a?(Admin)
 	    admin_root_path
 	  elsif resource.is_a?(User)
-	  	projects_path
+	  	user_path
 	  end
 	end
 

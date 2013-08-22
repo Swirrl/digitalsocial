@@ -74,11 +74,6 @@ class Organisation
     UserRequest.where(responded_to: false, is_invite: false, requestable_id: self.uri.to_s)
   end
 
-  # People who we've asked to join this org
-  def respondable_user_invites
-    UserRequest.where(responded_to: false, is_invite: true, requestable_id: self.uri.to_s)
-  end
-
   def has_respondables?
     has_respondable_project_invites? || has_respondable_project_requests? || has_respondable_user_requests?
   end
@@ -93,10 +88,6 @@ class Organisation
 
   def has_respondable_user_requests?
     respondable_user_requests.count > 0
-  end
-
-  def has_respondable_user_invites?
-    respondable_user_invites.count > 0
   end
 
   def can_edit_project?(project)
@@ -133,7 +124,7 @@ class Organisation
   end
 
   def users
-    OrganisationMembership.all.select{ |om| om.organisation_uri == self.uri  }.map { |om| User.find(om.user_id) }
+    OrganisationMembership.all.select{ |om| om.organisation_uri == self.uri  }.map { |om| User.find(om.user_id) rescue nil }.reject { |u| u.nil? }
   end
 
   def invited_users=(ary)
