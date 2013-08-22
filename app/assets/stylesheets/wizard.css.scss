@@ -166,6 +166,16 @@
       background: rgba(255, 255, 255, 0.75);
     }
 
+    .messages {
+      padding-top:12px;
+      clear:left;
+
+      &.error {
+        color: $red;;
+      }
+
+    }
+
     .details {
       float: left;
       line-height: 1.5;
@@ -255,7 +265,7 @@ form .input.invite-row {
   @include columns(16);
   background: $very-light-grey;
   &.error {
-    background: #be1622;
+    background: $red;
     color: #fff;
   }
   #map-messages {

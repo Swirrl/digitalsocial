@@ -24,7 +24,7 @@ class UserRequest < Request
     end
   end
 
-  def build_user_request(user, org)
+  def self.build_user_request(user, org)
     user_request = UserRequest.new
     user_request.user_email = user.email
     user_request.user_first_name = user.first_name
@@ -45,7 +45,7 @@ class UserRequest < Request
   private
 
   def email_does_not_already_belong_to_organisation
-    errors.add(:user_email, 'email already belongs to organisation') if email_already_belongs_to_organisation?
+    errors.add(:user_email, 'This email already belongs to the organisation') if email_already_belongs_to_organisation?
   end
 
   def email_already_belongs_to_organisation?
@@ -56,7 +56,7 @@ class UserRequest < Request
   end
 
   def duplicate_request_does_not_already_exist
-    errors.add(:user_email, 'request already exists for this email address') if duplicate_request_exists?
+    errors.add(:user_email, 'A request already exists for this email address') if duplicate_request_exists?
   end
 
   def duplicate_request_exists?

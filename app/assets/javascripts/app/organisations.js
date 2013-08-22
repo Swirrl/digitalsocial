@@ -18,7 +18,7 @@ $(function(){
             _this.getSuggestions(true);
           else
             $(this).data('timer', setTimeout(_this.getSuggestions, 500));
-          
+
           e.preventDefault();
           return false;
         });
@@ -34,8 +34,8 @@ $(function(){
         organisations.hideSuggestions();
         return;
       }
-        
-      else {    
+
+      else {
         $.ajax({
           type: 'GET',
           url: '/organisations',
@@ -72,12 +72,45 @@ $(function(){
           $suggestion.find('.header').text(org.name);
           $suggestion.find('.subheader').text('The address will appear here');
           $suggestion.find('.image img').attr('src', org.image_url);
-          $suggestion.find('.action a').attr('href', '/organisations/'+org.guid+'/request_to_join')
+          $suggestion.find('.action a').attr('href', '#'+org.guid)
           $('.suggestions').append($suggestion);
         });
-        
+
+        organisations.wireUpRequestButtons();
         organisations.showSuggestions();
       }
+    },
+
+    wireUpRequestButtons: function() {
+      $('.suggestions .action a').click(function(e) {
+        e.preventDefault();
+        var target = $(e.target);
+        var href = target.attr('href');
+        var guid = href.substring(1);
+
+        var messages = target.closest('.suggestion').find('.messages');
+
+        messages.removeClass('error');
+        messages.html('working...');
+
+        $.ajax({
+          url: '/organisations/'+guid+'/request_to_join',
+          dataType: 'json',
+          success: function(data, textStatus, jqXHR) {
+            if (data.errorMessage) {
+              messages.addClass('error');
+              messages.html(data.errorMessage);
+            } else {
+              window.location= '/user'; // redirect to dashboard.
+            }
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            messages.addClass('error');
+            messages.html('Something Went Wrong');
+          }
+        });
+      });
+      // '/organisations/'+org.guid+'/request_to_join'
     },
 
     clearSuggestions: function() {

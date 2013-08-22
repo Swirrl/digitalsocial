@@ -18,7 +18,7 @@ $(function(){
             _this.getSuggestions(true);
           else
             $(this).data('timer', setTimeout(_this.getSuggestions, 500));
-          
+
           e.preventDefault();
           return false;
         });
@@ -34,8 +34,8 @@ $(function(){
         projects.hideSuggestions();
         return;
       }
-        
-      else {    
+
+      else {
         $.ajax({
           type: 'GET',
           url: '/projects',
@@ -75,7 +75,7 @@ $(function(){
           $suggestion.find('.action a').attr('href', '/projects/'+project.guid+'/request_to_join')
           $('.suggestions').append($suggestion);
         });
-        
+
         projects.showSuggestions();
       }
     },

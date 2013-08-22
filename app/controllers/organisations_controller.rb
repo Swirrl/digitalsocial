@@ -10,19 +10,27 @@ class OrganisationsController < ApplicationController
 
   # issue a request for the current user to join the org passed in the id.
   def request_to_join
-    build_user_request(current_user, @organisation)
+    user_request = UserRequest.build_user_request(current_user, @organisation)
 
     if user_request.save
       # TODO send email.
-      render :text => 'worked!'
+      respond_to do |format|
+        format.html { render :text => 'success' } # for testing really
+        format.js { render :json => {:success => true }}
+      end
     else
-      render :text => "failed! #{user_request.errors.inspect}"
+      error_message = user_request.errors.messages.values.join(', ')
+      respond_to do |format|
+        format.html { render :text => error_message } # for testing really
+        format.js { render :json => {:success => false, :errorMessage => error_message } }
+      end
+
     end
   end
 
   def update
     if update_organisation
-      redirect_to user_url # dashboard
+      redirect_to user
     else
       render :edit
     end
@@ -87,7 +95,7 @@ class OrganisationsController < ApplicationController
   end
 
   def ensure_user_is_organisation_owner
-    redirect_to user_url unless current_organisation_membership.owner?
+    redirect_to :projects unless current_organisation_membership.owner?
   end
 
 end
