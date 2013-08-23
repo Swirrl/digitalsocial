@@ -124,7 +124,8 @@ class Organisation
   end
 
   def twitter_username
-    "@#{self.twitter.to_s.split("/").last}" if self.twitter.present?
+    username = self.twitter.to_s.split("/")[3] # Do cleaner way
+    "@#{username}" if username.present?
   end
 
   def users
