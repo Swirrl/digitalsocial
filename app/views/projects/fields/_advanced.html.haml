@@ -1,5 +1,23 @@
 .field-with-notes
   .notes
+    
+      
+  .field
+    .input
+      = f.label :start_date, "Project start date", class: 'dates'
+      = f.select :start_date_label, grouped_options_for_select(project_start_date_options, f.object.start_date_label), include_blank: "Select a start date"   
+
+.field-with-notes
+  .notes
+    
+
+  .field
+    .input
+      = f.label :end_date_label, "Project end date", class: 'dates'
+      = f.select :end_date_label, grouped_options_for_select(project_start_date_options(include_ongoing: true), f.object.end_date_label), include_blank: "Select an end date"
+      
+.field-with-notes
+  .notes
     :markdown
       How would you best describe the areas of society that this activity aims to impact? Click the suggestions under the box to add them, or add your own by typing into the box (type a commma betwen each new entry).
   .field

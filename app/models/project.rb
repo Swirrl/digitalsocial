@@ -10,7 +10,7 @@ class Project
   field :description, 'http://purl.org/dc/terms/description'
   field :webpage, 'http://xmlns.com/foaf/0.1/page', is_uri: true
 
-  field :duration, 'http://purl.org/NET/c4dm/event.owl#time'
+  field :duration, 'http://purl.org/NET/c4dm/event.owl#time', is_uri: true
   field :creator, 'http://data.digitalsocial.eu/def/ontology/recordedBy', is_uri: true
 
   concept_field :activity_type, 'http://data.digitalsocial.eu/def/ontology/activityType', Concepts::ActivityType
@@ -18,7 +18,7 @@ class Project
   concept_field :technology_focus, 'http://data.digitalsocial.eu/def/ontology/technologyFocus', Concepts::TechnologyFocus, multivalued: true
   concept_field :technology_method, 'http://data.digitalsocial.eu/def/ontology/technologyMethod', Concepts::TechnologyMethod, multivalued: true
 
-  attr_accessor :start_date, :end_date, :scoped_organisation
+  attr_accessor :scoped_organisation
 
   validates :name, :activity_type, :organisation_natures, presence: true
 
@@ -35,27 +35,35 @@ class Project
     guid
   end
 
-  def create_time_interval!
-    new_time_interval = TimeInterval.new
-    new_time_interval.start_date = start_date
-    new_time_interval.end_date   = end_date
-    new_time_interval.save
-
-    self.duration = new_time_interval.uri.to_s
-    save
-  end
-
   def duration_resource
-    TimeInterval.find(self.duration)
+    TimeInterval.find(self.duration) if self.duration.present?
   end
 
-  # def start_date
-  #   duration_resource.start_date if duration.present?
-  # end
+  def start_date_label
+    duration_resource.start_date.strftime("%B %Y") if self.duration.present? && duration_resource.start_date.present?
+  end
 
-  # def end_date
-  #   duration_resource.end_date if duration.present?
-  # end
+  def start_date_label=(label)
+    dr = self.duration.present? ? duration_resource : TimeInterval.new
+    dr.start_date = label.present? ? Date.parse(label) : nil
+    dr.save
+
+    self.duration = dr.uri.to_s
+    self.save
+  end
+
+  def end_date_label
+    duration_resource.end_date.strftime("%B %Y") if self.duration.present? && duration_resource.end_date.present?
+  end
+
+  def end_date_label=(label)
+    dr = self.duration.present? ? duration_resource : TimeInterval.new
+    dr.end_date = label.present? ? Date.parse(label) : nil
+    dr.save
+
+    self.duration = dr.uri.to_s
+    self.save
+  end
 
   def creator_resource
     Organisation.find(self.creator)
