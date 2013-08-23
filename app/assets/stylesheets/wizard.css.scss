@@ -167,13 +167,10 @@
     }
 
     .messages {
-      padding-top:12px;
       clear:left;
-
       &.error {
         color: $red;;
       }
-
     }
 
     .details {

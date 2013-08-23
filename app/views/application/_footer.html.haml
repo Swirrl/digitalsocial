@@ -1,14 +1,27 @@
-#footer
-  .container.clearfix
-    .copy
-      &copy; 2013 Digital Social Innovation
-    .links
-      %a{ href: "https://twitter.com/digi_si" }
-        = image_tag "icons/footer-twitter.png", alt: "Twitter"
-      
-      %a{ href: "mailto:contact@digitalsocial.eu" }
-        = image_tag "icons/footer-mail.png", alt: "Email"
-      
-      %span
-        Built by
-        %a{ href: "http://www.swirrl.com" } Swirrl
+%footer
+  .hr3
+
+  .credits
+    &copy; 2013 Digital Social Innovation. Built By Swirrl.
+
+  .contact
+    %a{ href: "https://twitter.com/digi_si" }
+      %i.icon-social-twitter
+      @digi_si
+
+    %a{ href: "mailto:contact@digitalsocial.eu" }
+      %i.icon-paper-plane
+      contact@digitalsocial.eu
+
+  %nav
+    %a{ href: "/blog" }
+      %i.icon-rss
+      Blog
+
+    %a{ href: "/about" }
+      %i.icon-circled-help
+      About
+
+    %a{ href: "/events" }
+      %i.icon-calendar
+      Events

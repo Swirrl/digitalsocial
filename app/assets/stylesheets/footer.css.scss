@@ -70,42 +70,20 @@
   }
 }
 
-#footer {
-  color: #fff;
-  line-height: 24px;
-  background: $mblue;
-  padding: 36px 0;
+footer {
+  margin-top:36px;
 
-  .container {
-    display: block;
-  }
-
-  .copy {
-    float: left;
-  }
-
-  .links {
-    float: right;
-    line-height: 24px;
-
-    img {
-      margin-left: 18px;
-    }
-
-    span, a {
-      vertical-align: top;
-    }
-
-    span {
-      color: #cfebf1;
-      margin-left: 24px;
-      margin-right: 6px;
-    }
-
+  nav, .credits, .contact {
+    margin-top:12px;
     a {
-      color: #fff;
+      padding:0 24px 0 0;
     }
   }
+
+  .credits {
+    margin-top:0;
+  }
+
 }
 
 #baseline {
