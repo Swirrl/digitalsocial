@@ -72,15 +72,16 @@ $(function(){
           $suggestion.find('.header').text(org.name);
           $suggestion.find('.subheader').text('The address will appear here');
           $suggestion.find('.image img').attr('src', org.image_url);
-          $suggestion.find('.action a').attr('href', '#'+org.guid)
+          $suggestion.find('.action a').attr('href', '/organisations/'+org.guid+'/request_to_join')
           $('.suggestions').append($suggestion);
         });
 
-        organisations.wireUpRequestButtons();
+       // organisations.wireUpRequestButtons();
         organisations.showSuggestions();
       }
     },
 
+    // EXPERIMENTAL (NOT USED AT THE MO)
     wireUpRequestButtons: function() {
       $('.suggestions .action a').click(function(e) {
         e.preventDefault();

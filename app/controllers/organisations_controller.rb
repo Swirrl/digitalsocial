@@ -14,17 +14,10 @@ class OrganisationsController < ApplicationController
 
     if user_request.save
       # TODO send email.
-      respond_to do |format|
-        format.html { render :text => 'success' } # for testing really
-        format.js { render :json => {:success => true }}
-      end
+      redirect_to user_url, :notice => "You have requested to join #{@organisation.name}. Members of #{@organisation.name} have be notified and we'll let you know when your request is accepted"
     else
       error_message = user_request.errors.messages.values.join(', ')
-      respond_to do |format|
-        format.html { render :text => error_message } # for testing really
-        format.js { render :json => {:success => false, :errorMessage => error_message } }
-      end
-
+      redirect_to user_url, :notice => "Your request failed. #{error_message}"
     end
   end
 
@@ -56,9 +49,15 @@ class OrganisationsController < ApplicationController
   end
 
   def index
-    if params[:q].present?
-      # TODO Find orgs by name/location etc.
+    if params[:q].present? # used for auto complete suggestions.
+      # TODO Find orgs by name
       @organisations = Organisation.search_by_name(params[:q]).to_a
+
+      current_organisations = current_user.organisation_resources
+      requested_orgs = current_user.pending_join_org_requests.map &:requestable
+
+      @organisations.reject!{ |o| current_organisations.map(&:uri).include?(o.uri) } # don't include ones already a member of
+      @organisations.reject!{ |o| requested_orgs.map(&:uri).include?(o.uri) } # don't include ones already requested to join
     else
       @organisations = Organisation.all.resources.to_a
     end
