@@ -69,6 +69,11 @@ class Organisation
     ProjectRequest.where(requestable_type: 'Project', responded_to: false, is_invite: false).in(requestable_id: project_resource_uris).all
   end
 
+  # Pending requests by this org to join a project.
+  def pending_project_requests
+    ProjectRequest.where(requestable_type: 'Project', requestor_id: self.uri.to_s, responded_to: false, is_invite: false).all
+  end
+
   # People who've requested to join this org
   def respondable_user_requests
     UserRequest.where(responded_to: false, is_invite: false, requestable_id: self.uri.to_s)

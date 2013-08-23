@@ -20,8 +20,17 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    if params[:q].present?
+    if params[:q].present? # used for auto complete suggestions.
       @projects = Project.search_by_name(params[:q]).to_a
+
+      Rails.logger.debug @projects.map &:name
+
+      current_projects = current_organisation.projects.resources
+      requested_projects = current_organisation.pending_project_requests.map &:requestable
+
+      @projects.reject!{ |p| current_projects.map(&:uri).include?(p.uri) } # don't include ones we're already a member of
+      @projects.reject!{ |p| requested_projects.map(&:uri).include?(p.uri) } # don't include ones already requested to join
+
     else
       @projects = Project.all.resources.to_a
     end
