@@ -113,12 +113,7 @@ form {
     }
 
     span.error {
-      display: inline-block;
-      background-color: $red;
-      color: #fff;
-      padding: 6px 12px;
-      margin-left: 2px;
-      font-size: 16px;
+      margin-bottom: 0;
     }
 
     &.field_with_errors {
@@ -128,6 +123,17 @@ form {
 
     }
   }
+
+  span.error {
+    display: inline-block;
+    background-color: $red;
+    color: #fff;
+    padding: 6px 12px;
+    margin-left: 2px;
+    font-size: 16px;
+    margin-bottom: 36px;
+  }
+
 }
 
 p.suggested-tags {

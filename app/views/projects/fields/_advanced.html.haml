@@ -1,0 +1,24 @@
+.field-with-notes
+  .notes
+    :markdown
+      How would you best describe the areas of society that this activity aims to impact? Click the suggestions under the box to add them, or add your own by typing into the box (type a commma betwen each new entry).
+  .field
+    = f.input :areas_of_society_list, label: "Areas of Society Impacted"
+    = render 'suggested_tags', tag_class: Concepts::AreaOfSociety, p_id: 'areas-of-society-suggested-tags'
+    = render 'tags_js', tag_field_id: "project_areas_of_society_list", suggested_tags_selector: "p#areas-of-society-suggested-tags a", tag_source_url: tags_projects_url(tag_class: "AreaOfSociety")
+
+.field-with-notes
+  .notes
+    :markdown
+      We have created some broad groupings of technology focus to help us understand the wider trends that are taking place in DSI. Please tell us which of the options below best describe the your activity.
+  .field
+    = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources
+
+.field-with-notes
+  .notes
+    :markdown
+      What type of digital tech is involved in this activity? Again, you can click the suggestions under the box to add them, or add your own by typing into the box (type a commma betwen each new entry).
+  .field
+    = f.input :technology_method_list, label: "Technology Method"
+    = render 'suggested_tags', tag_class: Concepts::TechnologyMethod, p_id: 'technology-method-suggested_tags'
+    = render 'tags_js', tag_field_id: "project_technology_method_list", suggested_tags_selector: "p#technology-method-suggested_tags a", tag_source_url: tags_projects_url(tag_class: "AreaOfSociety")

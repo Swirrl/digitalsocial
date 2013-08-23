@@ -1,8 +1,8 @@
-%h1 Add a project
+%h1 Add project
 
-%h3 Join existing project
-= render "request_form", project_request: @project_request
+= simple_form_for @project do |f|
+  = render "projects/fields/basic", f: f
+  = render "projects/fields/advanced", f: f
 
-%h3 Create new project
-= render "form", project: @project
-
+  .wizard-button-wrapper
+    = f.button :submit, 'Create project'.html_safe

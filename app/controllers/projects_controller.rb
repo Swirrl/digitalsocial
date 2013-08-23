@@ -33,11 +33,11 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new
+    @project.scoped_organisation = current_organisation
+    @project.creator             = current_organisation.uri
 
     if @project.update_attributes(params[:project])
-      @project.create_time_interval!
-      @project.add_creator_membership!(current_organisation)
-      redirect_to user_url # dashboard
+      redirect_to :user, notice: "Project created!"
     else
       render :new
     end
@@ -56,12 +56,14 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-
+    @project.scoped_organisation = current_organisation
   end
 
   def update
-    if update_project
-      redirect_to user_url, notice: "Project updated."
+    @project.scoped_organisation = current_organisation
+
+    if @project.update_attributes(params[:project])
+      redirect_to :user, notice: "Project updated!"
     else
       render :edit
     end
@@ -98,22 +100,6 @@ class ProjectsController < ApplicationController
 
   def check_project_can_be_edited
     redirect_to user_url unless current_organisation.can_edit_project?(@project)
-  end
-
-  def update_project
-    transaction = Tripod::Persistence::Transaction.new
-
-    @duration = @project.duration_resource
-    @duration.start_date = params[:project][:start_date]
-    @duration.end_date   = params[:project][:end_date]
-
-    if @project.update_attributes(params[:project], transaction: transaction) && @duration.save(transaction: transaction)
-      transaction.commit
-      true
-    else
-      transaction.abort
-      false
-    end
   end
 
 end

@@ -20,8 +20,7 @@ class Project
 
   attr_accessor :start_date, :end_date, :scoped_organisation
 
-  validates :name, :activity_type, presence: true
-  validates :organisation_natures, presence: { if: :new_record? }
+  validates :name, :activity_type, :organisation_natures, presence: true
 
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
