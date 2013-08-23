@@ -1,53 +1,23 @@
 #home
-  #banner
-    .text
-      %h1 We need your help
-      %br
-      %h2 Understanding Digital Social Innovation across Europe
+  #map
 
-  #content.lcol
+  :javascript
+    $(function() {
 
-    :markdown
+      var defaultCenter = [50,10];
+      var defaultZoom = 4;
+      var selectedZoom = 16;
 
-      The internet is playing an ever increasing role in how we work, play, and
-      relate to each other.
+      var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_MAP_ID}')
+        .setView(defaultCenter,defaultZoom);
+    });
 
-      As a natural result of this many of the most exciting new innovations
-      that address social issues are being developed online.  We call this
-      exciting new field *Digital Social Innovation* and it includes
-      a diverse set of activities and actors.
-
-      However, while the field of digital social innovation practice is
-      growing rapidly, there is little knowledge around what best practice
-      looks like, where it is happening, who the digital social innovators
-      are and what strategic approaches can best support its growth.
-
-      The EU Commission recognises this issue and has commissioned a
-      study to explore and assess the emerging landscape. This will be
-      carried out by an EU wide partnership of *Nesta* (UK), *Esade Business
-      School* (Spain), *Waag Society* (NL), *Institut de Recherche et d'Innovation*
-      (Fr) and *FutureEverything* (UK).
-
-      **Are you on the Digital Social Innovation Map?**
-
-      If you are active in this area, please help us by completing a
-      short survey.
-
+  .about
+    %p
       We are really interested in understanding who the digital social
       innovators are, where you are and how you are connected to each
       other. To understand this we are developing an EU wide map of
       organisations, listing what kind of activities they are involved in,
       how they are supporting it and how they are connected to others.
 
-      We will create a resource that helps digital social innovators
-      connect while also developing an understanding for the EU and national
-      governments on the state of Digital Social Innovation in different
-      parts of EU.
-
-      If you are keen on discussion more, drop us [a tweet](https://twitter.com/digi_si),
-      send us [an email](mailto:contact@digitalsocial.eu) or come
-      to one of the [DSI events](/events) we are planning on attending.
-
-    %br/
-
-    = link_to "Add me to the map", [:organisations, :build, :new_user], class: 'button'
+    = link_to "Add yourself to the map", [:organisations, :build, :new_user], class: 'button'
