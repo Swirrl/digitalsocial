@@ -1,14 +1,15 @@
-= render "breadcrumbs", active_index: 2
+.wizard
+  = render "breadcrumbs", active_index: 2
 
-.skip-wizard.clearfix
-  %span The following details about your organisation can be completed later.
+  .skip-wizard.clearfix
+    %span The following details about your organisation can be completed later.
 
-  = link_to "Skip for now &raquo;".html_safe, [:organisations, :build, :invite_users], class: 'button'
+    = link_to "Skip for now &raquo;".html_safe, [:organisations, :build, :invite_users], class: 'button'
 
 
-= simple_form_for @organisation, url: [:organisations, :build, :update_organisation] do |f|
+  = simple_form_for @organisation, url: [:organisations, :build, :update_organisation] do |f|
 
-  = render 'organisations/fields/advanced', f: f
+    = render 'organisations/fields/advanced', f: f
 
-  .wizard-button-wrapper
-    = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'
+    .wizard-button-wrapper
+      = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'
