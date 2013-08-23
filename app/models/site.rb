@@ -13,6 +13,10 @@ class Site
     super(uri || "http://data.digitalsocial.eu/id/site/#{Guid.new}")
   end
 
+  def address_resource
+    Address.find(self.address)
+  end
+
   before_save :round_lat_lng
 
   private

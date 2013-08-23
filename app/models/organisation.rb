@@ -27,6 +27,10 @@ class Organisation
     self.uri.to_s.split("/").last
   end
 
+  def to_param
+    guid
+  end
+
   def primary_site_resource
     Site.find(self.primary_site) if self.primary_site
   end

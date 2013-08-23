@@ -5,16 +5,32 @@ class SignupPresenter
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :name, :organisation, :user, :organisation_membership,
+  attr_accessor :name, :organisation, :user, :organisation_membership, :site, :address,
     :lat, :lng, :street_address, :locality, :region, :country, :postal_code # location related fields
 
   attr_accessible :name, :lat, :lng, :street_address, :locality, :region, :country, :postal_code
 
   validates :name, :lat, :lng,  :street_address, :locality, :country, presence: true
 
-  # def self.name
-  #   User.name
-  # end
+  def initialize(org=nil)
+    if org.present?
+      existing_site    = org.primary_site_resource
+      existing_address = org.primary_site_resource.address_resource
+
+      self.organisation   = org
+      self.site           = existing_site
+      self.address        = existing_address
+
+      self.name           = org.name
+      self.lat            = existing_site.lat
+      self.lng            = existing_site.lng
+      self.street_address = existing_address.street_address
+      self.locality       = existing_address.locality
+      self.region         = existing_address.region
+      self.country        = existing_address.country
+      self.postal_code    = existing_address.postal_code
+    end
+  end
 
   def attributes=(values)
     sanitize_for_mass_assignment(values).each do |attr, value|
@@ -23,18 +39,15 @@ class SignupPresenter
   end
 
   def site
-    return @site unless @site.nil?
-
-    @site = Site.new
+    @site ||= Site.new
     @site.lat = self.lat
     @site.lng = self.lng
+    @site.address = self.address.uri
     @site
   end
 
   def address
-    return @address unless @address.nil?
-
-    @address = Address.new
+    @address ||= Address.new
     @address.street_address = self.street_address
     @address.locality = self.locality
     @address.region = self.region
@@ -45,9 +58,7 @@ class SignupPresenter
   end
 
   def organisation
-    return @organisation unless @organisation.nil?
-
-    @organisation = Organisation.new
+    @organisation ||= Organisation.new
     @organisation.name         = self.name
     @organisation.primary_site = self.site.uri
     @organisation
@@ -72,7 +83,7 @@ class SignupPresenter
     )
       transaction.commit
       self.organisation_membership.save
-    else
+    else      
       transaction.abort
     end
 

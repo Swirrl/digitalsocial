@@ -4,10 +4,6 @@ class OrganisationsController < ApplicationController
   before_filter :set_organisation
   before_filter :ensure_user_is_organisation_owner, only: [:invite_user]
 
-  def edit
-
-  end
-
   # issue a request for the current user to join the org passed in the id.
   def request_to_join
     user_request = UserRequest.build_user_request(current_user, @organisation)
@@ -21,11 +17,32 @@ class OrganisationsController < ApplicationController
     end
   end
 
+  def edit
+    @organisation = current_organisation
+  end
+
   def update
-    if update_organisation
-      redirect_to user
+    @organisation = current_organisation
+
+    if @organisation.update_attributes(params[:organisation])
+      redirect_to :user, notice: 'Organisation details updated.'
     else
       render :edit
+    end
+  end
+
+  def edit_location
+    @organisation = SignupPresenter.new(current_organisation)
+  end
+
+  def update_location
+    @organisation = SignupPresenter.new(current_organisation)    
+    @organisation.attributes = params[:signup_presenter]
+
+    if @organisation.save
+      redirect_to :user, notice: 'Organisation location updated.'
+    else
+      render :edit_location
     end
   end
 
