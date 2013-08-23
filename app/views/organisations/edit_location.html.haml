@@ -1,0 +1,8 @@
+%h1 Edit location
+
+= simple_form_for @organisation, url: [:update_location, current_organisation] do |f|
+
+  = render 'organisations/fields/location', f: f
+
+  .wizard-button-wrapper
+    = f.button :submit, 'Update organisation'
