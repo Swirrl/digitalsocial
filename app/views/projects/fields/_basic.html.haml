@@ -1,35 +1,31 @@
 .field-with-notes
-  .notes
-    %p Please enter the official title you would give to this activity, i.e. an event name; a research project title etc.
   .field
     - if f.object.new_record?
       = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }
       = render 'suggestions'
-    
+
     - else
       = f.input :name, label: 'Name of your activity', input_html: { autocomplete: :off }
+  .notes
+    %p Please enter the official title you would give to this activity, i.e. an event name; a research project title etc.
 
 .field-with-notes
-  .notes
-    %p Describe what your activity is about. Please keep this as brief as possible (no more than a few hundred words).
   .field
     = f.input :description, as: :text
+  .notes
+    %p Describe what your activity is about. Please keep this as brief as possible (no more than a few hundred words).
 
 .field-with-notes
-  .notes
-    :markdown
-      People work on or support DSI in different kinds of ways. How would you best describe this activity?
-
-      We would like to understand what the main focus of your activity is - we realise the list below may not be a perfect fit, but please try to pick the best option possible from the list below.
-
-      If you feel your activity is really different, use the _Other_ option, and tell us a bit about it in a few words.
   .field
     = f.input :activity_type_label, label: 'Type of activity', as: :radio, collection: Concepts::ActivityType.top_level_concepts
     = f.input :activity_type_label_other, label: false, as: :string, placeholder: 'Other - please state', wrapper_html: { class: 'other' }
     = f.error :activity_type
+  .notes
+    :markdown
+      How would you best describe this activity? We would like to understand the main focus of your activity. Please try to pick the best option possible from the list, but if you feel your activity is really different, you can use the _Other_ option, to tell us in a few words.
 
 .field-with-notes
-  .notes
-    How would you describe the roles you play in this activity?
   .field
     = f.input :organisation_natures, label: 'Relationship in activity', as: :check_boxes, collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
+  .notes
+    How would you describe the roles you play in this activity?

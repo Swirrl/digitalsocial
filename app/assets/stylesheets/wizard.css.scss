@@ -1,5 +1,4 @@
 /* Structure */
-
 .breadcrumbs {
 
   @include columns(16);
@@ -134,8 +133,8 @@
 }
 
 .wizard-intro {
+  @include columns(16);
   p {
-    @include columns(16);
     font-size: 16px;
     color: $dark-grey;
   }

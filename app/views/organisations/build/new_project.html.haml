@@ -1,14 +1,15 @@
-= render "breadcrumbs", active_index: 4
+.wizard
+  = render "breadcrumbs", active_index: 4
 
-.wizard-intro
-  :markdown
-    Please add details about an activity your organisation performs. You need to add at least one activity to appear on the map. You will be able to add more later.
+  .wizard-intro
+    :markdown
+      Please add details about an activity your organisation performs. You need to add at least one activity to appear on the map. You will be able to add more later.
 
-    An activity could be of any size. It may be the only thing that your organisation does, or it may be one of a number of activities that you deliver with a number of partners.
+      An activity could be of any size. It may be the only thing that your organisation does, or it may be one of a number of activities that you deliver with a number of partners.
 
-= simple_form_for @project, url: [:organisations, :build, :create_project] do |f|
-  
-  = render "projects/fields/basic", f: f
+  = simple_form_for @project, url: [:organisations, :build, :create_project] do |f|
 
-  .wizard-button-wrapper
-    = f.button :submit, 'Next step &raquo;'.html_safe
+    = render "projects/fields/basic", f: f
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Next step &raquo;'.html_safe

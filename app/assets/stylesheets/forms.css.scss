@@ -7,9 +7,9 @@ form {
     .field, .fields {
 
       @include columns(8);
-      @include offset(1);
 
-
+      clear:left;
+      @include clearfix;
 
       div.input {
         textarea,
@@ -24,22 +24,23 @@ form {
 
     .notes {
 
-      clear:left;
-      @include clearfix;
+      @include columns(7);
+      @include offset(1);
 
       p:last-child {
         margin-bottom:0; // dont margin the last p.
       }
 
-      @include columns(7);
-
       font-size: 16px;
       padding-top:20px;
       @include media-all-mobile {
+        font-size:14px;
+        color: lighten($dark-grey, 15%);
+
         // as it's underneath
-        // margin-top:-30px;
-        // padding-top:0;
-        margin-bottom:20px;
+        padding-top:0;
+        margin-top:-30px;
+        margin-bottom:40px;
       }
       color: $dark-grey;
     }
