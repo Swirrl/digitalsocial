@@ -43,7 +43,7 @@
         = link_to "Edit", edit_project_path(proj.guid)
 
 
-  %h3 Pending invites for you to join an activity
+  %h3 Pending invites for #{current_organisation.name} to join an activity
 
   - if current_organisation.has_respondable_project_invites?
     %ul
@@ -57,7 +57,7 @@
       %li
         [none]
 
-  %h3 Pending requests by others to join one of your activities
+  %h3 Pending requests by others to join one of #{current_organisation.name}'s activities
 
   - if current_organisation.has_respondable_project_requests?
     %ul
