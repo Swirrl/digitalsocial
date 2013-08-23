@@ -1,0 +1,10 @@
+.field-with-notes
+  .fields
+    - if f.object.persisted?
+      = f.input :name, label: 'Name of your organisation', input_html: { autocomplete: :off }
+
+    - else
+      = f.input :name, label: 'Name of your organisation', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
+      = render 'suggestions'
+  .notes
+    %p We are interested in hearing from both formal and informal groups.

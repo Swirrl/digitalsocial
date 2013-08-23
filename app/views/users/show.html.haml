@@ -11,7 +11,8 @@
         = org.name
         - if org.uri == current_organisation.uri
           (current)
-          = link_to "Edit", edit_organisation_path(org.guid)
+          = link_to "Edit details", edit_organisation_path(org.guid)
+          = link_to "Edit location", edit_location_organisation_path(org.guid)
         - else
           = link_to "switch", user_path(:org_id => org.guid)
 

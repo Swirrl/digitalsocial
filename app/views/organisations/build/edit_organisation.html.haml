@@ -9,29 +9,7 @@
 
   = simple_form_for @organisation, url: [:organisations, :build, :update_organisation] do |f|
 
-    .field-with-notes
-      .field
-        = f.input :webpage, label: 'Website URL'
-      .notes
-        %p The address of the main website of your organisation. This should be a full URL including the http://.
-
-    .field-with-notes
-      .field
-        = f.input :twitter_username, label: 'Twitter'
-      .notes
-        %p Please only add accounts which represent your entire organisation. Just the user name, please (e.g. @nesta_uk).
-
-    .field-with-notes
-      .field
-        = f.input :fte_range, as: :radio, collection: Concepts::FTERange.all.resources, value_method: :uri, label: 'Number of staff'
-      .notes
-        %p How many full time staff (or equivalent) does your organisation employ? Please give your best estimate of the number of full time equivalent workers employed on a permanent or contractual basis by  your organisation.
-
-    .field-with-notes
-      .field
-        = f.input :organisation_type, as: :radio, collection: Concepts::OrganisationType.all.resources, value_method: :uri
-      .notes
-        %p Which organisation type best describes #{current_organisation.name}? We know this may not describe your organisation precisely, please pick the closest fit.
+    = render 'organisations/fields/advanced', f: f
 
     .wizard-button-wrapper
       = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'

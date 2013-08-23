@@ -17,7 +17,7 @@
 
 .field-with-notes
   .field
-    = f.input :activity_type_label, label: 'Type of activity', as: :radio, collection: Concepts::ActivityType.top_level_concepts
+    = f.input :activity_type_label, required: true, label: 'Type of activity', as: :radio, collection: Concepts::ActivityType.top_level_concepts
     = f.input :activity_type_label_other, label: false, as: :string, placeholder: 'Other - please state', wrapper_html: { class: 'other' }
     = f.error :activity_type
   .notes

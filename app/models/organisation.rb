@@ -27,6 +27,10 @@ class Organisation
     self.uri.to_s.split("/").last
   end
 
+  def to_param
+    guid
+  end
+
   def primary_site_resource
     Site.find(self.primary_site) if self.primary_site
   end
@@ -125,7 +129,8 @@ class Organisation
   end
 
   def twitter_username
-    "@#{self.twitter.to_s.split("/").last}" if self.twitter.present?
+    username = self.twitter.to_s.split("/")[3] # Do cleaner way
+    "@#{username}" if username.present?
   end
 
   def users
