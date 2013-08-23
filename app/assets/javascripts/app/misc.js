@@ -6,6 +6,7 @@ $(function(){
       this.revealableList();
       this.otherFields();
       this.revealOtherField();
+      this.autoSizeTextareas();
     },
 
     revealableList: function() {
@@ -51,6 +52,10 @@ $(function(){
           }
         }
       })
+    },
+
+    autoSizeTextareas: function() {
+      $('textarea.autosize').autosize();
     }
   }
 

@@ -107,6 +107,11 @@ form {
 
     }
 
+    textarea.autosize {
+      @include transition(height, 0);
+      padding-bottom: 48px;
+    }
+
     &.other {
       display: none;
       margin-top: -24px;

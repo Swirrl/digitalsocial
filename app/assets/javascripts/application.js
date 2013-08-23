@@ -13,5 +13,6 @@
 // Note: getting jquery and UI from CDN for now
 //
 //= require jquery_ujs
+//= require jquery.autosize
 //= require tag-it
 //= require_tree "./app"

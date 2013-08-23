@@ -11,7 +11,7 @@
 
 .field-with-notes
   .field
-    = f.input :description, as: :text
+    = f.input :description, as: :text, input_html: { class: 'autosize', rows: 5 }
   .notes
     %p Describe what your activity is about. Please keep this as brief as possible (no more than a few hundred words).
 
