@@ -2,8 +2,12 @@
   .notes
     %p Please enter the official title you would give to this activity, i.e. an event name; a research project title etc.
   .field
-    = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }
-    = render 'suggestions'
+    - if f.object.new_record?
+      = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }
+      = render 'suggestions'
+    
+    - else
+      = f.input :name, label: 'Name of your activity', input_html: { autocomplete: :off }
 
 .field-with-notes
   .notes
