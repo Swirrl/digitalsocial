@@ -43,14 +43,32 @@ module ApplicationHelper
     years_ago = opts[:years_ago] || 10
 
     options = []
-    options.push([nil, [["Ongoing", nil]]]) if opts[:include_ongoing]
-
     options += (Date.today.year-years_ago..Date.today.year).to_a.reverse.collect do |year|
       months = (1..12).to_a.reverse.collect do |n|
         label = [Date::MONTHNAMES[n], year].join(" ")
         date  = Date.parse(label)
 
         label if date < Date.today
+      end.compact
+
+      [year, months]
+    end
+
+    options
+  end
+
+  def project_end_date_options(opts={})
+    years_ahead = opts[:years_ahead] || 10
+
+    options = []
+    options.push([nil, [["Ongoing", nil]]])
+
+    options += (Date.today.year..Date.today.year+years_ahead).to_a.collect do |year|
+      months = (1..12).to_a.collect do |n|
+        label = [Date::MONTHNAMES[n], year].join(" ")
+        date  = Date.parse(label)
+
+        label if date > Date.today
       end.compact
 
       [year, months]

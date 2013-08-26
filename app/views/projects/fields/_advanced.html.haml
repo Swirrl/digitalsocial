@@ -8,7 +8,7 @@
   .field
     .input
       = f.label :end_date_label, "Activity end date", class: 'dates'
-      = f.select :end_date_label, grouped_options_for_select(project_start_date_options(include_ongoing: true), f.object.end_date_label), include_blank: "Select an end date"
+      = f.select :end_date_label, grouped_options_for_select(project_end_date_options, f.object.end_date_label), include_blank: "Select an end date"
 
       
 .field-with-notes
