@@ -69,7 +69,6 @@ $(function(){
 
         var orgs = data.organisations;
         var current_organisation_uris = data.current_organisation_uris;
-        var requested_organisation_uris = data.requested_organisation_uris;
 
         $.each(orgs, function(index, org){
           var $suggestion = $('.suggestion-template').clone()
@@ -81,11 +80,6 @@ $(function(){
           if($.inArray( org.uri, current_organisation_uris ) > -1 ){
             $suggestion.addClass("current");
             $suggestion.find('.messages').text("(already a member)");
-          }
-
-          if($.inArray( org.uri, requested_organisation_uris ) > -1 ){
-            $suggestion.addClass("requested");
-            $suggestion.find('.messages').text("(already requested)");
           }
 
           var anchor = $suggestion.find('.action a');

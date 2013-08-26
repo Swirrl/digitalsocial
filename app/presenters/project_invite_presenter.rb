@@ -25,6 +25,7 @@ class ProjectInvitePresenter
   validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation? }
 
   validate :organisation_is_not_already_member_of_project
+  validate :invite_doesnt_already_exist
 
   validates :project_uri, presence: true
 
@@ -52,10 +53,22 @@ class ProjectInvitePresenter
   end
 
   def user
-    @user ||= User.new do |user|
-      user.first_name = self.user_first_name
-      user.email      = self.user_email
-      user.password   = rand(36**16).to_s(36) # Temporary random password
+    return @user if @user
+
+    if new_organisation?
+      @user = User.where(email: self.user_email).first
+
+      unless @user
+        @user ||= User.new do |user|
+          user.first_name = self.user_first_name
+          user.email      = self.user_email
+          user.password   = rand(36**16).to_s(36) # Temporary random password
+        end
+      end
+
+      @user
+    else
+      return nil
     end
   end
 
@@ -72,7 +85,6 @@ class ProjectInvitePresenter
       @organisation_membership = OrganisationMembership.where(organisation_uri: self.invited_organisation_uri, owner: true).first
     end
   end
-
 
   def project
     @project ||= Project.find(self.project_uri)
@@ -94,6 +106,30 @@ class ProjectInvitePresenter
     end
   end
 
+  def persisted?
+    false
+  end
+
+  private
+
+  def existing_project_membership?
+    project_membership_org_predicate = ProjectMembership.fields[:organisation].predicate.to_s
+    project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
+
+    ProjectMembership
+      .where("?uri <#{project_membership_org_predicate}> <#{self.invited_organisation_uri}>")
+      .where("?uri <#{project_membership_project_predicate}> <#{self.project_uri}>")
+      .count > 0
+  end
+
+  def open_invite?
+    ProjectInvite.where(
+      project_uri: self.project_uri,
+      invited_organisation_uri: self.invited_organisation_uri,
+      open: true
+    ).count > 0
+  end
+
   def save_for_new_organisation
     if invalid?
       Rails.logger.debug( self.errors.inspect )
@@ -105,7 +141,7 @@ class ProjectInvitePresenter
     if self.invited_organisation.save(transaction: transaction)
       transaction.commit
 
-      self.user.save
+      self.user.save unless self.user.persisted?
       self.organisation_membership.save
       self.project_invite.save
 
@@ -132,24 +168,12 @@ class ProjectInvitePresenter
     false
   end
 
-  def persisted?
-    false
-  end
-
-  def existing_project_membership?
-    project_membership_org_predicate = ProjectMembership.fields[:organisation].predicate.to_s
-    project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
-
-    ProjectMembership
-      .where("?uri <#{project_membership_org_predicate}> <#{self.invited_organisation_uri}>")
-      .where("?uri <#{project_membership_project_predicate}> <#{self.project_uri}>")
-      .count > 0
-  end
-
-  private
-
   def organisation_is_not_already_member_of_project
-    errors.add(:project_uri, "already a member of this project") if existing_project_membership?
+    errors.add(:project_uri, "Your organisation is already a member of this project") if existing_project_membership?
+  end
+
+  def invite_doesnt_already_exist
+    errors.add(:project_uri, "Someone has invited this organisation to this project") if open_invite?
   end
 
 end

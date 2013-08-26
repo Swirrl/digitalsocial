@@ -22,13 +22,7 @@ class ProjectsController < ApplicationController
   def index
     if params[:q].present? # used for auto complete suggestions.
       @projects = Project.search_by_name(params[:q]).to_a
-
       current_project_uris = current_organisation.project_resource_uris
-      requested_project_uris = current_organisation.pending_project_requests_by_self.map(&:project_uri)
-
-      # @projects.reject!{ |p| current_projects.map(&:uri).include?(p.uri) } # don't include ones we're already a member of
-      # @projects.reject!{ |p| requested_projects.map(&:uri).include?(p.uri) } # don't include ones already requested to join
-
     else
       @projects = Project.all.resources.to_a
     end
@@ -36,8 +30,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.json do render json: {
           projects: @projects,
-          current_project_uris: current_project_uris,
-          requested_project_uris: requested_project_uris
+          current_project_uris: current_project_uris
         }
       end
     end

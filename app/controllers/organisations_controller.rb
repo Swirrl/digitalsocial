@@ -68,10 +68,7 @@ class OrganisationsController < ApplicationController
   def index
     if params[:q].present? # used for auto complete suggestions.
       @organisations = Organisation.search_by_name(params[:q]).to_a
-
       current_organisation_uris = current_user.organisation_resources.map{|o| o.uri.to_s }
-      requested_organisation_uris = current_user.pending_join_org_requests.map(&:requestable).map{|o| o.uri.to_s }
-
     else
       @organisations = Organisation.all.resources.to_a
     end
@@ -79,8 +76,7 @@ class OrganisationsController < ApplicationController
     respond_to do |format|
       format.json do render json: {
           organisations: @organisations,
-          current_organisation_uris: current_organisation_uris,
-          requested_organisation_uris: requested_organisation_uris
+          current_organisation_uris: current_organisation_uris # list of orgs for this user
         }
       end
     end
