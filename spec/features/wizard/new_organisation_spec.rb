@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'New user wizard step' do
+feature 'New organisation wizard step' do
 
   let(:user) { FactoryGirl.create(:user) }
 
