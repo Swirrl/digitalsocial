@@ -5,16 +5,28 @@ class ProjectInvitePresenter
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :organisation_name, :user_first_name, :user_email, :nature_uri,
-    :organisation_uri, :project_uri, :new_organisation
+  # mass assignable
+  attr_accessible :invited_organisation_name,
+    :user_first_name,
+    :user_email
 
-  validates :organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation? }
+  attr_accessor :invitor_organisation_uri,
+    :invited_organisation_uri,
+
+    # for making new org
+    :invited_organisation_name,
+    :user_first_name,
+    :user_email,
+
+    :project_uri
+
+
+  validates :invited_organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation? }
   validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation? }
-  validates :organisation_uri, presence: { unless: :new_organisation? }
-  validate :user_email_must_be_unique, if: :new_organisation?
-  # TODO validate project isn't already member of project
 
-  validates :project_uri, :nature_uri, presence: true
+  validate :organisation_is_not_already_member_of_project
+
+  validates :project_uri, presence: true
 
   def attributes=(values)
     sanitize_for_mass_assignment(values).each do |attr, value|
@@ -23,17 +35,17 @@ class ProjectInvitePresenter
   end
 
   def new_organisation?
-    self.new_organisation.present?
+    # if org uri of invited org not set, must be a new org.
+    !self.invited_organisation_uri
   end
 
-  def organisation
-    return @organisation unless @organisation.nil?
+  def invited_organisation
 
-    if self.organisation_uri.present?
-      @organisation = Organisation.find(self.organisation_uri)
-    else
+    if new_organisation?
       @organisation = Organisation.new
-      @organisation.name = self.organisation_name
+      @organisation.name = self.invited_organisation_name
+    else
+      @organisation = Organisation.find(self.invited_organisation_uri)
     end
 
     @organisation
@@ -53,30 +65,30 @@ class ProjectInvitePresenter
     if new_organisation?
       @organisation_membership ||= OrganisationMembership.new do |om|
         om.user             = self.user
-        om.organisation_uri = self.organisation.uri.to_s
+        om.organisation_uri = self.invited_organisation.uri.to_s
         om.owner            = true
       end
     else
-      @organisation_membership = OrganisationMembership.where(organisation_uri: self.organisation_uri, owner: true).first
+      @organisation_membership = OrganisationMembership.where(organisation_uri: self.invited_organisation_uri, owner: true).first
     end
   end
+
 
   def project
     @project ||= Project.find(self.project_uri)
   end
 
-  def project_request
-    @project_request ||= ProjectRequest.new do |r|
-      r.requestor    = self.organisation
-      r.requestable  = self.project
-      r.is_invite    = true
-      r.project_membership_nature_uri = self.nature_uri
+  def project_invite
+    @project_invite ||= ProjectInvite.new do |i|
+      i.invitor_organisation_uri  = self.invitor_organisation_uri
+      i.invited_organisation_uri  = self.invited_organisation_uri
+      i.project_uri = self.project_uri
     end
   end
 
   def user_request
     @user_request ||= UserRequest.new do |r|
-      r.requestable     = self.organisation
+      r.requestable     = self.invited_organisation
       r.user_first_name = self.user_first_name
       r.user_email      = self.user_email
     end
@@ -91,35 +103,40 @@ class ProjectInvitePresenter
   end
 
   def save_for_new_organisation
-    return false if invalid?
+    if invalid?
+      Rails.logger.debug( self.errors.inspect )
+      return false
+    end
 
     transaction = Tripod::Persistence::Transaction.new
-    if self.organisation.save(transaction: transaction)
+
+    if self.invited_organisation.save(transaction: transaction)
       transaction.commit
 
       self.user.save
       self.organisation_membership.save
-      self.project_request.save
+      self.project_invite.save
 
-      RequestMailer.project_new_organisation_invite(request, user).deliver
+      RequestMailer.project_new_organisation_invite(self, user).deliver
     else
       transaction.abort
     end
 
     true
   rescue => e
-    Rails.logger.debug e.inspect
+    Rails.logger.debug( e.inspect )
     false
   end
 
   def save_for_existing_organisation
-    return false if invalid?
+    if invalid?
+      Rails.logger.debug( self.errors.inspect )
+      return false
+    end
 
-    self.project_request.save
-    self.user_request.save if self.user_request.valid?
-
-    true
+    self.project_invite.save
   rescue => e
+    Rails.logger.debug( e.inspect )
     false
   end
 
@@ -127,10 +144,20 @@ class ProjectInvitePresenter
     false
   end
 
+  def existing_project_membership?
+    project_membership_org_predicate = ProjectMembership.fields[:organisation].predicate.to_s
+    project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
+
+    ProjectMembership
+      .where("?uri <#{project_membership_org_predicate}> <#{self.invited_organisation_uri}>")
+      .where("?uri <#{project_membership_project_predicate}> <#{self.project_uri}>")
+      .count > 0
+  end
+
   private
 
-  def user_email_must_be_unique
-    errors.add(:user_email, 'has already been taken') if User.where(email: self.user_email).any?
+  def organisation_is_not_already_member_of_project
+    errors.add(:project_uri, "already a member of this project") if existing_project_membership?
   end
 
 end

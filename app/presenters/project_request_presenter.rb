@@ -5,17 +5,13 @@ class ProjectRequestPresenter
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor:project_uri, # project being requested to join
-    :nature_uris, # nature of relationship
+  attr_accessor :requestor_organisation_uri,
+    :project_uri
 
-    :user_organisation_uri, # the details of the contact.
-    :user_first_name,
-    :user_email,
+  validates :project_uri, :requestor_organisation_uri, presence: true
 
-    :organisation # the organisation making the reuqest
-
-  validates :project_uri, :nature_uris, :organisation, presence: true
-  validate :organisation_is_not_already_member_of_project
+  validate :organisation_is_not_already_member_of_project,
+    :no_existing_requests
 
   def attributes=(values)
     sanitize_for_mass_assignment(values).each do |attr, value|
@@ -27,49 +23,28 @@ class ProjectRequestPresenter
     @project ||= Project.find(self.project_uri.to_s)
   end
 
-  def user_organisation
-    Organisation.find(self.user_organisation_uri)
+  def requestor_organisation
+    Organisation.find(self.requestor_organisation_uri)
   end
 
   def project_request
     @project_request ||= ProjectRequest.new do |r|
-
-      Rails.logger.debug " project request"
-      Rails.logger.debug self.project_uri
-      Rails.logger.debug self.project
-      Rails.logger.debug self.organisation
-
-      r.requestable  = self.project
-      r.requestor    = self.organisation
-      r.project_membership_nature_uris = self.nature_uris.reject {|u| u.blank?}
-    end
-  end
-
-  def user_request
-    @user_request ||= UserRequest.new do |r|
-      r.requestable     = self.user_organisation
-      r.user_first_name = self.user_first_name
-      r.user_email      = self.user_email
+      r.project_uri  = self.project_uri
+      r.requestor_organisation_uri = self.requestor_organisation_uri
     end
   end
 
   def save
 
     if invalid?
-      Rails.logger.debug "invalid"
+      Rails.logger.debug self.errors.inspect
       return false
     end
 
     self.project_request.save
 
-    # if self.user_organisation # if they supplied an organisation
-    #   self.user_request.save if self.user_request.valid?
-    # end
-
-    true
   rescue => e
-    Rails.logger.debug "save failed"
-    Rails.logger.debug e.inspect
+    Rails.logger.debug e
     false
   end
 
@@ -86,15 +61,27 @@ class ProjectRequestPresenter
     project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
 
     ProjectMembership
-      .where("?uri <#{project_membership_org_predicate}> <#{self.organisation.uri}>")
+      .where("?uri <#{project_membership_org_predicate}> <#{self.requestor_organisation_uri}>")
       .where("?uri <#{project_membership_project_predicate}> <#{self.project_uri}>")
       .count > 0
+  end
+
+  def existing_pending_request?
+    ProjectRequest.where(
+      project_uri: self.project_uri,
+      requestor_organisation_uri: self.requestor_organisation_uri,
+      open: true
+    ).count > 0
   end
 
   private
 
   def organisation_is_not_already_member_of_project
-    errors.add(:project_uri, "already a member of this project") if self.organisation.present? && existing_project_membership?
+    errors.add(:project_uri, "This organisation is already a member of this project") if existing_project_membership?
+  end
+
+  def no_existing_requests
+    errors.add(:project_uri, "Your organisation has already requsted membership to this project.") if existing_pending_request?
   end
 
 end

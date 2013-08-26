@@ -17,6 +17,7 @@
         - else
           = link_to "switch", user_path(:org_id => org.guid)
 
+
   %h3 Organisations you've requested to join
 
   - if current_user.pending_join_org_requests.any?
@@ -59,16 +60,16 @@
         = proj.name
         = link_to "Edit", edit_project_path(proj.guid)
         |
-        = link_to "Invite another organisation", "#"
+        = link_to "Invite another organisation", invite_project_path(proj)
 
 
   %h3 Pending invites for #{current_organisation.name} to join an activity
 
-  - if current_organisation.has_respondable_project_invites?
+  - if current_organisation.pending_project_invites.any?
     %ul
-      - current_organisation.respondable_project_invites.each do |inv|
+      - current_organisation.pending_project_invites.each do |inv|
         %li
-          You've been invited to #{inv.requestable.name} by #{inv.requestor}.
+          You've been invited to #{inv.project_resource.name} by #{inv.invitor_organisation_resource.name}.
         = link_to "accept", "#"
 
   - else
@@ -78,16 +79,29 @@
 
   %h3 Pending requests by others to join one of #{current_organisation.name}'s activities
 
-  - if current_organisation.has_respondable_project_requests?
+  - if current_organisation.pending_project_requests_by_others.any?
     %ul
-      - current_organisation.respondable_project_requests.each do |req|
+      - current_organisation.pending_project_requests_by_others.each do |req|
         %li
-          #{inv.requestor} wants to join #{inv.requestable.name}.
+          #{req.requestor_organisation_resource.name} wants to join #{req.project_resource.name}.
           = link_to "accept", "#"
   - else
     %ul
       %li
         [none]
+
+  %h3 Pending requests by #{current_organisation.name} to join other activities.
+
+  - if current_organisation.pending_project_requests_by_self.any?
+    %ul
+      - current_organisation.pending_project_requests_by_self.each do |req|
+        %li
+          #{req.project_resource.name}.
+  - else
+    %ul
+      %li
+        [none]
+
 
   = link_to "Add/Join an activity for this organisation", new_project_path
 
@@ -107,7 +121,7 @@
 
   %h3 Users requesting membership to #{current_organisation.name}
 
-  - if current_organisation.has_respondable_user_requests?
+  - if current_organisation.respondable_user_requests.any?
     - current_organisation.respondable_user_requests.each do |req|
       %ul
         %li

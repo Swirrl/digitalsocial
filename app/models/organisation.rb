@@ -3,7 +3,7 @@ class Organisation
   include Tripod::Resource
   include ConceptFields
 
-  rdf_type 'http://www.w3.org/ns/org#Organisation'
+  rdf_type 'http://www.w3.org/ns/org#Organization'
   graph_uri Digitalsocial::DATA_GRAPH
 
   field :name, 'http://www.w3.org/2000/01/rdf-schema#label'
@@ -71,19 +71,19 @@ class Organisation
     is_member_of_project?(project)
   end
 
-  # Pending project invites for this organisation that can be responded to
-  def respondable_project_invites
-    ProjectRequest.where(requestor_type: 'Organisation', requestor_id: self.uri.to_s, responded_to: false, is_invite: true).all
+  # projects I've been invited to
+  def pending_project_invites
+    ProjectInvite.where(invited_organisation_uri: self.uri, open: true)
   end
 
-  # Pending project requests made by another organisation to join one of this organisation's projects
-  def respondable_project_requests
-    ProjectRequest.where(requestable_type: 'Project', responded_to: false, is_invite: false).in(requestable_id: project_resource_uris).all
+  # projects I've requested to join
+  def pending_project_requests_by_self
+    ProjectRequest.where(requestor_organisation_uri: self.uri, open: true)
   end
 
-  # Pending requests by this org to join a project.
-  def pending_project_requests
-    ProjectRequest.where(requestable_type: 'Project', requestor_id: self.uri.to_s, responded_to: false, is_invite: false).all
+  # Our projects that others have requested to join
+  def pending_project_requests_by_others
+    ProjectRequest.where(open: true).in(project_uri: project_resource_uris)
   end
 
   # People who've requested to join this org
@@ -92,19 +92,9 @@ class Organisation
   end
 
   def has_respondables?
-    has_respondable_project_invites? || has_respondable_project_requests? || has_respondable_user_requests?
-  end
-
-  def has_respondable_project_invites?
-    respondable_project_invites.count > 0
-  end
-
-  def has_respondable_project_requests?
-    respondable_project_requests.count > 0
-  end
-
-  def has_respondable_user_requests?
-    respondable_user_requests.count > 0
+    pending_project_invites.any? ||
+      pending_project_requests_by_others.any? ||
+      respondable_user_requests
   end
 
   def as_json(options = nil)

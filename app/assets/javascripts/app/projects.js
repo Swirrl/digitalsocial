@@ -72,7 +72,12 @@ $(function(){
           $suggestion.find('.header').text(project.name);
           $suggestion.find('.subheader').text(project.organisation_names);
           $suggestion.find('.image img').attr('src', project.image_url);
-          $suggestion.find('.action a').attr('href', '/projects/'+project.guid+'/request_to_join')
+
+          var anchor = $suggestion.find('.action a');
+          var urlTemplate = anchor.attr('href');
+          anchor.attr('href', urlTemplate.replace(':project_id', project.guid));
+
+
           $('.suggestions').append($suggestion);
         });
 
