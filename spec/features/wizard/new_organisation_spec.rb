@@ -40,7 +40,7 @@ feature 'New organisation wizard step' do
   end
 
   scenario 'Sets the lat and lng from the location details', js: true do
-    pending
+    pending # Webmock ignore sparql reqests
   end
   
 end

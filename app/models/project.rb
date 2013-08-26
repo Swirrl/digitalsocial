@@ -20,7 +20,8 @@ class Project
 
   attr_accessor :scoped_organisation
 
-  validates :name, :activity_type, :organisation_natures, presence: true
+  validates :name, :activity_type, presence: true
+  validates :organisation_natures, presence: { if: 'scoped_organisation.present?' }
 
   # override initialise
   def initialize(uri=nil, graph_uri=nil)

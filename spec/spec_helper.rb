@@ -38,6 +38,8 @@ RSpec.configure do |config|
   #     --seed 1234
   #config.order = "random"
 
+  Capybara.ignore_hidden_elements = true
+
   DatabaseCleaner.strategy = :truncation
   DatabaseCleaner.orm = "mongoid"
 

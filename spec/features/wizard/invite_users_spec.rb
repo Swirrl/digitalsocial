@@ -12,11 +12,10 @@ feature 'Invite users wizard step' do
 
   scenario 'Skipping the invite users step' do
     page.should have_link('Skip', href: organisations_build_new_project_path)
-    save_and_open_page
   end
 
   scenario 'Fill in team member details' do
-    pending
+    pending # Waiting on user request model changes
   end
   
 end
