@@ -86,14 +86,6 @@ class ProjectInvitePresenter
     end
   end
 
-  def user_request
-    @user_request ||= UserRequest.new do |r|
-      r.requestable     = self.invited_organisation
-      r.user_first_name = self.user_first_name
-      r.user_email      = self.user_email
-    end
-  end
-
   def save
     if new_organisation?
       save_for_new_organisation
