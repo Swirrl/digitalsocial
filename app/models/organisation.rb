@@ -101,7 +101,8 @@ class Organisation
     json = {
       name: self.name,
       guid: self.guid,
-      image_url: self.image_url
+      image_url: self.image_url,
+      uri: self.uri.to_s
     }
     json
   end

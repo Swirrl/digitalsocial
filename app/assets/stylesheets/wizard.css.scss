@@ -149,6 +149,22 @@
 
   .suggestion {
 
+    &.current {
+      background: #eee;
+    }
+
+    &.current {
+      a {
+        display:none;
+      }
+    }
+
+    &.requested {
+      a {
+        display:none;
+      }
+    }
+
     display: block;
     padding: 12px;
     background: #fff2e3;
@@ -167,8 +183,10 @@
 
     .messages {
       clear:left;
+      float:right;
+      padding-top:12px;
       &.error {
-        color: $red;;
+        color: $red;
       }
     }
 

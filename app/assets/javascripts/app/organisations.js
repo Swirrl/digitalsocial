@@ -65,13 +65,28 @@ $(function(){
     },
 
     addSuggestions: function(data) {
-      if (data.length > 0) {
-        $.each(data, function(index, org){
+      if (data.organisations && data.organisations.length > 0) {
+
+        var orgs = data.organisations;
+        var current_organisation_uris = data.current_organisation_uris;
+        var requested_organisation_uris = data.requested_organisation_uris;
+
+        $.each(orgs, function(index, org){
           var $suggestion = $('.suggestion-template').clone()
           $suggestion.removeClass('suggestion-template').addClass('suggestion');
           $suggestion.find('.header').text(org.name);
           $suggestion.find('.subheader').text('The address will appear here');
           $suggestion.find('.image img').attr('src', org.image_url);
+
+          if($.inArray( org.uri, current_organisation_uris ) > -1 ){
+            $suggestion.addClass("current");
+            $suggestion.find('.messages').text("(already a member)");
+          }
+
+          if($.inArray( org.uri, requested_organisation_uris ) > -1 ){
+            $suggestion.addClass("requested");
+            $suggestion.find('.messages').text("(already requested)");
+          }
 
           var anchor = $suggestion.find('.action a');
           var urlTemplate = anchor.attr('href');
@@ -85,38 +100,6 @@ $(function(){
       }
     },
 
-    // EXPERIMENTAL (NOT USED AT THE MO)
-    wireUpRequestButtons: function() {
-      $('.suggestions .action a').click(function(e) {
-        e.preventDefault();
-        var target = $(e.target);
-        var href = target.attr('href');
-        var guid = href.substring(1);
-
-        var messages = target.closest('.suggestion').find('.messages');
-
-        messages.removeClass('error');
-        messages.html('working...');
-
-        $.ajax({
-          url: '/organisations/'+guid+'/request_to_join',
-          dataType: 'json',
-          success: function(data, textStatus, jqXHR) {
-            if (data.errorMessage) {
-              messages.addClass('error');
-              messages.html(data.errorMessage);
-            } else {
-              window.location= '/user'; // redirect to dashboard.
-            }
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            messages.addClass('error');
-            messages.html('Something Went Wrong');
-          }
-        });
-      });
-      // '/organisations/'+org.guid+'/request_to_join'
-    },
 
     clearSuggestions: function() {
       $('.suggestion').remove();

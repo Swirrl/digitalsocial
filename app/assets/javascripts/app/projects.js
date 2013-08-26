@@ -65,13 +65,28 @@ $(function(){
     },
 
     addSuggestions: function(data) {
-      if (data.length > 0) {
-        $.each(data, function(index, project){
+      if (data.projects && data.projects.length > 0) {
+
+        var projects = data.projects;
+        var current_project_uris = data.current_project_uris;
+        var requested_project_uris = data.requested_project_uris;
+
+        $.each(projects, function(index, project){
           var $suggestion = $('.suggestion-template').clone()
           $suggestion.removeClass('suggestion-template').addClass('suggestion');
           $suggestion.find('.header').text(project.name);
           $suggestion.find('.subheader').text(project.organisation_names);
           $suggestion.find('.image img').attr('src', project.image_url);
+
+          if($.inArray( project.uri, current_project_uris ) > -1 ){
+            $suggestion.addClass("current");
+            $suggestion.find('.messages').text("(already a member)");
+          }
+
+          if($.inArray( project.uri, requested_project_uris ) > -1 ){
+            $suggestion.addClass("requested");
+            $suggestion.find('.messages').text("(already requested)");
+          }
 
           var anchor = $suggestion.find('.action a');
           var urlTemplate = anchor.attr('href');
