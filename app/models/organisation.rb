@@ -35,6 +35,10 @@ class Organisation
     Site.find(self.primary_site) if self.primary_site
   end
 
+  def address_str
+    self.primary_site_resource.address_resource.to_s
+  end
+
   def projects
     project_membership_org_predicate = ProjectMembership.fields[:organisation].predicate.to_s
     project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
@@ -102,7 +106,8 @@ class Organisation
       name: self.name,
       guid: self.guid,
       image_url: self.image_url,
-      uri: self.uri.to_s
+      uri: self.uri.to_s,
+      address: self.address_str
     }
     json
   end

@@ -149,22 +149,6 @@
 
   .suggestion {
 
-    &.current {
-      background: #eee;
-    }
-
-    &.current {
-      a {
-        display:none;
-      }
-    }
-
-    &.requested {
-      a {
-        display:none;
-      }
-    }
-
     display: block;
     padding: 12px;
     background: #fff2e3;
@@ -213,6 +197,12 @@
         font-size: 20px;
         margin-top: 12px;
         margin-right: 12px;
+      }
+    }
+
+    &.current, &.requested {
+      .action {
+        display:none;
       }
     }
 
