@@ -5,10 +5,16 @@ class ProjectRequestPresenter
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :project_uri, :nature_uri, :organisation, :user_first_name,
-    :user_email, :user_organisation_uri
+  attr_accessor:project_uri, # project being requested to join
+    :nature_uris, # nature of relationship
 
-  validates :project_uri, :nature_uri, :organisation, presence: true
+    :user_organisation_uri, # the details of the contact.
+    :user_first_name,
+    :user_email,
+
+    :organisation # the organisation making the reuqest
+
+  validates :project_uri, :nature_uris, :organisation, presence: true
   validate :organisation_is_not_already_member_of_project
 
   def attributes=(values)
@@ -18,7 +24,7 @@ class ProjectRequestPresenter
   end
 
   def project
-    @project ||= Project.find(self.project_uri)
+    @project ||= Project.find(self.project_uri.to_s)
   end
 
   def user_organisation
@@ -27,9 +33,15 @@ class ProjectRequestPresenter
 
   def project_request
     @project_request ||= ProjectRequest.new do |r|
+
+      Rails.logger.debug " project request"
+      Rails.logger.debug self.project_uri
+      Rails.logger.debug self.project
+      Rails.logger.debug self.organisation
+
       r.requestable  = self.project
       r.requestor    = self.organisation
-      r.project_membership_nature_uri = self.nature_uri
+      r.project_membership_nature_uris = self.nature_uris.reject {|u| u.blank?}
     end
   end
 
@@ -42,14 +54,22 @@ class ProjectRequestPresenter
   end
 
   def save
-    return false if invalid?
+
+    if invalid?
+      Rails.logger.debug "invalid"
+      return false
+    end
 
     self.project_request.save
-    self.user_request.save if self.user_request.valid?
+
+    # if self.user_organisation # if they supplied an organisation
+    #   self.user_request.save if self.user_request.valid?
+    # end
 
     true
   rescue => e
-    Rails.logger.debug e
+    Rails.logger.debug "save failed"
+    Rails.logger.debug e.inspect
     false
   end
 

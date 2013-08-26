@@ -9,7 +9,7 @@ class OrganisationsController < ApplicationController
     user_request = UserRequest.build_user_request(current_user, @organisation)
 
     if user_request.save
-      # TODO send email.
+      # don't need to send an email. This will just appear in the digest.
       redirect_to user_url, :notice => "You have requested to join #{@organisation.name}. Members of #{@organisation.name} have be notified and we'll let you know when your request is accepted"
     else
       error_message = user_request.errors.messages.values.join(', ')
@@ -36,7 +36,7 @@ class OrganisationsController < ApplicationController
   end
 
   def update_location
-    @organisation = SignupPresenter.new(current_organisation)    
+    @organisation = SignupPresenter.new(current_organisation)
     @organisation.attributes = params[:signup_presenter]
 
     if @organisation.save
@@ -67,7 +67,6 @@ class OrganisationsController < ApplicationController
 
   def index
     if params[:q].present? # used for auto complete suggestions.
-      # TODO Find orgs by name
       @organisations = Organisation.search_by_name(params[:q]).to_a
 
       current_organisations = current_user.organisation_resources

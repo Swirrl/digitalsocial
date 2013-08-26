@@ -47,9 +47,14 @@ class User
     RequestMailer.request_digest(self, organisation).deliver
   end
 
-  # requests for this user to join another org
+  # requests by this user to join another org
   def pending_join_org_requests
     UserRequest.where(responded_to: false, is_invite: false, requestor_id: self.id)
+  end
+
+  # invitest for this user to join another org
+  def pending_join_org_invites
+    UserRequest.where(responded_to: false, is_invite: true, requestor_id: self.id)
   end
 
   def self.send_request_digests

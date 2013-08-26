@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :find_project, only: [:invite, :create_invite, :edit, :update]
+  before_filter :find_project, only: [:invite, :create_invite, :edit, :update, :request_to_join, :create_request]
   before_filter :set_project_invite, only: [:create_invite]
   before_filter :check_project_can_be_edited, only: [:edit, :update]
 
@@ -22,8 +22,6 @@ class ProjectsController < ApplicationController
   def index
     if params[:q].present? # used for auto complete suggestions.
       @projects = Project.search_by_name(params[:q]).to_a
-
-      Rails.logger.debug @projects.map &:name
 
       current_projects = current_organisation.projects.resources
       requested_projects = current_organisation.pending_project_requests.map &:requestable
@@ -56,6 +54,10 @@ class ProjectsController < ApplicationController
     @project_invite = ProjectInvitePresenter.new
   end
 
+  def new_invite
+
+  end
+
   def create_invite
     if @project_invite.save
       render text: "Invited organisation!"
@@ -78,22 +80,33 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # get /projects/id/request_to_join
+  def request_to_join
+    @project_request = ProjectRequestPresenter.new
+    @project_request.project_uri = @project.uri
+    @project_request.organisation = current_organisation
+  end
+
   def create_request
     @project_request = ProjectRequestPresenter.new
-    @project_request.attributes   = params[:project_request_presenter]
+    @project_request.project_uri = @project.uri
     @project_request.organisation = current_organisation
+    @project_request.nature_uris = params[:project_request_presenter][:nature_uris]
+
+    # TODO? Store user details?
 
     if @project_request.save
-      render text: "Requested to be part of project"
+      redirect_to user_url, notice: "Thanks for your request. This project's existing organisations will be notified and you'll be notified when someone approves your request."
     else
-      @project = Project.new
-      render :new
+      flash.now.notice = @project_request.errors.messages.values.join(', ')
+      render :request_to_join
     end
   end
 
   private
 
   def find_project
+    Rails.logger.debug "finding: http://data.digitalsocial.eu/id/activity/#{params[:id]}"
     @project = Project.find("http://data.digitalsocial.eu/id/activity/#{params[:id]}")
   end
 

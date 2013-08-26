@@ -28,8 +28,6 @@ class ApplicationController < ActionController::Base
     session[:org_id] = org_id
   end
 
-	# TODO Need to allow the current_user's "organisation scope"
-	# to be set in the UI
 	def current_organisation
     set_current_organisation(params[:org_id]) if params[:org_id]
 

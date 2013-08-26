@@ -24,11 +24,13 @@ Digitalsocial::Application.routes.draw do
   resources :projects, only: [:new, :create, :index, :edit, :update] do
     member do
       get 'invite'
+      get 'new_invite'
       post 'create_invite'
+      post 'create_request'
+      get 'request_to_join'
     end
     collection do
       get 'tags'
-      post 'create_request'
     end
   end
 
