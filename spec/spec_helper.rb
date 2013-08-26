@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'email_spec'
+require 'capybara/poltergeist'
 #require 'webmock/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -38,6 +39,7 @@ RSpec.configure do |config|
   #     --seed 1234
   #config.order = "random"
 
+  Capybara.javascript_driver = :poltergeist
   Capybara.ignore_hidden_elements = true
   Capybara.default_wait_time = 5
 
