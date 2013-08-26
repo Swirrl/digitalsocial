@@ -67,11 +67,11 @@ $(function(){
     addSuggestions: function(data) {
       if (data.projects && data.projects.length > 0) {
 
-        var projects = data.projects;
+        var projs = data.projects;
         var current_project_uris = data.current_project_uris;
         var requested_project_uris = data.requested_project_uris;
 
-        $.each(projects, function(index, project){
+        $.each(projs, function(index, project){
           var $suggestion = $('.suggestion-template').clone()
           $suggestion.removeClass('suggestion-template').addClass('suggestion');
           $suggestion.find('.header').text(project.name);
