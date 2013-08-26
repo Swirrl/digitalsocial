@@ -72,7 +72,11 @@ $(function(){
           $suggestion.find('.header').text(org.name);
           $suggestion.find('.subheader').text('The address will appear here');
           $suggestion.find('.image img').attr('src', org.image_url);
-          $suggestion.find('.action a').attr('href', '/organisations/'+org.guid+'/request_to_join')
+
+          var anchor = $suggestion.find('.action a');
+          var urlTemplate = anchor.attr('href');
+          anchor.attr('href', urlTemplate.replace(':organisation_id', org.guid));
+
           $('.suggestions').append($suggestion);
         });
 

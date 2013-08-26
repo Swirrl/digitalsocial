@@ -23,7 +23,6 @@ class ProjectInvitePresenter
 
   validates :invited_organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation? }
   validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation? }
-  validates :organisation_uri, presence: { unless: :new_organisation? }
 
   validate :organisation_is_not_already_member_of_project
 
@@ -46,7 +45,7 @@ class ProjectInvitePresenter
       @organisation = Organisation.new
       @organisation.name = self.invited_organisation_name
     else
-      @organisation = Organisation.find(self.organisation_uri)
+      @organisation = Organisation.find(self.invited_organisation_uri)
     end
 
     @organisation
@@ -70,7 +69,7 @@ class ProjectInvitePresenter
         om.owner            = true
       end
     else
-      @organisation_membership = OrganisationMembership.where(organisation_uri: self.organisation_uri, owner: true).first
+      @organisation_membership = OrganisationMembership.where(organisation_uri: self.invited_organisation_uri, owner: true).first
     end
   end
 
@@ -135,13 +134,7 @@ class ProjectInvitePresenter
       return false
     end
 
-    self.project_request.save
-
-    if new_organisation?
-      self.user_request.save if self.user_request.valid?
-    end
-
-    true
+    self.project_invite.save
   rescue => e
     Rails.logger.debug( e.inspect )
     false

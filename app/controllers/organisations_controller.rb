@@ -69,11 +69,11 @@ class OrganisationsController < ApplicationController
     if params[:q].present? # used for auto complete suggestions.
       @organisations = Organisation.search_by_name(params[:q]).to_a
 
-      current_organisations = current_user.organisation_resources
-      requested_orgs = current_user.pending_join_org_requests.map &:requestable
+      # current_organisations = current_user.organisation_resources
+      # requested_orgs = current_user.pending_join_org_requests.map &:requestable
 
-      @organisations.reject!{ |o| current_organisations.map(&:uri).include?(o.uri) } # don't include ones already a member of
-      @organisations.reject!{ |o| requested_orgs.map(&:uri).include?(o.uri) } # don't include ones already requested to join
+      # @organisations.reject!{ |o| current_organisations.map(&:uri).include?(o.uri) } # don't include ones already a member of
+      # @organisations.reject!{ |o| requested_orgs.map(&:uri).include?(o.uri) } # don't include ones already requested to join
     else
       @organisations = Organisation.all.resources.to_a
     end

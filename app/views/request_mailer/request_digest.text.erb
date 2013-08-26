@@ -1,22 +1,25 @@
 Hi <%= @user.first_name %>,
 
-<% if @organisation.has_respondable_project_invites? %>
-You have pending project invites to the following projects:
+<% if @organisation.pending_project_invites.any? %>
+<%= @organisation.name %> has pending project invites to the following projects:
 
-<% @organisation.respondable_project_invites.each do |invite| %>
-* <%= invite.requestable.label %>
+<% @organisation.pending_project_invites.each do |inv| %>
+* <%= inv.project_resource.name %>
 <% end %>
 <% end %>
 
-<% if @organisation.has_respondable_project_requests? %>
-You have pending project requests to join projects from the following organisations:
+<% if @organisation.pending_project_requests_by_others.any? %>
+<%= @organisation.name %> has pending project requests from the following organisations:
 
-<% @organisation.respondable_project_requests.each do |request| %>
-* <%= request.requestor.name %> (<%= request.requestable.label %>)
+<% @organisation.current_organisation.pending_project_requests_by_others.each do |req| %>
+* <%= req.requestor_organisation_resource.name %> (<%= req.project_resource.name %>)
 <% end %>
 <% end %>
-<% if @organisation.has_respondable_project_invites? || @organisation.has_respondable_project_requests? %>
-Use the link below to respond to these project requests:
+
+<% if @organisation.pending_project_invites.any? ||
+  @organisation.pending_project_requests_by_others.any? %>
+
+Please log in to your DSI dashboard (link below) to respond to these project requests:
 
 <%= projects_url(auth_token: @user.authentication_token, org_id: @organisation.guid) %>
 
@@ -25,7 +28,7 @@ Use the link below to respond to these project requests:
 You have pending users to invite to your organisation:
 
 <% @organisation.respondable_user_requests.each do |request| %>
-* <%= request.user_first_name %> (<%= request.user_email %>)
+* <%= request.user_first_name %> (<%= request.user_email %>).requestor_organisation_resource.name
 <% end %>
 
 <% end %>

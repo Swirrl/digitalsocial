@@ -8,6 +8,15 @@ class ProjectInvite
   field :open, type: Boolean, default: true
   field :accepted, type: Boolean # nil until decision made.
 
+
+  def project_resource
+    Project.find(self.project_uri)
+  end
+
+  def invitor_organisation_resource
+    Project.find(self.invitor_organisation_uri)
+  end
+
   def accept!
     #todo
   end

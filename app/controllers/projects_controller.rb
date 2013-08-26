@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :find_project, only: [:invite, :create_invite, :edit, :update, :request_to_join, :create_request, :new_invite]
+  before_filter :find_project, only: [:invite, :create_new_org_invite, :create_existing_org_invite, :edit, :update, :request_to_join, :create_request, :new_invite]
   before_filter :set_project_invite, only: [:create_invite]
   before_filter :check_project_can_be_edited, only: [:edit, :update]
 
@@ -23,11 +23,11 @@ class ProjectsController < ApplicationController
     if params[:q].present? # used for auto complete suggestions.
       @projects = Project.search_by_name(params[:q]).to_a
 
-      current_projects = current_organisation.projects.resources
-      requested_projects = current_organisation.pending_project_requests.map &:requestable
+      # current_projects = current_organisation.projects.resources
+      # requested_projects = current_organisation.pending_project_requests.map &:requestable
 
-      @projects.reject!{ |p| current_projects.map(&:uri).include?(p.uri) } # don't include ones we're already a member of
-      @projects.reject!{ |p| requested_projects.map(&:uri).include?(p.uri) } # don't include ones already requested to join
+      # @projects.reject!{ |p| current_projects.map(&:uri).include?(p.uri) } # don't include ones we're already a member of
+      # @projects.reject!{ |p| requested_projects.map(&:uri).include?(p.uri) } # don't include ones already requested to join
 
     else
       @projects = Project.all.resources.to_a
@@ -91,15 +91,34 @@ class ProjectsController < ApplicationController
     @project_invite.invitor_organisation_uri = current_organisation.uri
   end
 
-  def create_invite
+
+  # GET /projects/:id/create_existing_org_invite?organisation_id=blah
+  # One click invite
+  # Should prob be a put or post but we want to generate the link in the JS suggestions.
+  def create_existing_org_invite
+    @project_invite = ProjectInvitePresenter.new
+    @project_invite.project_uri = @project.uri
+    @project_invite.invitor_organisation_uri = current_organisation.uri
+    @project_invite.invited_organisation_uri = "http://data.digitalsocial.eu/id/organization/#{params[:organisation_id]}"
+
+    if @project_invite.save
+      redirect_to user_url, notice: "Organisation invited. Members of the organisation you invited will be notified."
+    else
+      Rails.logger.debug "Failed"
+      flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
+      render :invite
+    end
+  end
+
+  # posting a form.
+  def create_new_org_invite
     @project_invite = ProjectInvitePresenter.new
     @project_invite.attributes = params[:project_invite_presenter]
-
     @project_invite.project_uri = @project.uri
     @project_invite.invitor_organisation_uri = current_organisation.uri
 
     if @project_invite.save
-      redirect_to user_url, notice: "Organisation invited. Members of the organisation you invited will be notified."
+      redirect_to user_url, notice: "Organisation invited. We'll email the contact you entered."
     else
       flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
       render :invite
@@ -116,12 +135,6 @@ class ProjectsController < ApplicationController
 
   def set_project_attributes
     params[:project].each { |k, v| @project.send("#{k}=", v) }
-  end
-
-  def set_project_invite
-    @project_invite = ProjectInvitePresenter.new
-    @project_invite.attributes   = params[:project_invite_presenter]
-    @project_invite.project_uri  = @project.uri
   end
 
   def check_project_can_be_edited

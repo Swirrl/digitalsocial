@@ -75,7 +75,7 @@ class Organisation
 
   # Our projects that others have requested to join
   def pending_project_requests_by_others
-    ProjectRequest.where(open: true).in(requestable_id: project_resource_uris).all
+    ProjectRequest.where(open: true).in(project_uri: project_resource_uris)
   end
 
 
@@ -100,19 +100,9 @@ class Organisation
   end
 
   def has_respondables?
-    has_respondable_project_invites? || has_respondable_project_requests? || has_respondable_user_requests?
-  end
-
-  def has_respondable_project_invites?
-    respondable_project_invites.count > 0
-  end
-
-  def has_respondable_project_requests?
-    respondable_project_requests.count > 0
-  end
-
-  def has_respondable_user_requests?
-    respondable_user_requests.count > 0
+    pending_project_invites.any? ||
+      pending_project_requests_by_others.any? ||
+      respondable_user_requests
   end
 
   def can_edit_project?(project)
