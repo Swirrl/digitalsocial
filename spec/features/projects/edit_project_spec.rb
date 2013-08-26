@@ -45,5 +45,13 @@ feature 'Edit project' do
     page.should_not have_content 'A brilliant project'
     page.should_not have_link 'Request to join'
   end
+
+  scenario "Not allowed to edit a project organisation is not a member of" do
+    project2 = FactoryGirl.create(:project, name: "Forbidden project")
+    visit edit_project_path(project2)
+
+    page.current_path.should == "/user"
+    page.should_not have_content "Forbidden project"
+  end
   
 end

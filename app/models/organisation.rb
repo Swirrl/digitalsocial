@@ -63,6 +63,14 @@ class Organisation
       .where("?uri <#{project_membership_project_predicate}> <#{project.uri}>")
   end
 
+  def is_member_of_project?(project)
+    project_memberships_for_project(project).count > 0
+  end
+
+  def can_edit_project?(project)
+    is_member_of_project?(project)
+  end
+
   # Pending project invites for this organisation that can be responded to
   def respondable_project_invites
     ProjectRequest.where(requestor_type: 'Organisation', requestor_id: self.uri.to_s, responded_to: false, is_invite: true).all
@@ -97,10 +105,6 @@ class Organisation
 
   def has_respondable_user_requests?
     respondable_user_requests.count > 0
-  end
-
-  def can_edit_project?(project)
-    true # everyone can edit project for now.
   end
 
   def as_json(options = nil)
