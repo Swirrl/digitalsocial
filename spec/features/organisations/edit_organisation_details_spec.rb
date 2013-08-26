@@ -28,5 +28,14 @@ feature 'Edit organisation details' do
 
     page.current_path.should_not == '/user'
   end
+
+  scenario "Project suggestions not shown", js: true do
+    FactoryGirl.create(:organisation, name: 'An amazing organisation')
+
+    fill_in 'Name', with: 'amazin'
+
+    page.should_not have_content 'An amazing organisation'
+    page.should_not have_link 'Request to join'
+  end
   
 end

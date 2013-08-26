@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :project do
     name         { Faker::Company.catch_phrase }
+    description  { Faker::Lorem.paragraph }
     webpage      { "http://#{Faker::Internet.domain_name}" }
     activity_type_label   { Faker::Lorem.words.join(", ") }
     start_date_label { rand(5.years).ago.to_date.strftime("%B %Y") }
@@ -8,5 +9,10 @@ FactoryGirl.define do
     creator      { FactoryGirl.create(:organisation).uri.to_s }
     scoped_organisation { FactoryGirl.create(:organisation) }
     organisation_natures { [Concepts::ProjectMembershipNature.all.first.uri] }
+
+    activity_type { Concepts::ActivityType.first.uri }
+    areas_of_society { [Concepts::AreaOfSociety.first.uri] }
+    technology_focus { [Concepts::TechnologyFocus.first.uri] }
+    technology_method { [Concepts::TechnologyMethod.first.uri] }
   end
 end

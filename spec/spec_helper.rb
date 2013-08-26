@@ -39,6 +39,7 @@ RSpec.configure do |config|
   #config.order = "random"
 
   Capybara.ignore_hidden_elements = true
+  Capybara.default_wait_time = 5
 
   DatabaseCleaner.strategy = :truncation
   DatabaseCleaner.orm = "mongoid"

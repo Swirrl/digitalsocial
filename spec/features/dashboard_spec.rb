@@ -13,5 +13,9 @@ feature 'Dashboard' do
   scenario 'Add a new organisation link' do
     page.should have_link('Join another organisation', href: organisations_build_new_organisation_path)
   end
+
+  scenario 'Add a new project link' do
+    page.should have_link('Join an activity', href: new_project_path)
+  end
   
 end
