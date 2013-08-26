@@ -24,10 +24,8 @@ Digitalsocial::Application.routes.draw do
   resources :projects, only: [:new, :create, :index, :edit, :update] do
     member do
       get 'invite'
-      get 'new_invite'
       post 'create_invite'
-      post 'create_request'
-      get 'request_to_join'
+      get 'request_to_join' #one-click. Prob should be a PUT/POST but we want to do it from JS.
     end
     collection do
       get 'tags'

@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :find_project, only: [:invite, :create_invite, :edit, :update, :request_to_join, :create_request]
+  before_filter :find_project, only: [:invite, :create_invite, :edit, :update, :request_to_join, :create_request, :new_invite]
   before_filter :set_project_invite, only: [:create_invite]
   before_filter :check_project_can_be_edited, only: [:edit, :update]
 
@@ -50,22 +50,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def invite
-    @project_invite = ProjectInvitePresenter.new
-  end
-
-  def new_invite
-
-  end
-
-  def create_invite
-    if @project_invite.save
-      render text: "Invited organisation!"
-    else
-      render :invite
-    end
-  end
-
   def edit
     @project.scoped_organisation = current_organisation
   end
@@ -80,27 +64,47 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # get /projects/id/request_to_join
+
+  ##### REQUESTS #####
+
+  # GET /projects/:id/request_to_join.
+  # One click request (from suggestions or project page).
+  # Should prob be a put or post but we want to generate the link in the JS suggestions.
   def request_to_join
     @project_request = ProjectRequestPresenter.new
     @project_request.project_uri = @project.uri
-    @project_request.organisation = current_organisation
-  end
-
-  def create_request
-    @project_request = ProjectRequestPresenter.new
-    @project_request.project_uri = @project.uri
-    @project_request.organisation = current_organisation
-    @project_request.nature_uris = params[:project_request_presenter][:nature_uris]
-
-    # TODO? Store user details?
+    @project_request.requestor_organisation_uri = current_organisation.uri
 
     if @project_request.save
-      redirect_to user_url, notice: "Thanks for your request. This project's existing organisations will be notified and you'll be notified when someone approves your request."
+      redirect_to user_url, notice: "#{@project_request.project.name}'s organisations will be informed of your request. We'll let you know it's approved."
     else
-      flash.now.notice = @project_request.errors.messages.values.join(', ')
-      render :request_to_join
+      redirect_to user_url, alert: "Request failed. #{@project_request.errors.messages.values.join(', ')}"
     end
+  end
+
+  ##### INVITES #####
+
+  # get /projects/:id/invite
+  def invite
+    @project_invite = ProjectInvitePresenter.new
+    @project_invite.project_uri = @project.uri
+    @project_invite.invitor_organisation_uri = current_organisation.uri
+  end
+
+  def create_invite
+    @project_invite = ProjectInvitePresenter.new
+    @project_invite.attributes = params[:project_invite_presenter]
+
+    @project_invite.project_uri = @project.uri
+    @project_invite.invitor_organisation_uri = current_organisation.uri
+
+    if @project_invite.save
+      redirect_to user_url, notice: "Organisation invited. Members of the organisation you invited will be notified."
+    else
+      flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
+      render :invite
+    end
+
   end
 
   private

@@ -2,7 +2,7 @@
   .field
     - if f.object.new_record?
       = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }
-      = render 'suggestions'
+      = render 'suggestions', button_text: 'Request to join'
 
     - else
       = f.input :name, label: 'Name of your activity', input_html: { autocomplete: :off }

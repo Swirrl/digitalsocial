@@ -17,6 +17,7 @@
         - else
           = link_to "switch", user_path(:org_id => org.guid)
 
+
   %h3 Organisations you've requested to join
 
   - if current_user.pending_join_org_requests.any?
@@ -59,7 +60,7 @@
         = proj.name
         = link_to "Edit", edit_project_path(proj.guid)
         |
-        = link_to "Invite another organisation", "#"
+        = link_to "Invite another organisation", invite_project_path(proj)
 
 
   %h3 Pending invites for #{current_organisation.name} to join an activity
