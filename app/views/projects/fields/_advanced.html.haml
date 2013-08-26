@@ -1,13 +1,13 @@
 .field-with-notes      
   .field
     .input
-      = f.label :start_date, "Project start date", class: 'dates'
+      = f.label :start_date_label, "Activity start date", class: 'dates'
       = f.select :start_date_label, grouped_options_for_select(project_start_date_options, f.object.start_date_label), include_blank: "Select a start date"   
 
 .field-with-notes
   .field
     .input
-      = f.label :end_date_label, "Project end date", class: 'dates'
+      = f.label :end_date_label, "Activity end date", class: 'dates'
       = f.select :end_date_label, grouped_options_for_select(project_start_date_options(include_ongoing: true), f.object.end_date_label), include_blank: "Select an end date"
 
       

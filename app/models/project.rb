@@ -21,7 +21,7 @@ class Project
   attr_accessor :scoped_organisation
 
   validates :name, :activity_type, presence: true
-  validates :organisation_natures, presence: { if: 'scoped_organisation.present?' }
+  validate :ensure_scoped_organisation_has_membership
 
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
@@ -98,13 +98,20 @@ class Project
     scoped_project_membership_resources.each(&:destroy)
 
     natures.reject(&:blank?).each do |nature|
+
       pm = ProjectMembership.new
       pm.project      = self.uri.to_s
-      pm.organisation = self.creator_resource.uri.to_s
+      pm.organisation = self.scoped_organisation.uri.to_s
       pm.nature       = nature
       pm.save
 
       self.save
+    end
+  end
+
+  def ensure_scoped_organisation_has_membership
+    if scoped_organisation.present? && scoped_organisation.project_memberships_for_project(self).count.zero?
+      errors.add(:organisation_natures, "can't be blank")
     end
   end
 

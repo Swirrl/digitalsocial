@@ -86,11 +86,12 @@ class Organisations::BuildController < ApplicationController
 
   def edit_project
     # TODO Ensure organisation is a member of the retrieved project
-    @project = Project.find("http://data.digitalsocial.eu/id/activity/#{params[:id]}")
+    @project = current_organisation.project_resources.first
     @project.scoped_organisation = current_organisation
   end
 
   def update_project
+    # TODO Ensure organisation is a member of the retrieved project
     @project = Project.find("http://data.digitalsocial.eu/id/activity/#{params[:id]}")
     @project.scoped_organisation = current_organisation
 
