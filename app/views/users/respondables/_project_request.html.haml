@@ -1,0 +1,21 @@
+.respondable.clearfix{ class: respondable.class.to_s.underscore }
+  .image
+    = image_tag "http://placehold.it/70x70"
+
+  .details
+    .header
+      = link_to respondable.requestor_organisation_resource.name, respondable.requestor_organisation_resource
+      has requested to join
+      = link_to respondable.project_resource.name, respondable.project_resource
+    .subheader
+
+  .action
+    = link_to "Accept", "#", class: 'button button-green accept'
+    = link_to "Ignore", [:reject, respondable], method: :put, class: 'button'
+
+
+  .natures
+    = simple_form_for [:accept, respondable] do |f|
+      = f.input :natures, as: :check_boxes, label: "Which roles did #{respondable.requestor_organisation_resource.name} play in this activity?", collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
+      = f.button :submit, 'Confirm', class: 'button-green'
+    

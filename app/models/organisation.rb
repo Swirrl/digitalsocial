@@ -98,8 +98,12 @@ class Organisation
   end
 
   def has_respondables?
-    pending_project_invites.any? ||
-      pending_project_requests_by_others.any? ||
+    respondables.any?
+  end
+
+  def respondables
+    pending_project_invites + 
+      pending_project_requests_by_others +
       respondable_user_requests
   end
 

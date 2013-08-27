@@ -1,0 +1,74 @@
+.dashboard {
+
+  width: 960px;
+
+  .respondables {
+
+    //width: 100%;
+
+    .respondable {
+
+      display: block;
+      padding: 12px;
+      background: #fff2e3;
+
+      &:nth-child(even) {
+        background: #fffaf4;
+      }
+
+      .image {
+        float: left;
+        width: 70px;
+        height: 70px;
+        margin-right: 12px;
+        background: rgba(255, 255, 255, 0.75);
+      }
+
+
+      .details {
+        float: left;
+        line-height: 1.5;
+
+        .header {
+          font-weight: 600;
+          font-size: 20px;
+        }
+
+        .subheader {
+          font-style: italic;
+        }
+      }
+
+      .action {
+        float: right;
+        width: 240px;
+        text-align: right;
+      }
+
+      .natures {
+        float: right;
+        width: 360px;
+        display: none;
+
+        .input {
+          margin-bottom: 12px;
+        }
+        .button {
+          float: right;
+        }
+      }
+
+      .action, .natures {
+        .button {
+          font-size: 20px;
+          margin-top: 12px;
+          margin-right: 12px;
+          line-height: 1;
+        }
+      }
+
+    }
+
+  }
+
+}
