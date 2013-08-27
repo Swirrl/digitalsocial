@@ -18,6 +18,8 @@ class Organisation
 
   validates :name, presence: true
 
+  attr_accessor :invited_users, :invites_to_send
+
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
     super(uri || "http://data.digitalsocial.eu/id/organization/#{Guid.new}")
@@ -132,16 +134,37 @@ class Organisation
   end
 
   def invited_users=(ary)
-    ary.reject! { |_, u| u[:first_name].blank? || u[:email].blank? }
+    @invited_users   = ary
+    @invites_to_send = []
 
-    ary.each do |_, u|
-      uip = UserInvitePresenter.new
-      uip.user_first_name = u[:first_name]
-      uip.user_email      = u[:email]
-      uip.organisation    = self
-      uip.save
+    ary.each do |n, u|
+      if u[:first_name].present? || u[:email].present?
+        uip = UserInvitePresenter.new
+        uip.user_first_name = u[:first_name]
+        uip.user_email      = u[:email]
+        uip.organisation    = self
+
+        if uip.invalid?
+          @invited_users[n][:error] = uip.errors.full_messages.first
+        else
+          @invites_to_send << uip
+        end
+      end
     end
+  end
 
+  def can_send_user_invites?
+    @invited_users.each { |_, u| return false if u[:error].present? }
+    true
+  end
+
+  def send_user_invites
+    @invites_to_send.each(&:save)
+  end
+
+  def build_user_invites
+    @invited_users = {}
+    50.times { |n| @invited_users[n.to_s] ||= {} }
   end
 
 end

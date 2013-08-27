@@ -46,22 +46,20 @@ class OrganisationsController < ApplicationController
     end
   end
 
-  def user_invite
-    @user_invite = UserInvitePresenter.new
+  def invite_users
+    @organisation = current_organisation
+    @organisation.build_user_invites
   end
 
-  def create_user_invite
-    @user_invite = UserInvitePresenter.new
-    user_invite_parameters = params[:user_invite_presenter]
+  def create_user_invites
+    @organisation = current_organisation
+    @organisation.invited_users = params[:invited_users]
 
-    @user_invite.user_first_name = user_invite_parameters[:user_first_name]
-    @user_invite.user_email = user_invite_parameters[:user_email]
-    @user_invite.organisation = @organisation
-
-    if @user_invite.save
-      render text: "User added"
+    if @organisation.can_send_user_invites?
+      @organisation.send_user_invites
+      redirect_to :user, notice: "Team members invited"
     else
-      render :user_invite
+      render :invite_users
     end
   end
 

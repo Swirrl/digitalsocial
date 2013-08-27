@@ -1,0 +1,11 @@
+- 50.times do |n|
+  - visible = (n < 2) || f.object.invited_users[n.to_s][:first_name].present? || f.object.invited_users[n.to_s][:email].present?
+
+  .invite-row.input.revealable{ style: "display: #{visible ? 'block' : 'none'};" }
+    = text_field_tag "invited_users[#{n}][first_name]", f.object.invited_users[n.to_s][:first_name], placeholder: "First name", size: 15
+    = text_field_tag "invited_users[#{n}][email]", f.object.invited_users[n.to_s][:email], placeholder: "Email address", class: 'email', size: 30
+
+    - if (error = f.object.invited_users[n.to_s][:error]).present?
+      %span.error= error
+
+%p= link_to "Add another team member", "#", class: 'reveal-next'
