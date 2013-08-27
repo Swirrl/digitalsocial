@@ -7,11 +7,7 @@ feature 'Invite users wizard step' do
 
   background do
     login_as user, scope: :user
-    visit organisations_build_invite_users_path
-  end
-
-  scenario 'Skipping the invite users step' do
-    page.should have_link('Skip', href: organisations_build_new_project_path)
+    visit invite_users_organisation_path(organisation)
   end
 
   scenario 'Fill in team member details successfully' do
@@ -21,18 +17,18 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_1_first_name', with: 'Jane'
     fill_in 'invited_users_1_email', with: 'jane@test.com'
 
-    click_button 'Next step'
+    click_button 'Invite users'
 
-    page.current_path.should include("organisations/build/new_project")
+    page.current_path.should == "/user"
   end
 
   scenario 'Fill in team member details without first name' do
     fill_in 'invited_users_0_first_name', with: ''
     fill_in 'invited_users_0_email', with: 'jane@test.com'
 
-    click_button 'Next step'
+    click_button 'Invite users'
 
-    page.current_path.should_not include("organisations/build/new_project")
+    page.current_path.should_not == "/user"
     page.should have_css('.error')
   end
 
@@ -40,9 +36,9 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_0_first_name', with: 'Bob'
     fill_in 'invited_users_0_email', with: ''
 
-    click_button 'Next step'
+    click_button 'Invite users'
 
-    page.current_path.should_not include("organisations/build/new_project")
+    page.current_path.should_not == "/user"
     page.should have_css('.error')
   end
 
@@ -50,9 +46,9 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_0_first_name', with: 'Bob'
     fill_in 'invited_users_0_email', with: 'bob@test'
 
-    click_button 'Next step'
+    click_button 'Invite users'
 
-    page.current_path.should_not include("organisations/build/new_project")
+    page.current_path.should_not == "/user"
     page.should have_css('.error')
   end
 
@@ -62,9 +58,9 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_0_first_name', with: 'Bob'
     fill_in 'invited_users_0_email', with: 'existing@test.com'
 
-    click_button 'Next step'
+    click_button 'Invite users'
 
-    page.current_path.should include("organisations/build/new_project")
+    page.current_path.should == "/user"
   end
 
   scenario 'Fill in team member details with email of user already existing but already belonging to organisation' do
@@ -74,9 +70,9 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_0_first_name', with: 'Bob'
     fill_in 'invited_users_0_email', with: 'existing@test.com'
 
-    click_button 'Next step'
+    click_button 'Invite users'
 
-    page.current_path.should_not include("organisations/build/new_project")
+    page.current_path.should_not == "/user"
     page.should have_css('.error')
   end
   

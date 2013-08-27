@@ -8,6 +8,7 @@ class UserInvitePresenter
   attr_accessor :user_first_name, :user_email, :organisation
 
   validates :user_first_name, :user_email, presence: true
+  validates :user_email, format: { with: Devise.email_regexp }
   validate :user_is_not_already_member_of_organisation
 
   def attributes=(values)

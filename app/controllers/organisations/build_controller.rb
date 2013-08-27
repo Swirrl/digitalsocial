@@ -52,12 +52,15 @@ class Organisations::BuildController < ApplicationController
 
   def invite_users
     @organisation = current_organisation
+    @organisation.build_user_invites
   end
 
   def create_user_invites
     @organisation = current_organisation
+    @organisation.invited_users = params[:invited_users]
 
-    if @organisation.update_attributes(params[:organisation])
+    if @organisation.can_send_user_invites?
+      @organisation.send_user_invites
       redirect_to [:organisations, :build, :new_project]
     else
       render :invite_users
