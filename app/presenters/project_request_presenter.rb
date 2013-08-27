@@ -81,7 +81,7 @@ class ProjectRequestPresenter
   end
 
   def no_existing_requests
-    errors.add(:project_uri, "Your organisation has already requsted membership to this project.") if existing_pending_request?
+    errors.add(:project_uri, "Your organisation has already requsted membership to this project") if existing_pending_request?
   end
 
 end
