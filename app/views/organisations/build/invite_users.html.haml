@@ -13,12 +13,7 @@
 
   = simple_form_for @organisation, url: [:organisations, :build, :create_user_invites] do |f|
 
-    - 50.times do |n|
-      .invite-row.input.revealable{ class: "invite-row-#{n}" }
-        = text_field_tag "organisation[invited_users][#{n}][first_name]", nil, placeholder: "First name", size: 15
-        = text_field_tag "organisation[invited_users][#{n}][email]", nil, placeholder: "Email address", class: 'email', size: 30
-
-    %p= link_to "Add another team member", "#", class: 'reveal-next'
+    = render "organisations/fields/invite_users", f: f
 
     .wizard-button-wrapper
       = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'

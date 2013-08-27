@@ -1,0 +1,7 @@
+%h1 Invite users
+
+= simple_form_for @organisation, url: [:create_user_invites, :organisation] do |f|
+  = render "organisations/fields/invite_users", f: f
+
+  .wizard-button-wrapper
+    = f.button :submit, 'Next step &raquo;'.html_safe

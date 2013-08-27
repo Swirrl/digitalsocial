@@ -52,16 +52,6 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
-  resources :organisations, only: [:edit, :update, :index] do
-    member do
-      get 'user_invite'
-      post 'create_user_invite'
-      get 'request_to_join'
-      get 'edit_location'
-      post 'update_location'
-    end
-  end
-
   namespace :organisations do
     namespace :build do
       get 'new_user'
@@ -76,6 +66,16 @@ Digitalsocial::Application.routes.draw do
       post 'create_project'
       get 'edit_project'
       put 'update_project'
+    end
+  end
+
+  resources :organisations, only: [:edit, :update, :index] do
+    member do
+      get 'invite_users'
+      put 'create_user_invites'
+      get 'request_to_join'
+      get 'edit_location'
+      post 'update_location'
     end
   end
 
