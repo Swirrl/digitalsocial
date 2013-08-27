@@ -2,7 +2,20 @@ require 'spec_helper'
 
 describe ProjectInvitePresenter do
 
-  context "new organisation" do
+  describe "#project_invite" do
+    let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
+    let(:project_invite) { project_invite_presenter.project_invite }
+
+    it "should instantiate a project invite based on the params" do
+      project_invite.new_record?.should be_true
+      project_invite.invitor_organisation_uri.should == project_invite_presenter.invitor_organisation_uri
+      project_invite.invited_organisation_uri.should == project_invite_presenter.invited_organisation_uri
+      project_invite.project_uri.should == project_invite_presenter.project_uri
+    end
+
+  end
+
+  context "#new organisation" do
     let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
 
     it "must have a valid factory" do
@@ -25,12 +38,13 @@ describe ProjectInvitePresenter do
       end
     end
 
-    describe "user" do
+    describe "#user" do
 
       context "the user already exists" do
         let!(:user) {
           u = FactoryGirl.build(:user)
           u.email = project_invite_presenter.user_email
+          u.save!
           u
         }
 
@@ -45,6 +59,71 @@ describe ProjectInvitePresenter do
         end
       end
     end
+
+    describe "#organisation_membership" do
+      let!(:om) { project_invite_presenter.organisation_membership }
+
+      it "should instantiate a new Org Membership for the user and org" do
+        om.new_record?.should be_true
+        om.user.email.should == project_invite_presenter.user_email
+        om.organisation_uri.should == project_invite_presenter.invited_organisation.uri.to_s
+      end
+    end
+
+    describe "#save" do
+
+      it "must create an organisation with the correct details" do
+        project_invite_presenter.save
+        project_invite_presenter.invited_organisation.should be_persisted
+        project_invite_presenter.invited_organisation.name.should == project_invite_presenter.invited_organisation_name
+      end
+
+      context "user doesn't already exist" do
+
+        it "must create a user with the correct details" do
+          User.any_instance.should_receive(:save).and_call_original
+          project_invite_presenter.save
+          project_invite_presenter.user.should be_persisted
+          project_invite_presenter.user.first_name.should == project_invite_presenter.user_first_name
+          project_invite_presenter.user.email.should      == project_invite_presenter.user_email
+        end
+      end
+
+      context "user already exists" do
+
+        let!(:user) {
+          u = FactoryGirl.build(:user)
+          u.email = project_invite_presenter.user_email
+          u.save!
+          u
+        }
+        it "must use the existing user" do
+          User.any_instance.should_not_receive(:save)
+          project_invite_presenter.save
+          project_invite_presenter.user.should be_persisted
+          project_invite_presenter.user.email.should      == project_invite_presenter.user_email
+        end
+      end
+
+      # TODO.
+      it "should send an email"
+
+      it "should create an invite with the right details" do
+        project_invite_presenter.save
+        project_invite_presenter.project_invite.should be_persisted
+        project_invite_presenter.project_invite.invited_organisation_uri.should == project_invite_presenter.invited_organisation_uri
+        project_invite_presenter.project_invite.invitor_organisation_uri.should == project_invite_presenter.invitor_organisation_uri
+        project_invite_presenter.project_invite.project_uri.should == project_invite_presenter.project_uri
+      end
+
+      it "should create an org membership for the user" do
+        project_invite_presenter.save
+        project_invite_presenter.organisation_membership.should be_persisted
+        project_invite_presenter.organisation_membership.organisation_uri.should == project_invite_presenter.invited_organisation.uri.to_s
+        project_invite_presenter.organisation_membership.user.should == project_invite_presenter.user
+      end
+
+    end
   end
 
   context "existing organisation" do
@@ -54,19 +133,19 @@ describe ProjectInvitePresenter do
       project_invite_presenter.should be_valid
     end
 
-    describe ".new_organisation?" do
+    describe "#new_organisation?" do
       it "should return false" do
         project_invite_presenter.new_organisation?.should be_false
       end
     end
 
-    describe "invited_organisation" do
+    describe "#invited_organisation" do
       it "should return the existing org" do
         project_invite_presenter.invited_organisation.new_record.should be_false
       end
     end
 
-    describe "user" do
+    describe "#user" do
       it "should return nil" do
         project_invite_presenter.user.should be_nil
       end
@@ -110,107 +189,24 @@ describe ProjectInvitePresenter do
       end
     end
 
+    describe "#organisation_membership" do
+      let!(:om) { project_invite_presenter.organisation_membership }
+
+      it "should return nil" do
+        om.should be_nil
+      end
+    end
+
+    describe "#save" do
+      it "should create an invite with the right details" do
+        project_invite_presenter.save
+        project_invite_presenter.project_invite.should be_persisted
+        project_invite_presenter.project_invite.invited_organisation_uri.should == project_invite_presenter.invited_organisation_uri
+        project_invite_presenter.project_invite.invitor_organisation_uri.should == project_invite_presenter.invitor_organisation_uri
+        project_invite_presenter.project_invite.project_uri.should == project_invite_presenter.project_uri
+      end
+    end
+
   end
-
-  # context "new organisation" do
-
-  #   let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
-
-  #   it "must have a valid factory" do
-  #     project_invite_presenter.should be_valid
-  #   end
-
-  #   it "must have a unique email address" do
-  #     FactoryGirl.create(:user, email: 'test@test.com')
-
-  #     project_invite_presenter.user_email = 'test@test.com'
-  #     project_invite_presenter.should_not be_valid
-  #   end
-
-  #   describe ".save" do
-
-  #     before do
-  #       project_invite_presenter.save
-  #     end
-
-  #     it "must create an organisation with the correct details" do
-  #       project_invite_presenter.organisation.should be_persisted
-  #       project_invite_presenter.organisation.name.should == project_invite_presenter.organisation_name
-  #     end
-
-  #     it "must create a user with the correct details" do
-  #       project_invite_presenter.user.should be_persisted
-  #       project_invite_presenter.user.first_name.should == project_invite_presenter.user_first_name
-  #       project_invite_presenter.user.email.should      == project_invite_presenter.user_email
-  #     end
-
-  #     it "must create an organisation membership with the correct details" do
-  #       project_invite_presenter.organisation_membership.should be_persisted
-  #       project_invite_presenter.organisation_membership.organisation_uri.should == project_invite_presenter.organisation.uri.to_s
-  #       project_invite_presenter.organisation_membership.user.should == project_invite_presenter.user
-  #       project_invite_presenter.organisation_membership.owner.should be_true
-  #     end
-
-  #     it "must create a request with the correct details" do
-  #       project_invite_presenter.project_request.should be_persisted
-  #       project_invite_presenter.project_request.requestor.should == project_invite_presenter.organisation
-  #       project_invite_presenter.project_request.requestable.should == project_invite_presenter.project
-  #       project_invite_presenter.project_request.is_invite.should be_true
-  #       project_invite_presenter.project_request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
-  #     end
-
-  #   end
-
-  # end
-
-  # context "existing organisation" do
-
-  #   let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_existing_organisation) }
-
-  #   it "must have a valid factory" do
-  #     project_invite_presenter.should be_valid
-  #   end
-
-  #   describe ".save" do
-
-  #     context "without user details" do
-
-  #       before do
-  #         project_invite_presenter.save
-  #       end
-
-  #       it "must create a request with the correct details" do
-  #         project_invite_presenter.project_request.should be_persisted
-  #         project_invite_presenter.project_request.requestor.should == project_invite_presenter.organisation
-  #         project_invite_presenter.project_request.requestable.should == project_invite_presenter.project
-  #         project_invite_presenter.project_request.is_invite.should be_true
-  #         project_invite_presenter.project_request.project_membership_nature_uri.should == project_invite_presenter.nature_uri
-  #       end
-
-  #       it "must not create a user request if they are not provided" do
-  #         project_invite_presenter.user_request.should_not be_persisted
-  #       end
-
-  #     end
-
-  #     context "with user details" do
-
-  #       before do
-  #         project_invite_presenter.user_first_name = "Foo"
-  #         project_invite_presenter.user_email = "foo@bar.com"
-  #         project_invite_presenter.save
-  #       end
-
-  #       it "must create a user request with the correct details if they are provided" do
-  #         project_invite_presenter.user_request.should be_persisted
-  #         project_invite_presenter.user_request.user_first_name.should == "Foo"
-  #         project_invite_presenter.user_request.user_email.should == "foo@bar.com"
-  #       end
-
-  #     end
-
-  #   end
-
-  # end
 
 end

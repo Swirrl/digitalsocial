@@ -99,6 +99,7 @@ RSpec.configure do |config|
 
     # clean mongo
     DatabaseCleaner.clean
+
   end
 
   config.include Warden::Test::Helpers, type: :feature

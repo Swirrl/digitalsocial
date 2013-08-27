@@ -41,6 +41,7 @@ class ProjectInvitePresenter
   end
 
   def invited_organisation
+    return @organisation if @organisation
 
     if new_organisation?
       @organisation = Organisation.new
@@ -73,7 +74,7 @@ class ProjectInvitePresenter
   end
 
   def organisation_membership
-    return @organisation_membership unless @organisation_membership.nil?
+    return @organisation_membership if @organisation_membership
 
     if new_organisation?
       @organisation_membership ||= OrganisationMembership.new do |om|
@@ -82,8 +83,10 @@ class ProjectInvitePresenter
         om.owner            = true
       end
     else
-      @organisation_membership = OrganisationMembership.where(organisation_uri: self.invited_organisation_uri, owner: true).first
+      @organisation_membership = nil
     end
+
+    @organisation_membership
   end
 
   def project
