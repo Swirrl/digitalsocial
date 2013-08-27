@@ -1,0 +1,25 @@
+.projects
+  %h3 Activities
+
+  %ul
+    - current_organisation.projects.resources.each do |proj|
+      %li{ class: cycle('odd', 'even') }
+        %p
+          %strong= proj.name
+        %p
+          = link_to "Edit", edit_project_path(proj.guid)
+          |
+          = link_to "Invite another organisation", invite_project_path(proj)
+
+  - if current_organisation.pending_project_requests_by_self.any?
+    %ul
+      - current_organisation.pending_project_requests_by_self.each do |req|
+        %li{ class: cycle('odd', 'even') }
+          %p
+            %strong #{req.project_resource.name}
+          %p
+            %em (Pending)
+
+  = link_to "Add/join activity", [:new, :project], class: 'button'
+
+- reset_cycle

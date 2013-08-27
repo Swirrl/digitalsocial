@@ -1,8 +1,9 @@
 .dashboard
-  
-  - if current_organisation.has_respondables?
-    %h2 Requests/invites for #{current_organisation.name}
 
-    .respondables
-      - current_organisation.respondables.each do |respondable|
-        = render "users/respondables/#{respondable.class.to_s.underscore}", respondable: respondable
+  %h2 #{current_organisation.name}'s Dashboard
+
+  = render "users/dashboard/respondables"
+  
+  .dashboard-row.clearfix
+    = render "users/dashboard/projects"
+    = render "users/dashboard/users"

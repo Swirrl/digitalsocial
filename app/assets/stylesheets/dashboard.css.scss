@@ -2,9 +2,21 @@
 
   width: 960px;
 
+  h2 { 
+    margin-bottom: 48px;
+  }
+
+  h3 {
+    color: #666;
+  }
+
+  .button {
+    font-size: 20px;
+  }
+
   .respondables {
 
-    //width: 100%;
+    margin-bottom: 60px;
 
     .respondable {
 
@@ -12,7 +24,7 @@
       padding: 12px;
       background: #fff2e3;
 
-      &:nth-child(even) {
+      &:nth-child(odd) {
         background: #fffaf4;
       }
 
@@ -49,6 +61,7 @@
         float: right;
         width: 360px;
         display: none;
+        margin-top: 6px;
 
         .input {
           margin-bottom: 12px;
@@ -60,7 +73,6 @@
 
       .action, .natures {
         .button {
-          font-size: 20px;
           margin-top: 12px;
           margin-right: 12px;
           line-height: 1;
@@ -69,6 +81,54 @@
 
     }
 
+  }
+
+  .dashboard-row {
+    @include row;
+  }
+
+  .projects {
+    @include columns(8);
+
+    ul {
+      margin-bottom: 0;
+    }
+
+    .button {
+      margin-top: 36px;
+    }
+  }
+
+  .users {
+    @include columns(7);
+    @include offset(1);
+  }
+
+  .users, .projects {
+    ul {
+      padding-left: 0;
+      
+
+      li {
+        display: block;
+        list-style-type: none;
+        background: #fffaf4;
+        padding: 12px;
+        margin: 0;
+
+        &.odd {
+          background: #fff2e3;
+        }
+
+        p {
+          margin: 0;
+        }
+
+        p + p {
+          margin-top: 2px;
+        }
+      }
+    }
   }
 
 }

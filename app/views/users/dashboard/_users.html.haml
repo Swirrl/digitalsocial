@@ -1,0 +1,19 @@
+.users
+  %h3 Users
+
+  %ul
+
+    - current_organisation.users.each do |u|
+      %li{ class: cycle('odd', 'even') }
+        %p
+          %strong= u.first_name
+          - if u.id == current_user.id
+            = "(you)"
+            
+            = link_to "Edit profile", edit_user_path
+        %p
+          %em= u.email
+
+  = link_to "Invite users", [:invite_users, current_organisation], class: 'button'
+
+- reset_cycle

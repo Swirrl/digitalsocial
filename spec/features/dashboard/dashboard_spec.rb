@@ -15,7 +15,7 @@ feature 'Dashboard' do
   end
 
   scenario 'Add a new project link' do
-    page.should have_link('Join an activity', href: new_project_path)
+    page.should have_link('Add/join activity', href: new_project_path)
   end
   
 end
