@@ -219,4 +219,14 @@ class Project
     self.technology_focus_list.split(",").collect(&:strip)
   end
 
+  def webpage_label=(domain)
+    domain.strip!
+    domain.gsub!(/^http:\/\//, "")
+    self.webpage = domain.present? ? "http://#{domain}" : nil
+  end
+
+  def webpage_label
+    self.webpage.to_s.gsub(/^http:\/\//, "") if self.webpage.present?
+  end
+
 end
