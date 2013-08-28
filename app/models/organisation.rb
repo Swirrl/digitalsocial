@@ -134,12 +134,22 @@ class Organisation
   def twitter_username=(username)
     username.strip!
     username.gsub!(/^@/, "")
-    self.twitter = "http://twitter.com/#{username}"
+    self.twitter = username.present? ? "http://twitter.com/#{username}" : nil
   end
 
   def twitter_username
     username = self.twitter.to_s.split("/")[3] # Do cleaner way
     "@#{username}" if username.present?
+  end
+
+  def webpage_label=(domain)
+    domain.strip!
+    domain.gsub!(/^http:\/\//, "")
+    self.webpage = domain.present? ? "http://#{domain}" : nil
+  end
+
+  def webpage_label
+    self.webpage.to_s.gsub(/^http:\/\//, "") if self.webpage.present?
   end
 
   def users
