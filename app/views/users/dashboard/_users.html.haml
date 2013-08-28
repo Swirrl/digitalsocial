@@ -1,10 +1,10 @@
-.users
+.users.dashboard-section
   %h3 Users
 
   %ul
 
     - current_organisation.users.each do |u|
-      %li{ class: cycle('odd', 'even') }
+      %li
         %p
           %strong= u.first_name
           - if u.id == current_user.id
@@ -15,5 +15,3 @@
           %em= u.email
 
   = link_to "Invite users", [:invite_users, current_organisation], class: 'button'
-
-- reset_cycle

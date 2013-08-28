@@ -1,9 +1,17 @@
 .dashboard
 
-  %h2 #{current_organisation.name}'s Dashboard
+  - if current_organisation
 
-  = render "users/dashboard/respondables"
-  
+    %h2 #{current_organisation.name}'s Dashboard
+
+    = render "users/dashboard/respondables"
+    
+    .dashboard-row.clearfix
+      = render "users/dashboard/projects"
+      = render "users/dashboard/users"
+
+  %h2 Your account
+
   .dashboard-row.clearfix
-    = render "users/dashboard/projects"
-    = render "users/dashboard/users"
+    = render "users/dashboard/organisations"
+    = render "users/dashboard/details"

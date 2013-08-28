@@ -37,9 +37,10 @@
       }
 
 
-      .details {
+      .text {
         float: left;
         line-height: 1.5;
+        max-width: 600px;
 
         .header {
           font-weight: 600;
@@ -85,9 +86,10 @@
 
   .dashboard-row {
     @include row;
+    margin-bottom: 60px;
   }
 
-  .projects {
+  .projects, .organisations {
     @include columns(8);
 
     ul {
@@ -99,12 +101,12 @@
     }
   }
 
-  .users {
+  .users, .details {
     @include columns(7);
     @include offset(1);
   }
 
-  .users, .projects {
+  .dashboard-section {
     ul {
       padding-left: 0;
       
@@ -116,7 +118,7 @@
         padding: 12px;
         margin: 0;
 
-        &.odd {
+        &:nth-child(odd) {
           background: #fff2e3;
         }
 

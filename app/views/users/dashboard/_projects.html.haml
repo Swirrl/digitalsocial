@@ -1,27 +1,31 @@
-.projects
+.projects.dashboard-section
   %h3 Activities
 
-  %ul
-    - current_organisation.projects.resources.each do |proj|
-      %li{ class: cycle('odd', 'even') }
-        %p
-          %strong= proj.name
-        %p
-          = link_to "View", project_path(proj)
-          |
-          = link_to "Edit", edit_project_path(proj.guid)
-          |
-          = link_to "Invite another organisation", invite_project_path(proj)
+  - if current_organisation.projects.count > 0 || current_organisation.pending_project_requests_by_self.any?
 
-  - if current_organisation.pending_project_requests_by_self.any?
     %ul
+      - current_organisation.projects.resources.each do |proj|
+        %li
+          %p
+            %strong= proj.name
+          %p
+            = link_to "View", project_path(proj)
+            |
+            = link_to "Edit", edit_project_path(proj.guid)
+            |
+            = link_to "Invite another organisation", invite_project_path(proj)
+
       - current_organisation.pending_project_requests_by_self.each do |req|
-        %li{ class: cycle('odd', 'even') }
+        %li
           %p
             %strong #{req.project_resource.name}
           %p
             %em (Pending)
 
-  = link_to "Add/join activity", [:new, :project], class: 'button'
+    = link_to "Add/join another activity", [:new, :project], class: 'button'
+
+  - else
+
+    = link_to "Add/join an activity", [:new, :project], class: 'button'
 
 - reset_cycle

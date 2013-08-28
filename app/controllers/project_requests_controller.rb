@@ -11,8 +11,6 @@ class ProjectRequestsController < ApplicationController
     else
       redirect_to :user, alert: "The request could not be accepted"
     end
-    #Rails.logger.debug @request.inspect
-    #redirect_to :back
   end
 
   def reject

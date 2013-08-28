@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # user dashboard
   def show
-    redirect_to [:organisations, :build, :new_organisation] unless current_organisation
+    #redirect_to [:organisations, :build, :new_organisation] unless current_organisation
   end
 
   def new
