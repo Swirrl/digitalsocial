@@ -9,7 +9,6 @@ class Organisation
   field :name, 'http://www.w3.org/2000/01/rdf-schema#label'
   field :primary_site, 'http://www.w3.org/ns/org#hasPrimarySite', is_uri: true
 
-  field :no_of_staff, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', datatype: RDF::XSD.integer
   field :twitter, 'http://data.digitalsocial.eu/def/ontology/twitterAccount', is_uri: true # this should be the full URL http://twitter.com/blah
   field :webpage, 'http://xmlns.com/foaf/0.1/page', is_uri: true
 
@@ -22,7 +21,15 @@ class Organisation
 
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
-    super(uri || "http://data.digitalsocial.eu/id/organization/#{Guid.new}")
+    super(uri || Organisation.slug_to_uri(Guid.new))
+  end
+
+  def self.slug_to_uri(slug)
+    "http://data.digitalsocial.eu/id/organization/#{slug}"
+  end
+
+  def self.uri_to_slug(uri)
+    uri.split("/").last
   end
 
   def guid
@@ -35,10 +42,6 @@ class Organisation
 
   def primary_site_resource
     Site.find(self.primary_site) if self.primary_site
-  end
-
-  def address_str
-    self.primary_site_resource.address_resource.to_s
   end
 
   def projects
@@ -172,5 +175,12 @@ class Organisation
     @invited_users = {}
     50.times { |n| @invited_users[n.to_s] ||= {} }
   end
+
+  #### expose some useful data for this object, to avoid law of demeter type probs
+
+  def address_str
+    self.primary_site_resource.address_resource.to_s
+  end
+
 
 end

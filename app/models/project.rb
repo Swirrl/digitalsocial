@@ -25,7 +25,15 @@ class Project
 
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
-    super(uri || "http://data.digitalsocial.eu/id/activity/#{Guid.new}")
+    super(uri || Project.slug_to_uri(Guid.new))
+  end
+
+  def self.slug_to_uri(slug)
+    "http://data.digitalsocial.eu/id/activity/#{slug}"
+  end
+
+  def self.uri_to_slug(uri)
+    uri.split("/").last
   end
 
   def guid
@@ -64,6 +72,14 @@ class Project
 
     self.duration = dr.uri.to_s
     self.save
+  end
+
+  def duration_str
+    str = ""
+    str += start_date_label if start_date_label
+    str += " - "
+    str += end_date_label if end_date_label
+    str
   end
 
   def creator_resource
@@ -121,6 +137,25 @@ class Project
     Organisation
       .where("?pm_uri <#{project_membership_project_predicate}> <#{self.uri}>")
       .where("?pm_uri <#{project_membership_org_predicate}> ?uri")
+  end
+
+  def natures_for_organisation(organisation)
+    project_membership_org_predicate = ProjectMembership.fields[:organisation].predicate.to_s
+    project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
+    project_membership_nature_predicate = ProjectMembership.fields[:nature].predicate.to_s
+
+    Concepts::ProjectMembershipNature.find_by_sparql(
+      "SELECT ?uri WHERE {
+        ?pm_uri <#{project_membership_nature_predicate}> ?uri .
+        ?pm_uri <#{project_membership_org_predicate}> <#{organisation.uri.to_s}> .
+        ?pm_uri <#{project_membership_project_predicate}> <#{self.uri.to_s}> .
+      }"
+    )
+
+  end
+
+  def natures_str_for_organisation(organisation)
+    natures_for_organisation(organisation).map(&:label).join(", ")
   end
 
   def organisation_resources

@@ -63,12 +63,16 @@ class OrganisationsController < ApplicationController
     end
   end
 
+  def show
+    @organisation = Organisation.find( Organisation.slug_to_uri(params[:id]) )
+  end
+
   def index
     if params[:q].present? # used for auto complete suggestions.
       @organisations = Organisation.search_by_name(params[:q]).to_a
       current_organisation_uris = current_user.organisation_resources.map{|o| o.uri.to_s }
     else
-      @organisations = Organisation.all.resources.to_a
+      @organisations = Organisation.all.resources
     end
 
     respond_to do |format|
@@ -77,6 +81,7 @@ class OrganisationsController < ApplicationController
           current_organisation_uris: current_organisation_uris # list of orgs for this user
         }
       end
+      format.html
     end
   end
 
@@ -84,7 +89,7 @@ class OrganisationsController < ApplicationController
 
   def set_organisation
     if params[:id].present?
-      @organisation = Organisation.find("http://data.digitalsocial.eu/id/organization/#{params[:id]}")
+      @organisation = Organisation.find(Organisation.slug_to_uri(params[:id]))
     else
       @organisation = current_organisation
     end

@@ -1,0 +1,40 @@
+%h3 Project
+%h1= @project.name
+
+%h4 Description
+%p= @project.description || "Not supplied"
+
+%h4 Web page
+%p= @project.webpage || "Not supplied"
+
+%h4 Duration
+%p= @project.duration_str
+
+%h4 Type of Activity
+%p= @project.activity_type_label
+
+%h4 Areas of Society
+%p= @project.areas_of_society_list.present? ? @project.areas_of_society_list : "None supplied"
+
+%h4 Technology Focus
+%p= @project.technology_focus_list.present? ? @project.technology_focus_list : "None supplied"
+
+%h4 Technology Method
+%p= @project.technology_method_list.present? ? @project.technology_method_list : "None supplied"
+
+%h4 Organisations
+%ul
+  - @project.organisations.resources.each do |o|
+    %li
+      = link_to o.name, organisation_path(o)
+      (#{@project.natures_str_for_organisation(o)})
+
+- if current_user
+  - if current_organisation.projects.resources.map(&:uri).include?(@project.uri)
+    %p
+      Your organisation is a member of this activity.
+      = link_to "Edit activity", edit_project_path(@project)
+  - else
+    %p= link_to "Join this activity", request_to_join_project_path(@project)
+- else
+  Log in to edit or join this activity

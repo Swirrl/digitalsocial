@@ -1,0 +1,35 @@
+%h3 Organisation
+%h1= @organisation.name
+
+%h4 Address
+%p= @organisation.address_str
+
+%h4 No of Staff
+%p= @organisation.fte_range_label || "Not supplied"
+
+%h4 Twitter
+%p= @organisation.twitter_username || "Not supplied"
+
+%h4 Web page
+%p= @organisation.webpage || "Not supplied"
+
+%h4 Type of Organisation
+%p= @organisation.organisation_type_label || "Not supplied"
+
+%h4 Projects
+%ul
+  - @organisation.projects.resources.each do |p|
+    %li
+      = link_to p.name, project_path(p)
+      (#{p.natures_str_for_organisation(@organisation)})
+
+
+- if current_user
+  - if @organisation.users.include?(current_user)
+    %p
+      You are a member of this organisation.
+      = link_to "Edit organisation", edit_organisation_path(@organisation)
+  - else
+    %p= link_to "Join this organisation", request_to_join_organisation_path(@organisation)
+- else
+  Log in to edit or join this organisation

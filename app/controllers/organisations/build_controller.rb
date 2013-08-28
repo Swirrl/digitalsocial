@@ -95,7 +95,7 @@ class Organisations::BuildController < ApplicationController
 
   def update_project
     # TODO Ensure organisation is a member of the retrieved project
-    @project = Project.find("http://data.digitalsocial.eu/id/activity/#{params[:id]}")
+    @project = Project.find(Project.slug_to_uri(params[:id]))
     @project.scoped_organisation = current_organisation
 
     if @project.update_attributes(params[:project])

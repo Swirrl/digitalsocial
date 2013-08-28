@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
       @projects = Project.search_by_name(params[:q]).to_a
       current_project_uris = current_organisation.project_resource_uris
     else
-      @projects = Project.all.resources.to_a
+      @projects = Project.all.resources
     end
 
     respond_to do |format|
@@ -33,7 +33,13 @@ class ProjectsController < ApplicationController
           current_project_uris: current_project_uris
         }
       end
+      format.html
     end
+
+  end
+
+  def show
+    @project = Project.find( Project.slug_to_uri(params[:id]) )
   end
 
   def create
@@ -74,7 +80,7 @@ class ProjectsController < ApplicationController
     @project_request.requestor_organisation_uri = current_organisation.uri
 
     if @project_request.save
-      redirect_to user_url, notice: "#{@project_request.project.name}'s organisations will be informed of your request. We'll let you know it's approved."
+      redirect_to user_url, notice: "#{@project_request.project.name}'s organisations will be informed of your request. We'll let you know when it's approved."
     else
       redirect_to user_url, alert: "Request failed. #{@project_request.errors.messages.values.join(', ')}"
     end
@@ -97,7 +103,7 @@ class ProjectsController < ApplicationController
     @project_invite = ProjectInvitePresenter.new
     @project_invite.project_uri = @project.uri
     @project_invite.invitor_organisation_uri = current_organisation.uri
-    @project_invite.invited_organisation_uri = "http://data.digitalsocial.eu/id/organization/#{params[:organisation_id]}"
+    @project_invite.invited_organisation_uri = Organisation.slug_to_uri(params[:organisation_id])
 
     if @project_invite.save
       redirect_to user_url, notice: "Organisation invited. Members of the organisation you invited will be notified."
@@ -127,8 +133,7 @@ class ProjectsController < ApplicationController
   private
 
   def find_project
-    Rails.logger.debug "finding: http://data.digitalsocial.eu/id/activity/#{params[:id]}"
-    @project = Project.find("http://data.digitalsocial.eu/id/activity/#{params[:id]}")
+    @project = Project.find(Project.slug_to_uri(params[:id]))
   end
 
   def set_project_attributes

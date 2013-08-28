@@ -1,0 +1,8 @@
+%h1 Activities
+= link_to "Add another activity", new_project_path
+
+%hr
+
+%ul
+- @projects.each do |p|
+  %li= link_to p.name, project_path(p)
