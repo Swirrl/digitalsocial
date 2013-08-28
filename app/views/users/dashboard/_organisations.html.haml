@@ -11,6 +11,8 @@
             - if org.uri == current_organisation.uri
               (current)
           %p
+            = link_to "View", organisation_path(org.guid)
+            |
             = link_to "Edit details", edit_organisation_path(org.guid)
             |
             = link_to "Edit location", edit_location_organisation_path(org.guid)
