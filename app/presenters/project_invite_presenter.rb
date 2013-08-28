@@ -95,7 +95,7 @@ class ProjectInvitePresenter
   def project_invite
     @project_invite ||= ProjectInvite.new do |i|
       i.invitor_organisation_uri  = self.invitor_organisation_uri
-      i.invited_organisation_uri  = self.invited_organisation_uri
+      i.invited_organisation_uri  = self.invited_organisation.uri # the invited_organisation method will instatiate the org for new ones.
       i.project_uri = self.project_uri
     end
   end
@@ -127,7 +127,7 @@ class ProjectInvitePresenter
   def open_invite?
     ProjectInvite.where(
       project_uri: self.project_uri,
-      invited_organisation_uri: self.invited_organisation_uri,
+      invited_organisation_uri: self.invited_organisation.uri,
       open: true
     ).count > 0
   end
