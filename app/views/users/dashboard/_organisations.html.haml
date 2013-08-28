@@ -28,7 +28,7 @@
           %p
             %em (Pending)
 
-  - if current_organisation
     = link_to "Add/join another organisation", [:organisations, :build, :new_organisation], class: 'button'
   - else
+    %p.empty You are not a member of any organisations yet.
     = link_to "Add/join an organisation", [:organisations, :build, :new_organisation], class: 'button'

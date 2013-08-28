@@ -131,6 +131,11 @@
         }
       }
     }
+
+    p.empty {
+      margin-bottom: 0;
+      color: #999;
+    }
   }
 
 }

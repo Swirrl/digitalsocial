@@ -14,21 +14,23 @@ class SignupPresenter
 
   def initialize(org=nil)
     if org.present?
-      existing_site    = org.primary_site_resource
-      existing_address = org.primary_site_resource.address_resource
-
       self.organisation   = org
-      self.site           = existing_site
-      self.address        = existing_address
-
       self.name           = org.name
-      self.lat            = existing_site.lat
-      self.lng            = existing_site.lng
-      self.street_address = existing_address.street_address
-      self.locality       = existing_address.locality
-      self.region         = existing_address.region
-      self.country        = existing_address.country
-      self.postal_code    = existing_address.postal_code
+
+      if (existing_site = org.primary_site_resource).present?
+        existing_address = org.primary_site_resource.address_resource
+        
+        self.site           = existing_site
+        self.address        = existing_address
+
+        self.lat            = existing_site.lat
+        self.lng            = existing_site.lng
+        self.street_address = existing_address.street_address
+        self.locality       = existing_address.locality
+        self.region         = existing_address.region
+        self.country        = existing_address.country
+        self.postal_code    = existing_address.postal_code
+      end
     end
   end
 

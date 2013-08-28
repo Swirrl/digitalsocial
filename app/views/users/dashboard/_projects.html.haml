@@ -25,7 +25,9 @@
     = link_to "Add/join another activity", [:new, :project], class: 'button'
 
   - else
-
+    %p.empty
+      = current_organisation.name
+      are not a member of any activities yet.
     = link_to "Add/join an activity", [:new, :project], class: 'button'
 
 - reset_cycle
