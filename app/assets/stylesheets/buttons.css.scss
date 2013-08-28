@@ -26,5 +26,13 @@
     }
   }
 
+  &.button-red {
+    background: $red;
+
+    &:hover {
+      background: $red-hover;
+    }
+  }
+
 
 }

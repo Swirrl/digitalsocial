@@ -94,12 +94,16 @@ class Organisation
 
   # People who've requested to join this org
   def respondable_user_requests
-    UserRequest.where(responded_to: false, is_invite: false, requestable_id: self.uri.to_s)
+    UserRequest.where(organisation_uri: self.uri.to_s, open: true)
   end
 
   def has_respondables?
-    pending_project_invites.any? ||
-      pending_project_requests_by_others.any? ||
+    respondables.any?
+  end
+
+  def respondables
+    pending_project_invites + 
+      pending_project_requests_by_others +
       respondable_user_requests
   end
 
@@ -137,6 +141,10 @@ class Organisation
 
   def users
     OrganisationMembership.all.select{ |om| om.organisation_uri == self.uri  }.map { |om| User.find(om.user_id) rescue nil }.reject { |u| u.nil? }
+  end
+
+  def add_user(user)
+    OrganisationMembership.create(user: user, organisation_uri: self.uri.to_s)
   end
 
   def invited_users=(ary)

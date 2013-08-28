@@ -109,6 +109,12 @@ class Project
     end
   end
 
+  def add_organisation(organisation, natures)
+    self.scoped_organisation = organisation
+    self.organisation_natures = natures
+    self.save
+  end
+
   def ensure_scoped_organisation_has_membership
     if scoped_organisation.present? && scoped_organisation.project_memberships_for_project(self).count.zero?
       errors.add(:organisation_natures, "can't be blank")

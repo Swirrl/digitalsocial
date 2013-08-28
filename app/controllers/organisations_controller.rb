@@ -6,10 +6,11 @@ class OrganisationsController < ApplicationController
 
   # issue a request for the current user to join the org passed in the id.
   def request_to_join
-    user_request = UserRequest.build_user_request(current_user, @organisation)
+    @user_request = UserRequest.new
+    @user_request.user = current_user
+    @user_request.organisation_uri = @organisation.uri.to_s
 
-    if user_request.save
-      # don't need to send an email. This will just appear in the digest.
+    if @user_request.save
       redirect_to user_url, :notice => "You have requested to join #{@organisation.name}. Members of #{@organisation.name} have be notified and we'll let you know when your request is accepted"
     else
       error_message = user_request.errors.messages.values.join(', ')
