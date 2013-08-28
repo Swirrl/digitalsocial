@@ -88,6 +88,7 @@ class ProjectsController < ApplicationController
 
   ##### INVITES #####
 
+  # prepare to invite a new org to a project
   # get /projects/:id/invite
   def invite
     @project_invite = ProjectInvitePresenter.new
@@ -95,7 +96,7 @@ class ProjectsController < ApplicationController
     @project_invite.invitor_organisation_uri = current_organisation.uri
   end
 
-
+  # Actually invite an existing org to a project
   # GET /projects/:id/create_existing_org_invite?organisation_id=blah
   # One click invite
   # Should prob be a put or post but we want to generate the link in the JS suggestions.
@@ -114,6 +115,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # Actually invite a new org to a project
   # posting a form.
   def create_new_org_invite
     @project_invite = ProjectInvitePresenter.new

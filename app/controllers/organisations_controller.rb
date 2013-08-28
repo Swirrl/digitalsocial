@@ -4,19 +4,6 @@ class OrganisationsController < ApplicationController
   before_filter :set_organisation
   before_filter :ensure_user_is_organisation_owner, only: [:invite_user]
 
-  # issue a request for the current user to join the org passed in the id.
-  def request_to_join
-    user_request = UserRequest.build_user_request(current_user, @organisation)
-
-    if user_request.save
-      # don't need to send an email. This will just appear in the digest.
-      redirect_to user_url, :notice => "You have requested to join #{@organisation.name}. Members of #{@organisation.name} have be notified and we'll let you know when your request is accepted"
-    else
-      error_message = user_request.errors.messages.values.join(', ')
-      redirect_to user_url, :notice => "Your request failed. #{error_message}"
-    end
-  end
-
   def edit
     @organisation = current_organisation
   end
@@ -46,23 +33,6 @@ class OrganisationsController < ApplicationController
     end
   end
 
-  def invite_users
-    @organisation = current_organisation
-    @organisation.build_user_invites
-  end
-
-  def create_user_invites
-    @organisation = current_organisation
-    @organisation.invited_users = params[:invited_users]
-
-    if @organisation.can_send_user_invites?
-      @organisation.send_user_invites
-      redirect_to :user, notice: "Team members invited"
-    else
-      render :invite_users
-    end
-  end
-
   def show
     @organisation = Organisation.find( Organisation.slug_to_uri(params[:id]) )
   end
@@ -82,6 +52,40 @@ class OrganisationsController < ApplicationController
         }
       end
       format.html
+    end
+  end
+
+  ##### REQUESTS ####
+
+  # issue a request for the current user to join the org passed in the id.
+  def request_to_join
+    user_request = UserRequest.build_user_request(current_user, @organisation)
+
+    if user_request.save
+      # don't need to send an email. This will just appear in the digest.
+      redirect_to user_url, :notice => "You have requested to join #{@organisation.name}. Members of #{@organisation.name} have be notified and we'll let you know when your request is accepted"
+    else
+      error_message = user_request.errors.messages.values.join(', ')
+      redirect_to user_url, :notice => "Your request failed. #{error_message}"
+    end
+  end
+
+  ##### INVITES ####
+
+  def invite_users
+    @organisation = current_organisation
+    @organisation.build_user_invites
+  end
+
+  def create_user_invites
+    @organisation = current_organisation
+    @organisation.invited_users = params[:invited_users]
+
+    if @organisation.can_send_user_invites?
+      @organisation.send_user_invites
+      redirect_to :user, notice: "Team members invited"
+    else
+      render :invite_users
     end
   end
 
