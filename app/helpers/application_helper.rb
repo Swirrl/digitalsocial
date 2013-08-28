@@ -77,4 +77,8 @@ module ApplicationHelper
     options
   end
 
+  def asteroid_image_path
+    "/assets/asteroids/#{rand(5)+1}_70x70.png"
+  end
+
 end
