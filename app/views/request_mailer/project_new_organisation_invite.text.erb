@@ -2,10 +2,6 @@ Hello <%= @user.first_name %>,
 
 You have been invited to join a project on DSI.
 
-Click the link below to sign up and accept the invitation:
+Click the link below to complete the sign up and accept the invitation:
 
-TODO: Link to log in and change password etc.
-<%# edit_invited_user_url(
-   @user,
-   auth_token: @user.authentication_token,
-   org_id: @invite.invited_organisation.guid) %>
+<%= edit_password_url(@user, :reset_password_token => @user.reset_password_token, :new => 1) %>

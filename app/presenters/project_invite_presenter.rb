@@ -80,7 +80,6 @@ class ProjectInvitePresenter
       @organisation_membership ||= OrganisationMembership.new do |om|
         om.user             = self.user
         om.organisation_uri = self.invited_organisation.uri.to_s
-        om.owner            = true
       end
     else
       @organisation_membership = nil
@@ -142,12 +141,16 @@ class ProjectInvitePresenter
     transaction = Tripod::Persistence::Transaction.new
 
     if self.invited_organisation.save(transaction: transaction)
-      transaction.commit
+
+      # so the user needs a password reset.
+      self.user.reset_password_token   = User.reset_password_token
+      self.user.reset_password_sent_at = Time.now
 
       self.user.save unless self.user.persisted?
       self.organisation_membership.save
       self.project_invite.save
 
+      transaction.commit
       RequestMailer.project_new_organisation_invite(self, user).deliver
     else
       transaction.abort

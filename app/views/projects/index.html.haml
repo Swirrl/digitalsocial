@@ -1,5 +1,6 @@
 %h1 Activities
-= link_to "Add another activity", new_project_path
+- if current_user && current_organisation
+  = link_to "Add another activity", new_project_path
 
 %hr
 

@@ -1,5 +1,6 @@
 %h1 Organisations
-= link_to "Add another organisation", organisations_build_new_organisation_path
+- if current_user
+  = link_to "Add another organisation", organisations_build_new_organisation_path
 
 %hr
 
