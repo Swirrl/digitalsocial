@@ -29,4 +29,5 @@
   .field
     = f.input :organisation_natures, label: 'Relationship in activity', as: :check_boxes, collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
   .notes
-    How would you describe the roles #{current_organisation.name} plays in this activity?
+    :markdown
+      How would you describe the roles #{current_organisation.name} plays in this activity?
