@@ -165,9 +165,9 @@
     }
 
     .messages {
-      clear:left;
-      float:right;
-      padding-top:12px;
+      float: right;
+      line-height: 70px;
+
       &.error {
         color: $red;
       }
@@ -176,6 +176,7 @@
     .details {
       float: left;
       line-height: 1.5;
+      max-width: 600px;
 
       .header {
         font-weight: 600;

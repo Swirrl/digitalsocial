@@ -2,12 +2,13 @@
   .field
     - if f.object.new_record?
       = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }
-      = render 'suggestions', button_text: 'Request to join', action_url_template: '/projects/:project_id/request_to_join'
 
     - else
       = f.input :name, label: 'Name of your activity', input_html: { autocomplete: :off }
   .notes
     %p Please enter the official title you would give to this activity, i.e. an event name; a research project title etc.
+
+= render 'suggestions', button_text: 'Request to join', action_url_template: '/projects/:project_id/request_to_join'
 
 .field-with-notes
   .field
