@@ -10,8 +10,8 @@ feature 'Request to Join Project' do
     visit organisations_build_new_project_path
   end
 
-  scenario 'Blah' do
-    page.should have_link('Skip', href: organisations_build_new_project_path)
-  end
+  # scenario 'Blah' do
+  #   page.should have_link('Skip', href: organisations_build_new_project_path)
+  # end
 
 end
