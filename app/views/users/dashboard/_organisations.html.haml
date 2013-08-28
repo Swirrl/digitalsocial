@@ -1,0 +1,32 @@
+.organisations.dashboard-section
+  %h3 Your organisations
+
+  - if current_organisation || current_user.pending_join_org_requests.any?
+
+    %ul
+      - current_user.organisation_resources.each do |org|
+        %li
+          %p
+            %strong= org.name
+            - if org.uri == current_organisation.uri
+              (current)
+          %p
+            = link_to "Edit details", edit_organisation_path(org.guid)
+            |
+            = link_to "Edit location", edit_location_organisation_path(org.guid)
+            
+            - if org.uri != current_organisation.uri
+              |
+              = link_to "switch", user_path(:org_id => org.guid)
+
+      - current_user.pending_join_org_requests.each do |r|
+        %li
+          %p
+            %strong= r.organisation_resource.name
+          %p
+            %em (Pending)
+
+  - if current_organisation
+    = link_to "Add/join another organisation", [:organisations, :build, :new_organisation], class: 'button'
+  - else
+    = link_to "Add/join an organisation", [:organisations, :build, :new_organisation], class: 'button'

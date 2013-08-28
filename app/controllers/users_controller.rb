@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   # user dashboard
   def show
+    #redirect_to [:organisations, :build, :new_organisation] unless current_organisation
   end
 
   def new
@@ -26,6 +27,8 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
+
+    params[:user].delete(:password) if params[:user][:password].blank? 
 
     if @user.update_attributes(params[:user])
       sign_in @user, bypass: true

@@ -42,6 +42,13 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
+  resources :project_invites do
+    member do
+      put 'accept'
+      put 'reject'
+    end
+  end
+
   resources :user_requests, only: [:index, :create] do
     member do
       put 'accept'

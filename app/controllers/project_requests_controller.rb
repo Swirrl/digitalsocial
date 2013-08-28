@@ -4,18 +4,20 @@ class ProjectRequestsController < ApplicationController
   before_filter :set_request, only: [:accept, :reject]
   
   def accept
+    @request.attributes = params[:project_request]
+
     if @request.accept!
-      redirect_to :back, notice: "The request has been accepted."
+      redirect_to :user, notice: "The request has been accepted."
     else
-      redirect_to :back, alert: "The request could not be accepted"
+      redirect_to :user, alert: "The request could not be accepted"
     end
   end
 
   def reject
     if @request.reject!
-      redirect_to :back, notice: "The request has been rejected."
+      redirect_to :user
     else
-      redirect_to :back, alert: "The request could not be rejected."
+      redirect_to :user
     end
   end
 

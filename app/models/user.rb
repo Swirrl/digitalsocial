@@ -32,6 +32,7 @@ class User
   field :first_name, type: String
 
   has_many :organisation_memberships
+  has_many :user_requests
 
   validates :first_name, :email, presence: true
   validates :email, uniqueness: true
@@ -49,7 +50,7 @@ class User
 
   # requests by this user to join another org
   def pending_join_org_requests
-    UserRequest.where(responded_to: false, is_invite: false, requestor_id: self.id)
+    user_requests.where(open: true)
   end
 
   # invitest for this user to join another org
