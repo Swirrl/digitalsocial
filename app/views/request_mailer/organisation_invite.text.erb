@@ -5,5 +5,5 @@ Hello <%= @user.first_name %>,
 <% if @user.organisation_memberships.count == 1 %>
 Click the link below to sign in and set your password.
 
-<%= edit_user_url('_', auth_token: @user.authentication_token, org_id: @organisation.guid, p: 1) %>
+<%= edit_password_url(@user, :reset_password_token => @user.reset_password_token, :new => 1) %>
 <% end %>

@@ -36,6 +36,9 @@ class UserInvitePresenter
   def save
     return false if invalid?
 
+    self.user.reset_password_token   = User.reset_password_token
+    self.user.reset_password_sent_at = Time.now
+
     self.user.save
     self.organisation_membership.save
 

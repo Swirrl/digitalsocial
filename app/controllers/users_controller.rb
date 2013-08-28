@@ -28,6 +28,8 @@ class UsersController < ApplicationController
   def update
     @user = current_user
 
+    params[:user].delete(:password) if params[:user][:password].blank? 
+
     if @user.update_attributes(params[:user])
       sign_in @user, bypass: true
       redirect_to user_url # dashboard

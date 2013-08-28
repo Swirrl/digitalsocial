@@ -38,9 +38,5 @@ feature 'New organisation wizard step' do
     page.should have_content 'An amazing organisation'
     page.should have_link 'Request to join'
   end
-
-  scenario 'Sets the lat and lng from the location details', js: true do
-    pending # Webmock ignore sparql reqests
-  end
   
 end
