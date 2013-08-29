@@ -2,19 +2,6 @@ require 'spec_helper'
 
 describe ProjectInvitePresenter do
 
-  describe "#project_invite" do
-    let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
-    let(:project_invite) { project_invite_presenter.project_invite }
-
-    it "should instantiate a project invite based on the params" do
-      project_invite.new_record?.should be_true
-      project_invite.invitor_organisation_uri.should == project_invite_presenter.invitor_organisation_uri
-      project_invite.invited_organisation_uri.should == project_invite_presenter.invited_organisation_uri
-      project_invite.project_uri.should == project_invite_presenter.project_uri
-    end
-
-  end
-
   context "#new organisation" do
     let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
 
@@ -111,7 +98,8 @@ describe ProjectInvitePresenter do
       it "should create an invite with the right details" do
         project_invite_presenter.save
         project_invite_presenter.project_invite.should be_persisted
-        project_invite_presenter.project_invite.invited_organisation_uri.should == project_invite_presenter.invited_organisation_uri
+        project_invite_presenter.project_invite.invited_organisation_uri.should_not be_nil
+        project_invite_presenter.project_invite.invited_organisation_uri.should == project_invite_presenter.invited_organisation.uri
         project_invite_presenter.project_invite.invitor_organisation_uri.should == project_invite_presenter.invitor_organisation_uri
         project_invite_presenter.project_invite.project_uri.should == project_invite_presenter.project_uri
       end
