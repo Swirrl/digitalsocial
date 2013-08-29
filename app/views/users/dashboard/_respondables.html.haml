@@ -1,3 +1,9 @@
+- unless current_organisation.primary_site
+  %h3 Add a Location
+  .respondables
+    = render "users/dashboard/respondables/address"
+
+
 - if current_organisation.has_respondables?
   .respondables
 

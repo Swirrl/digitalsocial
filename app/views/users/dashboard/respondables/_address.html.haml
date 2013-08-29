@@ -1,0 +1,11 @@
+.respondable.clearfix{ class: 'respondable address' }
+  .image
+    = image_tag asteroid_image_path
+
+  .text
+    .header
+      Your organisation wont appear on the map until you have provided a location.
+    .subheader
+
+  .action
+    = link_to "Add a location", edit_location_organisation_path(current_organisation.guid), class: 'button button-green accept'
