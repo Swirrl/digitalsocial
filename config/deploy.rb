@@ -8,7 +8,7 @@ set :rvm_ruby_string, '1.9.3-p194'        # Or whatever env you want it to run i
 set :rvm_type, :user
 ###
 
-set :application, "digitalsocial"
+set :application, "digitalsocial-app"
 
 server "176.9.106.113", :app, :web, :db, :primary => true
 
@@ -26,7 +26,7 @@ set :runner, "rails"
 set :admin_runner, "rails"
 set :use_sudo, false
 
-set :branch, "master"
+set :branch, "alpha"
 
 set :deploy_via, :remote_cache
 
