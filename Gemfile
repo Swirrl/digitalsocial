@@ -14,6 +14,7 @@ gem 'mongoid_slug'
 gem 'activemodel', require: 'active_model'
 gem 'country_select'
 gem 'entypo-rails'
+gem 'database_cleaner'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -28,7 +29,6 @@ group :development, :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'faker'
-  gem 'database_cleaner'
   gem 'launchy'
   gem 'email_spec'
   gem 'debugger'

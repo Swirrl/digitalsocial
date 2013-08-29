@@ -1,4 +1,9 @@
 require 'bundler/capistrano' # enable bundler stuff!
+
+set :stages, %w(app holding)
+set :default_stage, "app"
+require 'capistrano/ext/multistage'
+
 load 'deploy/assets'
 
 # rvm stuff
@@ -7,8 +12,6 @@ require "rvm/capistrano"                  # Load RVM's capistrano plugin.
 set :rvm_ruby_string, '1.9.3-p194'        # Or whatever env you want it to run in.
 set :rvm_type, :user
 ###
-
-set :application, "digitalsocial-app"
 
 server "176.9.106.113", :app, :web, :db, :primary => true
 
@@ -25,8 +28,6 @@ set :user, "rails"
 set :runner, "rails"
 set :admin_runner, "rails"
 set :use_sudo, false
-
-set :branch, "alpha"
 
 set :deploy_via, :remote_cache
 
