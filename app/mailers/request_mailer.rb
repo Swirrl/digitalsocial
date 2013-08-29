@@ -10,7 +10,7 @@ class RequestMailer < ActionMailer::Base
   def organisation_invite(user, organisation)
     @user = user
     @organisation = organisation
-    mail to: @user.email, subject: "You've been invited to join ab organisation on DigitalSocialInnovation"
+    mail to: @user.email, subject: "You've been invited to join an organisation on DigitalSocialInnovation"
   end
 
   def request_digest(user, organisation)
