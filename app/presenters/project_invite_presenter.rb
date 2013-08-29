@@ -40,6 +40,12 @@ class ProjectInvitePresenter
     !self.invited_organisation_uri
   end
 
+  def invitor_organisation
+    return @invitor_organisation if @invitor_organisation
+    @invitor_organisation = Organisation.find(self.invitor_organisation_uri)
+    @invitor_organisation
+  end
+
   def invited_organisation
     return @organisation if @organisation
 
