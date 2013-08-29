@@ -1,5 +1,5 @@
 class RequestMailer < ActionMailer::Base
-  default from: "contact@digitialsocial.eu"
+  default from: "contact@digitalsocial.eu"
 
   def project_new_organisation_invite(invite, user)
     @invite = invite
