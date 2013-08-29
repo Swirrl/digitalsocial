@@ -1,6 +1,6 @@
 class OrganisationsController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :set_organisation
   before_filter :ensure_user_is_organisation_owner, only: [:invite_user]
 
