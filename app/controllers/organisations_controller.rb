@@ -93,10 +93,12 @@ class OrganisationsController < ApplicationController
   private
 
   def set_organisation
-    if params[:id].present?
-      @organisation = Organisation.find(Organisation.slug_to_uri(params[:id]))
-    else
-      @organisation = current_organisation
+    if current_user
+      if params[:id].present?
+        @organisation = Organisation.find(Organisation.slug_to_uri(params[:id]))
+      else
+        @organisation = current_organisation
+      end
     end
   end
 

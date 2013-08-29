@@ -105,7 +105,7 @@ class Organisation
   end
 
   def respondables
-    pending_project_invites + 
+    pending_project_invites +
       pending_project_requests_by_others +
       respondable_user_requests
   end
@@ -197,7 +197,7 @@ class Organisation
   #### expose some useful data for this object, to avoid law of demeter type probs
 
   def address_str
-    self.primary_site_resource.address_resource.to_s
+    self.primary_site_resource.address_resource.to_s if self.primary_site
   end
 
 
