@@ -84,11 +84,14 @@ GEM
       railties (>= 3.0.0)
     faker (1.2.0)
       i18n (~> 0.5)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
     faye-websocket (0.4.7)
       eventmachine (>= 0.12.0)
     guid (0.1.1)
     haml (4.0.3)
       tilt
+    hashie (2.0.5)
     highline (1.6.19)
     hike (1.2.3)
     http_parser.rb (0.5.3)
@@ -122,6 +125,7 @@ GEM
       stringex (~> 1.4)
     moped (1.5.1)
     multi_json (1.7.9)
+    multipart-post (1.2.0)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -201,6 +205,10 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    sentry-raven (0.6.0)
+      faraday (>= 0.7.6)
+      hashie (>= 1.1.0)
+      uuidtools
     simple_form (2.1.0)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -229,6 +237,7 @@ GEM
       rdf-turtle
       rest-client
     tzinfo (0.3.37)
+    uuidtools (2.1.4)
     warden (1.2.3)
       rack (>= 1.0)
     xpath (2.0.0)
@@ -262,6 +271,7 @@ DEPENDENCIES
   redcarpet
   rspec-rails (~> 2.0)
   sass-rails (~> 3.2.3)
+  sentry-raven
   simple_form
   tripod
   yui-compressor
