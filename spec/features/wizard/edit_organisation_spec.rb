@@ -18,17 +18,17 @@ feature 'Edit organisation wizard step' do
     
     click_button 'Next step'
 
-    page.current_url.should include("organisations/build/invite_users")
+    page.current_url.should include("organisations/build/new_project")
   end
 
   scenario 'Filling in edit organisation step successfully with no details' do
     click_button 'Next step'
 
-    page.current_url.should include("organisations/build/invite_users")
+    page.current_url.should include("organisations/build/new_project")
   end
 
   scenario 'Skipping the edit organisation step' do
-    page.should have_link('Skip', href: organisations_build_invite_users_path)
+    page.should have_link('Skip', href: organisations_build_new_project_path)
   end
   
 end

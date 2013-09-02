@@ -1,10 +1,10 @@
 .wizard
-  = render "breadcrumbs", active_index: 5
+  = render "breadcrumbs", active_index: 4
 
   .skip-wizard.clearfix
     %span The following details about your activity can completed later.
 
-    = link_to "Skip for now &raquo;".html_safe, user_path, class: 'button'
+    = link_to "Skip for now &raquo;".html_safe, organisations_build_invite_organisations_path(id: @project.guid), class: 'button'
 
   = simple_form_for @project, url: [:organisations, :build, :update_project] do |f|
     = hidden_field_tag :id, @project.guid

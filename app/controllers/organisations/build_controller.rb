@@ -44,26 +44,9 @@ class Organisations::BuildController < ApplicationController
     @organisation = current_organisation
 
     if @organisation.update_attributes(params[:organisation])
-      redirect_to [:organisations, :build, :invite_users]
-    else
-      render :edit_organisation
-    end
-  end
-
-  def invite_users
-    @organisation = current_organisation
-    @organisation.build_user_invites
-  end
-
-  def create_user_invites
-    @organisation = current_organisation
-    @organisation.invited_users = params[:invited_users]
-
-    if @organisation.can_send_user_invites?
-      @organisation.send_user_invites
       redirect_to [:organisations, :build, :new_project]
     else
-      render :invite_users
+      render :edit_organisation
     end
   end
 
@@ -99,9 +82,31 @@ class Organisations::BuildController < ApplicationController
     @project.scoped_organisation = current_organisation
 
     if @project.update_attributes(params[:project])
-      redirect_to user_path #dashboard
+      redirect_to organisations_build_invite_organisations_path(id: @project.guid)
     else
       render :edit_project
+    end
+  end
+
+  def invite_organisations
+    @project = Project.find(Project.slug_to_uri(params[:id]))
+    @project_invite = ProjectInvitePresenter.new
+    @project_invite.project_uri = @project.uri
+    @project_invite.invitor_organisation_uri = current_organisation.uri
+  end
+
+  def create_new_organisation_invite
+    @project = Project.find(Project.slug_to_uri(params[:id]))
+    @project_invite = ProjectInvitePresenter.new
+    @project_invite.attributes = params[:project_invite_presenter]
+    @project_invite.project_uri = @project.uri
+    @project_invite.invitor_organisation_uri = current_organisation.uri
+
+    if @project_invite.save
+      redirect_to user_url, notice: "Organisation invited. We'll email the contact you entered."
+    else
+      flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
+      render :invite_organisations
     end
   end
 

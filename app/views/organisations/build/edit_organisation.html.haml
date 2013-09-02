@@ -4,7 +4,7 @@
   .skip-wizard.clearfix
     %span The following details about your organisation can be completed later.
 
-    = link_to "Skip for now &raquo;".html_safe, [:organisations, :build, :invite_users], class: 'button'
+    = link_to "Skip for now &raquo;".html_safe, [:organisations, :build, :new_project], class: 'button'
 
 
   = simple_form_for @organisation, url: [:organisations, :build, :update_organisation] do |f|
