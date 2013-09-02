@@ -1,0 +1,34 @@
+.wizard
+  = render "breadcrumbs", active_index: 5
+
+  .skip-wizard.clearfix
+    %span Activity invites can be created later.
+
+    = link_to "Skip for now &raquo;".html_safe, [:user], class: 'button'
+
+  .wizard-intro
+    :markdown
+      Invite another organisation to join acitivity: **#{@project.name}**
+
+  = simple_form_for @project_invite, url: [:organisations, :build, :create_new_organisation_invite] do |f|
+    = hidden_field_tag :id, @project.guid
+
+    .field-with-notes
+      .field
+        = f.input :invited_organisation_name, label: 'Organisation Name', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
+      .notes
+        %p
+          Start typing an organisation name and we'll suggest existing ones.
+
+    = render 'suggestions', button_text: 'Invite', action_url_template: "/projects/#{@project.guid}/create_existing_org_invite?organisation_id=:organisation_id"
+
+    .field-with-notes
+      .fields
+        = f.input :user_first_name, required: false
+        = f.input :user_email, required: false
+      .notes
+        %p
+          If you're adding a new organisation, please give the name and email of the person you worked with on this activity.
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'
