@@ -1,12 +1,12 @@
 # concept schemes
 
 # Project Membership Natures - all top level. We don't allow other here.
-["We are the sole funder",
-  "We co-fund it",
-  "We are the delivery lead",
-  "We support the delivery as a partner",
-  "We evaluate this activity",
-  "We are part of the advisory group"
+["Sole funder",
+  "Co-funder",
+  "Delivery Lead",
+  "Delivery Partner",
+  "Evaluator",
+  "Advisory-group member"
   # note no other
   ].each do |label|
   Concepts::ProjectMembershipNature.from_label(label, top_level:true)

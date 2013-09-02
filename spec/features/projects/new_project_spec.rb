@@ -14,7 +14,7 @@ feature 'New project' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     choose 'Research Project'
-    check 'We are the sole funder'
+    check 'Sole funder'
     check 'We are the delivery lead'
     select 'January 2011', from: 'Activity start date'
     select 'Ongoing', from: 'Activity end date'
@@ -52,7 +52,7 @@ feature 'New project' do
   scenario 'Fill in with specifying other field', js: true do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
-    check 'We are the sole funder'
+    check 'Sole funder'
     check 'We are the delivery lead'
 
     choose 'Other'
@@ -65,7 +65,7 @@ feature 'New project' do
   scenario 'Activity type radio buttons should be validated' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
-    check 'We are the sole funder'
+    check 'Sole funder'
     check 'We are the delivery lead'
 
     click_button 'Create'
@@ -80,9 +80,9 @@ feature 'New project' do
     choose 'Research Project'
 
     click_button 'Create'
-    
+
     page.current_path.should_not == "/user"
     page.should have_css('.project_organisation_natures .error')
   end
-  
+
 end

@@ -15,7 +15,7 @@ feature 'Edit project' do
     fill_in 'Name', with: 'A different name'
     fill_in 'Description', with: 'Lorem ispum etc'
     choose 'Event'
-    uncheck 'We are the sole funder'
+    uncheck 'Sole funder'
     check 'We are part of the advisory group'
     select 'January 2011', from: 'Activity start date'
     select 'Ongoing', from: 'Activity end date'
@@ -30,7 +30,7 @@ feature 'Edit project' do
   end
 
   scenario 'Updating the organisation unsuccessfully' do
-    uncheck 'We are the sole funder'
+    uncheck 'Sole funder'
 
     click_button 'Update'
 
@@ -53,5 +53,5 @@ feature 'Edit project' do
     page.current_path.should == "/user"
     page.should_not have_content "Forbidden project"
   end
-  
+
 end

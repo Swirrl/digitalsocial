@@ -4,7 +4,7 @@ feature 'Respond to project invite' do
 
   let(:user) { FactoryGirl.create(:user_with_organisations, organisations_count: 1) }
   let(:organisation) { user.organisation_resources.first }
-  
+
   background do
     project = FactoryGirl.create(:project, name: "Prism")
     invitor = FactoryGirl.create(:organisation, name: "NSA")
@@ -21,7 +21,7 @@ feature 'Respond to project invite' do
 
   scenario 'Should allow confirmation if nature is specified', js: true do
     click_link 'Accept'
-    check 'We are the sole funder'
+    check 'Sole funder'
     click_button 'Confirm'
 
     page.should have_content "invite has been accepted"
@@ -40,5 +40,5 @@ feature 'Respond to project invite' do
     page.should_not have_content "NSA has invited you to join Prism"
     page.should_not have_content "invite has been accepted"
   end
-  
+
 end

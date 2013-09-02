@@ -14,7 +14,7 @@ feature 'New project wizard step' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     choose 'Research Project'
-    check 'We are the sole funder'
+    check 'Sole funder'
     check 'We are the delivery lead'
 
     click_button 'Next step'
@@ -46,7 +46,7 @@ feature 'New project wizard step' do
   scenario 'Fill in with specifying other field', js: true do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
-    check 'We are the sole funder'
+    check 'Sole funder'
     check 'We are the delivery lead'
 
     choose 'Other'
@@ -59,7 +59,7 @@ feature 'New project wizard step' do
   scenario 'Activity type radio buttons should be validated' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
-    check 'We are the sole funder'
+    check 'Sole funder'
     check 'We are the delivery lead'
 
     click_button 'Next step'
@@ -74,9 +74,9 @@ feature 'New project wizard step' do
     choose 'Research Project'
 
     click_button 'Next step'
-    
+
     page.current_url.should_not include("organisations/build/edit_project")
     page.should have_css('.project_organisation_natures .error')
   end
-  
+
 end
