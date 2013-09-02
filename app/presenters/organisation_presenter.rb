@@ -1,11 +1,11 @@
-class SignupPresenter
+class OrganisationPresenter
 
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :name, :organisation, :user, :organisation_membership, :site, :address,
+  attr_accessor :name, :user,
     :lat, :lng, :street_address, :locality, :region, :country, :postal_code # location related fields
 
   attr_accessible :name, :lat, :lng, :street_address, :locality, :region, :country, :postal_code
@@ -19,7 +19,7 @@ class SignupPresenter
 
       if (existing_site = org.primary_site_resource).present?
         existing_address = org.primary_site_resource.address_resource
-        
+
         self.site           = existing_site
         self.address        = existing_address
 
@@ -85,7 +85,7 @@ class SignupPresenter
     )
       transaction.commit
       self.organisation_membership.save
-    else      
+    else
       transaction.abort
     end
 

@@ -53,10 +53,10 @@
     // handle forms changing
 
     function formFieldChanged() {
-      var streetAddress = $('#signup_presenter_street_address').val();
-      var locality = $('#signup_presenter_locality').val();
-      var region = $('#signup_presenter_region').val();
-      var country = $('#signup_presenter_country').val();
+      var streetAddress = $('#organisation_presenter_street_address').val();
+      var locality = $('#organisation_presenter_locality').val();
+      var region = $('#organisation_presenter_region').val();
+      var country = $('#organisation_presenter_country').val();
 
       // if we've got a street address, locality and country, then do the geo coding...
       if(streetAddress.length > 0 &&
@@ -136,8 +136,8 @@
     function clearLatLong() {
       if (marker) { map.removeLayer(marker); marker = null; }
       $("#map-messages").html("We couldn't find a location for the address you entered. Please click on the map to place a pin.");
-      $("input#signup_presenter_lat").val('');
-      $("input#signup_presenter_lng").val('');
+      $("input#organisation_presenter_lat").val('');
+      $("input#organisation_presenter_lng").val('');
       map.setView(defaultCenter,defaultZoom);
     }
 
@@ -146,8 +146,8 @@
     }
 
     function updateLatLngFields(lat, lng) {
-      $("input#signup_presenter_lat").val(lat);
-      $("input#signup_presenter_lng").val(lng);
+      $("input#organisation_presenter_lat").val(lat);
+      $("input#organisation_presenter_lng").val(lng);
     }
 
     function onMapClick(e) {

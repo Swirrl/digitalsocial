@@ -19,12 +19,12 @@ class OrganisationsController < ApplicationController
   end
 
   def edit_location
-    @organisation = SignupPresenter.new(current_organisation)
+    @organisation = OrganisationPresenter.new(current_organisation)
   end
 
   def update_location
-    @organisation = SignupPresenter.new(current_organisation)
-    @organisation.attributes = params[:signup_presenter]
+    @organisation = OrganisationPresenter.new(current_organisation)
+    @organisation.attributes = params[:organisation_presenter]
 
     if @organisation.save
       redirect_to :user, notice: 'Organisation location updated.'

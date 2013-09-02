@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
 
-    params[:user].delete(:password) if params[:user][:password].blank? 
+    params[:user].delete(:password) if params[:user][:password].blank?
 
     if @user.update_attributes(params[:user])
       sign_in @user, bypass: true
@@ -39,14 +39,14 @@ class UsersController < ApplicationController
   end
 
   def edit_invited
-    @user = SignupPresenter.new
+    @user = OrganisationPresenter.new
     @user.first_name        = current_user.first_name
     @user.email             = current_user.email
     @user.organisation_name = current_organisation.name
   end
 
   def update_invited
-    @user = SignupPresenter.new
+    @user = OrganisationPresenter.new
     @user.attributes = params[:user]
 
     # TODO Move this into presenter
