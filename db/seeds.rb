@@ -44,10 +44,10 @@ end
 end
 
 # Technology Focus
-["Open Networks (innovative combinations of network solutions and infrastructures, e.g. sensor networks, free network services, open wifi, bottom up-broadband, distributed social networks, p2p infrastructures)",
-  "Open Data (innovative ways to capture, use, analysing, and interpret open data coming from people and from the environment)",
-  "Open Knowledge (co-production of new knowledge and crowd mobilisation based on open contents, open source and open access)",
-  "Open Hardware (new ways of making and using open hardware solutions)"
+["Open Networks",
+  "Open Data",
+  "Open Knowledge",
+  "Open Hardware"
   # Note: no 'other'
 ].each do |label|
   Concepts::TechnologyFocus.from_label(label, top_level:true)
@@ -55,8 +55,8 @@ end
 
 # Technology Method
 ["big data",
-  "open Data",
-  "open Source",
+  "open data",
+  "open source",
   "crowdfunding",
   "crowdmapping",
   "geotagging",
@@ -70,7 +70,8 @@ end
   "social networks",
   "social media",
   "3D printing",
-  "P2P - Distributed exchange networks",
+  "P2P",
+  "distributed exchange networks",
   "online peer support",
   "machine learning",
   "online market place",
