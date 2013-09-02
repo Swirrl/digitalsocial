@@ -2,7 +2,8 @@ body {
   font-family: $chaparral;
   font-size: 18px;
   color: $black;
-  background: #fff url(image-path("backgrounds/bg.png")) repeat-y center top;
+  background: #fff; // url(image-path("backgrounds/bg.png")) repeat-y center top;
+  padding-bottom: 60px;
 }
 
 .row {
