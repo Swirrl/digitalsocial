@@ -5,7 +5,7 @@ class OrganisationPresenter
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :name, :user,
+  attr_accessor :name, :organisation, :user, :organisation_membership, :site, :address,
     :lat, :lng, :street_address, :locality, :region, :country, :postal_code # location related fields
 
   attr_accessible :name, :lat, :lng, :street_address, :locality, :region, :country, :postal_code
