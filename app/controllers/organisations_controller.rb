@@ -14,6 +14,7 @@ class OrganisationsController < ApplicationController
     if @organisation.update_attributes(params[:organisation])
       redirect_to :user, notice: 'Organisation details updated.'
     else
+      Rails.logger.debug @organisation.errors.inspect
       render :edit
     end
   end

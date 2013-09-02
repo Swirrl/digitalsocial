@@ -1,0 +1,14 @@
+development:
+  bucket: digitalsocialinnovation-dev
+  access_key_id: AKIAJQSZGO423MNHWRLQ
+  secret_access_key: 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
+
+test:
+  bucket: digitalsocialinnovation-dev
+  access_key_id: AKIAJQSZGO423MNHWRLQ
+  secret_access_key: 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
+
+production:
+  bucket: digitalsocialinnovation
+  access_key_id: AKIAJQSZGO423MNHWRLQ
+  secret_access_key: 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

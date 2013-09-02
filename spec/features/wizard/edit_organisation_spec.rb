@@ -15,6 +15,7 @@ feature 'Edit organisation wizard step' do
     fill_in 'Twitter', with: '@test'
     choose '0-5'
     choose 'Business'
+    attach_file 'Your Logo', "#{Rails.root}/test/example.png"
     
     click_button 'Next step'
 

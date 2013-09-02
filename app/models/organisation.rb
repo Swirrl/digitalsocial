@@ -11,6 +11,7 @@ class Organisation
 
   field :twitter, 'http://data.digitalsocial.eu/def/ontology/twitterAccount', is_uri: true # this should be the full URL http://twitter.com/blah
   field :webpage, 'http://xmlns.com/foaf/0.1/page', is_uri: true
+  field :logo, 'http://xmlns.com/foaf/0.1/logo', is_uri: true
 
   concept_field :organisation_type, 'http://data.digitalsocial.eu/def/ontology/organizationType', Concepts::OrganisationType
   concept_field :fte_range, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', Concepts::FTERange
@@ -123,7 +124,11 @@ class Organisation
 
   def image_url
     # TODO allow logo upload
-    "/assets/asteroids/#{rand(5)+1}_70x70.png"
+    if logo_resource.present?
+      logo_resource.file.url(:thumb) 
+    else
+      "/assets/asteroids/#{rand(5)+1}_70x70.png"
+    end
   end
 
   def self.search_by_name(search)
@@ -192,6 +197,18 @@ class Organisation
   def build_user_invites
     @invited_users = {}
     50.times { |n| @invited_users[n.to_s] ||= {} }
+  end
+
+  def logo_resource
+    Logo.where(organisation_uri: self.uri.to_s).first
+  end
+
+  def logo_resource=(new_logo_resource)
+    new_logo = logo_resource || Logo.new(organisation_uri: self.uri.to_s)
+    new_logo.file = new_logo_resource
+    new_logo.save
+
+    self.logo = new_logo.file.url
   end
 
   #### expose some useful data for this object, to avoid law of demeter type probs
