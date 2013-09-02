@@ -67,8 +67,6 @@ Digitalsocial::Application.routes.draw do
       post 'create_organisation'
       get 'edit_organisation'
       put 'update_organisation'
-      get 'invite_users'
-      put 'create_user_invites'
       get 'new_project'
       post 'create_project'
       get 'edit_project'
