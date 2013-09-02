@@ -11,19 +11,19 @@ Hi <%= @user.first_name %>,
 <% if @organisation.pending_project_requests_by_others.any? %>
 The following organisations have requested to join <%= @organisation.name %>'s activities:
 
-<% @organisation.current_organisation.pending_project_requests_by_others.each do |req| %>
-* <%= req.requestor_organisation_resource.name %> (<%= req.project.name %>)
+<% @organisation.pending_project_requests_by_others.each do |req| %>
+* <%= req.requestor_organisation_resource.name %> (<%= req.project_resource.name %>)
 <% end %>
 <% end %>
 
-<% if @organisation.has_respondable_user_requests? %>
+<% if @organisation.respondable_user_requests.any? %>
 The following users have requested to join your organisation:
 
 <% @organisation.respondable_user_requests.each do |request| %>
-* <%= request.user_first_name %> (<%= request.user_email %>).requestor_organisation_resource.name
+* <%= request.user.first_name %> (<%= request.user.email %>).requestor_organisation_resource.name
 <% end %>
 <% end %>
 
 To respond to these items, please log in to the digitalsocial.eu dashboard for <%= @organisation.name %> (link below).
 
-<%= user_uri(org_id: @organisation.guid) %>
+<%= user_url(org_id: @organisation.guid) %>
