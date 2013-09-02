@@ -16,7 +16,7 @@ feature 'Edit project' do
     fill_in 'Description', with: 'Lorem ispum etc'
     choose 'Event'
     uncheck 'Sole funder'
-    check 'We are part of the advisory group'
+    check 'Advisory-group member'
     select 'January 2011', from: 'Activity start date'
     select 'Ongoing', from: 'Activity end date'
     uncheck 'Open Networks'

@@ -15,7 +15,7 @@ feature 'New project' do
     fill_in 'Description', with: 'Lorem ispum'
     choose 'Research Project'
     check 'Sole funder'
-    check 'We are the delivery lead'
+    check 'Delivery Lead'
     select 'January 2011', from: 'Activity start date'
     select 'Ongoing', from: 'Activity end date'
     uncheck 'Open Networks'
@@ -53,7 +53,7 @@ feature 'New project' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     check 'Sole funder'
-    check 'We are the delivery lead'
+    check 'Delivery Lead'
 
     choose 'Other'
     fill_in 'project_activity_type_label_other', with: 'Something else'
@@ -66,7 +66,7 @@ feature 'New project' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     check 'Sole funder'
-    check 'We are the delivery lead'
+    check 'Delivery Lead'
 
     click_button 'Create'
 

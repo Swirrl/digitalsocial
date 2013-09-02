@@ -15,7 +15,7 @@ feature 'New project wizard step' do
     fill_in 'Description', with: 'Lorem ispum'
     choose 'Research Project'
     check 'Sole funder'
-    check 'We are the delivery lead'
+    check 'Delivery Lead'
 
     click_button 'Next step'
 
@@ -47,7 +47,7 @@ feature 'New project wizard step' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     check 'Sole funder'
-    check 'We are the delivery lead'
+    check 'Delivery Lead'
 
     choose 'Other'
     fill_in 'project_activity_type_label_other', with: 'Something else'
@@ -60,7 +60,7 @@ feature 'New project wizard step' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     check 'Sole funder'
-    check 'We are the delivery lead'
+    check 'Delivery Lead'
 
     click_button 'Next step'
 
