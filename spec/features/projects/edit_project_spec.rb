@@ -23,6 +23,7 @@ feature 'Edit project' do
     check 'Open Hardware'
     fill_in 'Areas of Society Impacted', with: 'Finance'
     fill_in 'Technology Method', with: 'Peer Support'
+    fill_in 'Social Impact', with: 'This is a social impact'
 
     click_button 'Update'
 

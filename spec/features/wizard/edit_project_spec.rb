@@ -19,6 +19,7 @@ feature 'Edit project wizard step' do
     check 'Open Networks'
     fill_in 'Areas of Society Impacted', with: 'work and employment'
     fill_in 'Technology Method', with: 'Open Data'
+    fill_in 'Social Impact', with: 'This is a social impact'
 
     click_button 'Next step'
 
