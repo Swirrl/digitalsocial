@@ -12,6 +12,7 @@ class Project
 
   field :duration, 'http://purl.org/NET/c4dm/event.owl#time', is_uri: true
   field :creator, 'http://data.digitalsocial.eu/def/ontology/recordedBy', is_uri: true
+  field :social_impact, 'http://data.digitalsocial.eu/def/ontology/socialImpact'
 
   concept_field :activity_type, 'http://data.digitalsocial.eu/def/ontology/activityType', Concepts::ActivityType
   concept_field :areas_of_society, 'http://data.digitalsocial.eu/def/ontology/areaOfSociety', Concepts::AreaOfSociety, multivalued: true
