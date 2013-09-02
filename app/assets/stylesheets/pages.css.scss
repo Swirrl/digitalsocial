@@ -4,8 +4,29 @@
     @include columns(16);
   }
 
+  .banner {
+    position: absolute;
+    top: 400px;
+    left: 320px;
+    font-size: 20px;
+    background: rgba(100,100,100,0.8);
+    color: white;
+    padding: 24px;
+  }
+
   .about {
     @include columns(16);
+
+    ol, ul {
+      list-style-position: inside;
+      line-height: 1.5;
+      margin-bottom: 1.5em;
+      padding-left:0;
+      li {
+        margin-bottom:0
+      }
+    }
+
   }
 }
 

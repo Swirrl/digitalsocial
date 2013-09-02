@@ -1,5 +1,7 @@
 #home
   #map
+  .banner
+    Map-based visualisation coming soon.
 
   :javascript
     $(function() {
@@ -12,8 +14,45 @@
         .setView(defaultCenter,defaultZoom);
     });
 
+
+
+
   .about
     :markdown
-      A short (100-200 words) piece of copy that explains what DSI is, and why organisations would want to add themselves to the map. [Read more](/about).
+      Welcome! We are looking for organisations that focus on how collaborating online can help make a difference to society.
 
-    = link_to "Add yourself to the map", [:organisations, :build, :new_user], class: 'button'
+      #### Does your organisation:
+
+      1. Focus on grass-roots or “bottom-up” communities of users?
+      2. Use online/digital tools or methods in a disruptive way?
+      3. Make a positive social impact?
+      4. Work in the European Union?
+      5. Create a “network effect” through collaboration online?
+      i.e. the larger number of users a service has, the better it works.
+
+      If you can answer yes to all of the questions above then we would like to invite you to [build your profile](#{organisations_build_new_user_path}) and put yourself on the innovation map.
+
+      We’re interested in hearing about a wide range of activities related to Digital Social Innovation (DSI) - whether you’re building services, hosting networks, carrying out research or curating conferences. You can [build your profile](#{organisations_build_new_user_path}) right now in 5 mins with some basic info and then come back later to add more detail.
+
+    = link_to "Start Building a Profile", [:organisations, :build, :new_user], class: 'button'
+
+    %br
+    %br
+    %br
+
+    :markdown
+
+      #### About
+
+      This is part of an EU wide research project on what we call Digital Social Innovation (DSI). Through taking part you will build a network profile for your organisation and help generate open data for the research team and everyone interested in this exciting field. It will take around 5 minutes to get going.
+
+      #### Why take part?
+
+      By taking part you will get access to unique new insights into the exciting and growing field of Digital Social Innovation. You will:
+
+      - Showcase the great work you are doing to a community of potential collaborators and funders.
+      - Be recognised as a pioneer Digital Social Innovator and inspire a growing community in Europe
+      - Be invited to attend future DSI networking events
+
+      If you have any queries please contact us: [contact@digitalsocial.eu](mailto:contact@digitalsocial.eu).
+
