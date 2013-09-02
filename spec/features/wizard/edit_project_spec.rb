@@ -17,7 +17,7 @@ feature 'Edit project wizard step' do
     select 'January 2013', from: 'Activity start date'
     select 'Ongoing', from: 'Activity end date'
     check 'Open Networks'
-    fill_in 'Areas of Society Impacted', with: 'Work And Employment'
+    fill_in 'Areas of Society Impacted', with: 'work and employment'
     fill_in 'Technology Method', with: 'Open Data'
 
     click_button 'Next step'
@@ -37,9 +37,9 @@ feature 'Edit project wizard step' do
   end
 
   scenario 'Clicking a tag should fill in the appropriate field', js: true do
-    click_link 'Work And Employment'
+    click_link 'work and employment'
 
-    find_field('project_areas_of_society_list', visible: false).value.should include('Work And Employment')
+    find_field('project_areas_of_society_list', visible: false).value.should include('work and employment')
   end
 
 end

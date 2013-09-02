@@ -21,7 +21,7 @@ feature 'Respond to project invite' do
 
   scenario 'Should allow confirmation if nature is specified', js: true do
     click_link 'Accept'
-    check 'Sole Funder'
+    check 'We are the sole funder'
     click_button 'Confirm'
 
     page.should have_content "invite has been accepted"

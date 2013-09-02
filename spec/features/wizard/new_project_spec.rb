@@ -14,8 +14,8 @@ feature 'New project wizard step' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     choose 'Research Project'
-    check 'Sole Funder'
-    check 'Delivery Lead'
+    check 'We are the sole funder'
+    check 'We are the delivery lead'
 
     click_button 'Next step'
 
@@ -46,8 +46,8 @@ feature 'New project wizard step' do
   scenario 'Fill in with specifying other field', js: true do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
-    check 'Sole Funder'
-    check 'Delivery Lead'
+    check 'We are the sole funder'
+    check 'We are the delivery lead'
 
     choose 'Other'
     fill_in 'project_activity_type_label_other', with: 'Something else'
@@ -59,8 +59,8 @@ feature 'New project wizard step' do
   scenario 'Activity type radio buttons should be validated' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
-    check 'Sole Funder'
-    check 'Delivery Lead'
+    check 'We are the sole funder'
+    check 'We are the delivery lead'
 
     click_button 'Next step'
 

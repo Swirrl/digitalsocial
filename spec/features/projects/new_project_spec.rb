@@ -14,8 +14,8 @@ feature 'New project' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     choose 'Research Project'
-    check 'Sole Funder'
-    check 'Delivery Lead'
+    check 'We are the sole funder'
+    check 'We are the delivery lead'
     select 'January 2011', from: 'Activity start date'
     select 'Ongoing', from: 'Activity end date'
     uncheck 'Open Networks'
@@ -52,8 +52,8 @@ feature 'New project' do
   scenario 'Fill in with specifying other field', js: true do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
-    check 'Sole Funder'
-    check 'Delivery Lead'
+    check 'We are the sole funder'
+    check 'We are the delivery lead'
 
     choose 'Other'
     fill_in 'project_activity_type_label_other', with: 'Something else'
@@ -65,8 +65,8 @@ feature 'New project' do
   scenario 'Activity type radio buttons should be validated' do
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
-    check 'Sole Funder'
-    check 'Delivery Lead'
+    check 'We are the sole funder'
+    check 'We are the delivery lead'
 
     click_button 'Create'
 

@@ -15,8 +15,8 @@ feature 'Edit project' do
     fill_in 'Name', with: 'A different name'
     fill_in 'Description', with: 'Lorem ispum etc'
     choose 'Event'
-    uncheck 'Sole Funder'
-    check 'Advisory Group Member'
+    uncheck 'We are the sole funder'
+    check 'We are part of the advisory group'
     select 'January 2011', from: 'Activity start date'
     select 'Ongoing', from: 'Activity end date'
     uncheck 'Open Networks'
@@ -30,7 +30,7 @@ feature 'Edit project' do
   end
 
   scenario 'Updating the organisation unsuccessfully' do
-    uncheck 'Sole Funder'
+    uncheck 'We are the sole funder'
 
     click_button 'Update'
 
