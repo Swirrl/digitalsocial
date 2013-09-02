@@ -2,7 +2,6 @@ class Organisations::BuildController < ApplicationController
 
   before_filter :authenticate_user!, except: [:new_user, :create_user]
   before_filter :redirect_to_new_organisation_if_logged_in, only: [:new_user, :create_user]
-  # before_filter { |c| c.override_with_other_params scopes: [:project, :organisation] }
 
   def new_user
     @user = User.new
