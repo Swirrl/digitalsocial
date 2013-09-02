@@ -1,8 +1,12 @@
 .wizard
   = render "breadcrumbs", active_index: 4
 
+  .wizard-intro
+    %h3 Additional activity details
+  .clearfix
+
   .skip-wizard.clearfix
-    %span The following details about your activity can completed later.
+    %span This step lets you add more details about your organisation's activity
 
     = link_to "Skip for now &raquo;".html_safe, organisations_build_invite_organisations_path(id: @project.guid), class: 'button'
 

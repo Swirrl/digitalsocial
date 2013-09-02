@@ -16,6 +16,6 @@
 
   .natures
     = simple_form_for [:accept, respondable] do |f|
-      = f.input :natures, as: :check_boxes, label: "Which roles did you play in this activity?", collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
+      = f.input :natures, as: :check_boxes, label: "What is your organisation's relationship to this activity", collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
       = f.button :submit, 'Confirm', class: 'button-green'
-    
+

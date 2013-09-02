@@ -38,13 +38,14 @@ p {
   line-height: 1.5;
 }
 
-ul {
-  padding-left: 48px;
-  margin-bottom: 30px;
+
+ol, ul {
+  list-style-position: inside;
+  padding-left: 0px;
+  margin-bottom: 1.5em;
 
   li {
     line-height: 1.5;
-    margin-bottom: 12px;
   }
 }
 

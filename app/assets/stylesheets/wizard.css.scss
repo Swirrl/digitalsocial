@@ -9,7 +9,6 @@
   overflow: hidden;
   margin-left: 0;
   height: 46px;
-  line-height: 38px;
   margin-bottom: 30px;
   font-weight: 300;
   font-style: italic;
@@ -17,6 +16,8 @@
   li {
     float: left;
     margin-bottom: 0;
+    padding-bottom: 12px;
+    line-height: 38px;
 
     span {
       padding: 5px 7px 5px 62px;
@@ -133,7 +134,7 @@
 
 .wizard-intro {
   @include columns(16);
-  p {
+  p, ul {
     font-size: 16px;
     color: $dark-grey;
   }

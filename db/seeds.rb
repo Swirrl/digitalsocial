@@ -1,11 +1,12 @@
 # concept schemes
 
 # Project Membership Natures - all top level. We don't allow other here.
-["Sole Funder",
-  "CoFunder",
-  "Delivery Lead",
-  "Delivery Partner",
-  "Advisory Group Member"
+["We are the sole funder",
+  "We co-fund it",
+  "We are the delivery lead",
+  "We support the delivery as a partner",
+  "We evaluate this activity",
+  "We are part of the advisory group"
   # note no other
   ].each do |label|
   Concepts::ProjectMembershipNature.from_label(label, top_level:true)
@@ -28,48 +29,56 @@ end
 end
 
 # Areas of Society
-["Work And Employment",
-  "Health And Wellbeing",
-  "Participation And Democracy",
-  "Education And Skills",
-  "Science",
-  "Culture And Arts",
-  "Finance",
-  "Energy And Environment",
-  "Neighbourhood Regeneration",
+["work and employment",
+  "health and wellbeing",
+  "participation and democracy",
+  "education and skills",
+  "science",
+  "culture and arts",
+  "finance and economy",
+  "energy and environment",
+  "neighbourhood regeneration",
   "Other"  # Will be used as a special broad top-level concept scheme to hang narrower ones off.
 ].each do |label|
   Concepts::AreaOfSociety.from_label(label, top_level:true)
 end
 
 # Technology Focus
-["Open Networks",
-  "Open Data",
-  "Open Knowledge",
-  "Open Hardware"
+["Open Networks (innovative combinations of network solutions and infrastructures, e.g. sensor networks, free network services, open wifi, bottom up-broadband, distributed social networks, p2p infrastructures)",
+  "Open Data (innovative ways to capture, use, analysing, and interpret open data coming from people and from the environment)",
+  "Open Knowledge (co-production of new knowledge and crowd mobilisation based on open contents, open source and open access)",
+  "Open Hardware (new ways of making and using open hardware solutions)"
   # Note: no 'other'
 ].each do |label|
   Concepts::TechnologyFocus.from_label(label, top_level:true)
 end
 
 # Technology Method
-["Citizen Science",
-  "Collaborative Consumption",
-  "Crowd Funding",
-  "Crowd Sourcing",
-  "Crowd Mapping",
-  "Citizen Journalism",
-  "Data Visualisation",
-  "Makers Clubs",
-  "e-democracy",
-  "Geotagging",
-  "Online Learning",
-  "Online Notice Board",
-  "Open Data",
-  "Personal Monitoring",
-  "Peer Support",
-  "Social Networks",
-  "Other"
+["big data",
+  "open Data",
+  "open Source",
+  "crowdfunding",
+  "crowdmapping",
+  "geotagging",
+  "mobile apps",
+  "e-petitions",
+  "online learning models",
+  "MOOCS",
+  "online notice board",
+  "personal monitoring",
+  "quantified-self",
+  "social networks",
+  "social media",
+  "3D printing",
+  "P2P - Distributed exchange networks",
+  "online peer support",
+  "machine learning",
+  "online market place",
+  "collaborative consumption",
+  "online resource sharing",
+  "sensors",
+  "Internet of things",
+  "Other"  # Will be used as a special broad top-level concept scheme to hang narrower ones off.
 ].each do |label|
   Concepts::TechnologyMethod.from_label(label, top_level:true)
 end

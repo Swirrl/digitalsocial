@@ -2,24 +2,22 @@
 
   .field
     = f.input :webpage_label, label: 'Website URL'
-    
+
   .notes
     :markdown
       The address of the website associated with this activity.
 
-.field-with-notes      
-  .field
-    .input
-      = f.label :start_date_label, "Activity start date", class: 'dates'
-      = f.select :start_date_label, grouped_options_for_select(project_start_date_options, f.object.start_date_label), include_blank: "Select a start date"   
-
 .field-with-notes
   .field
     .input
+      = f.label :start_date_label, "Activity start date", class: 'dates'
+      = f.select :start_date_label, grouped_options_for_select(project_start_date_options, f.object.start_date_label), include_blank: "Select a start date"
+    .input
       = f.label :end_date_label, "Activity end date", class: 'dates'
       = f.select :end_date_label, grouped_options_for_select(project_end_date_options, f.object.end_date_label), include_blank: "Select an end date"
+  .notes
+    %p How long has this particular activity got left to run? This can include the wrap up or evaluation period beyond the main delivery of the activity. It can include future activities that are certain to go ahead.  We are only looking for approximate dates.
 
-      
 .field-with-notes
 
   .field
