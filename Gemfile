@@ -15,7 +15,8 @@ gem 'activemodel', require: 'active_model'
 gem 'country_select'
 gem 'entypo-rails'
 gem 'database_cleaner'
-gem "sentry-raven"
+gem 'sentry-raven'
+gem 'aws-sdk', '~> 1.3.4'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

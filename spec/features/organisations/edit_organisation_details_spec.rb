@@ -16,6 +16,7 @@ feature 'Edit organisation details' do
     fill_in 'Twitter', with: '@somethingelse'
     choose '6-10'
     choose 'Social Enterprise Charity Or Foundation'
+    attach_file 'Your Logo', "#{Rails.root}/test/example.png"
     
     click_button 'Update'
 

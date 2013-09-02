@@ -1,5 +1,13 @@
 .field-with-notes
   .field
+    - if f.object.logo_resource.present?
+      = image_tag f.object.logo_resource.file.url(:medium)
+    = f.input :logo_resource, as: :file, label: 'Your Logo'
+  .notes
+    
+
+.field-with-notes
+  .field
     = f.input :webpage_label, label: 'Website URL'
   .notes
     %p The address of the main website of your organisation.
