@@ -3,46 +3,54 @@ require "spec_helper"
 describe RequestMailer do
 
   describe ".request_digest" do
-  
+
     let(:user) { FactoryGirl.create(:user_with_organisations, organisations_count: 1) }
+
     let(:organisation) { user.organisation_resources.first }
+    let(:other_org) { FactoryGirl.create(:organisation) }
+    let(:project) { FactoryGirl.create(:project) }
 
     it 'should be set to be delivered to the email passed in' do
       RequestMailer.request_digest(user, organisation).should deliver_to(user.email)
     end
 
     it 'should contain the names of the projects they are invited to' do
-      request = FactoryGirl.create(:project_request, requestor: organisation, is_invite: true, responded_to: false)
+      inv = FactoryGirl.create(:project_invite, project_uri: project.uri, invitor_organisation_uri: other_org.uri.to_s, invited_organisation_uri: organisation.uri.to_s, open: true)
 
-      RequestMailer.request_digest(user, organisation).should have_body_text(request.requestable.label)
+      RequestMailer.request_digest(user, organisation).should have_body_text(project.name)
     end
 
     it 'should contain the names of the organisations that made requests and the projects they want to join' do
       pm = FactoryGirl.create(:project_membership, organisation: organisation.uri.to_s)
-      request = FactoryGirl.create(:project_request, is_invite: false, responded_to: false, requestable: pm.project_resource)
+      request = FactoryGirl.create(:project_request, project_uri: pm.project.to_s, requestor_organisation_uri: other_org.uri.to_s, open: true)
 
-      RequestMailer.request_digest(user, organisation).should have_body_text(request.requestor.name)
-      RequestMailer.request_digest(user, organisation).should have_body_text(request.requestable.label)
+      RequestMailer.request_digest(user, organisation).should have_body_text(other_org.name)
+      RequestMailer.request_digest(user, organisation).should have_body_text(pm.project_resource.name)
     end
 
-    it 'should contain a link to the projects path of the organisation' do
-      request = FactoryGirl.create(:project_request, requestor: organisation, is_invite: true, responded_to: false)
+    it 'should contain a link to the dashboard path of the organisation' do
+     inv = FactoryGirl.create(:project_invite, project_uri: project.uri, invitor_organisation_uri: other_org.uri.to_s, invited_organisation_uri: organisation.uri.to_s, open: true)
 
-      RequestMailer.request_digest(user, organisation).should have_body_text("/projects?auth_token=#{user.authentication_token}&org_id=#{organisation.guid}")
+      RequestMailer.request_digest(user, organisation).should have_body_text("/user?org_id=#{organisation.guid}")
     end
 
     it 'should contain the details of users to be added' do
-      request = FactoryGirl.create(:user_request, requestable: organisation, user_first_name: 'Bob', user_email: 'bob@swirrl.com', responded_to: false)
+      pending_user = FactoryGirl.create(:user)
+      FactoryGirl.create(:user_request, organisation_uri: organisation.uri.to_s, open: true, user: pending_user)
 
-      RequestMailer.request_digest(user, organisation).should have_body_text('Bob')
-      RequestMailer.request_digest(user, organisation).should have_body_text('bob@swirrl.com')
+      RequestMailer.request_digest(user, organisation).should have_body_text(pending_user.first_name)
+      RequestMailer.request_digest(user, organisation).should have_body_text(pending_user.email)
     end
 
     it 'should not contain the details of users whose requests have been responded to' do
-      request = FactoryGirl.create(:user_request, requestable: organisation, user_first_name: 'Fred', user_email: 'fred@swirrl.com', responded_to: true)
+      pending_user = FactoryGirl.create(:user)
+      accepted_user = FactoryGirl.create(:user)
 
-      RequestMailer.request_digest(user, organisation).should_not have_body_text('Fred')
-      RequestMailer.request_digest(user, organisation).should_not have_body_text('fred@swirrl.com')
+      FactoryGirl.create(:user_request, organisation_uri: organisation.uri.to_s, open: true, user: pending_user)
+      FactoryGirl.create(:user_request, organisation_uri: organisation.uri.to_s, open: false, accepted: true, user: accepted_user)
+
+      RequestMailer.request_digest(user, organisation).should_not have_body_text(accepted_user.first_name)
+      RequestMailer.request_digest(user, organisation).should_not have_body_text(accepted_user.email)
     end
 
   end

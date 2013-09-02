@@ -6,6 +6,7 @@ describe User do
 
     let(:user) { FactoryGirl.build(:user) }
 
+
     it 'must have a valid factory' do
       user.should be_valid
     end
@@ -23,6 +24,7 @@ describe User do
       context 'one organisation' do
 
         let(:user) { FactoryGirl.create(:user_with_organisations, organisations_count: 1) }
+        let(:other_user) { FactoryGirl.create(:user) }
 
         let(:organisation) { user.organisation_resources.first }
         let(:other_org) { FactoryGirl.create(:organisation) }
@@ -65,7 +67,7 @@ describe User do
         end
 
         it 'should send an email if a user has pending user requests' do
-          FactoryGirl.create(:user_request, organisation_uri: organisation.uri.to_s, open: true, user: user)
+          FactoryGirl.create(:user_request, organisation_uri: organisation.uri.to_s, open: true, user: other_user)
 
           lambda { User.send_request_digests }.should change(ActionMailer::Base.deliveries, :count).by(1)
         end
