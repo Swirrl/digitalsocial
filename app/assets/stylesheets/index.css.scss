@@ -8,6 +8,7 @@
       display: block;
       padding: 12px;
       background: #fff2e3;
+      position: relative;
 
       &:nth-child(even) {
         background: #fffaf4;
@@ -18,10 +19,15 @@
         width: 70px;
         //height: 70px;
         margin-right: 12px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
         //background: rgba(255, 255, 255, 0.75);
-        
         img {
-          vertical-align: middle;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin: auto;
         }
       }
 
@@ -29,6 +35,7 @@
         float: left;
         line-height: 1.5;
         max-width: 600px;
+        margin-left: 82px;
 
         .header {
           font-weight: 600;
@@ -47,8 +54,7 @@
 
         .button {
           font-size: 20px;
-          margin-top: 12px;
-          margin-right: 12px;
+          
         }
       }
 
