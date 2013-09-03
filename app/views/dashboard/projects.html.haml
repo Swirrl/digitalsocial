@@ -1,0 +1,6 @@
+.dashboard.projects
+  
+  - if current_organisation
+    %h1 #{current_organisation.name}'s Dashboard
+    = render "dashboard/tabs", active: "Activities"
+    = render "dashboard/projects/list"

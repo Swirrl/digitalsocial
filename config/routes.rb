@@ -86,6 +86,11 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
+  namespace :dashboard do
+    get 'projects'
+    root to: 'dashboard#index'
+  end
+
   match ':action' => 'site'
   root to: 'site#index'
 

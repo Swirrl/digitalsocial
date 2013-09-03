@@ -235,4 +235,22 @@ class Project
     where("?uri <#{name_predicate}> ?name").order("?name")
   end
 
+  def progress_percent
+    @progress_percent ||= 
+      ((progress_count.to_f / Project.progress_attributes.length) * 100).round
+  end
+
+  def self.progress_attributes
+    [:name, :description, :webpage, :start_date_label, :end_date_label, :social_impact,
+     :activity_type, :areas_of_society, :technology_focus, :technology_method]
+  end
+
+  def progress_count
+    count = 0
+    Project.progress_attributes.each do |attr|
+      count += 1 if self.send(attr).present?
+    end
+    count
+  end
+
 end

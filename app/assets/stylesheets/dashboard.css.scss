@@ -2,140 +2,144 @@
 
   width: 960px;
 
-  h2 { 
-    margin-bottom: 48px;
+  h1 { 
+    color: $orange;
+    font-style: italic;
+    margin: 18px 0 48px;
+    font-weight: 600;
   }
 
-  h3 {
-    color: #666;
-  }
+  ul.tabs {
+    display: block;
+    width: 100%;
+    margin-bottom: 36px;
+    border-bottom: 3px solid $orange;
 
-  .button {
-    font-size: 20px;
-  }
-
-  .respondables {
-
-    margin-bottom: 60px;
-
-    .respondable {
-
+    li {
       display: block;
-      padding: 12px;
-      background: #fff2e3;
+      float: left;
+      margin-right: 60px;
+      font-size: 30px;
+      font-style: italic;
+      font-weight: 300;
+      opacity: 0.66;
+      @include transition(opacity, 0.1s);
 
-      &:nth-child(odd) {
-        background: #fffaf4;
+      &:hover {
+        opacity: 1;
       }
 
-      .image {
-        float: left;
-        width: 70px;
-        height: 70px;
-        margin-right: 12px;
-        background: rgba(255, 255, 255, 0.75);
+      &.active {
+        border-bottom: 3px solid $orange;
+        font-weight: 600;
+        opacity: 1;
       }
-
-
-      .text {
-        float: left;
-        line-height: 1.5;
-        max-width: 600px;
-
-        .header {
-          font-weight: 600;
-          font-size: 20px;
-        }
-
-        .subheader {
-          font-style: italic;
-        }
-      }
-
-      .action {
-        float: right;
-        width: 240px;
-        text-align: right;
-      }
-
-      .natures {
-        float: right;
-        width: 360px;
-        display: none;
-        margin-top: 6px;
-
-        .input {
-          margin-bottom: 12px;
-        }
-        .button {
-          float: right;
-        }
-      }
-
-      .action, .natures {
-        .button {
-          margin-top: 12px;
-          margin-right: 12px;
-          line-height: 1;
-        }
-      }
-
     }
-
   }
+  
 
-  .dashboard-row {
-    @include row;
+  ul.projects {
     margin-bottom: 60px;
-  }
 
-  .projects, .organisations {
-    @include columns(8);
+    li {
+      padding: 24px;
+      background: #f0f0f0;
+      list-style-type: none;
+      margin-bottom: 18px;
 
-    ul {
-      margin-bottom: 0;
-    }
+      a {
+        font-weight: 600;
+        color: $link-blue;
 
-    .button {
-      margin-top: 36px;
-    }
-  }
+        &:hover {
+          color: $link-blue-hover;
+        }
+      }
 
-  .users, .details {
-    @include columns(7);
-    @include offset(1);
-  }
+      .name {
+        font-size: 28px;
+        font-style: italic;
+        margin-bottom: 6px;
+        line-height: 1.1;
+      }
 
-  .dashboard-section {
-    ul {
-      padding-left: 0;
-      
-
-      li {
+      .row {
         display: block;
-        list-style-type: none;
-        background: #fffaf4;
-        padding: 12px;
-        margin: 0;
+        width: 100%;
+        margin-bottom: 0;
 
-        &:nth-child(odd) {
-          background: #fff2e3;
+        .progress {
+          float: left;
+          @include columns(7);
+          margin-left: 0;
+          padding-top: 7px;
+
+          .bar {
+            @include border-radius(9px);
+            background: #ccc;
+            width: 100%;
+            height: 18px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 12px;
+          }
+
+          .fill {
+            height: 18px;
+            background: $orange;
+            width: 40%;
+            @include border-radius(9px);
+            text-align: right;
+            line-height: 1;
+
+            &.green {
+              background: $green;
+            }
+
+            span.text {
+              color: white;
+              margin-right: 6px;
+              font-size: 14px;
+              line-height: 18px;
+              font-style: italic;
+              opacity: 0.75;
+            }
+          }
+
+
         }
 
-        p {
-          margin: 0;
+        .organisations {
+          float: left;
+          @include columns(7);
+          @include offset(1);
+          line-height: 1;
+
+          .count {
+            line-height: 30px;
+            margin-bottom: 12px;
+
+            i {
+              width: 21px;
+              font-size: 32px;
+              color: $orange;
+              margin-right: 0;
+              vertical-align: middle;
+            }
+
+          }
+
+          span.text {
+            font-style: italic;
+            color: #999;
+          }
+
         }
 
-        p + p {
-          margin-top: 2px;
+        .progress, .organisations {
+          
         }
       }
     }
-
-    p.empty {
-      margin-bottom: 0;
-      color: #999;
-    }
   }
-
 }
