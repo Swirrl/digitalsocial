@@ -1,9 +1,15 @@
-%h1 Organisations
-- if current_user
-  = link_to "Add another organisation", organisations_build_new_organisation_path
+.index
+  %h1 Organisations
 
-%hr
+  %ul.organisations
+    - @organisations.each do |o|
+      %li.clearfix
+        .image
+          = image_tag o.image_url
 
-%ul
-- @organisations.each do |o|
-  %li= link_to o.name, organisation_path(o)
+        .details
+          .header= o.name
+          .subheader= o.address_str
+
+        .action
+          = link_to 'View', o, class: 'button'

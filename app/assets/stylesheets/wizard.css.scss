@@ -163,7 +163,9 @@
       //height: 70px;
       margin-right: 12px;
       //background: rgba(255, 255, 255, 0.75);
-      line-height: 70px;
+      img {
+        vertical-align: middle;
+      }
     }
 
     .messages {

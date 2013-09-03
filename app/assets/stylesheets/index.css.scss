@@ -1,0 +1,57 @@
+.index {
+  width: 960px;
+
+  ul.organisations {
+
+    li {
+
+      display: block;
+      padding: 12px;
+      background: #fff2e3;
+
+      &:nth-child(even) {
+        background: #fffaf4;
+      }
+
+      .image {
+        float: left;
+        width: 70px;
+        //height: 70px;
+        margin-right: 12px;
+        //background: rgba(255, 255, 255, 0.75);
+        
+        img {
+          vertical-align: middle;
+        }
+      }
+
+      .details {
+        float: left;
+        line-height: 1.5;
+        max-width: 600px;
+
+        .header {
+          font-weight: 600;
+          font-size: 24px;
+        }
+
+        .subheader {
+          font-style: italic;
+        }
+      }
+
+      .action {
+        float: right;
+        width: 240px;
+        text-align: right;
+
+        .button {
+          font-size: 20px;
+          margin-top: 12px;
+          margin-right: 12px;
+        }
+      }
+
+    }
+  }
+}
