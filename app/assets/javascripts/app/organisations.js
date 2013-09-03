@@ -74,7 +74,12 @@ $(function(){
           var $suggestion = $('.suggestion-template').clone()
           $suggestion.removeClass('suggestion-template').addClass('suggestion');
           $suggestion.find('.header').text(org.name);
-          $suggestion.find('.subheader').text(org.address);
+          if(org.address) {
+            $suggestion.find('.subheader').text(org.address);
+          } else {
+            $suggestion.find('.subheader').text('Address not supplied.');
+          }
+
           $suggestion.find('.image img').attr('src', org.image_url);
 
           if($.inArray( org.uri, current_organisation_uris ) > -1 ){
