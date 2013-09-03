@@ -39,7 +39,7 @@
   .field
     = f.input :technology_method_list, label: "Technology Method"
     = render 'suggested_tags', tag_class: Concepts::TechnologyMethod, p_id: 'technology-method-suggested_tags'
-    = render 'tags_js', tag_field_id: "project_technology_method_list", suggested_tags_selector: "p#technology-method-suggested_tags a", tag_source_url: tags_projects_url(tag_class: "AreaOfSociety")
+    = render 'tags_js', tag_field_id: "project_technology_method_list", suggested_tags_selector: "p#technology-method-suggested_tags a", tag_source_url: tags_projects_url(tag_class: "TechnologyMethod")
   .notes
     :markdown
       What type of digital tech is involved in this activity? Again, you can click the suggestions under the box to add them, or add your own by typing into the box (type a commma betwen each new entry).
