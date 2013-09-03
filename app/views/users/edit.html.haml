@@ -1,7 +1,7 @@
 %h1 Edit User Profile
 
 = simple_form_for @user, url: user_path do |f|
-  = f.input :first_name, required: true
+  = f.input :first_name, required: true, label: 'Name'
   = f.input :email, required: true
   = f.input :password, label: 'Change password'
 
