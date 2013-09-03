@@ -39,11 +39,13 @@ class OrganisationsController < ApplicationController
   end
 
   def index
+    org_name_predicate = 
+
     if params[:q].present? # used for auto complete suggestions.
       @organisations = Organisation.search_by_name(params[:q]).to_a
       current_organisation_uris = current_user.organisation_resources.map{|o| o.uri.to_s }
     else
-      @organisations = Organisation.all.resources
+      @organisations = Organisation.order_by_name.resources
     end
 
     respond_to do |format|

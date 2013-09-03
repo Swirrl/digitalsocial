@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
       @projects = Project.search_by_name(params[:q]).to_a
       current_project_uris = current_organisation.project_resource_uris
     else
-      @projects = Project.all.resources
+      @projects = Project.order_by_name.resources
     end
 
     respond_to do |format|

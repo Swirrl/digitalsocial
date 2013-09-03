@@ -195,7 +195,7 @@ class Project
 
   def self.search_by_name(search)
     name_predicate = self.fields[:name].predicate.to_s
-    self.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
+    self.order_by_name.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
   end
 
   def activity_type_label_other=(other)
@@ -228,6 +228,11 @@ class Project
 
   def webpage_label
     self.webpage.to_s.gsub(/^http:\/\//, "") if self.webpage.present?
+  end
+
+  def self.order_by_name
+    name_predicate = self.fields[:name].predicate.to_s 
+    where("?uri <#{name_predicate}> ?name").order("?name")
   end
 
 end
