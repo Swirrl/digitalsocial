@@ -1,0 +1,6 @@
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix qb:         <http://purl.org/linked-data/cube#> .
+
+<http://data.digitalsocial.eu/data/reach> a qb:DataSet ;
+  rdfs:label "Dataset of activity reach data" ;
+  .
