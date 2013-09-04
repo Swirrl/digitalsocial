@@ -44,6 +44,8 @@ Digitalsocial::Application.configure do
 
   Paperclip.logger = Logger.new(nil)
 
+  Digitalsocial::DATA_ENDPOINT = 'http://127.0.0.1:3030/dsitest/data'
+
   Tripod.configure do |config|
     config.update_endpoint = 'http://127.0.0.1:3030/dsitest/update'
     config.query_endpoint = 'http://127.0.0.1:3030/dsitest/sparql'
