@@ -73,7 +73,7 @@ Digitalsocial::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'alpha.digitalsocial.eu' }
 
-  Digitalsocial::DATA_ENDPOINT = 'http://127.0.0.1:3030/dsi/data'
+  Digitalsocial::DATA_ENDPOINT = 'http://sparql3.publishmydata.com/dsi/data'
 
   Tripod.configure do |config|
     config.update_endpoint = 'http://sparql3.publishmydata.com/dsi/update'
