@@ -116,9 +116,16 @@ h1 + h2 {
   padding-top: 9px;
 }
 
-.hr3 {
+.hr {
   display: block;
   background-color: $orange;
+  //width: 10000px;
+}
+
+.hr1 {
+  height: 3px;
+}
+
+.hr3 {
   height: 9px;
-  width: 100%;
 }

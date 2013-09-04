@@ -16,8 +16,8 @@
   ul.tabs {
     display: block;
     width: 100%;
-    margin-bottom: 48px;
-    border-bottom: 3px solid $orange;
+    margin-bottom: 0;
+    //border-bottom: 3px solid $orange;
 
     li {
       display: block;
@@ -44,6 +44,10 @@
         margin-right: 0;
         margin-left: 60px;
       }
+    }
+
+    + .hr {
+      margin-bottom: 48px;
     }
   }
 
