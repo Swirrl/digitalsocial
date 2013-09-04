@@ -208,8 +208,12 @@ class Project
     end
   end
 
+  def activity_type_slug
+    activity_type_resource.slug
+  end
+
   def activity_type_resource
-    Concepts::ActivityType.find(self.activity_type) if self.activity_type.present?
+    @activity_type_resource ||= Concepts::ActivityType.find(self.activity_type) if self.activity_type.present?
   end
 
   def technology_focus_array=(array)
@@ -231,12 +235,12 @@ class Project
   end
 
   def self.order_by_name
-    name_predicate = self.fields[:name].predicate.to_s 
+    name_predicate = self.fields[:name].predicate.to_s
     where("?uri <#{name_predicate}> ?name").order("?name")
   end
 
   def progress_percent
-    @progress_percent ||= 
+    @progress_percent ||=
       ((progress_count.to_f / Project.progress_attributes.length) * 100).round
   end
 
@@ -251,6 +255,15 @@ class Project
       count += 1 if self.send(attr).present?
     end
     count
+  end
+
+  def reach
+    ReachValue.get_reach_value_for_activity(self.uri)
+  end
+
+  def reach=(reachValue)
+    rv = ReachValue.build_reach_value(self, reachValueLiteral)
+    rv.save
   end
 
 end
