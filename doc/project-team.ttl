@@ -1,0 +1,8 @@
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix org:        <http://www.w3.org/ns/org#> .
+@prefix foaf:       <http://xmlns.com/foaf/0.1/> .
+
+<http://data.digitalsocial.eu/id/project-team> a <http://www.w3.org/ns/org#Organization> ;
+  rdfs:label "The project team, led by Nesta, that is carrying out the Digital Social Innovation project. The other partners are Esade, FutureEverything, IRI, Waag Society and Swirrl." ;
+  foaf:page <http://digitalsocial.eu> ;
+  .
