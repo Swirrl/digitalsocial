@@ -4,6 +4,10 @@
     %h1 #{current_organisation.name}'s Dashboard
     = render "dashboard/tabs", active: "Users"
 
+  %h2
+    %strong #{current_organisation.name}'s
+    Users
+
 
   %ul.users.dashboard-list
     - current_organisation.users.each do |u|

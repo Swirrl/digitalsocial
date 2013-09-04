@@ -2,9 +2,13 @@
   %h1 #{current_organisation.name}'s Dashboard
   = render "dashboard/tabs", active: "Location"
 
+  %h2
+    %strong #{current_organisation.name}'s
+    location
+
   = simple_form_for @organisation, url: [:update_location, current_organisation] do |f|
 
     = render 'organisations/fields/location', f: f
 
     .wizard-button-wrapper
-      = f.button :submit, 'Update location'
+      = f.button :submit, 'Update location', class: 'button-green'

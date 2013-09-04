@@ -2,6 +2,17 @@
 
   width: 960px;
 
+  h2 {
+    color: #999;
+    font-style: italic;
+    font-weight: 500;
+    margin-bottom: 48px;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
   ul.tabs {
     display: block;
     width: 100%;
@@ -243,6 +254,14 @@
   .empty {
     font-style: italic;
     color: #999;
+  }
+
+  .wizard-button-wrapper {
+    margin-left: 0;
+
+    input.button {
+      float: none;
+    }
   }
 
 }

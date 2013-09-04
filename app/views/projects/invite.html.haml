@@ -1,26 +1,31 @@
-%h1 Invite Organisation to join Activity
+.dashboard
+  
+  %h1 #{current_organisation.name}'s Dashboard
+  = render "dashboard/tabs", active: "Activities"
 
-:markdown
-  Invite another organisation to join acitivity: **#{@project.name}**
+  %h2 
+    Invite Organisation to join
+    %strong #{@project.name}
 
-= simple_form_for @project_invite, url: [:create_new_org_invite, @project] do |f|
 
-  .field-with-notes
-    .field
-      = f.input :invited_organisation_name, label: 'Organisation Name', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
-    .notes
-      %p
-        Start typing an organisation name and we'll suggest existing ones.
+  = simple_form_for @project_invite, url: [:create_new_org_invite, @project] do |f|
 
-  = render 'suggestions', button_text: 'Invite', action_url_template: "/projects/#{@project.guid}/create_existing_org_invite?organisation_id=:organisation_id"
+    .field-with-notes
+      .field
+        = f.input :invited_organisation_name, label: 'Organisation Name', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
+      .notes
+        %p
+          Start typing an organisation name and we'll suggest existing ones.
 
-  .field-with-notes
-    .fields
-      = f.input :user_first_name, required: false
-      = f.input :user_email, required: false
-    .notes
-      %p
-        If you're adding a new organisation, please give the name and email of the person you worked with on this activity.
+    = render 'suggestions', button_text: 'Invite', action_url_template: "/projects/#{@project.guid}/create_existing_org_invite?organisation_id=:organisation_id"
 
-  .wizard-button-wrapper
-    = f.button :submit, 'Invite'
+    .field-with-notes
+      .fields
+        = f.input :user_first_name, required: false
+        = f.input :user_email, required: false
+      .notes
+        %p
+          If you're adding a new organisation, please give the name and email of the person you worked with on this activity.
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Invite organisation', class: 'button-green'

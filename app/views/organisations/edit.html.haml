@@ -2,10 +2,14 @@
   %h1 #{current_organisation.name}'s Dashboard
   = render "dashboard/tabs", active: "Details"
 
+  %h2
+    %strong #{current_organisation.name}'s
+    details
+
   = simple_form_for @organisation do |f|
     
     = render 'organisations/fields/name', f: f
     = render 'organisations/fields/advanced', f: f
 
     .wizard-button-wrapper
-      = f.button :submit, 'Update details'
+      = f.button :submit, 'Update details', class: 'button-green'

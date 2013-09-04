@@ -3,4 +3,10 @@
   - if current_organisation
     %h1 #{current_organisation.name}'s Dashboard
     = render "dashboard/tabs", active: "Activities"
+
+
+    %h2
+      %strong #{current_organisation.name}'s
+      Activities
+      
     = render "dashboard/projects/list"

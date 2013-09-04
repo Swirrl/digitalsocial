@@ -1,7 +1,11 @@
-%h1 Invite users
+.dashboard
+  %h1 #{current_organisation.name}'s Dashboard
+  = render "dashboard/tabs", active: "Users"
 
-= simple_form_for @organisation, url: [:create_user_invites, :organisation] do |f|
-  = render "organisations/fields/invite_users", f: f
+  %h2 Invite Users
 
-  .wizard-button-wrapper
-    = f.button :submit, 'Invite users'
+  = simple_form_for @organisation, url: [:create_user_invites, :organisation] do |f|
+    = render "organisations/fields/invite_users", f: f
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Send invitations', class: 'button-green'
