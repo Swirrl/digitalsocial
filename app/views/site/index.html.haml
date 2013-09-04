@@ -1,58 +1,43 @@
-#home
-  #map
-  .banner
-    Map-based visualisation coming soon.
+!!!
+%html
+  %head
+    %title= [@title, "Digital Social Innovation"].compact.join(" | ")
 
-  :javascript
-    $(function() {
+    = stylesheet_link_tag  "application"
 
-      var defaultCenter = [50,10];
-      var defaultZoom = 4;
-      var selectedZoom = 16;
+    %link{rel:"stylesheet", href:"//cdn.leafletjs.com/leaflet-0.6.4/leaflet.css"}
+    %link{rel:"stylesheet", href:"//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.css"}
 
-      var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_MAP_ID}')
-        .setView(defaultCenter,defaultZoom);
-    });
+    /[if lte IE 8]
+      %link{rel: "stylesheet", href:"//cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css"}
+
+    =# jquery ui style for tagit.
+    %link{rel:"stylesheet", href:"//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css"}
+
+    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
+    %script{src: "//code.jquery.com/ui/1.10.3/jquery-ui.js"}
+
+    %script{src: "//cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"}
+    %script{src: "//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.js"}
 
 
+    = javascript_include_tag "application"
 
+    = csrf_meta_tags
+    = render "typekit"
+  %body.home
+    
+    <iframe width='100%' height='100%' frameBorder='0' src='http://a.tiles.mapbox.com/v3/swirrl.map-v2ypw352.html#5/46.241/7.976'></iframe>
 
-  .about
-    :markdown
-      Welcome! We are looking for organisations that focus on how collaborating online can help make a difference to society.
+    .logo
+      = image_tag "logo/dsi-logo.png"
 
-      #### Does your organisation:
+    .info
+      %h1 Digital Social Innovation
 
-      1. Focus on grass-roots or “bottom-up” communities of users?
-      2. Use online/digital tools or methods in a disruptive way?
-      3. Make a positive social impact?
-      4. Work in the European Union?
-      5. Create a “network effect” through collaboration online?
-      i.e. the larger number of users a service has, the better it works.
+      .text
+        %p Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+        %p Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+        %p Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna.
 
-      If you can answer yes to all of the questions above then we would like to invite you to [build your profile](#{organisations_build_new_user_path}) and put yourself on the innovation map.
-
-      We’re interested in hearing about a wide range of activities related to Digital Social Innovation (DSI) - whether you’re building services, hosting networks, carrying out research or curating conferences. You can [build your profile](#{organisations_build_new_user_path}) right now in 5 mins with some basic info and then come back later to add more detail.
-
-    = link_to "Start Building a Profile", [:organisations, :build, :new_user], class: 'button'
-
-    %br
-    %br
-    %br
-
-    :markdown
-
-      #### About
-
-      This is part of an EU wide research project on what we call Digital Social Innovation (DSI). Through taking part you will build a network profile for your organisation and help generate open data for the research team and everyone interested in this exciting field. It will take around 5 minutes to get going.
-
-      #### Why take part?
-
-      By taking part you will get access to unique new insights into the exciting and growing field of Digital Social Innovation. You will:
-
-      - Showcase the great work you are doing to a community of potential collaborators and funders.
-      - Be recognised as a pioneer Digital Social Innovator and inspire a growing community in Europe
-      - Be invited to attend future DSI networking events
-
-      If you have any queries please contact us: [contact@digitalsocial.eu](mailto:contact@digitalsocial.eu).
-
+        = link_to "Put yourself on the map", [:organisations, :build, :new_user], class: 'button button-green'
