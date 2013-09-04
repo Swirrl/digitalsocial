@@ -4,7 +4,7 @@
    <http://www.w3.org/2000/01/rdf-schema#label> "Organizations and Activities";
    <http://purl.org/dc/terms/title> "Organizations and Activities";
    <http://www.w3.org/2000/01/rdf-schema#comment>
-      "Data collected via the [DigitalSocialInnovation](http://digitalsocial.eu) site" ;
+      "Data collected via the DigitalSocial.eu site" ;
    <http://publishmydata.com/def/dataset#contactEmail> <mailto:contact@digitalsocial.eu>;
    <http://publishmydata.com/def/dataset#graph> <http://data.digitalsocial.eu/graph/organizations-and-activities>;
    <http://purl.org/dc/terms/publisher> <http://data.digitalsocial.eu/id/project-team>;
