@@ -1,7 +1,7 @@
 # project team (in main data graph)
 
 RestClient::Request.execute(
-  :method => :post,
+  :method => :post, # add this to the graph.
   :url => (Digitalsocial::DATA_ENDPOINT + '?graph=' + Digitalsocial::DATA_GRAPH),
   :payload =>  File.read(File.join(Rails.root, 'doc', 'project-team.ttl')),
   :headers => {content_type: 'text/turtle'},
