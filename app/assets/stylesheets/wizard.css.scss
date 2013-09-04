@@ -229,18 +229,20 @@
 .skip-wizard {
   display: block;
   padding: 12px;
-  background: #ffffe0;
+  background: #fff2e3;
   margin-bottom: 48px;
 
   span {
     line-height: 44px;
     padding-left: 12px;
-    color: #b2b2a0;
+    color: $orange;
+    font-style: italic;
   }
 
   .button {
     float: right;
     font-size: 20px;
+    padding: 12px 24px;
   }
 }
 
