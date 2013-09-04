@@ -38,7 +38,8 @@ def content_type_for_filename(filename)
 end
 
 ['cube.ttl', 'dcterms.rdf', 'dsi-ontology.nt', 'foaf.rdf', 'org.ttl', 'owl.rdf',
- 'rdf.rdf', 'rdfs.rdf', 'rdfschema_extra.nt', 'skos.rdf', 'vcard.rdf', 'wgs84_pos.rdf'].each do |filename|
+ 'rdf.rdf', 'rdfs.rdf', 'rdfschema_extra.nt', 'skos.rdf', 'vcard.ttl', 'wgs84_pos.rdf',
+ 'timeline.ttl', 'event.ttl'].each do |filename|
 
   RestClient::Request.execute(
     :method => :put,
