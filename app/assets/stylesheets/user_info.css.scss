@@ -2,67 +2,69 @@
   position:absolute;
   right: 0;
   background: $very-light-grey;
+  //min-width: 240px;
 
   @include media-all-mobile {
     position:relative;
   }
 
   a.current-user {
-    text-align:center;
     display:block;
     padding: 12px 24px;
     color: $black;
+    font-style: italic;
   }
 
   .expanded {
-    font-size: 14px !important;
+    -webkit-border-bottom-right-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 
-    .links {
-      padding: 12px;
-      text-align:center;
-      a.button {
-        font-size: 14px;
-        padding: 5px;
-      }
-    }
+    ul {
+      margin: 0;
+      border-top: 2px solid #ddd;
+      padding: 3px 0;
 
-    .orgs {
-      p {
-        padding: 0px;
-        margin:0;
-        text-align:center;
-      }
-      ul {
-        list-style-type:none;
-        margin:0;
-        padding:0;
-        li {
-          a {
-            display:block;
-            margin:0;
-            color: white;
-          }
 
-          &.current {
-            font-weight: 600;
+      li {
+        line-height: 1;
+        list-style-type: none;
+
+        a {
+          display: block;
+          margin: 0;
+          color: $black;
+          padding: 12px 24px;
+
+          &:hover {
+            background: #ddd;
           }
 
-          margin:0;
-          padding: 6px 24px;
-          border-top: 1px solid $light-grey;
-          &:nth-child(odd) {
-            background: lighten($blue, 50%)
-          }
-          &:nth-child(even) {
-            background: lighten($blue, 40%)
-          }
-          &:last-child {
-            border-bottom: 1px solid $light-grey;
-          }
+        }
+
+        &.divider {
+          height: 1px;
+          border-bottom: 2px solid #ddd;
+          margin: 3px 0;
+        }
+
+        &.label {
+          padding: 9px 24px;
+          color: #aaa;
+          font-style: italic;
+          font-size: 16px;
+        }
+
+        &.current a {
+          background: $link-blue;
+          color: #fff;
+          font-style: italic;
         }
       }
     }
-
 
   }
 
