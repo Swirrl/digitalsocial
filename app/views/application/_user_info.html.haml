@@ -5,25 +5,27 @@
       %i.icon-user
       #{current_user.first_name}
       - if current_organisation.present?
-        @ #{current_organisation.name}
+        (#{current_organisation.name})
       %i.icon-triangle-down
       %i.icon-triangle-up{style:"display:none"}
+    
+
     .expanded{style:"display:none"}
-      - if current_user.organisation_resources.many?
-        .orgs
-          %p
-            Switch Organisation
-          %ul
-            - current_user.organisation_resources.each do |org|
-              - is_current_org = (current_organisation.uri == org.uri)
-              = content_tag :li, class: is_current_org ? 'current' : '' do
-                = link_to dashboard_path(org_id: org.guid) do
-                  = org.name
-                  - if is_current_org
-                    %i.icon-check
-      .links
-        = link_to "Dashboard", dashboard_path, class: 'button'
-        = link_to "Log out", destroy_user_session_path
+      %ul
+
+        - if current_user.organisation_resources.many?
+          %li.label Current Organisation
+          - current_user.organisation_resources.each do |org|
+            - is_current_org = (current_organisation.uri == org.uri)
+            = content_tag :li, class: is_current_org ? 'current' : '' do
+              = link_to dashboard_path(org_id: org.guid) do
+                = org.name
+                - if is_current_org
+                  %i.icon-check
+          %li.divider
+
+        %li= link_to "Dashboard", dashboard_path
+        %li= link_to "Log out", destroy_user_session_path
 
     :javascript
       $("#user-info a.current-user").click( function(e) {

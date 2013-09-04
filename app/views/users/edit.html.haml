@@ -14,8 +14,7 @@
         - current_user.organisation_resources.each do |org|
           %li.clearfix
 
-            .image
-              = image_tag org.image_url
+            .image= image_tag org.image_url
 
             .details
               .header
@@ -36,21 +35,29 @@
                       %i.icon-user
 
                   %p
-                    = link_to "Invite more users", [:invite_users, current_organisation]
-                    %span.text (currently #{count})
-
+                    = link_to "Invite users", [:invite_users, current_organisation]
+                    - if count == 1
+                      %span.text (currently just you)
+                    - else
+                      %span.text (currently #{count})
             .action
               - if org.uri != current_organisation.uri
                 = link_to "Switch", edit_user_path(:org_id => org.guid), class: 'button button-green'
               = link_to "Edit", edit_organisation_path(org.guid), class: 'button'
 
 
-        / - current_user.pending_join_org_requests.each do |r|
-        /   %li
-        /     %p
-        /       %strong= r.organisation_resource.name
-        /     %p
-        /       %em (Pending)
+        - current_user.pending_join_org_requests.each do |r|
+          %li.clearfix
+            .image= image_tag r.organisation_resource.image_url
+            
+            .details
+              .header
+                #{r.organisation_resource.name} (awaiting acceptance)
+                
+              .row.clearfix
+                .address
+                  %p= r.organisation_resource.address_str
+         
 
       = link_to "+ Add/join another organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
     - else
