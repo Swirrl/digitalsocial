@@ -4,7 +4,7 @@ class Project
   include ConceptFields
 
   rdf_type 'http://data.digitalsocial.eu/def/ontology/Activity'
-  graph_uri 'http://data.digitalsoclal.eu/graph/data'
+  graph_uri Digitalsocial::DATA_GRAPH
 
   field :name, 'http://www.w3.org/2000/01/rdf-schema#label'
   field :description, 'http://purl.org/dc/terms/description'

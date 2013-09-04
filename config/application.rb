@@ -17,7 +17,7 @@ end
 
 module Digitalsocial
 
-  DATA_GRAPH = 'http://data.digitalsoclal.eu/graph/data'
+  DATA_GRAPH = 'http://data.digitalsoclal.eu/graph/organizations-and-activities'
   MAPBOX_MAP_ID = 'swirrl.map-fur94vuh'
   EU_COUNTRIES = ["Austria", "Belgium", "Bulgaria", "Cyprus", "Czech Republic",
     "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary",
