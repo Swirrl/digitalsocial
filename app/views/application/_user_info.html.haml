@@ -17,7 +17,7 @@
             - current_user.organisation_resources.each do |org|
               - is_current_org = (current_organisation.uri == org.uri)
               = content_tag :li, class: is_current_org ? 'current' : '' do
-                = link_to user_path(org_id: org.guid) do
+                = link_to dashboard_path(org_id: org.guid) do
                   = org.name
                   - if is_current_org
                     %i.icon-check
