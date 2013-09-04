@@ -63,6 +63,19 @@
       position: relative;
     }
 
+    a {
+      font-weight: 600;
+      color: $link-blue;
+
+      &:hover {
+        color: $link-blue-hover;
+      }
+    }
+
+    .button, .button:hover {
+      color: #fff;
+    }
+
   }
   
 
@@ -70,15 +83,6 @@
     
     li {
       
-
-      a {
-        font-weight: 600;
-        color: $link-blue;
-
-        &:hover {
-          color: $link-blue-hover;
-        }
-      }
 
       .name {
         font-size: 28px;
@@ -255,6 +259,98 @@
     }
   }
 
+  ul.organisations {
+    li {
+      .image {
+        float: left;
+        width: 70px;
+        height: 70px;
+        margin-right: 12px;
+        position: absolute;
+        top: 24px;
+        //background: rgba(255, 255, 255, 0.75);
+        img {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+        }
+      }
+
+      .details {
+        float: left;
+        line-height: 1.2;
+        width: 600px;
+        margin-left: 94px;
+
+        .header {
+          font-size: 24px;
+          font-style: italic;
+          margin-bottom: 12px;
+        }
+
+        .row {
+          margin-bottom: 0;
+        }
+
+        .address {
+          color: #999;
+          margin-bottom: 6px;
+          float: left;
+          width: 308px;
+          margin-right: 36px;
+
+          p {
+            line-height: 1.3;
+            margin-bottom: 12px;
+          }
+          p + p {
+            margin-bottom: 0;
+          }
+        }
+
+        .users {
+          float: left;
+          width: 250px;
+
+          .count {
+            line-height: 30px;
+            margin-bottom: 12px;
+
+            i {
+              width: 30px;
+              font-size: 30px;
+              color: $orange;
+              margin-right: 0;
+              vertical-align: middle;
+            }
+
+          }
+
+          span.text {
+            font-style: italic;
+            color: #999;
+          }
+
+          p + p {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .action {
+        float: right;
+        width: 200px;
+        text-align: right;
+
+        .button {
+          font-size: 20px;
+          padding: 8px 24px;
+        }
+      }
+    }
+  }
+
   .empty {
     font-style: italic;
     color: #999;
@@ -265,6 +361,19 @@
 
     input.button {
       float: none;
+    }
+  }
+
+  .user-organisations {
+    margin-bottom: 60px;
+  }
+
+  .user-account {
+    padding: 36px;
+    background: #fff2e3;
+
+    h2 {
+      color: #f7b757;
     }
   }
 

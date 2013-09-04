@@ -12,7 +12,7 @@ feature 'Respond to user request' do
     organisation.update_attribute :name, 'Swirrl'
 
     login_as user, scope: :user
-    visit user_path
+    visit dashboard_path
   end
 
   scenario 'Should see project invite' do
@@ -35,6 +35,7 @@ feature 'Respond to user request' do
 
   scenario 'Should add requested user to users list if accepted' do
     click_link 'Accept'
+    visit dashboard_users_path
 
     within('.users') do
       page.should have_content 'bob@test.com'
@@ -43,6 +44,7 @@ feature 'Respond to user request' do
 
   scenario 'Should not add requested user to users list if rejected' do
     click_link 'Ignore'
+    visit dashboard_users_path
 
     within('.users') do
       page.should_not have_content 'bob@test.com'

@@ -17,18 +17,18 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_1_first_name', with: 'Jane'
     fill_in 'invited_users_1_email', with: 'jane@test.com'
 
-    click_button 'Invite users'
+    click_button 'Send'
 
-    page.current_path.should == "/user"
+    page.current_path.should == dashboard_users_path
   end
 
   scenario 'Fill in team member details without first name' do
     fill_in 'invited_users_0_first_name', with: ''
     fill_in 'invited_users_0_email', with: 'jane@test.com'
 
-    click_button 'Invite users'
+    click_button 'Send'
 
-    page.current_path.should_not == "/user"
+    page.current_path.should_not == dashboard_users_path
     page.should have_css('.error')
   end
 
@@ -36,9 +36,9 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_0_first_name', with: 'Bob'
     fill_in 'invited_users_0_email', with: ''
 
-    click_button 'Invite users'
+    click_button 'Send'
 
-    page.current_path.should_not == "/user"
+    page.current_path.should_not == dashboard_users_path
     page.should have_css('.error')
   end
 
@@ -46,9 +46,9 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_0_first_name', with: 'Bob'
     fill_in 'invited_users_0_email', with: 'bob@test'
 
-    click_button 'Invite users'
+    click_button 'Send'
 
-    page.current_path.should_not == "/user"
+    page.current_path.should_not == dashboard_users_path
     page.should have_css('.error')
   end
 
@@ -58,9 +58,9 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_0_first_name', with: 'Bob'
     fill_in 'invited_users_0_email', with: 'existing@test.com'
 
-    click_button 'Invite users'
+    click_button 'Send'
 
-    page.current_path.should == "/user"
+    page.current_path.should == dashboard_users_path
   end
 
   scenario 'Fill in team member details with email of user already existing but already belonging to organisation' do
@@ -70,9 +70,9 @@ feature 'Invite users wizard step' do
     fill_in 'invited_users_0_first_name', with: 'Bob'
     fill_in 'invited_users_0_email', with: 'existing@test.com'
 
-    click_button 'Invite users'
+    click_button 'Send'
 
-    page.current_path.should_not == "/user"
+    page.current_path.should_not == dashboard_users_path
     page.should have_css('.error')
   end
   

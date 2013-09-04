@@ -12,7 +12,7 @@ class OrganisationsController < ApplicationController
     @organisation = current_organisation
 
     if @organisation.update_attributes(params[:organisation])
-      redirect_to :user, notice: 'Organisation details updated.'
+      redirect_to [:edit, @organisation], notice: 'Organisation details updated.'
     else
       Rails.logger.debug @organisation.errors.inspect
       render :edit
@@ -28,7 +28,7 @@ class OrganisationsController < ApplicationController
     @organisation.attributes = params[:organisation_presenter]
 
     if @organisation.save
-      redirect_to :user, notice: 'Organisation location updated.'
+      redirect_to [:edit_location, current_organisation], notice: 'Organisation location updated.'
     else
       render :edit_location
     end
@@ -67,10 +67,10 @@ class OrganisationsController < ApplicationController
     user_request.organisation_uri = @organisation.uri.to_s
 
     if user_request.save
-      redirect_to user_url, :notice => "You have requested to join #{@organisation.name}. Members of #{@organisation.name} have be notified and we'll let you know when your request is accepted"
+      redirect_to :dashboard, :notice => "You have requested to join #{@organisation.name}. Members of #{@organisation.name} have be notified and we'll let you know when your request is accepted"
     else
       error_message = user_request.errors.messages.values.join(', ')
-      redirect_to user_url, :notice => "Your request failed. #{error_message}"
+      redirect_to :dashboard, :notice => "Your request failed. #{error_message}"
     end
   end
 
@@ -87,7 +87,7 @@ class OrganisationsController < ApplicationController
 
     if @organisation.can_send_user_invites?
       @organisation.send_user_invites
-      redirect_to :user, notice: "Team members invited"
+      redirect_to [:dashboard, :users], notice: "Team members invited"
     else
       render :invite_users
     end

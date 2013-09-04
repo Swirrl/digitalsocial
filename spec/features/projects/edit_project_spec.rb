@@ -27,7 +27,7 @@ feature 'Edit project' do
 
     click_button 'Update'
 
-    page.current_path.should == "/user"
+    page.current_path.should == dashboard_projects_path
   end
 
   scenario 'Updating the organisation unsuccessfully' do
@@ -35,7 +35,7 @@ feature 'Edit project' do
 
     click_button 'Update'
 
-    page.current_path.should_not == "/user"
+    page.current_path.should_not == dashboard_projects_path
   end
 
   scenario "Project suggestions not shown", js: true do
@@ -51,7 +51,7 @@ feature 'Edit project' do
     project2 = FactoryGirl.create(:project, name: "Forbidden project")
     visit edit_project_path(project2)
 
-    page.current_path.should == "/user"
+    page.current_path.should == dashboard_projects_path
     page.should_not have_content "Forbidden project"
   end
 

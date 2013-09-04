@@ -7,17 +7,17 @@ class ProjectInvitesController < ApplicationController
     @invite.attributes = params[:project_invite]
 
     if @invite.accept!
-      redirect_to :user, notice: "The invite has been accepted."
+      redirect_to :dashboard, notice: "The invite has been accepted."
     else
-      redirect_to :user, alert: "The invite could not be accepted"
+      redirect_to :dashboard, alert: "The invite could not be accepted"
     end
   end
 
   def reject
     if @invite.reject!
-      redirect_to :user
+      redirect_to :dashboard
     else
-      redirect_to :user
+      redirect_to :dashboard
     end
   end
 
