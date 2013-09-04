@@ -133,7 +133,7 @@ class Organisation
 
   def self.search_by_name(search)
     name_predicate = self.fields[:name].predicate.to_s
-    self.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
+    self.order_by_name.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
   end
 
   def twitter_username=(username)
@@ -217,5 +217,9 @@ class Organisation
     self.primary_site_resource.address_resource.to_s if self.primary_site
   end
 
+  def self.order_by_name
+    name_predicate = self.fields[:name].predicate.to_s 
+    where("?uri <#{name_predicate}> ?name").order("?name")
+  end
 
 end

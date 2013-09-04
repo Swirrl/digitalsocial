@@ -1,9 +1,15 @@
-%h1 Activities
-- if current_user && current_organisation
-  = link_to "Add another activity", new_project_path
+.index
+  %h1 Activities
 
-%hr
+  %ul.activities
+    - @projects.each do |p|
+      %li.clearfix
+        .image
+          = image_tag p.image_url
 
-%ul
-- @projects.each do |p|
-  %li= link_to p.name, project_path(p)
+        .details
+          .header= p.name
+          .subheader= p.description
+
+        .action
+          = link_to 'View', p, class: 'button'
