@@ -2,7 +2,7 @@
 
 <http://data.digitalsocial.eu/data/organizations-and-activities> a <http://publishmydata.com/def/dataset#Dataset>;
    <http://www.w3.org/2000/01/rdf-schema#label> "Organizations and Activities";
-   <http://purl.org/dc/terms/title> "organizations and Activities";
+   <http://purl.org/dc/terms/title> "Organizations and Activities";
    <http://publishmydata.com/def/dataset#contactEmail> <mailto:contact@digitalsocial.eu>;
    <http://publishmydata.com/def/dataset#graph> <http://data.digitalsocial.eu/graph/organizations-and-activities>;
    <http://purl.org/dc/terms/publisher> <http://data.digitalsocial.eu/id/project-team>;
