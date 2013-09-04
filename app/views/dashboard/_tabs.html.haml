@@ -10,8 +10,8 @@
   %li{ class: active == 'Users' ? 'active' : nil }
     = link_to "Users", [:dashboard, :users]
   %li{ class: active == 'Details' ? 'active' : nil }
-    = link_to "Details", [:dashboard, :users]
+    = link_to "Details", edit_organisation_path(current_organisation.guid)
   %li{ class: active == 'Location' ? 'active' : nil }
-    = link_to "Location", [:dashboard, :users]
+    = link_to "Location", edit_location_organisation_path(current_organisation.guid)
   %li.right{ class: active == 'Account' ? 'active' : nil }
     = link_to "My account", [:edit, :user]
