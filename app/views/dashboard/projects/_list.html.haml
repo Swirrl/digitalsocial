@@ -9,10 +9,10 @@
         .name= req.project_resource.name
 
 
-  = link_to "Add/join another activity", [:new, :project], class: 'button button-green'
+  = link_to "+ Add/join another activity", [:new, :project], class: 'button button-green'
 
 - else
   %p.empty
     = current_organisation.name
     are not a member of any activities yet.
-  = link_to "Add/join an activity", [:new, :project], class: 'button'
+  = link_to "+ Add/join an activity", [:new, :project], class: 'button'

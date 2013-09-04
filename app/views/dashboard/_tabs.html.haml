@@ -1,9 +1,17 @@
 %ul.tabs.clearfix
   %li{ class: active == 'Pending' ? 'active' : nil }
-    = link_to "Pending (5)", :dashboard
+    = link_to :dashboard do
+      Pending
+      - if current_organisation.pending_count > 0
+        (#{current_organisation.pending_count})
+
   %li{ class: active == 'Activities' ? 'active' : nil }
     = link_to "Activities", [:dashboard, :projects]
   %li{ class: active == 'Users' ? 'active' : nil }
     = link_to "Users", [:dashboard, :users]
+  %li{ class: active == 'Details' ? 'active' : nil }
+    = link_to "Details", [:dashboard, :users]
+  %li{ class: active == 'Location' ? 'active' : nil }
+    = link_to "Location", [:dashboard, :users]
   %li.right{ class: active == 'Account' ? 'active' : nil }
     = link_to "My account", [:edit, :user]

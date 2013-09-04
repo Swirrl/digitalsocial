@@ -11,3 +11,7 @@
         - if current_organisation.has_respondables?
           - current_organisation.respondables.each do |respondable|
             = render "dashboard/pending/respondables/#{respondable.class.to_s.underscore}", respondable: respondable
+
+    - else
+      .empty
+        You have no pending invites or requests to respond to.

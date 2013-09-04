@@ -178,11 +178,7 @@
         max-width: 540px;
         margin-left: 94px;
 
-        .message {
-          font-weight: 500;
-          font-style: italic;
-          font-size: 24px;
-        }
+        
 
         .subheader {
           font-style: italic;
@@ -199,7 +195,54 @@
           padding: 8px 24px;
         }
       }
+
+      .natures {
+        float: right;
+        width: 360px;
+        display: none;
+        margin-top: 6px;
+
+        .input {
+          margin-bottom: 12px;
+        }
+        .button {
+          float: right;
+          padding: 8px 24px;
+        }
+        .checkbox {
+          input {
+            vertical-align: baseline;
+          }
+        }
+      }
+
+      
     }
+  }
+
+  ul.users {
+
+    .name {
+      font-size: 24px;
+      font-style: italic;
+    }
+
+    .sign-in {
+      color: #999;
+    }
+
+    .button {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 20px;
+      padding: 8px 24px;
+    }
+  }
+
+  .empty {
+    font-style: italic;
+    color: #999;
   }
 
 }

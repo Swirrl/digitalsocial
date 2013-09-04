@@ -3,3 +3,22 @@
   - if current_organisation
     %h1 #{current_organisation.name}'s Dashboard
     = render "dashboard/tabs", active: "Users"
+
+
+  %ul.users.dashboard-list
+    - current_organisation.users.each do |u|
+      %li
+        .name
+          = u.first_name
+          (#{u.email})
+
+        .sign-in
+          - if u.current_sign_in_at.present?
+            Last signed in #{time_ago_in_words(u.current_sign_in_at)} ago
+          - else
+            Not yet signed in
+
+        - if u.id == current_user.id
+          = link_to "Edit profile", edit_user_path, class: 'button'
+
+  = link_to "+ Invite users", [:invite_users, current_organisation], class: 'button button-green'
