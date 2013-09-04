@@ -1,3 +1,13 @@
+# project team (in main data graph)
+
+RestClient::Request.execute(
+  :method => :post,
+  :url => (Digitalsocial::DATA_ENDPOINT + '?graph=' + Digitalsocial::DATA_GRAPH),
+  :payload =>  File.read(File.join(Rails.root, 'doc', 'project-team.ttl')),
+  :headers => {content_type: 'text/turtle'},
+  :timeout => 300
+)
+
 # dataset metadata
 RestClient::Request.execute(
   :method => :put,
@@ -15,6 +25,30 @@ RestClient::Request.execute(
   :headers => {content_type: 'text/plain'},
   :timeout => 300
 )
+
+# supporting external ontologies
+
+def content_type_for_filename(filename)
+  {
+    '.ttl' => 'text/turtle',
+    '.nt' => 'text/plain',
+    '.txt' => 'text/plain',
+    '.rdf' => 'application/rdf+xml'
+  }[File.extname(filename)]
+end
+
+['cube.ttl', 'dcterms.rdf', 'dsi-ontology.nt', 'foaf.rdf', 'org.ttl', 'owl.rdf',
+ 'rdf.rdf', 'rdfs.rdf', 'rdfschema_extra.nt', 'skos.rdf', 'vcard.rdf', 'wgs84_pos.rdf'].each do |filename|
+
+  RestClient::Request.execute(
+    :method => :put,
+    :url => (Digitalsocial::DATA_ENDPOINT + '?graph=' + "http://data.digitalsocial.eu/graph/ontology/#{filename.split('.').first}" ),
+    :payload =>  File.read(File.join(Rails.root, 'doc', filename)),
+    :headers => {content_type: content_type_for_filename(filename) },
+    :timeout => 300
+  )
+
+end
 
 # concept schemes
 
