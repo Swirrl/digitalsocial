@@ -6,7 +6,8 @@
 
     - current_organisation.pending_project_requests_by_self.each do |req|
       %li
-        .name= req.project_resource.name
+        .name
+          #{req.project_resource.name} (awaiting acceptance)
 
 
   = link_to "+ Add/join another activity", [:new, :project], class: 'button button-green'
