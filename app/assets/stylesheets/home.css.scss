@@ -1,0 +1,62 @@
+.home {
+  height: 100%;
+  padding-bottom: 0;
+
+  .logo {
+    position: absolute;
+    top: 0px;
+    left: 72px;
+    padding: 60px 36px 60px;
+    background: rgba(255, 255, 255, 0.75);
+    border-bottom: 3px solid $orange;
+  }
+
+  .info {
+    position: absolute;
+    bottom: 0px;
+    //left: 216px;
+    right: 0px;
+    bottom: 36px;
+    width: 50%;
+    
+    background: rgba(255, 255, 255, 0.75);
+    border-top: 9px solid $orange;
+    padding: 36px;
+
+    h1 {
+      margin-bottom: 24px;
+      font-size: 36px;
+    }
+
+    p {
+      margin-bottom: 12px;
+
+      &:first-child {
+        font-weight: 600;
+        font-style: italic;
+      }
+    }
+
+    .text {
+      
+    }
+
+
+
+    .button {
+      margin-top: 24px;
+      font-size: 30px;
+    }
+  }
+
+  .controls {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    width: 240px;
+    height: 300px;
+    right: 0px;
+    top: 72px;
+    border-top: 3px solid $orange;
+    border-bottom: 3px solid $orange;
+  }
+}
