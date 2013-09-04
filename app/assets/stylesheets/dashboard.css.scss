@@ -27,6 +27,12 @@
         font-weight: 600;
         opacity: 1;
       }
+
+      &.right {
+        float: right;
+        margin-right: 0;
+        margin-left: 60px;
+      }
     }
   }
   

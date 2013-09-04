@@ -1,0 +1,4 @@
+.dashboard.pending
+  - if current_organisation
+    %h1 #{current_organisation.name}'s Dashboard
+    = render "dashboard/tabs", active: "Pending"

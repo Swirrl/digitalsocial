@@ -1,7 +1,9 @@
 %ul.tabs.clearfix
   %li{ class: active == 'Pending' ? 'active' : nil }
-    = link_to "Pending (5)", "#"
+    = link_to "Pending (5)", :dashboard
   %li{ class: active == 'Activities' ? 'active' : nil }
-    = link_to "Activities", dashboard_projects_path
+    = link_to "Activities", [:dashboard, :projects]
   %li{ class: active == 'Users' ? 'active' : nil }
-    = link_to "Users", "#"
+    = link_to "Users", [:dashboard, :users]
+  %li.right{ class: active == 'Account' ? 'active' : nil }
+    = link_to "My account", [:edit, :user]

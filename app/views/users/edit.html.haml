@@ -1,8 +1,12 @@
-%h1 Edit User Profile
+.dashboard.account
+  
+  - if current_organisation
+    %h1 #{current_organisation.name}'s Dashboard
+    = render "dashboard/tabs", active: "Account"
+    
+    = simple_form_for @user, url: user_path do |f|
+      = f.input :first_name, required: true, label: 'Name'
+      = f.input :email, required: true
+      = f.input :password, label: 'Change password'
 
-= simple_form_for @user, url: user_path do |f|
-  = f.input :first_name, required: true, label: 'Name'
-  = f.input :email, required: true
-  = f.input :password, label: 'Change password'
-
-  = f.button :submit, 'Save changes'
+      = f.button :submit, 'Save changes'
