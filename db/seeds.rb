@@ -1,3 +1,21 @@
+# dataset metadata
+RestClient::Request.execute(
+  :method => :put,
+  :url => (Digitalsocial::DATA_ENDPOINT + '?graph=' + Digitalsocial::DATA_GRAPH + '/metadata'),
+  :payload =>  File.read(File.join(Rails.root, 'doc', 'organizations-and-activities.ttl')),
+  :headers => {content_type: 'text/turtle'},
+  :timeout => 300
+)
+
+# ontology
+RestClient::Request.execute(
+  :method => :put,
+  :url => (Digitalsocial::DATA_ENDPOINT + '?graph=' + Digitalsocial::ONTOLOGY_GRAPH),
+  :payload =>  File.read(File.join(Rails.root, 'doc', 'dsi-ontology.nt')),
+  :headers => {content_type: 'text/plain'},
+  :timeout => 300
+)
+
 # concept schemes
 
 # Project Membership Natures - all top level. We don't allow other here.
