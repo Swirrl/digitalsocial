@@ -1,0 +1,13 @@
+.dashboard.pending
+  - if current_organisation
+    %h1 #{current_organisation.name}'s Dashboard
+    = render "dashboard/tabs", active: "Pending"
+
+    - if current_organisation.has_respondables? || !current_organisation.primary_site
+      %ul.respondables.dashboard-list
+        - if !current_organisation.primary_site
+          = render "dashboard/pending/respondables/address"
+
+        - if current_organisation.has_respondables?
+          - current_organisation.respondables.each do |respondable|
+            = render "dashboard/pending/respondables/#{respondable.class.to_s.underscore}", respondable: respondable

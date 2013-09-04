@@ -35,9 +35,8 @@
       }
     }
   }
-  
 
-  ul.projects {
+  ul.dashboard-list {
     margin-bottom: 60px;
 
     li {
@@ -45,6 +44,17 @@
       background: #f0f0f0;
       list-style-type: none;
       margin-bottom: 18px;
+      display: block;
+      position: relative;
+    }
+
+  }
+  
+
+  ul.projects {
+    
+    li {
+      
 
       a {
         font-weight: 600;
@@ -141,4 +151,55 @@
       }
     }
   }
+
+  ul.respondables {
+    li {
+
+      .image {
+        float: left;
+        width: 70px;
+        //height: 70px;
+        margin-right: 12px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        //background: rgba(255, 255, 255, 0.75);
+        img {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+        }
+      }
+
+      .text {
+        float: left;
+        line-height: 1.5;
+        max-width: 540px;
+        margin-left: 94px;
+
+        .message {
+          font-weight: 500;
+          font-style: italic;
+          font-size: 24px;
+        }
+
+        .subheader {
+          font-style: italic;
+        }
+      }
+
+      .action {
+        float: right;
+        width: 240px;
+        text-align: right;
+
+        .button {
+          font-size: 20px;
+          padding: 8px 24px;
+        }
+      }
+    }
+  }
+
 }

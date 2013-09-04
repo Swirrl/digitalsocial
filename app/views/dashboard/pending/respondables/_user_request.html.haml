@@ -1,15 +1,11 @@
-.respondable.clearfix{ class: respondable.class.to_s.underscore }
+%li.respondable.clearfix{ class: respondable.class.to_s.underscore }
   .image
     = image_tag asteroid_image_path
 
   .text
-    .header
-      
-      = respondable.user.first_name
-      %em= "(#{respondable.user.email})"
-      has requested to join
-      = current_organisation.name
-    .subheader
+    .message
+      #{respondable.user.first_name} (#{respondable.user.email})
+      has requested to join #{current_organisation.name}
 
   .action
     = link_to "Accept", [:accept, respondable], method: :put, class: 'button button-green accept'
