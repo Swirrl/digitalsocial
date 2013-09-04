@@ -32,40 +32,9 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(params[:user])
       sign_in @user, bypass: true
-      redirect_to user_url # dashboard
+      redirect_to edit_user_path # dashboard
     else
       render :edit
-    end
-  end
-
-  def edit_invited
-    @user = OrganisationPresenter.new
-    @user.first_name        = current_user.first_name
-    @user.email             = current_user.email
-    @user.organisation_name = current_organisation.name
-  end
-
-  def update_invited
-    @user = OrganisationPresenter.new
-    @user.attributes = params[:user]
-
-    # TODO Move this into presenter
-    @user.user            = current_user
-    @user.user.first_name = @user.first_name
-    @user.user.email      = @user.email
-    @user.user.password   = @user.password
-
-    @user.organisation              = current_organisation
-    @user.organisation.name         = @user.organisation_name
-    @user.organisation.primary_site = @user.site.uri
-
-    @user.organisation_membership = current_organisation_membership
-
-    if @user.save
-      sign_in @user.user, bypass: true
-      redirect_to user_url # dashboard
-    else
-      render :edit_invited
     end
   end
 

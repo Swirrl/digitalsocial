@@ -12,7 +12,7 @@ feature 'Respond to project invite' do
     project_invite = FactoryGirl.create(:project_invite, project_uri: project.uri.to_s, invitor_organisation_uri: invitor.uri.to_s, invited_organisation_uri: organisation.uri.to_s)
 
     login_as user, scope: :user
-    visit user_path
+    visit dashboard_path
   end
 
   scenario 'Should see project invite' do

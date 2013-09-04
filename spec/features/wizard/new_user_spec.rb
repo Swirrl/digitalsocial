@@ -7,7 +7,7 @@ feature 'New user wizard step' do
   end
 
   scenario 'Filling in new user step successfully' do
-    fill_in 'First name', with: 'John'
+    fill_in 'Name', with: 'John'
     fill_in 'Email', with: 'john@example.com'
     fill_in 'Password', with: 'password123'
     click_button 'Next step'
@@ -18,7 +18,7 @@ feature 'New user wizard step' do
   scenario 'Filling in new user step with existing email' do
     FactoryGirl.create(:user, email: 'john@example.com')
 
-    fill_in 'First name', with: 'John'
+    fill_in 'Name', with: 'John'
     fill_in 'Email', with: 'john@example.com'
     fill_in 'Password', with: 'password123'
     click_button 'Next step'
@@ -27,7 +27,7 @@ feature 'New user wizard step' do
   end
 
   scenario 'Filling in new user step with no password' do
-    fill_in 'First name', with: 'John'
+    fill_in 'Name', with: 'John'
     fill_in 'Email', with: 'john@example.com'
     click_button 'Next step'
 

@@ -12,7 +12,7 @@ feature 'Respond to project request' do
     project_request = FactoryGirl.create(:project_request, project_uri: project.uri.to_s, requestor_organisation_uri: requestor.uri.to_s)
 
     login_as user, scope: :user
-    visit user_path
+    visit dashboard_path
   end
 
   scenario 'Should see project request' do

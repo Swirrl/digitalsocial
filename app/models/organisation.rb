@@ -222,4 +222,13 @@ class Organisation
     where("?uri <#{name_predicate}> ?name").order("?name")
   end
 
+  def pending_count
+    return @pending_count if @pending_count
+    
+    @pending_count = 0
+    @pending_count += 1 if !primary_site
+    @pending_count += respondables.count
+    @pending_count
+  end
+
 end

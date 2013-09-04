@@ -20,14 +20,14 @@ feature 'Edit organisation details' do
     
     click_button 'Update'
 
-    page.current_path.should == '/user'
+    page.current_path.should == edit_organisation_path(organisation.guid)
   end
 
   scenario 'Updating the organisation unsuccessfully' do
     fill_in 'Name', with: ''
     click_button 'Update'
 
-    page.current_path.should_not == '/user'
+    page.current_path.should_not == edit_organisation_path(organisation.guid)
   end
 
   scenario "Project suggestions not shown", js: true do

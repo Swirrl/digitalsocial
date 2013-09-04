@@ -1,8 +1,68 @@
-%h1 Edit User Profile
+.dashboard.account
+  
+  - if current_organisation
+    %h1 #{current_organisation.name}'s Dashboard
+    = render "dashboard/tabs", active: "Account"
 
-= simple_form_for @user, url: user_path do |f|
-  = f.input :first_name, required: true, label: 'Name'
-  = f.input :email, required: true
-  = f.input :password, label: 'Change password'
+  .user-organisations
 
-  = f.button :submit, 'Save changes'
+    %h2 Your organisations
+
+    - if current_organisation || current_user.pending_join_org_requests.any?
+
+      %ul.dashboard-list.organisations
+        - current_user.organisation_resources.each do |org|
+          %li.clearfix
+
+            .image
+              = image_tag org.image_url
+
+            .details
+              .header
+                = org.name
+                - if org.uri == current_organisation.uri
+                  (current)
+              .row.clearfix
+                .address
+                  %p= org.address_str
+                  
+                  %p= link_to "Edit location", edit_location_organisation_path(org.guid)
+
+                .users
+                  - count = org.users.count
+
+                  %p.count
+                    - count.times do
+                      %i.icon-user
+
+                  %p
+                    = link_to "Invite more users", [:invite_users, current_organisation]
+                    %span.text (currently #{count})
+
+            .action
+              - if org.uri != current_organisation.uri
+                = link_to "Switch", edit_user_path(:org_id => org.guid), class: 'button button-green'
+              = link_to "Edit", edit_organisation_path(org.guid), class: 'button'
+
+
+        / - current_user.pending_join_org_requests.each do |r|
+        /   %li
+        /     %p
+        /       %strong= r.organisation_resource.name
+        /     %p
+        /       %em (Pending)
+
+      = link_to "+ Add/join another organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
+    - else
+      .empty You are not a member of any organisations yet.
+      = link_to "+ Add/join an organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
+
+    .user-account
+      %h2 Your account details
+      
+      = simple_form_for @user, url: user_path do |f|
+        = f.input :first_name, required: true, label: 'Name'
+        = f.input :email, required: true
+        = f.input :password, label: 'Change password'
+
+        = f.button :submit, 'Update account', class: 'button-green'

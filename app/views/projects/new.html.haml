@@ -1,8 +1,14 @@
-%h1 Add Activity
+.dashboard
+  
+  - if current_organisation
+    %h1 #{current_organisation.name}'s Dashboard
+    = render "dashboard/tabs", active: "Activities"
 
-= simple_form_for @project do |f|
-  = render "projects/fields/basic", f: f
-  = render "projects/fields/advanced", f: f
+  %h2 Add/Join an Activity
 
-  .wizard-button-wrapper
-    = f.button :submit, 'Create project'.html_safe
+  = simple_form_for @project do |f|
+    = render "projects/fields/basic", f: f
+    = render "projects/fields/advanced", f: f
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Create activity'.html_safe, class: 'button-green'

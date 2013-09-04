@@ -12,7 +12,7 @@ Digitalsocial::Application.routes.draw do
     root to: 'pages#index'
   end
 
-  resource :user, :only => [:show, :edit, :update]
+  resource :user, :only => [:edit, :update]
 
   resources :users, only: [:new, :create] do
     member do
@@ -85,6 +85,10 @@ Digitalsocial::Application.routes.draw do
       post 'update_location'
     end
   end
+
+  get 'dashboard' => 'dashboard#pending'
+  get 'dashboard/projects' => 'dashboard#projects'
+  get 'dashboard/users' => 'dashboard#users'
 
   match ':action' => 'site'
   root to: 'site#index'

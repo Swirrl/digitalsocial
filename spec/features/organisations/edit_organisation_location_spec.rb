@@ -21,7 +21,7 @@ feature 'Edit organisation location' do
 
     click_button 'Update'
 
-    page.current_path.should == "/user"
+    page.current_path.should == edit_location_organisation_path(organisation.guid)
   end
 
   scenario 'Updating the organisation location unsuccessfully' do
@@ -30,7 +30,7 @@ feature 'Edit organisation location' do
 
     click_button 'Update'
 
-    page.current_path.should_not == "/user"
+    page.current_path.should_not == edit_location_organisation_path(organisation.guid)
   end
 
   

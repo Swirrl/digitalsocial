@@ -48,7 +48,7 @@ class ProjectsController < ApplicationController
     @project.creator             = current_organisation.uri
 
     if @project.update_attributes(params[:project])
-      redirect_to :user, notice: "Project created!"
+      redirect_to [:dashboard, :projects], notice: "Project created!"
     else
       render :new
     end
@@ -62,7 +62,7 @@ class ProjectsController < ApplicationController
     @project.scoped_organisation = current_organisation
 
     if @project.update_attributes(params[:project])
-      redirect_to :user, notice: "Project updated!"
+      redirect_to [:dashboard, :projects], notice: "Project updated!"
     else
       render :edit
     end
@@ -80,9 +80,9 @@ class ProjectsController < ApplicationController
     @project_request.requestor_organisation_uri = current_organisation.uri
 
     if @project_request.save
-      redirect_to user_url, notice: "#{@project_request.project.name}'s organisations will be informed of your request. We'll let you know when it's approved."
+      redirect_to [:dashboard, :projects], notice: "#{@project_request.project.name}'s organisations will be informed of your request. We'll let you know when it's approved."
     else
-      redirect_to user_url, alert: "Request failed. #{@project_request.errors.messages.values.join(', ')}"
+      redirect_to [:dashboard, :projects], alert: "Request failed. #{@project_request.errors.messages.values.join(', ')}"
     end
   end
 
@@ -107,7 +107,7 @@ class ProjectsController < ApplicationController
     @project_invite.invited_organisation_uri = Organisation.slug_to_uri(params[:organisation_id])
 
     if @project_invite.save
-      redirect_to user_url, notice: "Organisation invited. Members of the organisation you invited will be notified."
+      redirect_to [:dashboard, :projects], notice: "Organisation invited. Members of the organisation you invited will be notified."
     else
       Rails.logger.debug "Failed"
       flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
@@ -124,7 +124,7 @@ class ProjectsController < ApplicationController
     @project_invite.invitor_organisation_uri = current_organisation.uri
 
     if @project_invite.save
-      redirect_to user_url, notice: "Organisation invited. We'll email the contact you entered."
+      redirect_to [:dashboard, :projects], notice: "Organisation invited. We'll email the contact you entered."
     else
       flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
       render :invite
@@ -143,7 +143,7 @@ class ProjectsController < ApplicationController
   end
 
   def check_project_can_be_edited
-    redirect_to user_url unless current_organisation.can_edit_project?(@project)
+    redirect_to dashboard_projects_path unless current_organisation.can_edit_project?(@project)
   end
 
 end

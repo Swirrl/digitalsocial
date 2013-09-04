@@ -31,7 +31,7 @@ describe RequestMailer do
     it 'should contain a link to the dashboard path of the organisation' do
      inv = FactoryGirl.create(:project_invite, project_uri: project.uri, invitor_organisation_uri: other_org.uri.to_s, invited_organisation_uri: organisation.uri.to_s, open: true)
 
-      RequestMailer.request_digest(user, organisation).should have_body_text("/user?org_id=#{organisation.guid}")
+      RequestMailer.request_digest(user, organisation).should have_body_text("/dashboard?org_id=#{organisation.guid}")
     end
 
     it 'should contain the details of users to be added' do

@@ -85,7 +85,7 @@ form {
       @include transition(all, 0.15s);
       display: block;
       margin-bottom: 0;
-      border-top: 2px solid #ddd;
+      border-top: 2px solid #d5d5d5;
 
       &:focus {
         border: 2px solid $orange;
@@ -149,14 +149,14 @@ p.suggested-tags {
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
-  color: #ccc;
+  color: #aaa;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color: #ccc;
+  color: #aaa;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color: #ccc;
+  color: #aaa;
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-  color: #ccc;
+  color: #aaa;
 }

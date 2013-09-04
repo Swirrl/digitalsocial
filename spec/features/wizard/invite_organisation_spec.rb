@@ -27,7 +27,7 @@ feature 'Invite organisation wizard step' do
     fill_in 'Name', with: 'testing'
     click_link 'Invite'
 
-    page.current_path.should == '/user'
+    page.current_path.should == dashboard_projects_path
   end
 
   scenario 'Invite a new organisation successfully' do
@@ -37,13 +37,13 @@ feature 'Invite organisation wizard step' do
 
     click_button 'Next step'
 
-    page.current_path.should == '/user'
+    page.current_path.should == dashboard_path
   end
 
   scenario 'Invite a new organisation unsuccessfully' do
     click_button 'Next step'
 
-    page.current_path.should_not == '/user'
+    page.current_path.should_not == dashboard_path
     page.should have_css('.error')
   end
 

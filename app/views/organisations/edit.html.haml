@@ -1,9 +1,15 @@
-%h1 Edit organisation
+.dashboard
+  %h1 #{current_organisation.name}'s Dashboard
+  = render "dashboard/tabs", active: "Details"
 
-= simple_form_for @organisation do |f|
-  
-  = render 'organisations/fields/name', f: f
-  = render 'organisations/fields/advanced', f: f
+  %h2
+    %strong #{current_organisation.name}'s
+    details
 
-  .wizard-button-wrapper
-    = f.button :submit, 'Update organisation'
+  = simple_form_for @organisation do |f|
+    
+    = render 'organisations/fields/name', f: f
+    = render 'organisations/fields/advanced', f: f
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Update details', class: 'button-green'

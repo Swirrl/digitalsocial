@@ -1,8 +1,16 @@
-%h1 Edit Activity
+.dashboard
+  
+  %h1 #{current_organisation.name}'s Dashboard
+  = render "dashboard/tabs", active: "Activities"
 
-= simple_form_for @project do |f|
-  = render "projects/fields/basic", f: f
-  = render "projects/fields/advanced", f: f
+  %h2 
+    Edit
+    %strong #{@project.name}
+    details
 
-  .wizard-button-wrapper
-    = f.button :submit, 'Update activity'.html_safe
+  = simple_form_for @project do |f|
+    = render "projects/fields/basic", f: f
+    = render "projects/fields/advanced", f: f
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Update activity'.html_safe, class: 'button-green'

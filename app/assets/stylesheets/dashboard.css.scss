@@ -2,50 +2,202 @@
 
   width: 960px;
 
-  h2 { 
+  h2 {
+    color: #999;
+    font-style: italic;
+    font-weight: 500;
     margin-bottom: 48px;
+
+    strong {
+      font-weight: 600;
+    }
   }
 
-  h3 {
-    color: #666;
+  ul.tabs {
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    //border-bottom: 3px solid $orange;
+
+    li {
+      display: block;
+      float: left;
+      margin-right: 60px;
+      font-size: 30px;
+      font-style: italic;
+      font-weight: 300;
+      opacity: 0.66;
+      @include transition(opacity, 0.1s);
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &.active {
+        border-bottom: 3px solid $orange;
+        font-weight: 600;
+        opacity: 1;
+      }
+
+      &.right {
+        float: right;
+        margin-right: 0;
+        margin-left: 60px;
+      }
+    }
+
+    + .hr {
+      margin-bottom: 48px;
+    }
   }
 
-  .button {
-    font-size: 20px;
-  }
-
-  .respondables {
-
+  ul.dashboard-list {
     margin-bottom: 60px;
 
-    .respondable {
-
+    li {
+      padding: 24px;
+      background: #f0f0f0;
+      list-style-type: none;
+      margin-bottom: 18px;
       display: block;
-      padding: 12px;
-      background: #fff2e3;
+      position: relative;
+    }
 
-      &:nth-child(odd) {
-        background: #fffaf4;
+    a {
+      font-weight: 600;
+      color: $link-blue;
+
+      &:hover {
+        color: $link-blue-hover;
       }
+    }
+
+    .button, .button:hover {
+      color: #fff;
+    }
+
+  }
+  
+
+  ul.projects {
+    
+    li {
+      
+
+      .name {
+        font-size: 28px;
+        font-style: italic;
+        margin-bottom: 6px;
+        line-height: 1.1;
+      }
+
+      .row {
+        display: block;
+        width: 100%;
+        margin-bottom: 0;
+
+        .progress {
+          float: left;
+          @include columns(7);
+          margin-left: 0;
+          padding-top: 7px;
+
+          .bar {
+            @include border-radius(9px);
+            background: #ccc;
+            width: 100%;
+            height: 18px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 12px;
+          }
+
+          .fill {
+            height: 18px;
+            background: $orange;
+            width: 40%;
+            @include border-radius(9px);
+            text-align: right;
+            line-height: 1;
+
+            &.green {
+              background: $green;
+            }
+
+            span.text {
+              color: white;
+              margin-right: 6px;
+              font-size: 14px;
+              line-height: 18px;
+              font-style: italic;
+              opacity: 0.75;
+            }
+          }
+
+
+        }
+
+        .organisations {
+          float: left;
+          @include columns(7);
+          @include offset(1);
+          line-height: 1;
+
+          .count {
+            line-height: 30px;
+            margin-bottom: 12px;
+
+            i {
+              width: 21px;
+              font-size: 32px;
+              color: $orange;
+              margin-right: 0;
+              vertical-align: middle;
+            }
+
+          }
+
+          span.text {
+            font-style: italic;
+            color: #999;
+          }
+
+        }
+
+        .progress, .organisations {
+          
+        }
+      }
+    }
+  }
+
+  ul.respondables {
+    li {
 
       .image {
         float: left;
         width: 70px;
-        height: 70px;
+        //height: 70px;
         margin-right: 12px;
-        background: rgba(255, 255, 255, 0.75);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        //background: rgba(255, 255, 255, 0.75);
+        img {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+        }
       }
-
 
       .text {
         float: left;
         line-height: 1.5;
-        max-width: 600px;
+        max-width: 540px;
+        margin-left: 94px;
 
-        .header {
-          font-weight: 600;
-          font-size: 20px;
-        }
+        
 
         .subheader {
           font-style: italic;
@@ -56,6 +208,11 @@
         float: right;
         width: 240px;
         text-align: right;
+
+        .button {
+          font-size: 20px;
+          padding: 8px 24px;
+        }
       }
 
       .natures {
@@ -69,72 +226,154 @@
         }
         .button {
           float: right;
+          padding: 8px 24px;
+        }
+        .checkbox {
+          input {
+            vertical-align: baseline;
+          }
         }
       }
 
-      .action, .natures {
-        .button {
-          margin-top: 12px;
-          margin-right: 12px;
-          line-height: 1;
-        }
-      }
+      
+    }
+  }
 
+  ul.users {
+
+    .name {
+      font-size: 24px;
+      font-style: italic;
     }
 
-  }
-
-  .dashboard-row {
-    @include row;
-    margin-bottom: 60px;
-  }
-
-  .projects, .organisations {
-    @include columns(8);
-
-    ul {
-      margin-bottom: 0;
+    .sign-in {
+      color: #999;
     }
 
     .button {
-      margin-top: 36px;
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 20px;
+      padding: 8px 24px;
     }
   }
 
-  .users, .details {
-    @include columns(7);
-    @include offset(1);
-  }
+  ul.organisations {
+    li {
+      .image {
+        float: left;
+        width: 70px;
+        height: 70px;
+        margin-right: 12px;
+        position: absolute;
+        top: 24px;
+        //background: rgba(255, 255, 255, 0.75);
+        img {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+        }
+      }
 
-  .dashboard-section {
-    ul {
-      padding-left: 0;
-      
+      .details {
+        float: left;
+        line-height: 1.2;
+        width: 600px;
+        margin-left: 94px;
 
-      li {
-        display: block;
-        list-style-type: none;
-        background: #fffaf4;
-        padding: 12px;
-        margin: 0;
-
-        &:nth-child(odd) {
-          background: #fff2e3;
+        .header {
+          font-size: 24px;
+          font-style: italic;
+          margin-bottom: 12px;
         }
 
-        p {
-          margin: 0;
+        .row {
+          margin-bottom: 0;
         }
 
-        p + p {
-          margin-top: 2px;
+        .address {
+          color: #999;
+          margin-bottom: 6px;
+          float: left;
+          width: 308px;
+          margin-right: 36px;
+
+          p {
+            line-height: 1.3;
+            margin-bottom: 12px;
+          }
+          p + p {
+            margin-bottom: 0;
+          }
+        }
+
+        .users {
+          float: left;
+          width: 250px;
+
+          .count {
+            line-height: 30px;
+            margin-bottom: 12px;
+
+            i {
+              width: 30px;
+              font-size: 30px;
+              color: $orange;
+              margin-right: 0;
+              vertical-align: middle;
+            }
+
+          }
+
+          span.text {
+            font-style: italic;
+            color: #999;
+          }
+
+          p + p {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .action {
+        float: right;
+        width: 200px;
+        text-align: right;
+
+        .button {
+          font-size: 20px;
+          padding: 8px 24px;
         }
       }
     }
+  }
 
-    p.empty {
-      margin-bottom: 0;
-      color: #999;
+  .empty {
+    font-style: italic;
+    color: #999;
+  }
+
+  .wizard-button-wrapper {
+    margin-left: 0;
+
+    input.button {
+      float: none;
+    }
+  }
+
+  .user-organisations {
+    margin-bottom: 60px;
+  }
+
+  .user-account {
+    padding: 36px;
+    background: #fff2e3;
+
+    h2 {
+      color: #f7b757;
     }
   }
 

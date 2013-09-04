@@ -52,7 +52,10 @@ ol, ul {
 
 h1 {
   font-size: 48px;
+  color: $orange;
+  font-style: italic;
   margin-bottom: 48px;
+  font-weight: 600;
 }
 
 h2 {
@@ -109,10 +112,20 @@ h1 + h2 {
   width: 300px;
 }
 
-.hr3 {
+#main {
+  padding-top: 9px;
+}
+
+.hr {
   display: block;
   background-color: $orange;
+  //width: 10000px;
+}
+
+.hr1 {
+  height: 3px;
+}
+
+.hr3 {
   height: 9px;
-  width: 100%;
-  margin-bottom: 36px;
 }

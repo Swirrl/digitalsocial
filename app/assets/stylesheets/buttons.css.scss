@@ -1,14 +1,15 @@
 .button {
   background: $orange;
   color: #fff;
-  padding: 12px 24px;
+  padding: 18px 24px;
   border: 0;
   outline: 0;
   font-size: 24px;
   font-family: $chaparral;
   cursor: pointer;
+  font-style: italic;
   //border-bottom: 5px solid $orange-shadow;
-  font-weight: 500;
+  font-weight: 600;
   display: inline-block;
   @include border-radius(3px);
   @include transition(all, 0.15s);
@@ -20,9 +21,11 @@
 
   &.button-green {
     background: $green;
+    color: #eff7f3;
 
     &:hover {
       background: $green-hover;
+      color: #fff;
     }
   }
 

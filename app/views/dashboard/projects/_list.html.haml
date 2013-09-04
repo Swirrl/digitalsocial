@@ -1,0 +1,18 @@
+- if current_organisation.projects.count > 0 || current_organisation.pending_project_requests_by_self.any?
+
+  %ul.projects.dashboard-list
+    - current_organisation.projects.resources.each do |project|
+      = render "dashboard/projects/list/existing", project: project
+
+    - current_organisation.pending_project_requests_by_self.each do |req|
+      %li
+        .name= req.project_resource.name
+
+
+  = link_to "+ Add/join another activity", [:new, :project], class: 'button button-green'
+
+- else
+  %p.empty
+    = current_organisation.name
+    are not a member of any activities yet.
+  = link_to "+ Add/join an activity", [:new, :project], class: 'button'

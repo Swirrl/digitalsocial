@@ -2,7 +2,9 @@
 
   - if current_organisation
 
-    %h2 #{current_organisation.name}'s Dashboard
+    %h1 #{current_organisation.name}'s Dashboard
+
+    = render "dashboard/tabs", active: "Activities"
 
     = render "users/dashboard/respondables"
     
