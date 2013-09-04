@@ -1,11 +1,14 @@
-# http://data.digitalsocial.eu/data/organizations-and-activities
+# metadata for the main dataset.
 
 <http://data.digitalsocial.eu/data/organizations-and-activities> a <http://publishmydata.com/def/dataset#Dataset>;
    <http://www.w3.org/2000/01/rdf-schema#label> "Organizations and Activities";
    <http://purl.org/dc/terms/title> "Organizations and Activities";
+   <http://www.w3.org/2000/01/rdf-schema#comment>
+      "Data collected via the DigitalSocial.eu site" ;
    <http://publishmydata.com/def/dataset#contactEmail> <mailto:contact@digitalsocial.eu>;
    <http://publishmydata.com/def/dataset#graph> <http://data.digitalsocial.eu/graph/organizations-and-activities>;
    <http://purl.org/dc/terms/publisher> <http://data.digitalsocial.eu/id/project-team>;
    <http://purl.org/dc/terms/references> <http://data.digitalsocial.eu/docs>;
    <http://rdfs.org/ns/void#dataDump> <http://data.digitalsocial.eu/data/organizations-and-activities/dump>;
+   <http://purl.org/dc/terms/license> <http://creativecommons.org/publicdomain/zero/1.0/> ;
    <http://rdfs.org/ns/void#sparqlEndpoint> <http://data.digitalsocial.eu/sparql> .
