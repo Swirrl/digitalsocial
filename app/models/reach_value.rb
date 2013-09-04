@@ -13,7 +13,7 @@ class ReachValue
   # it's type will depend on the
 
   # map of Activity Types slugs to Reach Measure Type slugs
-  def self.measure_type_lookup
+  def self.measure_type_for_activity_type(activity_type_slug)
     {
       "research-project" => "downloads",
       "event" => "attendees",
@@ -29,34 +29,35 @@ class ReachValue
     }
   end
 
-  def self.measure_type_type
+  def self.measure_type_xsd_type_for_activity_type(activity_type_slug)
+    activity_type_slug == "other" ? RDF::XSD.string : RDF::XSD.integer
+  end
+
+  def self.question_text_for_activity_type(activity_type_slug)
     {
-      "research-project" => RDF::XSD.integer,
-      "event" => RDF::XSD.integer,
-      "network" => RDF::XSD.integer,
-      "incubators-and-accelerators" => RDF::XSD.integer,
-      "maker-and-hacker-spaces" => RDF::XSD.integer,
-      "education-and-training" => RDF::XSD.integer,
-      "service-delivery" => RDF::XSD.integer,
-      "investment-and-funding" => RDF::XSD.integer,
-      "advocating-and-campaigning" => RDF::XSD.integer,
-      "advisory-or-expert-body" => RDF::XSD.integer,
-      "other" => RDF::XSD.string,
+      "research-project" => "How many times have your research outputs been downloaded in the last year?",
+      "event" => "How many people attended your event (the last time it was run)",
+      "network" => "How many organizations or individuals do you have in your network?",
+      "incubators-and-accelerators" => "",
+      "maker-and-hacker-spaces" => "",
+      "education-and-training" => "",
+      "service-delivery" => "",
+      "investment-and-funding" => "",
+      "advocating-and-campaigning" => "",
+      "advisory-or-expert-body" => "",
+      "other" => ""
     }
   end
 
-  def self.measure_type_unit
-    {
-      "investment-and-funding" => "http://dbpedia.org/resource/Euro",
-    }
+  def self.measure_type_unit_for_activity_type(activity_type_slug)
+    activity_type_slug == "investment-and-funding" ? "http://dbpedia.org/resource/Euro" : nil
   end
 
   # given an activity type uri, get the measure type uri
   # opts:
   #   if the ActivityType is network,
   #     opts[:network_metric] can be organizations or individuals
-  def self.get_measure_type_for_activity_type(activity_type_uri, opts={})
-    activity_type_slug = activity_type_uri.split('/')
+  def self.get_measure_type_uri_for_activity_type(activity_type_slug, opts={})
     lookup_val = ReachValue.measure_type_lookup[activity_type_slug]
 
     if opts[:network_metric]
