@@ -1,0 +1,236 @@
+<http://data.digitalsocial.eu/def/ontology> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://data.digitalsocial.eu/def/ontology> <http://www.w3.org/2000/01/rdf-schema#label> "An ontology of terms for describing Digital Social Innovation organizations and activities" .
+<http://data.digitalsocial.eu/def/ontology> <http://www.w3.org/2000/01/rdf-schema#comment> "An ontology of terms for describing Digital Social Innovation organizations and activities" .
+<http://data.digitalsocial.eu/def/ontology> <http://purl.org/dc/terms/created> "2013-08-21"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://data.digitalsocial.eu/def/ontology> <http://purl.org/dc/terms/modified> "2013-08-26"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://data.digitalsocial.eu/def/ontology> <http://purl.org/dc/terms/title> "An ontology of terms for describing Digital Social Innovation organizations and activities" .
+<http://data.digitalsocial.eu/def/ontology/ActivityMembership> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/ActivityMembership> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/ActivityMembership> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/ActivityMembership> <http://www.w3.org/2000/01/rdf-schema#label> "Activity membership" .
+<http://data.digitalsocial.eu/def/ontology/ActivityMembership> <http://www.w3.org/2000/01/rdf-schema#comment> "Represents an n-ary relationship between an Organization, an Activity and an ActivityRole" .
+<http://data.digitalsocial.eu/def/ontology/ActivityRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/ActivityRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/ActivityRole> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/ActivityRole> <http://www.w3.org/2000/01/rdf-schema#label> "Role in activity" .
+<http://data.digitalsocial.eu/def/ontology/ActivityRole> <http://www.w3.org/2000/01/rdf-schema#comment> "The role an organisation plays in an activity" .
+<http://data.digitalsocial.eu/def/ontology/ActivityRole> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://data.digitalsocial.eu/def/ontology/FTERange> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/FTERange> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/FTERange> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/FTERange> <http://www.w3.org/2000/01/rdf-schema#label> "FTE range" .
+<http://data.digitalsocial.eu/def/ontology/FTERange> <http://www.w3.org/2000/01/rdf-schema#comment> "Represents a range of full-time equivalent (FTE) staff numbers, for approximately describing the size of an organization." .
+<http://data.digitalsocial.eu/def/ontology/FTERange> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://data.digitalsocial.eu/def/ontology/OrganizationType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/OrganizationType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/OrganizationType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/OrganizationType> <http://www.w3.org/2000/01/rdf-schema#label> "Organization type" .
+<http://data.digitalsocial.eu/def/ontology/OrganizationType> <http://www.w3.org/2000/01/rdf-schema#comment> "A category of organization, in terms of the broad sector it works in." .
+<http://data.digitalsocial.eu/def/ontology/OrganizationType> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://data.digitalsocial.eu/def/ontology/ActivityType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/ActivityType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/ActivityType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/ActivityType> <http://www.w3.org/2000/01/rdf-schema#label> "Activity type" .
+<http://data.digitalsocial.eu/def/ontology/ActivityType> <http://www.w3.org/2000/01/rdf-schema#comment> "A category of digital social innovation activity" .
+<http://data.digitalsocial.eu/def/ontology/ActivityType> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://data.digitalsocial.eu/def/ontology/AreaOfSociety> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/AreaOfSociety> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/AreaOfSociety> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/AreaOfSociety> <http://www.w3.org/2000/01/rdf-schema#label> "Area of society" .
+<http://data.digitalsocial.eu/def/ontology/AreaOfSociety> <http://www.w3.org/2000/01/rdf-schema#comment> "A category of society that an activity is relevant to." .
+<http://data.digitalsocial.eu/def/ontology/AreaOfSociety> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://data.digitalsocial.eu/def/ontology/TechnologyFocus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/TechnologyFocus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/TechnologyFocus> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/TechnologyFocus> <http://www.w3.org/2000/01/rdf-schema#label> "Technology focus" .
+<http://data.digitalsocial.eu/def/ontology/TechnologyFocus> <http://www.w3.org/2000/01/rdf-schema#comment> "A broad category of high level technology trends that an activity fits with." .
+<http://data.digitalsocial.eu/def/ontology/TechnologyFocus> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://data.digitalsocial.eu/def/ontology/TechnologyMethod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/TechnologyMethod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/TechnologyMethod> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/TechnologyMethod> <http://www.w3.org/2000/01/rdf-schema#label> "Technology method" .
+<http://data.digitalsocial.eu/def/ontology/TechnologyMethod> <http://www.w3.org/2000/01/rdf-schema#comment> "A category of technology method that an activity makes use of." .
+<http://data.digitalsocial.eu/def/ontology/TechnologyMethod> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://data.digitalsocial.eu/def/ontology/Activity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/Activity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/Activity> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/Activity> <http://www.w3.org/2000/01/rdf-schema#label> "Activity" .
+<http://data.digitalsocial.eu/def/ontology/Activity> <http://www.w3.org/2000/01/rdf-schema#comment> "A digital social innovation activity." .
+<http://data.digitalsocial.eu/def/ontology/Activity> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://xmlns.com/foaf/0.1/Project> .
+<http://data.digitalsocial.eu/def/ontology/ReachValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://data.digitalsocial.eu/def/ontology/ReachValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://data.digitalsocial.eu/def/ontology/ReachValue> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/ReachValue> <http://www.w3.org/2000/01/rdf-schema#label> "Reach value" .
+<http://data.digitalsocial.eu/def/ontology/ReachValue> <http://www.w3.org/2000/01/rdf-schema#comment> "The value of reach for an activity, according to some particular measure of reach." .
+<http://data.digitalsocial.eu/def/ontology/ReachValue> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://purl.org/linked-data/cube#Observation> .
+<http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff> <http://www.w3.org/2000/01/rdf-schema#label> "number of FTE staff" .
+<http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff> <http://www.w3.org/2000/01/rdf-schema#comment> "Describes the approximate size of an organization in terms of its number of staff." .
+<http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff> <http://www.w3.org/2000/01/rdf-schema#range> <http://data.digitalsocial.eu/def/ontology/FTERange> .
+<http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/org#Organization> .
+<http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/twitterAccount> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/twitterAccount> <http://www.w3.org/2000/01/rdf-schema#label> "twitter account" .
+<http://data.digitalsocial.eu/def/ontology/twitterAccount> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an organization to it's main organization twitter account." .
+<http://data.digitalsocial.eu/def/ontology/twitterAccount> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/org#Organization> .
+<http://data.digitalsocial.eu/def/ontology/twitterAccount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/organizationType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/organizationType> <http://www.w3.org/2000/01/rdf-schema#label> "organization type" .
+<http://data.digitalsocial.eu/def/ontology/organizationType> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an organization to the broad sector that it works in." .
+<http://data.digitalsocial.eu/def/ontology/organizationType> <http://www.w3.org/2000/01/rdf-schema#range> <http://data.digitalsocial.eu/def/ontology/OrganizationType> .
+<http://data.digitalsocial.eu/def/ontology/organizationType> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/org#Organization> .
+<http://data.digitalsocial.eu/def/ontology/organizationType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/recordedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/recordedBy> <http://www.w3.org/2000/01/rdf-schema#label> "recorded by" .
+<http://data.digitalsocial.eu/def/ontology/recordedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "Notes which organization first recorded this activity at the Digital Social Innovation website." .
+<http://data.digitalsocial.eu/def/ontology/recordedBy> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/org#Organization> .
+<http://data.digitalsocial.eu/def/ontology/recordedBy> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/Activity> .
+<http://data.digitalsocial.eu/def/ontology/recordedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/activityType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/activityType> <http://www.w3.org/2000/01/rdf-schema#label> "activity type" .
+<http://data.digitalsocial.eu/def/ontology/activityType> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an activity to a category of digital social innovation" .
+<http://data.digitalsocial.eu/def/ontology/activityType> <http://www.w3.org/2000/01/rdf-schema#range> <http://data.digitalsocial.eu/def/ontology/ActivityType> .
+<http://data.digitalsocial.eu/def/ontology/activityType> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/Activity> .
+<http://data.digitalsocial.eu/def/ontology/activityType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/areaOfSociety> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/areaOfSociety> <http://www.w3.org/2000/01/rdf-schema#label> "area of society" .
+<http://data.digitalsocial.eu/def/ontology/areaOfSociety> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an activity to an area of society that it is relevant to" .
+<http://data.digitalsocial.eu/def/ontology/areaOfSociety> <http://www.w3.org/2000/01/rdf-schema#range> <http://data.digitalsocial.eu/def/ontology/AreaOfSociety> .
+<http://data.digitalsocial.eu/def/ontology/areaOfSociety> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/Activity> .
+<http://data.digitalsocial.eu/def/ontology/areaOfSociety> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/technologyFocus> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/technologyFocus> <http://www.w3.org/2000/01/rdf-schema#label> "technology focus" .
+<http://data.digitalsocial.eu/def/ontology/technologyFocus> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an activity to a high level category of technology trends" .
+<http://data.digitalsocial.eu/def/ontology/technologyFocus> <http://www.w3.org/2000/01/rdf-schema#range> <http://data.digitalsocial.eu/def/ontology/TechnologyFocus> .
+<http://data.digitalsocial.eu/def/ontology/technologyFocus> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/Activity> .
+<http://data.digitalsocial.eu/def/ontology/technologyFocus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/technologyMethod> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/technologyMethod> <http://www.w3.org/2000/01/rdf-schema#label> "technology method" .
+<http://data.digitalsocial.eu/def/ontology/technologyMethod> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an activity to a technology method that the activity makes use of." .
+<http://data.digitalsocial.eu/def/ontology/technologyMethod> <http://www.w3.org/2000/01/rdf-schema#range> <http://data.digitalsocial.eu/def/ontology/TechnologyMethod> .
+<http://data.digitalsocial.eu/def/ontology/technologyMethod> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/Activity> .
+<http://data.digitalsocial.eu/def/ontology/technologyMethod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/organization> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/organization> <http://www.w3.org/2000/01/rdf-schema#label> "organization" .
+<http://data.digitalsocial.eu/def/ontology/organization> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an ActivityMembership to the organization involved." .
+<http://data.digitalsocial.eu/def/ontology/organization> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/org#Organization> .
+<http://data.digitalsocial.eu/def/ontology/organization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/activity> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/activity> <http://www.w3.org/2000/01/rdf-schema#label> "activity" .
+<http://data.digitalsocial.eu/def/ontology/activity> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an ActivityMembership to the activity involved." .
+<http://data.digitalsocial.eu/def/ontology/activity> <http://www.w3.org/2000/01/rdf-schema#range> <http://data.digitalsocial.eu/def/ontology/Activity> .
+<http://data.digitalsocial.eu/def/ontology/activity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/role> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/role> <http://www.w3.org/2000/01/rdf-schema#label> "role" .
+<http://data.digitalsocial.eu/def/ontology/role> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an ActivityMembership to the role played by the organization in this activity." .
+<http://data.digitalsocial.eu/def/ontology/role> <http://www.w3.org/2000/01/rdf-schema#range> <http://data.digitalsocial.eu/def/ontology/ActivityRole> .
+<http://data.digitalsocial.eu/def/ontology/role> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/socialImpact> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/socialImpact> <http://www.w3.org/2000/01/rdf-schema#label> "social impact" .
+<http://data.digitalsocial.eu/def/ontology/socialImpact> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an activity to a description of its social impact." .
+<http://data.digitalsocial.eu/def/ontology/socialImpact> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/Activity> .
+<http://data.digitalsocial.eu/def/ontology/socialImpact> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/activityForReach> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/activityForReach> <http://www.w3.org/2000/01/rdf-schema#label> "activity" .
+<http://data.digitalsocial.eu/def/ontology/activityForReach> <http://www.w3.org/2000/01/rdf-schema#comment> "Links a measure of reach to the activity it describes." .
+<http://data.digitalsocial.eu/def/ontology/activityForReach> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/activityForReach> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#DimensionProperty> .
+<http://data.digitalsocial.eu/def/ontology/activityForReach> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#CodedProperty> .
+<http://data.digitalsocial.eu/def/ontology/reachRefPeriod> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reachRefPeriod> <http://www.w3.org/2000/01/rdf-schema#label> "reach reference period" .
+<http://data.digitalsocial.eu/def/ontology/reachRefPeriod> <http://www.w3.org/2000/01/rdf-schema#comment> "The date at which a measure of reach was recorded." .
+<http://data.digitalsocial.eu/def/ontology/reachRefPeriod> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> .
+<http://data.digitalsocial.eu/def/ontology/reachRefPeriod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reachRefPeriod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#DimensionProperty> .
+<http://data.digitalsocial.eu/def/ontology/reachRefPeriod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#CodedProperty> .
+<http://data.digitalsocial.eu/def/ontology/reachMeasure> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reachMeasure> <http://www.w3.org/2000/01/rdf-schema#label> "reach measure" .
+<http://data.digitalsocial.eu/def/ontology/reachMeasure> <http://www.w3.org/2000/01/rdf-schema#comment> "Links a measure of the reach to the actual value." .
+<http://data.digitalsocial.eu/def/ontology/reachMeasure> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://purl.org/linked-data/sdmx/2009/measure#obsValue> .
+<http://data.digitalsocial.eu/def/ontology/reachMeasure> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reachMeasure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reachMeasure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/downloads> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/downloads> <http://www.w3.org/2000/01/rdf-schema#label> "downloads" .
+<http://data.digitalsocial.eu/def/ontology/reach/downloads> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of downloads of the outputs of a research project" .
+<http://data.digitalsocial.eu/def/ontology/reach/downloads> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/downloads> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/downloads> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/downloads> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/attendees> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/attendees> <http://www.w3.org/2000/01/rdf-schema#label> "attendees" .
+<http://data.digitalsocial.eu/def/ontology/reach/attendees> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of attendees of an event" .
+<http://data.digitalsocial.eu/def/ontology/reach/attendees> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/attendees> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/attendees> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/attendees> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/organizationMembers> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/organizationMembers> <http://www.w3.org/2000/01/rdf-schema#label> "organization members" .
+<http://data.digitalsocial.eu/def/ontology/reach/organizationMembers> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of organizations in a network" .
+<http://data.digitalsocial.eu/def/ontology/reach/organizationMembers> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/organizationMembers> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/organizationMembers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/organizationMembers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualMembers> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualMembers> <http://www.w3.org/2000/01/rdf-schema#label> "individual members" .
+<http://data.digitalsocial.eu/def/ontology/reach/individualMembers> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of individuals in a network" .
+<http://data.digitalsocial.eu/def/ontology/reach/individualMembers> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualMembers> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualMembers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualMembers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/projectsSupported> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/projectsSupported> <http://www.w3.org/2000/01/rdf-schema#label> "projects supported" .
+<http://data.digitalsocial.eu/def/ontology/reach/projectsSupported> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of projects supported by an incubator" .
+<http://data.digitalsocial.eu/def/ontology/reach/projectsSupported> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/projectsSupported> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/projectsSupported> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/projectsSupported> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/members> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/members> <http://www.w3.org/2000/01/rdf-schema#label> "members" .
+<http://data.digitalsocial.eu/def/ontology/reach/members> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of members supported by a hacker space" .
+<http://data.digitalsocial.eu/def/ontology/reach/members> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/members> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/members> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/members> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualsTrained> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualsTrained> <http://www.w3.org/2000/01/rdf-schema#label> "individuals trained" .
+<http://data.digitalsocial.eu/def/ontology/reach/individualsTrained> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of individuals trained by an education activity" .
+<http://data.digitalsocial.eu/def/ontology/reach/individualsTrained> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualsTrained> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualsTrained> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/individualsTrained> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/registeredUsers> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/registeredUsers> <http://www.w3.org/2000/01/rdf-schema#label> "registered users" .
+<http://data.digitalsocial.eu/def/ontology/reach/registeredUsers> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of registered users of a service" .
+<http://data.digitalsocial.eu/def/ontology/reach/registeredUsers> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/registeredUsers> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/registeredUsers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/registeredUsers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/fundsInvested> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/fundsInvested> <http://www.w3.org/2000/01/rdf-schema#label> "funds invested" .
+<http://data.digitalsocial.eu/def/ontology/reach/fundsInvested> <http://www.w3.org/2000/01/rdf-schema#comment> "Amount of funding distributed" .
+<http://data.digitalsocial.eu/def/ontology/reach/fundsInvested> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/fundsInvested> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/fundsInvested> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/fundsInvested> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/subscribers> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/subscribers> <http://www.w3.org/2000/01/rdf-schema#label> "subscribers" .
+<http://data.digitalsocial.eu/def/ontology/reach/subscribers> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of subscribers to a campaign" .
+<http://data.digitalsocial.eu/def/ontology/reach/subscribers> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/subscribers> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/subscribers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/subscribers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/clients> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/clients> <http://www.w3.org/2000/01/rdf-schema#label> "clients" .
+<http://data.digitalsocial.eu/def/ontology/reach/clients> <http://www.w3.org/2000/01/rdf-schema#comment> "Number of clients of an advisory service" .
+<http://data.digitalsocial.eu/def/ontology/reach/clients> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/clients> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/clients> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/clients> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .
+<http://data.digitalsocial.eu/def/ontology/reach/description> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://data.digitalsocial.eu/def/ontology> .
+<http://data.digitalsocial.eu/def/ontology/reach/description> <http://www.w3.org/2000/01/rdf-schema#label> "reach description" .
+<http://data.digitalsocial.eu/def/ontology/reach/description> <http://www.w3.org/2000/01/rdf-schema#comment> "Description of reach of an activity" .
+<http://data.digitalsocial.eu/def/ontology/reach/description> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://data.digitalsocial.eu/def/ontology/reachMeasure> .
+<http://data.digitalsocial.eu/def/ontology/reach/description> <http://www.w3.org/2000/01/rdf-schema#domain> <http://data.digitalsocial.eu/def/ontology/ReachValue> .
+<http://data.digitalsocial.eu/def/ontology/reach/description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://data.digitalsocial.eu/def/ontology/reach/description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/linked-data/cube#MeasureProperty> .

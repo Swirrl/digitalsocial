@@ -13,6 +13,8 @@ module Concept
     field :broader, RDF::SKOS.broader, :is_uri => true
     field :narrower, RDF::SKOS.narrower, :is_uri => true, :multivalued => true
 
+    rdf_type RDF::SKOS.Concept
+
     def initialize(uri, graph_uri=nil)
       super
       self.in_scheme = self.class.resource_concept_scheme_uri
@@ -104,6 +106,7 @@ module Concept
         cs = ConceptScheme.find(self.resource_concept_scheme_uri.to_s)
       rescue Tripod::Errors::ResourceNotFound
         cs = ConceptScheme.new(self.resource_concept_scheme_uri.to_s, self.get_graph_uri)
+      #  cs.label = '' # TODO: set label.
       end
 
       # add to the top concepts
