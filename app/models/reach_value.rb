@@ -3,88 +3,94 @@ class ReachValue
   include Tripod::Resource
 
   rdf_type 'http://data.digitalsocial.eu/def/ontology/ReachValue'
+  graph_uri Digitalsocial::DATA_GRAPH
 
-  field :activity, 'http://data.digitalsocial.eu/def/ontology/activityForReach' # the activity we're discussing
-  field :dataset, 'http://purl.org/linked-data/cube#DataSet' # always set to 'http://data.digitalsocial.eu/data/reach'
-  field :measure_type, 'http://purl.org/linked-data/cube#measureType' # the question being answered.
+  field :activity, 'http://data.digitalsocial.eu/def/ontology/activityForReach', :is_uri => true # the activity we're discussing
+  field :dataset, 'http://purl.org/linked-data/cube#dataSet', :is_uri => true # always set to 'http://data.digitalsocial.eu/data/reach'
+  field :measure_type, 'http://purl.org/linked-data/cube#measureType', :is_uri => true # the question being answered.
   field :ref_period, 'http://data.digitalsocial.eu/def/ontology/reachRefPeriod', :datatype => RDF::XSD.dateTime # when the observation was made
   # NOTE: need to also have another triple, with the predicate of the object of the measure type triple
 
-  def self.measure_type_xsd_type_for_activity_type(activity_type_slug)
-    activity_type_slug == "other" ? RDF::XSD.string : RDF::XSD.integer
-  end
-
-  def self.question_text_for_activity_type(activity_type_slug)
-    {
-      "research-project" => "How many times have your research outputs been downloaded in the last year?",
-      "event" => "How many people attended your event (the last time it was run)",
-      "network" => "How many organizations or individuals do you have in your network?",
-      "incubators-and-accelerators" => "How many projects were supported by your incubator or accelerator in the last year?",
-      "maker-and-hacker-spaces" => "How many active members were supported by your maker or hacker space in the last year?",
-      "education-and-training" => "How many people did your activity provide education or training to in the last year?",
-      "service-delivery" => "How many users are registered for your services?",
-      "investment-and-funding" => "How much investment or funding have you distributed in the last year? (in euros)",
-      "advocating-and-campaigning" => "How many subscribers took part in your campaigns in the last year?",
-      "advisory-or-expert-body" => "How many clients have you advised over the last year?",
-      "other" => "Please describe the reach of your activity in as quantitative a way as possible."
-    }[activity_type_slug]
+  # override initialise
+  def initialize(uri=nil, graph_uri=nil)
+    super(uri || "http://data.digitalsocial.eu/data/reach/#{Guid.new}")
   end
 
   def self.measure_type_unit_for_activity_type(activity_type_slug)
     activity_type_slug == "investment-and-funding" ? "http://dbpedia.org/resource/Euro" : nil
   end
 
-  # given an activity type uri, get the measure type uri
-  # opts:
-  #   if the ActivityType is network,
-  #     opts[:network_metric] can be organizations or individuals
-  def self.get_measure_type_uri_for_activity_type(activity_type_slug, opts={})
-    lookup_val = measure_type_slug_for_activity_type(activity_type_slug)
+  def project_resource
+    @project ||= Project.find(activity)
+  end
 
-    if opts[:network_metric]
-      reach_measure_type_slug = lookup_val[opts[:network_metric].to_s]
+  # the measure type uri used for this reach value resource
+  def measure_type_uri
+    return @measure_type_uri if @measure_type_uri
+
+    if self.persisted?
+      Rails.logger.debug "looking up measure type"
+      rmt = ReachMeasureType
+        .where("<#{self.uri.to_s}> <http://purl.org/linked-data/cube#measureType> ?uri")
+        .first
+      @measure_type_uri = rmt.uri.to_s if rmt
     else
-      reach_measure_type_slug = lookup_val
+      @measure_type_uri
+    end
+  end
+
+  # set hte measure type used for this resource
+  def measure_type_uri=(val)
+    @measure_type_uri=val
+  end
+
+  def get_reach_value_literal
+    Rails.logger.debug "in get_reach_value_literal"
+    Rails.logger.debug self.measure_type_uri.inspect
+    Rails.logger.debug "--"
+    if self.measure_type_uri
+      self.read_predicate(measure_type_uri).first
     end
 
-    "http://data.digitalsocial.eu/def/ontology/reach/#{reach_measure_type_slug}"
   end
 
-  def self.get_reach_value_for_activity(activity_uri)
-    # do a lookup with SPARQL
+  def self.get_latest_reach_value_resource_for_activity(project_resource)
+    activity_predicate = ReachValue.fields[:activity].predicate.to_s
+    period_predicate = ReachValue.fields[:ref_period].predicate.to_s
+
+    ReachValue.where("?uri <#{activity_predicate}> <#{project_resource.uri.to_s}>")
+      .where("?uri <#{period_predicate}> ?period")
+      .order("DESC(?period)")
+      .first
   end
 
-  def self.build_reach_value(activity_resource, reachValueLiteral)
+  # if the ActivityType is network, network_metric can be organizations or individuals
+  def self.build_reach_value(project_resource, reach_value_literal, network_metric=nil)
 
-    measure_type_uri = ReachValue.get_measure_type_uri_for_activity_type(activity_resource.slug)
+    measure_type_uri = project_resource.activity_type_resource.get_reach_measure_type_uri(network_metric)
 
     rv = ReachValue.new
-    rv.activity = activity_resource.uri
+    rv.activity = project_resource.uri
     rv.dataset = 'http://data.digitalsocial.eu/data/reach'
     rv.measure_type = measure_type_uri
     rv.ref_period = Time.now
-    rv[measure_type_uri] = reachValueLiteral
-    rv
+    rv.measure_type_uri = measure_type_uri #this isn't saved as a field, just stored in memory.
 
+    data_type = project_resource.activity_type_slug == "other" ? RDF::XSD.string : RDF::XSD.integer
+
+    rv.write_predicate(measure_type_uri, RDF::Literal.new(reach_value_literal, :datatype => data_type) )
+
+    rv
   end
 
-  private
-
-  # map of Activity Types slugs to Reach Measure Type slugs
-  def self.measure_type_slug_for_activity_type(activity_type_slug)
-    {
-      "research-project" => "downloads",
-      "event" => "attendees",
-      "network" => {"organizations" => "organizationMembers", "individuals" => "individualMembers"},
-      "incubators-and-accelerators" => "projectsSupported",
-      "maker-and-hacker-spaces" => "members",
-      "education-and-training" => "individualsTrained",
-      "service-delivery" => "registeredUsers",
-      "investment-and-funding" => "fundsInvested",
-      "advocating-and-campaigning" => "subscribers",
-      "advisory-or-expert-body" => "clients",
-      "other" => "description"
-    }[activity_type_slug]
+  def validate_data_type_is_integer
+    if self.project_resource.activity_type_slug == "other"
+      # anything goes
+      return true
+    else
+      # must be an int.
+      return !!(/^[\d]*$/.match(self.get_reach_value_literal.to_s))
+    end
   end
 
 end

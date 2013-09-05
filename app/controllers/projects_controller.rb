@@ -43,13 +43,16 @@ class ProjectsController < ApplicationController
   end
 
   def create
+    transaction = Tripod::Persistence::Transaction.new
     @project = Project.new
     @project.scoped_organisation = current_organisation
     @project.creator             = current_organisation.uri
 
-    if @project.update_attributes(params[:project])
+    if @project.update_attributes(params[:project], transaction: transaction) && @project.save_reach_value(transaction: transaction)
+      transaction.commit
       redirect_to [:dashboard, :projects], notice: "Project created!"
     else
+      transaction.abort
       render :new
     end
   end
@@ -59,11 +62,15 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    transaction = Tripod::Persistence::Transaction.new
+
     @project.scoped_organisation = current_organisation
 
-    if @project.update_attributes(params[:project])
+    if @project.update_attributes(params[:project], transaction: transaction) && @project.save_reach_value(transaction: transaction)
+      transaction.commit
       redirect_to [:dashboard, :projects], notice: "Project updated!"
     else
+      transaction.abort
       render :edit
     end
   end

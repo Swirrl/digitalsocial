@@ -23,6 +23,7 @@ class Project
 
   validates :name, :activity_type, presence: true
   validate :ensure_scoped_organisation_has_membership
+  validate :validate_reach_data_type
 
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
@@ -136,6 +137,15 @@ class Project
     if scoped_organisation.present? && scoped_organisation.project_memberships_for_project(self).count.zero?
       errors.add(:organisation_natures, "can't be blank")
     end
+  end
+
+  def validate_reach_data_type
+    if @reach_value
+      errors.add(:reach_value_literal, "must be a whole number") unless @reach_value.validate_data_type_is_integer
+    else
+      true
+    end
+
   end
 
   def organisations
@@ -257,13 +267,27 @@ class Project
     count
   end
 
-  def reach
-    ReachValue.get_reach_value_for_activity(self.uri)
+  # get the latest reach value literal
+  def reach_value_literal
+    @reach_value ||= ReachValue.get_latest_reach_value_resource_for_activity(self)
+    Rails.logger.debug @reach_value
+    @reach_value.get_reach_value_literal if @reach_value
   end
 
-  def reach=(reachValue)
-    rv = ReachValue.build_reach_value(self, reachValueLiteral)
-    rv.save
+  # set the reach value literal
+  # if the ActivityType is network, network_metric can be organizations or individuals
+  def reach_value_literal=(reach_value_literal, network_metric=nil)
+    unless reach_value_literal.blank?
+      @reach_value = ReachValue.build_reach_value(self, reach_value_literal, network_metric)
+    end
+  end
+
+  def save_reach_value(opts={})
+    if @reach_value
+      @reach_value.save(opts)
+    else
+      true
+    end
   end
 
 end
