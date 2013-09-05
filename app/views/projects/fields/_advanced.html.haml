@@ -49,6 +49,10 @@
 .field-with-notes
   .field
     = f.input :reach_value_literal, label: (@project && @project.activity_type_resource) ? @project.activity_type_resource.get_reach_question_text : "Reach"
+
+    - if @project.activity_type_slug == "network"
+      = f.input :network_metric, required: false, label: 'Please indicate whether the number supplied above refers to organisations or individuals', as: :radio_buttons, collection: ["organisations", "individuals"], default: "organizations"
+
   .notes
     :markdown
       We would like to understand the approximate reach of your activities. This question is aimed at understanding approximate 'size' of your activity. We realise that 'reach' is not the same as impact, influence or engagement and will make this clear when we display this information.

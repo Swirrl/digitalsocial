@@ -29,7 +29,6 @@ class ReachValue
     return @measure_type_uri if @measure_type_uri
 
     if self.persisted?
-      Rails.logger.debug "looking up measure type"
       rmt = ReachMeasureType
         .where("<#{self.uri.to_s}> <http://purl.org/linked-data/cube#measureType> ?uri")
         .first
@@ -45,13 +44,9 @@ class ReachValue
   end
 
   def get_reach_value_literal
-    Rails.logger.debug "in get_reach_value_literal"
-    Rails.logger.debug self.measure_type_uri.inspect
-    Rails.logger.debug "--"
     if self.measure_type_uri
       self.read_predicate(measure_type_uri).first
     end
-
   end
 
   def self.get_latest_reach_value_resource_for_activity(project_resource)
@@ -65,16 +60,18 @@ class ReachValue
   end
 
   # if the ActivityType is network, network_metric can be organizations or individuals
-  def self.build_reach_value(project_resource, reach_value_literal, network_metric=nil)
+  def self.build_reach_value(project_resource, reach_value_literal)
 
-    measure_type_uri = project_resource.activity_type_resource.get_reach_measure_type_uri(network_metric)
+    measure_type_uri = project_resource.activity_type_resource.get_reach_measure_type_uri(project_resource.network_metric(:new_resource => true))
 
     rv = ReachValue.new
     rv.activity = project_resource.uri
     rv.dataset = 'http://data.digitalsocial.eu/data/reach'
     rv.measure_type = measure_type_uri
     rv.ref_period = Time.now
-    rv.measure_type_uri = measure_type_uri #this isn't saved as a field, just stored in memory.
+
+    #these aren't saved as a field, just stored in memory.
+    rv.measure_type_uri = measure_type_uri
 
     data_type = project_resource.activity_type_slug == "other" ? RDF::XSD.string : RDF::XSD.integer
 
@@ -83,14 +80,6 @@ class ReachValue
     rv
   end
 
-  def validate_data_type_is_integer
-    if self.project_resource.activity_type_slug == "other"
-      # anything goes
-      return true
-    else
-      # must be an int.
-      return !!(/^[\d]*$/.match(self.get_reach_value_literal.to_s))
-    end
-  end
+
 
 end

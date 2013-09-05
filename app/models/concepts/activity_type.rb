@@ -33,7 +33,7 @@ class Concepts::ActivityType
     lookup_val = {
       "research-project" => "downloads",
       "event" => "attendees",
-      "network" => {"organizations" => "organizationMembers", "individuals" => "individualMembers"},
+      "network" => {"organisations" => "organizationMembers", "individuals" => "individualMembers"},
       "incubators-and-accelerators" => "projectsSupported",
       "maker-and-hacker-spaces" => "members",
       "education-and-training" => "individualsTrained",
