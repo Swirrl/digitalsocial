@@ -5,6 +5,14 @@ class ProjectsController < ApplicationController
   before_filter :set_project_invite, only: [:create_invite]
   before_filter :check_project_can_be_edited, only: [:edit, :update]
 
+  # expects a top-level activity type label as a param.
+  # returns the reach question text
+  def reach_question_text
+    slug = Concepts::ActivityType.slugify_label_text(params[:activity_type_label])
+    activity_type_resource = Concepts::ActivityType.find( Concepts::ActivityType.uri_from_slug(slug) )
+    render :text => activity_type_resource.get_reach_question_text
+  end
+
   # return tags for the tagit controls
   # expects a tag_class param with the name of the tag class to query
   # expects a term param with the search term
