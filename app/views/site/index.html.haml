@@ -36,16 +36,19 @@
 
       .text
         :markdown
-          We are looking to hear from organisations who are involved in activities, from coding, to funding to research that focus on how new ways of collaborating online can help make a difference to society.
+          We’re setting up a network of organisations that use the internet for social good.
           [Read More](/about).
 
         %ul
-          %li Show the great work you are doing to a community of potential collaborators and funders.
-          %li Be recognised as a pioneer Digital Social Innovator and inspire a growing community in Europe.
-          %li Get invited to attend future DSI networking events.
+          %li Be part of a growing community of Digital Social Innovation
+          %li Inform better policy across the EU
+          %li Showcase your work and network to potential funders and investors
+          %li Get onto our map of digital social innovators
 
-        = link_to "Put yourself on the map", [:organisations, :build, :new_user], class: 'button button-green clear', style: 'float:right;'
         %p
-          Already signed up? #{link_to "Log in here", "/users/sign_in"}.
+          Joining the network is very easy and it will take just a few minutes to get started. Already signed up? #{link_to "Log in here", "/users/sign_in"}.
+
+        = link_to "Put yourself on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
+
 
 

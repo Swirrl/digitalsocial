@@ -134,7 +134,7 @@
 
 .wizard-intro {
   @include columns(16);
-  p, ul {
+  p, ul, ol {
     font-size: 16px;
     color: $dark-grey;
   }
