@@ -1,10 +1,10 @@
 .dashboard
-  
+
   %h1 #{current_organisation.name}'s Dashboard
   = render "dashboard/tabs", active: "Activities"
 
-  %h2 
-    Invite Organisation to join
+  %h2
+    Add a partner organisation for
     %strong #{@project.name}
 
 
@@ -15,7 +15,7 @@
         = f.input :invited_organisation_name, label: 'Organisation Name', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
       .notes
         %p
-          Start typing an organisation name and we'll suggest existing ones.
+          Start typing an organisation name and we'll suggest members of the DSI network.
 
     = render 'suggestions', button_text: 'Invite', action_url_template: "/projects/#{@project.guid}/create_existing_org_invite?organisation_id=:organisation_id"
 
@@ -25,7 +25,7 @@
         = f.input :user_email, required: false
       .notes
         %p
-          If you're adding a new organisation, please give the name and email of the person you worked with on this activity.
+          If the organisation you're trying to add doesn't appear in our suggestions, please add a contact email so we can let your partner organisation know #{@project.name} is now part of the DSI network, and invite them to sign up themselves.
 
     .wizard-button-wrapper
       = f.button :submit, 'Invite organisation', class: 'button-green'

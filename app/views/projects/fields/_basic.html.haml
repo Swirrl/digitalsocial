@@ -6,7 +6,7 @@
     - else
       = f.input :name, label: 'Name of your activity', input_html: { autocomplete: :off }
   .notes
-    %p Please enter the official title you would give to this activity, i.e. an event name; a research project title etc.
+    %p Please enter the title you would use to name this activity, eg. Name of network; event title; a research project title etc.
 
 = render 'suggestions', button_text: 'Request to join', action_url_template: '/projects/:project_id/request_to_join'
 
@@ -14,7 +14,7 @@
   .field
     = f.input :description, as: :text, input_html: { rows: 6 }
   .notes
-    %p Describe what your activity is about. Please keep this as brief as possible (no more than a few hundred words).
+    %p Describe your activity in brief. We will use this text to describe your activity to others.
 
 .field-with-notes
   .field
@@ -23,11 +23,11 @@
     = f.error :activity_type
   .notes
     :markdown
-      How would you best describe this activity? We would like to understand the main focus of your activity. Please try to pick the best option possible from the list, but if you feel your activity is really different, you can use the _Other_ option, to tell us in a few words.
+      How would you best describe this activity? Please try to use categories below; if you feel you do something very different, use Other
 
 .field-with-notes
   .field
-    = f.input :organisation_natures, label: 'Relationship in activity', as: :check_boxes, collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
+    = f.input :organisation_natures, label: 'Role in activity', as: :check_boxes, collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
   .notes
     :markdown
-      How would you describe #{current_organisation.name}'s relationship to this activity?
+      How would you describe #{current_organisation.name}'s role in this activity?

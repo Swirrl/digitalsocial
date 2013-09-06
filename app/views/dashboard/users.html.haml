@@ -1,12 +1,12 @@
 .dashboard.projects
-  
+
   - if current_organisation
     %h1 #{current_organisation.name}'s Dashboard
     = render "dashboard/tabs", active: "Users"
 
   %h2
-    %strong #{current_organisation.name}'s
-    Users
+    Members of
+    %strong #{current_organisation.name}
 
 
   %ul.users.dashboard-list
@@ -25,4 +25,4 @@
         - if u.id == current_user.id
           = link_to "Edit profile", edit_user_path, class: 'button'
 
-  = link_to "+ Invite users", [:invite_users, current_organisation], class: 'button button-green'
+  = link_to "+ Invite users to #{current_organisation.name}", [:invite_users, current_organisation], class: 'button button-green'

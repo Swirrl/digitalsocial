@@ -1,14 +1,20 @@
 .wizard
   = render "breadcrumbs", active_index: 5
 
-  .skip-wizard.clearfix
-    %span Activity invites can be created later.
-
-    = link_to "Skip for now &raquo;".html_safe, :dashboard, class: 'button'
-
   .wizard-intro
     :markdown
-      Invite another organisation to join acitivity: **#{@project.name}**
+
+      ### Add a partner organisation for #{@project.name}
+
+      This step gives you an opportunity to invite another organistaion that was involved in #{@project.name}. This will start to create a network map based on your connections and will help #{@project.name} become more visible to funders and partners across the EU.
+
+      If more than one other organisation was involved, you can add them later.
+  .clearfix
+
+  .skip-wizard.clearfix
+    %span Inviting organistaions to your activities can be done later.
+
+    = link_to "Skip for now &raquo;".html_safe, :dashboard, class: 'button'
 
   = simple_form_for @project_invite, url: [:organisations, :build, :create_new_organisation_invite] do |f|
     = hidden_field_tag :id, @project.guid
@@ -18,7 +24,7 @@
         = f.input :invited_organisation_name, label: 'Organisation Name', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
       .notes
         %p
-          Start typing an organisation name and we'll suggest existing ones.
+          Start typing an organisation name and we'll suggest members of the DSI network.
 
     = render 'suggestions', button_text: 'Invite', action_url_template: "/projects/#{@project.guid}/create_existing_org_invite?organisation_id=:organisation_id"
 
@@ -28,7 +34,7 @@
         = f.input :user_email, required: false
       .notes
         %p
-          If you're adding a new organisation, please give the name and email of the person you worked with on this activity.
+          If the organisation you're trying to add doesn't appear in our suggestions, please add a contact email so we can let your partner organisation know #{@project.name} is now part of the DSI network, and invite them to sign up themselves.
 
     .wizard-button-wrapper
       = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-green'
