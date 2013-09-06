@@ -44,7 +44,7 @@ class Concepts::ActivityType
       "other" => "description"
     }[self.slug]
 
-    if network_metric
+    if self.slug == "network" && network_metric
       reach_measure_type_slug = lookup_val[network_metric.to_s]
     else
       reach_measure_type_slug = lookup_val

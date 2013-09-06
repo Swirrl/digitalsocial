@@ -277,21 +277,24 @@ class Project
     end
   end
 
+  # Get the network metric for this
+  #
   # opts:
   # new_resource (true if we should use the newly built one, otherwise use latest existing).
   # TODO: This is hacktaculous - refactor this into a presenter of some kind?
   def network_metric(opts={})
     return @network_metric if @network_metric
 
-    if opts[:new_resource] && @new_reach_value_resource
-      resource = @new_reach_value_resource
-    else
-      resource = latest_reach_value_resource
-    end
-
     if activity_type_slug == "network"
-      if resource
-        measure_type_slug = resource.measure_type_uri.to_s.split('/').last
+
+      if opts[:new_resource] && @new_reach_value_resource
+        rv_resource = @new_reach_value_resource
+      else
+        rv_resource = latest_reach_value_resource
+      end
+
+      if rv_resource
+        measure_type_slug = rv_resource.measure_type.to_s.split('/').last
 
         if measure_type_slug.starts_with?("organ")
           "organisations"
@@ -301,7 +304,14 @@ class Project
       else
         "organisations" # default
       end
+    else
+      nil
     end
+  end
+
+  # set the network metric for this project (only applies if activity type is network)"
+  def network_metric=(val)
+    @network_metric = val
   end
 
   def reach_value_changed?
@@ -310,10 +320,6 @@ class Project
 
   def set_reach_value_changed!
     @reach_value_changed = true
-  end
-
-  def network_metric=(val)
-    @network_metric = val
   end
 
   def latest_reach_value_resource
