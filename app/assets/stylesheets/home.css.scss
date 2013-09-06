@@ -6,7 +6,7 @@
     position: absolute;
     top: 0px;
     left: 72px;
-    padding: 60px 36px 60px;
+    padding: 30px 18px 30px;
     background: rgba(255, 255, 255, 0.75);
     border-bottom: 3px solid $orange;
   }
@@ -16,9 +16,9 @@
     bottom: 0px;
     //left: 216px;
     right: 0px;
-    bottom: 36px;
-    width: 50%;
-    
+    bottom: 20px;
+    width: 61%;
+
     background: rgba(255, 255, 255, 0.75);
     border-top: 9px solid $orange;
     padding: 36px;
@@ -34,18 +34,12 @@
       &:first-child {
         font-weight: 600;
         font-style: italic;
+        font-size: 20px;
       }
     }
 
     .text {
-      
-    }
 
-
-
-    .button {
-      margin-top: 24px;
-      font-size: 30px;
     }
   }
 

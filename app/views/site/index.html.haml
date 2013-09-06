@@ -26,18 +26,26 @@
     = csrf_meta_tags
     = render "typekit"
   %body.home
-    
-    <iframe width='100%' height='100%' frameBorder='0' src='http://a.tiles.mapbox.com/v3/swirrl.map-v2ypw352.html#5/46.241/7.976'></iframe>
+
+    <iframe width='100%' height='100%' frameBorder='0' src='http://a.tiles.mapbox.com/v3/swirrl.map-v2ypw352.html#4/46.241/7.976'></iframe>
 
     .logo
-      = image_tag "logo/dsi-logo.png"
+      = image_tag "logo/dsi-logo.png", style: 'float:right; margin-left:10px; margin-bottom:10px;'
 
     .info
-      %h1 Digital Social Innovation
 
       .text
-        %p Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-        %p Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-        %p Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna.
+        :markdown
+          We are looking to hear from organisations who are involved in activities, from coding, to funding to research that focus on how new ways of collaborating online can help make a difference to society.
+          [Read More](/about).
 
-        = link_to "Put yourself on the map", [:organisations, :build, :new_user], class: 'button button-green'
+        %ul
+          %li Show the great work you are doing to a community of potential collaborators and funders.
+          %li Be recognised as a pioneer Digital Social Innovator and inspire a growing community in Europe.
+          %li Get invited to attend future DSI networking events.
+
+        = link_to "Put yourself on the map", [:organisations, :build, :new_user], class: 'button button-green clear', style: 'float:right;'
+        %p
+          Already signed up? #{link_to "Log in here", "/users/sign_in"}.
+
+
