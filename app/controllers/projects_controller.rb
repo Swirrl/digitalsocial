@@ -5,6 +5,14 @@ class ProjectsController < ApplicationController
   before_filter :set_project_invite, only: [:create_invite]
   before_filter :check_project_can_be_edited, only: [:edit, :update]
 
+  # expects a top-level activity type label as a param.
+  # returns the reach question text
+  def reach_question_text
+    slug = Concepts::ActivityType.slugify_label_text(params[:activity_type_label])
+    activity_type_resource = Concepts::ActivityType.find( Concepts::ActivityType.uri_from_slug(slug) )
+    render :text => activity_type_resource.get_reach_question_text
+  end
+
   # return tags for the tagit controls
   # expects a tag_class param with the name of the tag class to query
   # expects a term param with the search term
@@ -43,13 +51,16 @@ class ProjectsController < ApplicationController
   end
 
   def create
+    transaction = Tripod::Persistence::Transaction.new
     @project = Project.new
     @project.scoped_organisation = current_organisation
     @project.creator             = current_organisation.uri
 
-    if @project.update_attributes(params[:project])
+    if @project.update_attributes(params[:project], transaction: transaction) && @project.save_reach_value(transaction: transaction)
+      transaction.commit
       redirect_to [:dashboard, :projects], notice: "Project created!"
     else
+      transaction.abort
       render :new
     end
   end
@@ -59,11 +70,15 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    transaction = Tripod::Persistence::Transaction.new
+
     @project.scoped_organisation = current_organisation
 
-    if @project.update_attributes(params[:project])
+    if @project.update_attributes(params[:project], transaction: transaction) && @project.save_reach_value(transaction: transaction)
+      transaction.commit
       redirect_to [:dashboard, :projects], notice: "Project updated!"
     else
+      transaction.abort
       render :edit
     end
   end

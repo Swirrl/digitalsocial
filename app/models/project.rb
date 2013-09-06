@@ -24,6 +24,9 @@ class Project
   validates :name, :activity_type, presence: true
   validate :ensure_scoped_organisation_has_membership
 
+  validate :validate_reach_data_type
+  validate :validate_network_metric
+
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
     super(uri || Project.slug_to_uri(Guid.new))
@@ -208,8 +211,12 @@ class Project
     end
   end
 
+  def activity_type_slug
+    activity_type_resource.slug if activity_type_resource
+  end
+
   def activity_type_resource
-    Concepts::ActivityType.find(self.activity_type) if self.activity_type.present?
+    @activity_type_resource ||= Concepts::ActivityType.find(self.activity_type) if self.activity_type.present?
   end
 
   def technology_focus_array=(array)
@@ -231,12 +238,12 @@ class Project
   end
 
   def self.order_by_name
-    name_predicate = self.fields[:name].predicate.to_s 
+    name_predicate = self.fields[:name].predicate.to_s
     where("?uri <#{name_predicate}> ?name").order("?name")
   end
 
   def progress_percent
-    @progress_percent ||= 
+    @progress_percent ||=
       ((progress_count.to_f / Project.progress_attributes.length) * 100).round
   end
 
@@ -251,6 +258,103 @@ class Project
       count += 1 if self.send(attr).present?
     end
     count
+  end
+
+  # REACH STUFF:
+  ##############
+
+  def validate_reach_data_type
+    if @reach_value_literal && activity_type_slug != "other"
+      errors.add(:reach_value_literal, "must be a whole number") unless !!(/^[\d]*$/.match(@reach_value_literal.to_s))
+    else
+      true
+    end
+  end
+
+  def validate_network_metric
+    if @reach_value && activity_type_slug == "network"
+      errors.add(:network_metric, "must be chosen") unless ["organisations", "individuals"].include?(network_metric)
+    end
+  end
+
+  # Get the network metric for this
+  #
+  # opts:
+  # new_resource (true if we should use the newly built one, otherwise use latest existing).
+  # TODO: This is hacktaculous - refactor this into a presenter of some kind?
+  def network_metric(opts={})
+    return @network_metric if @network_metric
+
+    if activity_type_slug == "network"
+
+      if opts[:new_resource] && @new_reach_value_resource
+        rv_resource = @new_reach_value_resource
+      else
+        rv_resource = latest_reach_value_resource
+      end
+
+      if rv_resource
+        measure_type_slug = rv_resource.measure_type.to_s.split('/').last
+
+        if measure_type_slug.starts_with?("organ")
+          "organisations"
+        else
+          "individuals"
+        end
+      else
+        "organisations" # default
+      end
+    else
+      nil
+    end
+  end
+
+  # set the network metric for this project (only applies if activity type is network)"
+  def network_metric=(val)
+    @network_metric = val
+  end
+
+  def reach_value_changed?
+    @reach_value_changed
+  end
+
+  def set_reach_value_changed!
+    @reach_value_changed = true
+  end
+
+  def latest_reach_value_resource
+    @latest_reach_value_resource ||= ReachValue.get_latest_reach_value_resource_for_activity(self)
+  end
+
+  # get the just set / latest reach value literal
+  def reach_value_literal
+    return @reach_value_literal if @reach_value_literal
+    if latest_reach_value_resource
+      @reach_value_literal ||= latest_reach_value_resource.reach_value_literal
+    end
+  end
+
+  # set the reach value literal
+  # if the ActivityType is network, network_metric can be organizations or individuals
+  def reach_value_literal=(val)
+    if (!reach_value_literal) || (reach_value_literal.to_s != val.to_s)
+      # never been set before, or has changed value
+      self.set_reach_value_changed!
+    end
+    @reach_value_literal = val
+  end
+
+  def save_reach_value(opts={})
+    # we only build a new obs if it's changed
+    if self.reach_value_changed?
+      # builds a new observation and save it
+      @new_reach_value_resource = ReachValue.build_reach_value(self, @reach_value_literal)
+      result = @new_reach_value_resource.save(opts)
+      @reach_value_changed = false #reset the changed flag
+      result
+    else
+      true
+    end
   end
 
 end

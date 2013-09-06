@@ -86,6 +86,7 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
+  get 'reach_question_text' => "projects#reach_question_text"
   get 'dashboard' => 'dashboard#pending'
   get 'dashboard/projects' => 'dashboard#projects'
   get 'dashboard/users' => 'dashboard#users'

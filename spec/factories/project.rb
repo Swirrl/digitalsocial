@@ -14,5 +14,9 @@ FactoryGirl.define do
     areas_of_society { [Concepts::AreaOfSociety.first.uri] }
     technology_focus { [Concepts::TechnologyFocus.first.uri] }
     technology_method { [Concepts::TechnologyMethod.first.uri] }
+
+    factory :project_with_network_activity do
+      activity_type { Concepts::ActivityType.from_label("network").uri }
+    end
   end
 end

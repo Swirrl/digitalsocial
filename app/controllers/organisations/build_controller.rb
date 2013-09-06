@@ -77,12 +77,17 @@ class Organisations::BuildController < ApplicationController
 
   def update_project
     # TODO Ensure organisation is a member of the retrieved project
+
+    transaction = Tripod::Persistence::Transaction.new
+
     @project = Project.find(Project.slug_to_uri(params[:id]))
     @project.scoped_organisation = current_organisation
 
-    if @project.update_attributes(params[:project])
+    if @project.update_attributes(params[:project], transaction: transaction ) && @project.save_reach_value(transaction: transaction)
+      transaction.commit
       redirect_to organisations_build_invite_organisations_path(id: @project.guid)
     else
+      transaction.abort
       render :edit_project
     end
   end
