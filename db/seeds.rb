@@ -39,7 +39,7 @@ end
 
 ['cube.ttl', 'dcterms.rdf', 'dsi-ontology.nt', 'foaf.rdf', 'org.ttl', 'owl.rdf',
  'rdf.rdf', 'rdfs.rdf', 'rdfschema_extra.nt', 'skos.rdf', 'vcard.ttl', 'wgs84_pos.rdf',
- 'timeline.ttl', 'event.ttl'].each do |filename|
+ 'timeline.ttl', 'event.ttl','reach-dataset.ttl'].each do |filename|
 
   RestClient::Request.execute(
     :method => :put,
