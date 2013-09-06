@@ -283,7 +283,7 @@ class Project
   def network_metric(opts={})
     return @network_metric if @network_metric
 
-    if opts[:new_resource]
+    if opts[:new_resource] && @new_reach_value_resource
       resource = @new_reach_value_resource
     else
       resource = latest_reach_value_resource
@@ -302,6 +302,14 @@ class Project
         "organisations" # default
       end
     end
+  end
+
+  def reach_value_changed?
+    @reach_value_changed
+  end
+
+  def set_reach_value_changed!
+    @reach_value_changed = true
   end
 
   def network_metric=(val)
@@ -323,13 +331,21 @@ class Project
   # set the reach value literal
   # if the ActivityType is network, network_metric can be organizations or individuals
   def reach_value_literal=(val)
+    if (!reach_value_literal) || (reach_value_literal.to_s != val.to_s)
+      # never been set before, or has changed value
+      self.set_reach_value_changed!
+    end
     @reach_value_literal = val
   end
 
   def save_reach_value(opts={})
-    if @reach_value_literal
+    # we only build a new obs if it's changed
+    if self.reach_value_changed?
+      # builds a new observation and save it
       @new_reach_value_resource = ReachValue.build_reach_value(self, @reach_value_literal)
-      @new_reach_value_resource.save(opts)
+      result = @new_reach_value_resource.save(opts)
+      @reach_value_changed = false #reset the changed flag
+      result
     else
       true
     end

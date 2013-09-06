@@ -39,7 +39,6 @@ class ReachValue
 
   # setter
   def reach_value_literal=(val)
-    puts self.activity_type_slug
     data_type = self.activity_type_slug == "other" ? RDF::XSD.string : RDF::XSD.integer
     self.write_predicate(self.measure_type, RDF::Literal.new(val, :datatype => data_type) )
   end
