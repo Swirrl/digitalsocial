@@ -20,35 +20,31 @@ class ReachValue
     activity_type_slug == "investment-and-funding" ? "http://dbpedia.org/resource/Euro" : nil
   end
 
+  # memoized getter for project resource, based on the uri in self.activity field.
   def project_resource
-    @project ||= Project.find(activity)
+    @project ||= Project.find(self.activity)
   end
 
-  # the measure type uri used for this reach value resource
-  def measure_type_uri
-    return @measure_type_uri if @measure_type_uri
-
-    if self.persisted?
-      rmt = ReachMeasureType
-        .where("<#{self.uri.to_s}> <http://purl.org/linked-data/cube#measureType> ?uri")
-        .first
-      @measure_type_uri = rmt.uri.to_s if rmt
-    else
-      @measure_type_uri
-    end
+  def activity_type_slug
+    project_resource.activity_type_slug
   end
 
-  # set hte measure type used for this resource
-  def measure_type_uri=(val)
-    @measure_type_uri=val
+  # getter and setter for the reah value literal
+  ######
+
+  # getter
+  def reach_value_literal
+    self.read_predicate(self.measure_type).first
   end
 
-  def get_reach_value_literal
-    if self.measure_type_uri
-      self.read_predicate(measure_type_uri).first
-    end
+  # setter
+  def reach_value_literal=(val)
+    puts self.activity_type_slug
+    data_type = self.activity_type_slug == "other" ? RDF::XSD.string : RDF::XSD.integer
+    self.write_predicate(self.measure_type, RDF::Literal.new(val, :datatype => data_type) )
   end
 
+  # lookup the latest reach value observation given a project
   def self.get_latest_reach_value_resource_for_activity(project_resource)
     activity_predicate = ReachValue.fields[:activity].predicate.to_s
     period_predicate = ReachValue.fields[:ref_period].predicate.to_s
@@ -59,27 +55,22 @@ class ReachValue
       .first
   end
 
-  # if the ActivityType is network, network_metric can be organizations or individuals
+  # construct a reach value resource given a project, and a literal value
   def self.build_reach_value(project_resource, reach_value_literal)
-
-    measure_type_uri = project_resource.activity_type_resource.get_reach_measure_type_uri(project_resource.network_metric(:new_resource => true))
 
     rv = ReachValue.new
     rv.activity = project_resource.uri
     rv.dataset = 'http://data.digitalsocial.eu/data/reach'
-    rv.measure_type = measure_type_uri
-    rv.ref_period = Time.now
-
-    #these aren't saved as a field, just stored in memory.
-    rv.measure_type_uri = measure_type_uri
-
-    data_type = project_resource.activity_type_slug == "other" ? RDF::XSD.string : RDF::XSD.integer
-
-    rv.write_predicate(measure_type_uri, RDF::Literal.new(reach_value_literal, :datatype => data_type) )
+    rv.measure_type = ReachValue.determine_measure_type_uri(project_resource)
+    rv.ref_period = DateTime.now
+    rv.reach_value_literal = reach_value_literal
 
     rv
   end
 
-
+  def self.determine_measure_type_uri(project_resource)
+    network_metric = project_resource.network_metric(:new_resource => true)
+    measure_type_uri = project_resource.activity_type_resource.get_reach_measure_type_uri(network_metric)
+  end
 
 end

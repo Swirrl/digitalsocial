@@ -279,6 +279,7 @@ class Project
 
   # opts:
   # new_resource (true if we should use the newly built one, otherwise use latest existing).
+  # TODO: This is hacktaculous - refactor this into a presenter of some kind?
   def network_metric(opts={})
     return @network_metric if @network_metric
 
@@ -315,7 +316,7 @@ class Project
   def reach_value_literal
     return @reach_value_literal if @reach_value_literal
     if latest_reach_value_resource
-      @reach_value_literal ||= latest_reach_value_resource.get_reach_value_literal
+      @reach_value_literal ||= latest_reach_value_resource.reach_value_literal
     end
   end
 
