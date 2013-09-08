@@ -76,7 +76,7 @@ class ProjectsController < ApplicationController
 
     if @project.update_attributes(params[:project], transaction: transaction) && @project.save_reach_value(transaction: transaction)
       transaction.commit
-      redirect_to [:dashboard, :projects], notice: "Project updated!"
+      redirect_to [:dashboard, :projects], notice: "Activity successfully updated"
     else
       transaction.abort
       render :edit
