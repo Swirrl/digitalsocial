@@ -68,7 +68,7 @@ module ApplicationHelper
         label = [Date::MONTHNAMES[n], year].join(" ")
         date  = Date.parse(label)
 
-        label if date > Date.today
+        label if date > Date.today.year
       end.compact
 
       [year, months]

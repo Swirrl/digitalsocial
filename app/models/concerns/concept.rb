@@ -25,7 +25,7 @@ module Concept
 
     def to_s
       str = label
-      str += " (#{description})" if description
+      # str += " (#{description})" if description
       str
     end
 
