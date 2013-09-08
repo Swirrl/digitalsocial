@@ -6,6 +6,8 @@ class Concepts::ActivityType
   include Concept
   uri_root 'http://data.digitalsocial.eu/def/concept/activity-type/'
   concept_scheme_uri 'http://data.digitalsocial.eu/def/concept-scheme/activity-type'
+  concept_scheme_label 'ActivityTypes'
+
   broad_concept_uri (resource_uri_root + 'other')
 
   def slug

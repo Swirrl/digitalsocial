@@ -7,5 +7,6 @@ class Concepts::TechnologyFocus
   uri_root 'http://data.digitalsocial.eu/def/concept/technology-focus/'
   concept_scheme_uri 'http://data.digitalsocial.eu/def/concept-scheme/technology-focus'
   broad_concept_uri (resource_uri_root + 'other')
+  concept_scheme_label 'Activity Technology Focuses'
 
 end

@@ -6,6 +6,7 @@ module Concept
     class_attribute :resource_uri_root
     class_attribute :resource_concept_scheme_uri
     class_attribute :resource_broad_concept_uri
+    class_attribute :resource_concept_scheme_label
 
     field :in_scheme, RDF::SKOS.inScheme, :is_uri => true
     field :label, RDF::RDFS.label
@@ -35,6 +36,10 @@ module Concept
     def concept_scheme_uri(cs_uri)
       self.resource_concept_scheme_uri = cs_uri
       graph_uri cs_uri.to_s.gsub('/def/', '/graph/')
+    end
+
+    def concept_scheme_label(cs_label)
+      self.resource_concept_scheme_label = cs_label
     end
 
     def broad_concept_uri(uri)
@@ -106,7 +111,7 @@ module Concept
         cs = ConceptScheme.find(self.resource_concept_scheme_uri.to_s)
       rescue Tripod::Errors::ResourceNotFound
         cs = ConceptScheme.new(self.resource_concept_scheme_uri.to_s, self.get_graph_uri)
-      #  cs.label = '' # TODO: set label.
+        cs.label = self.resource_concept_scheme_label
       end
 
       # add to the top concepts
