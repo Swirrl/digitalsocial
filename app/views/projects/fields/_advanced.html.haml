@@ -32,7 +32,7 @@
     = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources, label: 'Technology Focus'
   .notes
     :markdown
-      We are interested in understanding how #{@project.name} fits with broad technology trends. Please select the option that best describes activityname.
+      We are interested in understanding how #{@project.name} fits with broad technology trends. Please select the option that best describes #{@project.name}.
 
 .field-with-notes
   .field

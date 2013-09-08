@@ -97,13 +97,26 @@ end
 end
 
 # Technology Focus
-["Open Networks",
-  "Open Data",
-  "Open Knowledge",
-  "Open Hardware"
+[
+  ["Open Networks",
+    "Innovative combinations of network solutions and infrastructures, e.g. sensor networks, free network services, open wifi, bottom up-broadband, distributed social networks, p2p infrastructures"
+    ],
+  ["Open Data",
+    "Innovative ways to capture, use, analysing, and interpret open data coming from people and from the environment"
+  ],
+  ["Open Knowledge",
+    "Co-production of new knowledge and crowd mobilisation based on open contents, open source and open access"
+  ],
+  ["Open Hardware",
+    "New ways of making and using open hardware solutions"
+  ]
   # Note: no 'other'
-].each do |label|
-  Concepts::TechnologyFocus.from_label(label, top_level:true)
+].each do |focus|
+  label = focus[0]
+  desc = focus[1]
+  c = Concepts::TechnologyFocus.from_label(label, top_level:true)
+  c.description = desc
+  c.save
 end
 
 # Technology Method
