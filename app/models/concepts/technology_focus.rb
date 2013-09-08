@@ -9,4 +9,8 @@ class Concepts::TechnologyFocus
   broad_concept_uri (resource_uri_root + 'other')
   concept_scheme_label 'Activity Technology Focuses'
 
+  def get_view_label
+    "#{self.label} <span style='display:block; font-weight:lighter; color:#888'>(#{self.description})</span>".html_safe
+  end
+
 end

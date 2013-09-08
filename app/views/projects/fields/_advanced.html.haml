@@ -29,7 +29,7 @@
       Please click the suggestions under the box to add the areas of society that #{@project.name} addresses. You can also add your own by typing into the box (please use a comma between each new entry).
 .field-with-notes
   .field
-    = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources, label: 'Technology Focus'
+    = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources, label: 'Technology Focus', :label_method => :get_view_label
   .notes
     :markdown
       We are interested in understanding how #{@project.name} fits with broad technology trends. Please select the option that best describes #{@project.name}.
