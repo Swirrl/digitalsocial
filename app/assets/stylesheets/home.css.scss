@@ -6,9 +6,27 @@
     position: absolute;
     top: 0px;
     left: 72px;
-    padding: 30px 18px 30px;
+    padding: 30px 18px 0px;
     background: rgba(255, 255, 255, 0.75);
     border-bottom: 3px solid $orange;
+
+    img {
+      
+    }
+
+    .links {
+      margin-top: 30px;
+      margin-bottom: 6px;
+      
+      a {
+        font-style: italic;
+        margin-right: 12px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 
   .info {

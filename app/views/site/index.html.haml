@@ -30,7 +30,13 @@
     <iframe width='100%' height='100%' frameBorder='0' src='http://a.tiles.mapbox.com/v3/swirrl.map-v2ypw352.html#4/46.241/7.976'></iframe>
 
     .logo
-      = image_tag "logo/dsi-logo.png", style: 'float:right; margin-left:10px; margin-bottom:10px;'
+      = image_tag "logo/dsi-logo.png"
+      .links
+        = link_to "About", "/about"
+        = link_to "Blog", "/blog"
+        = link_to "Events", "/events"
+        = link_to "Organisations", "/organisations"
+        = link_to "Activities", "/projects"
 
     .info
 
