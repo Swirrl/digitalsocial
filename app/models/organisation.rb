@@ -17,6 +17,7 @@ class Organisation
   concept_field :fte_range, 'http://data.digitalsocial.eu/def/ontology/numberOfFTEStaff', Concepts::FTERange
 
   validates :name, presence: true
+  validate :organisation_name_is_unique
 
   attr_accessor :invited_users, :invites_to_send
 
@@ -229,6 +230,15 @@ class Organisation
     @pending_count += 1 if !primary_site
     @pending_count += respondables.count
     @pending_count
+  end
+
+  private
+
+  def organisation_name_is_unique
+    name_predicate = Organisation.fields[:name].predicate.to_s
+    if Organisation.where("?uri <#{name_predicate}> \"#{name}\"").where("FILTER(?uri != <#{self.uri}>)").count > 0
+      errors.add(:name, "Organisation already exists")
+    end
   end
 
 end

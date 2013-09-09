@@ -2,10 +2,8 @@ require 'spec_helper'
 
 feature 'Edit organisation wizard step' do
 
-  let(:user) { FactoryGirl.create(:user_with_organisations, organisations_count: 1) }
-  let(:organisation) { user.organisation_resources.first }
-
   background do
+    user = FactoryGirl.create(:user_with_organisations, organisations_count: 1)
     login_as user, scope: :user
     visit organisations_build_edit_organisation_path
   end
