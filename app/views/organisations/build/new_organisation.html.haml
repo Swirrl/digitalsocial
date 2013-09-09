@@ -11,6 +11,8 @@
 
   = simple_form_for @organisation, url: [:organisations, :build, :create_organisation] do |f|
 
+    = render 'error_messages', object: f.object
+
     = render 'organisations/fields/name', f: f
     = render 'organisations/fields/location', f: f
 

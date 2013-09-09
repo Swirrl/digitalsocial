@@ -140,6 +140,18 @@ form {
     margin-bottom: 36px;
   }
 
+  .error-messages {
+    @include columns(16);
+    border: 2px solid $red;
+    margin-bottom: 36px;
+    padding: 18px;
+    background: #ecb9bd;
+    color: $red;
+    font-style: italic;
+    text-align: center;
+    @include clearfix;
+  }
+
 }
 
 p.suggested-tags {

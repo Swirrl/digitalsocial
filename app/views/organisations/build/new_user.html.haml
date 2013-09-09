@@ -23,6 +23,8 @@
 
   = simple_form_for @user, url: [:organisations, :build, :create_user] do |f|
 
+    = render 'error_messages', object: f.object
+
     .field-with-notes
       .field
         = f.input :first_name, placeholder: 'Enter your name', label: 'Name'

@@ -16,7 +16,11 @@
 
     = link_to "Skip for now &raquo;".html_safe, :dashboard, class: 'button'
 
+
   = simple_form_for @project_invite, url: [:organisations, :build, :create_new_organisation_invite] do |f|
+    
+    = render 'error_messages', object: f.object
+    
     = hidden_field_tag :id, @project.guid
 
     .field-with-notes
