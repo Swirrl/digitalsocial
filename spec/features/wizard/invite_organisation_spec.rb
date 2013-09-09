@@ -48,7 +48,7 @@ feature 'Invite organisation wizard step' do
   end
 
   scenario 'Skipping the invite organisation step' do
-    page.should have_link('Skip', href: user_path)
+    page.should have_link('Skip', href: dashboard_path)
   end
 
 end

@@ -248,7 +248,7 @@ class Project
   end
 
   def self.progress_attributes
-    [:name, :description, :webpage, :start_date_label, :end_date_label, :social_impact,
+    [:name, :description, :webpage, :start_date_label, :social_impact,
      :activity_type, :areas_of_society, :technology_focus, :technology_method]
   end
 
