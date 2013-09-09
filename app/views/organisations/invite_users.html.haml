@@ -5,6 +5,7 @@
   %h2 Invite Users
 
   = simple_form_for @organisation, url: [:create_user_invites, :organisation] do |f|
+    = render 'error_messages', object: f.object
     = render "organisations/fields/invite_users", f: f
 
     .wizard-button-wrapper

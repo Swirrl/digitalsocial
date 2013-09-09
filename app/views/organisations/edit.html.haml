@@ -7,7 +7,7 @@
     details
 
   = simple_form_for @organisation do |f|
-    
+    = render 'error_messages', object: f.object
     = render 'organisations/fields/name', f: f
     = render 'organisations/fields/advanced', f: f
 

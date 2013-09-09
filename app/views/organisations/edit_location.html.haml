@@ -7,7 +7,7 @@
     location
 
   = simple_form_for @organisation, url: [:update_location, current_organisation] do |f|
-
+    = render 'error_messages', object: f.object
     = render 'organisations/fields/location', f: f
 
     .wizard-button-wrapper
