@@ -8,7 +8,7 @@
   .notes
     %p Please enter the title you would use to name this activity, eg. Name of network; event title; a research project title etc.
 
-= render 'suggestions', button_text: 'Request to join', action_url_template: '/projects/:project_id/request_to_join'
+= render 'suggestions', button_text: 'Request to join', action_url_template: '/projects/:project_id/request_to_join', help: "The following activities matched that name. If the activity already exists click <strong>Request to join</strong> to send a request to the activity's members."
 
 .field-with-notes
   .field

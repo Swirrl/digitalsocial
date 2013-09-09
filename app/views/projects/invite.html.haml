@@ -17,7 +17,7 @@
         %p
           Start typing an organisation name and we'll suggest members of the DSI network.
 
-    = render 'suggestions', button_text: 'Invite', action_url_template: "/projects/#{@project.guid}/create_existing_org_invite?organisation_id=:organisation_id"
+    = render 'suggestions', button_text: 'Invite', action_url_template: "/projects/#{@project.guid}/create_existing_org_invite?organisation_id=:organisation_id", help: "The following organisations matched that name. Click <strong>Invite</strong> to invite an organisation to be a partner on this activity."
 
     .field-with-notes
       .fields
