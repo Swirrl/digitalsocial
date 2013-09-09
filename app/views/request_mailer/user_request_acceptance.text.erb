@@ -1,0 +1,8 @@
+Hi <%= @user.first_name %>,
+
+Your request to join <%= @organisation.name %> has been accepted.
+
+To go to <%= @organisation.name %>'s dashboard click the link below:
+
+<%= dashboard_url(org_id: @organisation.guid) %>
+

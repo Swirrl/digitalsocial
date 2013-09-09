@@ -17,6 +17,7 @@ class UserRequest
   def accept!
     add_user_to_organisation
     set_accepted
+    send_user_request_acceptance
 
     self.save
   end
@@ -41,6 +42,10 @@ class UserRequest
   def set_rejected
     self.open = false
     self.accepted = false
+  end
+
+  def send_user_request_acceptance
+    RequestMailer.user_request_acceptance(self, user).deliver
   end
 
 end
