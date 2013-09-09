@@ -79,4 +79,19 @@ feature 'New project wizard step' do
     page.should have_css('.project_organisation_natures .error')
   end
 
+  scenario 'Prevent duplicate projects from being added' do
+    FactoryGirl.create(:project, name: 'DuplicateActivity')
+
+    fill_in 'Name', with: 'DuplicateActivity'
+    fill_in 'Description', with: 'Lorem ispum'
+    choose 'Research Project'
+    check 'Sole funder'
+    check 'Delivery Lead'
+
+    click_button 'Next step'
+
+    page.current_url.should_not include("organisations/build/edit_project")
+    page.should have_css('.error')
+  end
+
 end

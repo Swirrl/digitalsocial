@@ -55,4 +55,26 @@ feature 'Edit project' do
     page.should_not have_content "Forbidden project"
   end
 
+  scenario 'Prevent duplicate projects from being added' do
+    FactoryGirl.create(:project, name: 'AnExistingActivity')
+
+    fill_in 'Name', with: 'AnExistingActivity'
+    fill_in 'Description', with: 'Lorem ispum etc'
+    choose 'Event'
+    uncheck 'Sole funder'
+    check 'Advisory-group member'
+    select 'January 2011', from: 'Activity start date'
+    select 'Ongoing', from: 'Activity end date'
+    uncheck 'Open Networks'
+    check 'Open Hardware'
+    fill_in 'Areas of Society Impacted', with: 'Finance'
+    fill_in 'Technology Method', with: 'Peer Support'
+    fill_in 'Social Impact', with: 'This is a social impact'
+
+    click_button 'Update'
+
+    page.current_path.should_not == dashboard_projects_path
+    page.should have_css('.error')
+  end
+
 end

@@ -27,6 +27,8 @@ class Project
   validate :validate_reach_data_type
   validate :validate_network_metric
 
+  validate :project_name_is_unique
+
   # override initialise
   def initialize(uri=nil, graph_uri=nil)
     super(uri || Project.slug_to_uri(Guid.new))
@@ -354,6 +356,15 @@ class Project
       result
     else
       true
+    end
+  end
+
+  private
+
+  def project_name_is_unique
+    name_predicate = Project.fields[:name].predicate.to_s
+    if Project.where("?uri <#{name_predicate}> \"#{name}\"").where("FILTER(?uri != <#{self.uri}>)").count > 0
+      errors.add(:name, "Activity already exists")
     end
   end
 
