@@ -22,6 +22,7 @@ class ProjectRequest
 
     add_requestor_to_project
     set_accepted
+    send_project_request_acceptances
 
     self.save
   end
@@ -46,6 +47,12 @@ class ProjectRequest
   def set_rejected
     self.open = false
     self.accepted = false
+  end
+
+  def send_project_request_acceptances
+    requestor_organisation_resource.users.each do |user|
+      RequestMailer.project_request_acceptance(self, user).deliver
+    end
   end
 
 end

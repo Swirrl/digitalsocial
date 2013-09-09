@@ -1,0 +1,8 @@
+Hi <%= @user.first_name %>,
+
+Your request to join "<%= @project.name %>" has been accepted.
+
+To view all your activities click the link below:
+
+<%= dashboard_projects_url(org_id: @organisation.guid) %>
+

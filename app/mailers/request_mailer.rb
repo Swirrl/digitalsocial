@@ -18,4 +18,14 @@ class RequestMailer < ActionMailer::Base
     @organisation = organisation
     mail to: @user.email, subject: "There are items awaiting your response on DigitalSocialInnovation for #{organisation.name}"
   end
+
+  def project_request_acceptance(project_request, user)
+    @project_request = project_request
+    @project = @project_request.project_resource
+    @organisation = @project_request.requestor_organisation_resource
+    @user = user
+
+    mail to: @user.email, subject: "Your activity request has been accepted"
+  end
+
 end
