@@ -63,7 +63,15 @@ class OrganisationsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render json: { organisations: @organisations.as_json(map_index: true) }
+        render json: { 
+          organisations: Organisation.organisations_for_map.map do |o| 
+            {
+              guid: o["org"]["value"].split('/').last,
+              lat: o["lat"]["value"],
+              lng: o["lng"]["value"]
+            }
+          end
+        }
       end
     end
   end

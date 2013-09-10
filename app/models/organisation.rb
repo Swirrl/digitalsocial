@@ -146,6 +146,19 @@ class Organisation
     end
   end
 
+  def self.organisations_for_map
+    Tripod::SparqlClient::Query.select("
+      SELECT ?org ?lat ?lng WHERE {       
+        GRAPH <#{Digitalsocial::DATA_GRAPH}> {
+          ?org a <http://www.w3.org/ns/org#Organization> .
+          ?org <http://www.w3.org/ns/org#hasPrimarySite> ?site .
+          ?site <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat .
+          ?site <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?lng .
+        }
+      }
+    ")
+  end
+
   def self.search_by_name(search)
     name_predicate = self.fields[:name].predicate.to_s
     self.order_by_name.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
