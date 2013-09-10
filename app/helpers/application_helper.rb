@@ -81,4 +81,11 @@ module ApplicationHelper
     "/assets/asteroids/#{rand(5)+1}_70x70.png"
   end
 
+  def home_map_popup(organisation)
+    content = []
+    content.push "<h3>#{link_to organisation.name, organisation}</h3>"
+
+    content.join
+  end
+
 end

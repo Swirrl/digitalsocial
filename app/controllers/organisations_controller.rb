@@ -1,7 +1,7 @@
 class OrganisationsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:index, :show]
-  before_filter :set_organisation
+  before_filter :authenticate_user!, :except => [:index, :show, :map_index, :map_show]
+  before_filter :set_organisation, :except => [:map_index, :map_show]
   before_filter :ensure_user_is_organisation_owner, only: [:invite_user]
 
   def edit
@@ -55,6 +55,26 @@ class OrganisationsController < ApplicationController
         }
       end
       format.html
+    end
+  end
+
+  def map_index
+    @organisations = Organisation.all.resources
+
+    respond_to do |format|
+      format.json do
+        render json: { organisations: @organisations.as_json(map_index: true) }
+      end
+    end
+  end
+  
+  def map_show
+    @organisation = Organisation.find(Organisation.slug_to_uri(params[:id]))
+
+    respond_to do |format|
+      format.json do
+        render json: { organisation: @organisation.as_json(map_show: true) }
+      end
     end
   end
 

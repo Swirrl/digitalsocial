@@ -27,7 +27,7 @@
     = render "typekit"
   %body.home
 
-    <iframe width='100%' height='100%' frameBorder='0' src='http://a.tiles.mapbox.com/v3/swirrl.map-v2ypw352.html#4/46.241/7.976'></iframe>
+    #home-map
 
     .logo
       = image_tag "logo/dsi-logo.png"
@@ -56,5 +56,6 @@
 
         = link_to "Put yourself on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
 
+    = render "site/index/map_js"
 
 

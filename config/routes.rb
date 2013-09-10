@@ -83,6 +83,10 @@ Digitalsocial::Application.routes.draw do
       get 'request_to_join'
       get 'edit_location'
       post 'update_location'
+      get 'map_show'
+    end
+    collection do
+      get 'map_index'
     end
   end
 

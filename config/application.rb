@@ -20,6 +20,7 @@ module Digitalsocial
   DATA_GRAPH = 'http://data.digitalsocial.eu/graph/organizations-and-activities'
   ONTOLOGY_GRAPH = 'http://data.digitalsocial.eu/graph/ontology/digital-social-innovation'
   MAPBOX_MAP_ID = 'swirrl.map-fur94vuh'
+  MAPBOX_HOME_MAP_ID = 'swirrl.map-v2ypw352'
   EU_COUNTRIES = ["Austria", "Belgium", "Bulgaria", "Cyprus", "Czech Republic",
     "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary",
     "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands",

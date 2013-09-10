@@ -113,14 +113,28 @@ class Organisation
   end
 
   def as_json(options = nil)
-    json = {
-      name: self.name,
-      guid: self.guid,
-      image_url: self.image_url,
-      uri: self.uri.to_s,
-      address: self.address_str
-    }
-    json
+    if options[:map_index]
+      {
+        guid: self.guid,
+        lat: primary_site_resource.lat,
+        lng: primary_site_resource.lng
+      }
+    elsif options[:map_show]
+      {
+        guid: self.guid,
+        name: self.name,
+        address: self.address_str,
+        projects: project_resources.collect { |p| { name: p.name, guid: p.guid } }
+      }
+    else
+      {
+        name: self.name,
+        guid: self.guid,
+        image_url: self.image_url,
+        uri: self.uri.to_s,
+        address: self.address_str
+      }
+    end
   end
 
   def image_url

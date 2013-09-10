@@ -16,5 +16,15 @@ FactoryGirl.define do
         FactoryGirl.create_list(:organisation_membership, evaluator.users_count, organisation_uri: organisation.uri.to_s)
       end
     end
+
+    factory :organisation_with_projects do
+      ignore do
+        projects_count { rand(6) }
+      end
+
+      after(:create) do |organisation, evaluator|
+        FactoryGirl.create_list(:project, evaluator.projects_count, scoped_organisation: organisation)
+      end
+    end
   end
 end

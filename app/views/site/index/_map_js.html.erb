@@ -1,0 +1,90 @@
+<script>
+  $(function() {
+
+    var defaultCenter = [50,10];
+    var defaultZoom = 4;
+    var selectedZoom = 16;
+
+    var lat = <%= Organisation.first.primary_site_resource.lat.present? ? Organisation.first.primary_site_resource.lat : 'null' %>;
+    var lng = <%= Organisation.first.primary_site_resource.lng.present? ? Organisation.first.primary_site_resource.lng : 'null' %>;
+
+    var map = L.mapbox.map('home-map', "<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>", {
+      scrollWheelZoom: false
+    }).setView(defaultCenter,defaultZoom);
+
+    $.ajax({
+      type: 'GET',
+      url: '/organisations/map_index',
+      success: function(data){
+        addOrganisationPins(data.organisations);
+      },
+      dataType: 'json'
+    });
+
+    map.on('popupopen', function(e) {
+      
+      var guid = e.popup._source._guid;
+      
+      $.ajax({
+        type: 'GET',
+        url: '/organisations/'+guid+'/map_show',
+        beforeSend: function(){
+          e.popup.setContent('<div class="spinner"></div>');
+        },
+        success: function(data){
+          setOrganisationPopupContent(data.organisation, e.popup);
+        },
+        error: function() {
+          e.popup.setContent('<div class="popup-error">Oops - something went wrong.</div>');
+        },
+        dataType: 'json'
+      });
+      
+    });
+
+    function addOrganisationPins(organisations) {
+
+      $.each(organisations, function(i, org) {
+
+        var m = L.marker(new L.LatLng(org.lat, org.lng), {
+          icon: L.mapbox.marker.icon({
+            'marker-color': 'f39200',
+            'marker-size': 'small'
+          })
+        }).bindPopup('', {
+          closeButton: false
+        });
+        m._guid = org.guid;
+        m.addTo(map);
+
+      });
+    }
+
+    function setOrganisationPopupContent(organisation, popup) {
+
+      var content = '';
+      content += '<h3><a href="/organisations/'+organisation.guid+'">'+organisation.name+'</a></h3>';
+      
+      if (organisation.address) {
+        content += '<p class="address">'+organisation.address+'</p>';  
+      }
+
+      if (organisation.projects.length > 0) {
+        content += '<ul class="projects">';
+        $.each(organisation.projects, function(i, project) {
+          content += '<li><a href="/projects/'+project.guid+'">'+project.name+'</a></li>';
+        });
+        content += '</ul>';
+      }
+      
+
+      popup.setContent(content);
+
+
+    }
+
+    
+
+  });
+
+</script>

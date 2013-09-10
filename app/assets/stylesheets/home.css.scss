@@ -16,11 +16,16 @@
 
     .links {
       margin-top: 30px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       
       a {
         font-style: italic;
         margin-right: 12px;
+        @include transition(all, 0);
+
+        &:hover {
+          border-bottom: 3px solid $orange;
+        }
 
         &:last-child {
           margin-right: 0;
@@ -77,3 +82,82 @@
     border-bottom: 3px solid $orange;
   }
 }
+
+#home-map {
+  width: 100%;
+  height: 100%;
+
+  .leaflet-popup-content-wrapper {
+    @include border-radius(0);
+    border-top: 6px solid $orange;
+    width: 300px;
+    min-height: 60px;
+
+    .leaflet-popup-content {
+      font-family: $chaparral;
+
+      .spinner {
+        padding: 24px 0;
+        background: transparent url(image-path('spinner.gif')) no-repeat center;
+        height: 32px;
+        padding: 32px 0;
+      }
+
+      .popup-error {
+        font-size: 18px;
+        padding: 32px 0;
+        text-align: center;
+        color: #888;
+        font-style: italic;
+      }
+
+      h3 {
+        margin-bottom: 6px;
+
+        a {
+          color: $orange;
+          font-size: 20px;
+          font-style: italic;
+          font-weight: normal;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      p.address {
+        font-style: italic;
+        color: #999;
+        font-size: 14px;
+        margin: 0 0 8px;
+        line-height: 1;
+      }
+
+      ul.projects {
+        font-size: 15px;
+        margin: 0;
+
+        li {
+          line-height: 1;
+          list-style-type: none;
+          margin-bottom: 8px;
+
+          a:hover {
+            text-decoration: underline;
+          }
+
+        }
+        
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
