@@ -149,3 +149,18 @@
 
 
 }
+
+#terms {
+  h3 {
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  p + h3 {
+    margin-top: 60px;
+  }
+
+  li {
+    margin-bottom: 18px;
+  }
+}

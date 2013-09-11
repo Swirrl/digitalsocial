@@ -6,6 +6,10 @@ class SiteController < ApplicationController
     render layout: false
   end
 
+  def terms
+    
+  end
+
   private
 
   def set_title

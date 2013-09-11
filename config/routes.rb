@@ -94,6 +94,7 @@ Digitalsocial::Application.routes.draw do
   get 'dashboard' => 'dashboard#pending'
   get 'dashboard/projects' => 'dashboard#projects'
   get 'dashboard/users' => 'dashboard#users'
+  get 'terms-and-conditions' => 'site#terms'
 
   match ':action' => 'site'
   root to: 'site#index'
