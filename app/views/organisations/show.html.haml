@@ -6,7 +6,7 @@
     .left-column.details
 
       %p.label Address
-      %p= @organisation.address_str(",<br>").html_safe
+      %p= @organisation.address_str.present? ? @organisation.address_str(",<br>").html_safe : "Not supplied"
 
       %p.label Type of Organisation
       %p= @organisation.organisation_type_label || "Not supplied"
@@ -28,11 +28,10 @@
         - else
           Not supplied
 
-    .right-column.map
-
-      #show-map
-
-      = render "organisations/show/map_js"
+    - if @organisation.primary_site_resource.present?
+      .right-column.map
+        #show-map
+        = render "organisations/show/map_js"
 
 
   .show-row

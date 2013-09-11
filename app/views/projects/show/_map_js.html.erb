@@ -10,28 +10,30 @@
     var minLat, maxLat, minLng, maxLng;
 
     <% @project.organisation_resources.each do |org| %>
+      <% if org.primary_site_resource.present? %>
 
-      var lat = <%= org.primary_site_resource.lat %>;
-      var lng = <%= org.primary_site_resource.lng %>;
+        var lat = <%= org.primary_site_resource.lat %>;
+        var lng = <%= org.primary_site_resource.lng %>;
 
-      if (!minLat) minLat = lat;
-      else if (lat < minLat) minLat = lat;
+        if (!minLat) minLat = lat;
+        else if (lat < minLat) minLat = lat;
 
-      if (!maxLat) maxLat = lat;
-      else if (lat > maxLat) maxLat = lat;
+        if (!maxLat) maxLat = lat;
+        else if (lat > maxLat) maxLat = lat;
 
-      if (!minLng) minLng = lng;
-      else if (lng < minLng) minLng = lng;
-      
-      if (!maxLng) maxLng = lng;
-      else if (lng > maxLng) maxLng = lng;
+        if (!minLng) minLng = lng;
+        else if (lng < minLng) minLng = lng;
+        
+        if (!maxLng) maxLng = lng;
+        else if (lng > maxLng) maxLng = lng;
 
-      L.marker(new L.LatLng(lat, lng), {
-        icon: L.mapbox.marker.icon({
-          'marker-color': 'f39200'
-        })
-      }).addTo(map);
+        L.marker(new L.LatLng(lat, lng), {
+          icon: L.mapbox.marker.icon({
+            'marker-color': 'f39200'
+          })
+        }).addTo(map);
 
+      <% end %>
     <% end %>
 
     var southWest = new L.LatLng(minLat, minLng);
