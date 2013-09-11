@@ -76,11 +76,17 @@
               %p.nature
                 %em #{@project.natures_str_for_organisation(o)}
 
+    .right-column.secondary-list
+      .hr.hr1
+      %h2 Similar Activities
+
+      %p
+        So similar activities yet.
 
   .show-row.cta
 
     - if current_user && current_organisation && current_organisation.is_member_of_project?(@project)
-      
+
       %span #{current_organisation.name} is a partner on this activity.
       = link_to "Edit activity", edit_project_path(@project), class: 'button'
     - else
