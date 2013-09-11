@@ -15,16 +15,22 @@ body {
 }
 
 .flash {
-  padding: 12px 24px;
-  margin: 18px 0;
+  padding: 18px 36px;
+  margin: 36px 0;
   color:white;
   line-height: 1.5;
+  text-align: center;
+  font-size: 20px;
+  font-style: italic;
+
   &.alert {
-    background: lighten($orange, 20%);
+    background: #ffffe0;
+    color: #7f7f75;
   }
 
   &.notice {
-    background: lighten($green, 15%);
+    background: #ffffe0;
+    color: #7f7f75;
   }
 }
 

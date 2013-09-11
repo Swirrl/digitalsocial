@@ -29,19 +29,28 @@
       %p= @project.reach_value_literal.to_s.present? ? @project.reach_value_literal.to_s : "Not supplied"
 
       %p.label Areas of Society Impacted
-      %ul
-        - @project.areas_of_society_list.split(', ').each do |aos|
-          %li= aos.titleize
+      - if @project.areas_of_society_list.present?
+        %ul
+          - @project.areas_of_society_list.split(', ').each do |aos|
+            %li= aos.titleize
+      - else
+        %p Not supplied
 
       %p.label Technology Focus
-      %ul
-        - @project.technology_focus_list.split(', ').each do |tf|
-          %li= tf.titleize
+      - if @project.technology_focus_list.present?
+        %ul
+          - @project.technology_focus_list.split(', ').each do |tf|
+            %li= tf.titleize
+      - else
+        %p Not supplied
 
       %p.label Technology Method
-      %ul
-        - @project.technology_method_list.split(', ').each do |tm|
-          %li= tm.titleize
+      - if @project.technology_method_list.present?
+        %ul
+          - @project.technology_method_list.split(', ').each do |tm|
+            %li= tm.titleize
+      - else
+        %p Not supplied
 
       %p.label Social Impact
       %p= @project.social_impact || "Not supplied"

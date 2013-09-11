@@ -34,7 +34,7 @@ class Concepts::ActivityType
     {
       "research-project" => "Downloads (in the last year)",
       "event" => "Attendees",
-      "network" => "How many organizations or individuals do you have in your network?",
+      "network" => "No. of Organizations/Individuals",
       "incubators-and-accelerators" => "Projects Supported (in the last year)",
       "maker-and-hacker-spaces" => "Active Members (in the last year)",
       "education-and-training" => "Students/Trainees (in the last year)",
