@@ -7,8 +7,11 @@ $(function(){
       this.otherFields();
       this.revealOtherField();
       this.autoSizeTextareas();
-      this.hrFull();
-      this.hrFullResize();
+
+      if ($('.hr-full').length) {
+        this.hrFull();
+        this.hrFullResize();  
+      }
     },
 
     revealableList: function() {

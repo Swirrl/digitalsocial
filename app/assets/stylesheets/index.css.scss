@@ -6,19 +6,19 @@
     li {
 
       display: block;
-      padding: 12px;
-      background: #fff2e3;
+      padding: 18px;
+      background: #eee;
       position: relative;
 
       &:nth-child(even) {
-        background: #fffaf4;
+        background: #f8f8f8;
       }
 
       .image {
         float: left;
         width: 70px;
         //height: 70px;
-        margin-right: 12px;
+        margin-right: 18px;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -34,16 +34,16 @@
       .details {
         float: left;
         line-height: 1.5;
-        max-width: 600px;
+        max-width: 840px;
         margin-left: 82px;
 
         .header {
-          font-weight: 600;
           font-size: 24px;
+          font-style: italic;
         }
 
         .subheader {
-          font-style: italic;
+          
         }
       }
 

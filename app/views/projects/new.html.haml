@@ -1,7 +1,8 @@
 .dashboard
   
   - if current_organisation
-    %h1 #{current_organisation.name}'s Dashboard
+    .title
+      %h1 #{current_organisation.name}'s Dashboard
     = render "dashboard/tabs", active: "Activities"
 
   %h2 Add/Join an Activity

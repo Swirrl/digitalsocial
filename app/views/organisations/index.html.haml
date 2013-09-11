@@ -8,8 +8,5 @@
           = image_tag o.image_url
 
         .details
-          .header= o.name
+          .header= link_to o.name, o
           .subheader= o.address_str
-
-        .action
-          = link_to 'View', o, class: 'button'

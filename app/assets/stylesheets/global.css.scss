@@ -137,11 +137,11 @@ h1 + h2 {
 }
 
 .hr3 {
-  height: 5px;
+  height: 4px;
 }
 
-.hr-full {
-  
+.title {
+  @include columns(16);
 }
 
 .leaflet-control-attribution {
