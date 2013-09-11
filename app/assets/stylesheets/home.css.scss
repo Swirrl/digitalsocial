@@ -115,7 +115,7 @@
 
   .leaflet-popup-content-wrapper {
     @include border-radius(0);
-    border-top: 6px solid $orange;
+    border-top: 4px solid $orange;
     width: 300px;
     min-height: 60px;
 
