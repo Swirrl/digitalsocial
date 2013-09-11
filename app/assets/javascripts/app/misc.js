@@ -7,6 +7,8 @@ $(function(){
       this.otherFields();
       this.revealOtherField();
       this.autoSizeTextareas();
+      this.hrFull();
+      this.hrFullResize();
     },
 
     revealableList: function() {
@@ -56,6 +58,15 @@ $(function(){
 
     autoSizeTextareas: function() {
       $('textarea.autosize').autosize();
+    },
+
+    hrFull: function() {
+      var width = $(window).width() - $('.hr-full').offset().left;
+      $('.hr-full').css({ width: width });
+    },
+
+    hrFullResize: function() {
+      $(window).resize(this.hrFull);
     }
   }
 
