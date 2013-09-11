@@ -30,11 +30,12 @@ body {
 
 a {
   text-decoration: none;
-  color: $orange;
+  color: $link-blue;
   @include transition(all, 0.1s);
 
   &:hover {
-    color: $orange;
+    color: $link-blue-hover;
+    text-decoration: underline;
   }
 }
 
@@ -128,6 +129,10 @@ h1 + h2 {
 
 .hr1 {
   height: 3px;
+}
+
+.hr2 {
+  height: 6px;
 }
 
 .hr3 {

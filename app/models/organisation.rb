@@ -241,8 +241,8 @@ class Organisation
 
   #### expose some useful data for this object, to avoid law of demeter type probs
 
-  def address_str
-    self.primary_site_resource.address_resource.to_s if self.primary_site
+  def address_str(connector=', ')
+    self.primary_site_resource.address_resource.to_s(connector) if self.primary_site
   end
 
   def self.order_by_name
@@ -257,6 +257,25 @@ class Organisation
     @pending_count += 1 if !primary_site
     @pending_count += respondables.count
     @pending_count
+  end
+
+  def partner_organisations_with_count
+    return @powc if @powc
+
+    @powc = {}
+    project_resources.each do |project|
+      project.organisation_resources.each do |org|
+        if org.guid != self.guid
+          if @powc[org.guid]
+            @powc[org.guid][:count] += 1
+          else
+            @powc[org.guid] = { name: org.name, count: 1 }
+          end
+        end
+      end
+    end
+
+    @powc = @powc.sort_by{ |_, v| v[:count] }.reverse
   end
 
   private

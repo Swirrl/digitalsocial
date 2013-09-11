@@ -5,9 +5,6 @@
     var defaultZoom = 4;
     var selectedZoom = 16;
 
-    var lat = <%= Organisation.first.primary_site_resource.lat.present? ? Organisation.first.primary_site_resource.lat : 'null' %>;
-    var lng = <%= Organisation.first.primary_site_resource.lng.present? ? Organisation.first.primary_site_resource.lng : 'null' %>;
-
     var map = L.mapbox.map('home-map', "<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>", {
       scrollWheelZoom: false
     }).setView(defaultCenter,defaultZoom);

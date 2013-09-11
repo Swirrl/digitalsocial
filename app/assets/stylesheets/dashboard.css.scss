@@ -29,8 +29,17 @@
       opacity: 0.66;
       @include transition(opacity, 0.1s);
 
+      a {
+        color: $orange;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
       &:hover {
         opacity: 1;
+        border-bottom: 3px solid $orange;
       }
 
       &.active {

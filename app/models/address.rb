@@ -14,8 +14,8 @@ class Address
     super(uri || "http://data.digitalsocial.eu/id/address/#{Guid.new}")
   end
 
-  def to_s
-    [street_address, locality, region, country, postal_code].select{|portion| portion.present?}.join(', ')
+  def to_s(connector=", ")
+    [street_address, locality, region, country, postal_code].select{|portion| portion.present?}.join(connector)
   end
 
 end

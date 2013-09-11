@@ -1,0 +1,21 @@
+<script>
+  $(function() {
+
+    var defaultZoom = 13;
+
+    var lat = <%= @organisation.primary_site_resource.lat %>;
+    var lng = <%= @organisation.primary_site_resource.lng %>;
+
+    var map = L.mapbox.map('show-map', "<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>", {
+      scrollWheelZoom: false
+    }).setView([lat, lng], defaultZoom);
+
+    L.marker(new L.LatLng(lat, lng), {
+      icon: L.mapbox.marker.icon({
+        'marker-color': 'f39200'
+      })
+    }).addTo(map);
+
+  });
+
+</script>

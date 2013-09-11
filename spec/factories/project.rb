@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :project do
-    name         { Faker::Company.catch_phrase }
+    name         { Faker::Company.catch_phrase.titleize }
     description  { Faker::Lorem.paragraph }
     webpage      { "http://#{Faker::Internet.domain_name}" }
     activity_type_label   { Faker::Lorem.words.join(", ") }
@@ -17,6 +17,16 @@ FactoryGirl.define do
 
     factory :project_with_network_activity do
       activity_type { Concepts::ActivityType.from_label("network").uri }
+    end
+
+    factory :project_with_organisations do
+      ignore do
+        organisations_count { rand(6) }
+      end
+
+      after(:create) do |project, evaluator|
+        FactoryGirl.create_list(:project_membership, evaluator.organisations_count, project: project.uri.to_s)
+      end
     end
   end
 end
