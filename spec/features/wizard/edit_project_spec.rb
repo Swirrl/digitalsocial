@@ -8,9 +8,9 @@ feature 'Edit project wizard step' do
 
   background do
     login_as user, scope: :user
-    FactoryGirl.create(:project, scoped_organisation: organisation)
+    project = FactoryGirl.create(:project, scoped_organisation: organisation)
 
-    visit organisations_build_edit_project_path
+    visit organisations_build_edit_project_path(id: project.guid)
   end
 
   scenario 'Filling in edit project step successfully' do

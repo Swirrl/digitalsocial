@@ -2,6 +2,8 @@ class Organisations::BuildController < ApplicationController
 
   before_filter :authenticate_user!, except: [:new_user, :create_user]
   before_filter :redirect_to_new_organisation_if_logged_in, only: [:new_user, :create_user]
+  before_filter :find_project_and_ensure_current_organisation_is_member,
+    only: [:edit_project, :update_project, :invite_organisations, :create_new_organisation_invite]
 
   def new_user
     @user = User.new
@@ -70,19 +72,13 @@ class Organisations::BuildController < ApplicationController
   end
 
   def edit_project
-    # TODO Ensure organisation is a member of the retrieved project
-    @project = current_organisation.project_resources.first
     @project.scoped_organisation = current_organisation
   end
 
   def update_project
-    # TODO Ensure organisation is a member of the retrieved project
-
-    transaction = Tripod::Persistence::Transaction.new
-
-    @project = Project.find(Project.slug_to_uri(params[:id]))
     @project.scoped_organisation = current_organisation
 
+    transaction = Tripod::Persistence::Transaction.new
     if @project.update_attributes(params[:project], transaction: transaction ) && @project.save_reach_value(transaction: transaction)
       transaction.commit
       redirect_to organisations_build_invite_organisations_path(id: @project.guid)
@@ -93,14 +89,12 @@ class Organisations::BuildController < ApplicationController
   end
 
   def invite_organisations
-    @project = Project.find(Project.slug_to_uri(params[:id]))
     @project_invite = ProjectInvitePresenter.new
     @project_invite.project_uri = @project.uri
     @project_invite.invitor_organisation_uri = current_organisation.uri
   end
 
   def create_new_organisation_invite
-    @project = Project.find(Project.slug_to_uri(params[:id]))
     @project_invite = ProjectInvitePresenter.new
     @project_invite.attributes = params[:project_invite_presenter]
     @project_invite.project_uri = @project.uri
@@ -118,6 +112,14 @@ class Organisations::BuildController < ApplicationController
 
   def redirect_to_new_organisation_if_logged_in
     redirect_to [:organisations, :build, :new_organisation] if user_signed_in?
+  end
+
+  def find_project_and_ensure_current_organisation_is_member
+    @project = Project.find(Project.slug_to_uri(params[:id]))
+
+    unless current_organisation.is_member_of_project?(@project)
+      redirect_to :dashboard, notice: "Your current organisation is not a member of that activity."
+    end
   end
 
 end
