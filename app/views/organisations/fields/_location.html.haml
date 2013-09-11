@@ -55,14 +55,13 @@
     function formFieldChanged() {
       var streetAddress = $('#organisation_presenter_street_address').val();
       var locality = $('#organisation_presenter_locality').val();
-      var region = $('#organisation_presenter_region').val();
       var country = $('#organisation_presenter_country').val();
 
       // if we've got a street address, locality and country, then do the geo coding...
       if(streetAddress.length > 0 &&
           (locality.length > 0) &&
           country.length > 0 ) {
-        geoCode(streetAddress, locality, region, country);
+        geoCode(streetAddress, locality, country);
       }
     }
 
@@ -76,14 +75,13 @@
       return geoQuery;
     }
 
-    function geoCode(streetAddress, locality, region, country, postalCode) {
+    function geoCode(streetAddress, locality, country, postalCode) {
 
       var url = 'http://nominatim.openstreetmap.org/search';
 
       geoQuery = '';
       geoQuery = addSectionToGeoQuery(geoQuery, streetAddress);
       geoQuery = addSectionToGeoQuery(geoQuery, locality);
-      geoQuery = addSectionToGeoQuery(geoQuery, region);
       geoQuery = addSectionToGeoQuery(geoQuery, country);
 
       url += '?q=' + encodeURIComponent(geoQuery);
