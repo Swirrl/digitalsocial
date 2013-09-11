@@ -36,7 +36,7 @@
     // hide the lat long fields
     $("#lat-lng").hide();
 
-    var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_MAP_ID}', {scrollWheelZoom: false})
+    var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_SHOW_MAP_ID}', {scrollWheelZoom: false})
       .setView(defaultCenter,defaultZoom);
 
     var marker = null;
@@ -121,7 +121,7 @@
       } else {
         marker = L.marker( new L.LatLng(lat, lng), {
           draggable: true,
-          icon: L.mapbox.marker.icon({'marker-color': '000'}),
+          icon: L.mapbox.marker.icon({'marker-color': 'F39200'}),
         });
         // wire up events to move
         marker.on('move', function(e) {
