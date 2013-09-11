@@ -27,17 +27,17 @@
 
     .field-with-notes
       .field
-        = f.input :first_name, placeholder: 'Enter your name', label: 'Name'
+        = f.input :first_name, placeholder: 'Enter your name', label: 'Your name'
       .notes
-        %p This is your name (your your organisation's name). This is so we know how to address you in emails etc. We won't release any personally identifying data in the open data.
+        %p This is your name (not your organisation's name). This is so we know how to address you in emails etc. We won't release any personally identifying data in the open data.
     .field-with-notes
       .field
-        = f.input :email, placeholder: 'Enter your email address'
+        = f.input :email, placeholder: 'Enter your email address', label: 'Your email'
       .notes
         %p You'll use the email and password to log in.
     .field-with-notes
       .field
-        = f.input :password, placeholder: 'Choose a new password', required: true
+        = f.input :password, placeholder: 'Choose a new password', required: true, label: 'New password'
       .notes
 
 

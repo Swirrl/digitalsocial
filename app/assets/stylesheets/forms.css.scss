@@ -35,14 +35,15 @@ form {
       padding-top:20px;
       @include media-all-mobile {
         font-size:14px;
-        color: lighten($dark-grey, 15%);
-
+        color: #888;
+        
         // as it's underneath
         padding-top:0;
         margin-top:-30px;
         margin-bottom:40px;
       }
-      color: $dark-grey;
+      color: #888;
+      font-style: italic;
     }
   }
 
@@ -143,7 +144,7 @@ form {
   .error-messages {
     @include columns(16);
     border: 2px solid $red;
-    margin-bottom: 36px;
+    margin-bottom: 48px;
     padding: 18px;
     background: #ecb9bd;
     color: $red;

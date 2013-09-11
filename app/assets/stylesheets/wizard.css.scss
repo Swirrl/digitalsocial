@@ -132,13 +132,33 @@
   }
 }
 
+.wizard {
+  margin-top: -4px;
+
+  h3 {
+    color: $orange;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 36px;
+  }
+}
+
 .wizard-intro {
   @include columns(16);
   p, ul, ol {
-    font-size: 16px;
+    font-size: 18px;
     color: $dark-grey;
+
+    strong {
+      font-weight: 600;
+      font-style: italic;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
-  margin-bottom:6px;
+  margin-bottom: 48px;
   @include clearfix;
 }
 
@@ -229,13 +249,13 @@
 .skip-wizard {
   display: block;
   padding: 12px;
-  background: #fff2e3;
+  background: #ffffe0;
   margin-bottom: 48px;
 
   span {
     line-height: 44px;
     padding-left: 12px;
-    color: $orange;
+    color: #7f7f75;
     font-style: italic;
   }
 
