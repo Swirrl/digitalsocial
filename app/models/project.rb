@@ -241,7 +241,7 @@ class Project
 
   def self.order_by_name
     name_predicate = self.fields[:name].predicate.to_s
-    where("?uri <#{name_predicate}> ?name").order("?name")
+    where("?uri <#{name_predicate}> ?name").order("lcase(str(?name))")
   end
 
   def progress_percent
