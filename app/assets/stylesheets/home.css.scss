@@ -9,6 +9,7 @@
     padding: 30px 18px 0px;
     background: rgba(255, 255, 255, 0.75);
     border-bottom: 3px solid $orange;
+    @include transition(top, 0.25s);
 
     img {
       
@@ -36,17 +37,40 @@
     }
   }
 
-  .info {
+  .small-info {
+    display: none;
     position: absolute;
-    bottom: 0px;
     //left: 216px;
     right: 0px;
     bottom: 20px;
-    width: 61%;
+    background: rgba(255, 255, 255, 0.75);
+    border-top: 9px solid $orange;
+    padding: 36px;
+
+    p.show-more {
+      text-align: center;
+      
+      line-height: 1;
+
+      a {
+        //color: #999;
+        font-size: 30px;
+        font-style: italic;
+      }
+    }
+  }
+
+  .info {
+    position: absolute;
+    //left: 216px;
+    right: 0px;
+    bottom: 20px;
+    width: 826px;
 
     background: rgba(255, 255, 255, 0.75);
     border-top: 9px solid $orange;
     padding: 36px;
+    @include transition(all, 0.5s);
 
     h1 {
       margin-bottom: 24px;
