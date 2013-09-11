@@ -23,7 +23,7 @@
       display: block;
       float: left;
       margin-right: 60px;
-      font-size: 30px;
+      font-size: 26px;
       font-style: italic;
       font-weight: 300;
       opacity: 0.66;
@@ -98,6 +98,18 @@
         font-style: italic;
         margin-bottom: 6px;
         line-height: 1.1;
+
+        a {
+          font-weight: 500;
+        }
+
+        span.grey {
+          color: #aaa;
+        }
+      }
+
+      &.awaiting .name {
+        margin-bottom: 0;
       }
 
       .row {

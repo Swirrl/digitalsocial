@@ -30,6 +30,22 @@ class Concepts::ActivityType
     }[self.slug]
   end
 
+  def get_reach_label_text
+    {
+      "research-project" => "Downloads (in the last year)",
+      "event" => "Attendees",
+      "network" => "How many organizations or individuals do you have in your network?",
+      "incubators-and-accelerators" => "Projects Supported (in the last year)",
+      "maker-and-hacker-spaces" => "Active Members (in the last year)",
+      "education-and-training" => "Students/Trainees (in the last year)",
+      "service-delivery" => "Registered Users",
+      "investment-and-funding" => "Investment/Funding Distributed in Euros (in the last year)",
+      "advocating-and-campaigning" => "Participating Subscribers (in the last year)",
+      "advisory-or-expert-body" => "Clients Advised (in the last year)",
+      "other" => "Reach"
+    }[self.slug]
+  end
+
   # if the ActivityType is network, network_metric can be organizations or individuals
   def get_reach_measure_type_uri(network_metric=nil)
     lookup_val = {

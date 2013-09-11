@@ -5,9 +5,10 @@
       = render "dashboard/projects/list/existing", project: project
 
     - current_organisation.pending_project_requests_by_self.each do |req|
-      %li
+      %li.awaiting
         .name
-          #{req.project_resource.name} (awaiting acceptance)
+          = link_to req.project_resource.name, req.project_resource
+          %span.grey (awaiting acceptance)
 
 
   = link_to "+ Add/join another activity", [:new, :project], class: 'button button-green'

@@ -1,0 +1,45 @@
+<script>
+  $(function() {
+
+    var defaultZoom = 13;
+
+    var map = L.mapbox.map('show-map', "<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>", {
+      scrollWheelZoom: false
+    });
+
+    var minLat, maxLat, minLng, maxLng;
+
+    <% @project.organisation_resources.each do |org| %>
+
+      var lat = <%= org.primary_site_resource.lat %>;
+      var lng = <%= org.primary_site_resource.lng %>;
+
+      if (!minLat) minLat = lat;
+      else if (lat < minLat) minLat = lat;
+
+      if (!maxLat) maxLat = lat;
+      else if (lat > maxLat) maxLat = lat;
+
+      if (!minLng) minLng = lng;
+      else if (lng < minLng) minLng = lng;
+      
+      if (!maxLng) maxLng = lng;
+      else if (lng > maxLng) maxLng = lng;
+
+      L.marker(new L.LatLng(lat, lng), {
+        icon: L.mapbox.marker.icon({
+          'marker-color': 'f39200'
+        })
+      }).addTo(map);
+
+    <% end %>
+
+    var southWest = new L.LatLng(minLat, minLng);
+    var northEast = new L.LatLng(maxLat, maxLng);
+    var bounds    = new L.LatLngBounds(southWest, northEast);
+
+    map.fitBounds(bounds);
+
+  });
+
+</script>
