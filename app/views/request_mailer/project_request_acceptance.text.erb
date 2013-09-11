@@ -1,8 +1,9 @@
-Hi <%= @user.first_name %>,
+Hello <%= @user.first_name %>,
 
-Your request to join "<%= @project.name %>" has been accepted.
+Your request to join <%= @project.name %> on digitalsocial.eu has been accepted.
 
 To view all your activities click the link below:
 
 <%= dashboard_projects_url(org_id: @organisation.guid) %>
 
+<%= render 'footer' %>

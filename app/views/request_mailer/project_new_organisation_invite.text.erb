@@ -1,8 +1,10 @@
 Hello <%= @user.first_name %>,
 
-You have been invited to join a project on digitalsocial.eu.
+You have been invited to join an activity on digitalsocial.eu
 
 Someone from <%= @invite.invitor_organisation.name %> has indicated that you worked on <%= @invite.project.name %>.
 
 Click the link below to complete the sign up and accept the invitation.
 <%= edit_password_url(@user, :reset_password_token => @user.reset_password_token, :new => 1) %>
+
+<%= render 'footer' %>

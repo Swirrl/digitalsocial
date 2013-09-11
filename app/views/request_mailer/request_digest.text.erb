@@ -1,4 +1,6 @@
-Hi <%= @user.first_name %>,
+Hello <%= @user.first_name %>,
+
+This is a weekly digest of your pending items on digitalsocial.eu
 
 <% if @organisation.pending_project_invites.any? %>
 <%= @organisation.name %> has pending invites to the following activities:
@@ -27,3 +29,5 @@ The following users have requested to join your organisation:
 To respond to these items, please log in to the digitalsocial.eu dashboard for <%= @organisation.name %> (link below).
 
 <%= dashboard_url(org_id: @organisation.guid) %>
+
+<%= render 'footer' %>

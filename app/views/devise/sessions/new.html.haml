@@ -3,10 +3,10 @@
 = simple_form_for resource, :as => resource_name, :url => session_path(resource_name) do |f|
 
   = f.input :email
-  = f.input :password
+  = f.input :password, required: true
   = f.input :remember_me, :as => :boolean if devise_mapping.rememberable?
 
-  = f.button :submit, 'Log In'
+  = f.button :submit, 'Log In', class: 'button-green'
 
 %hr
 %p
