@@ -72,6 +72,19 @@
     padding: 36px;
     @include transition(all, 0.5s);
 
+    .credits {
+      margin-top: 24px;
+      margin-bottom: -12px;
+      font-size: 16px;
+      color: #aaa;
+
+      a {
+        font-weight: 600;
+        font-style: italic;
+        color: #aaa;
+      }
+    }
+
     h1 {
       margin-bottom: 24px;
       font-size: 36px;
