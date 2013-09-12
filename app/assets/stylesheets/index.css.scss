@@ -1,9 +1,11 @@
 .index {
-  @include columns(16);
-  width: 960px;
+
+  .title {
+    @include columns(16);
+  }
 
   ul {
-
+     @include columns(16);
     li {
 
       display: block;
