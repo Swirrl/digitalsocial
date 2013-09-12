@@ -34,9 +34,9 @@
       #main.clearfix
         = yield
 
-      - unless current_user
+      - if show_partners
         = render "partners"
       = render "footer"
-    
+
     = render "analytics"
 

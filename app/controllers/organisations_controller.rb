@@ -3,6 +3,7 @@ class OrganisationsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show, :map_index, :map_show]
   before_filter :set_organisation, :except => [:map_index, :map_show]
   before_filter :ensure_user_is_organisation_owner, only: [:invite_user]
+  before_filter :show_partners, only: [:show, :index]
 
   def edit
     @organisation = current_organisation
@@ -39,7 +40,7 @@ class OrganisationsController < ApplicationController
   end
 
   def index
-    org_name_predicate = 
+    org_name_predicate =
 
     if params[:q].present? # used for auto complete suggestions.
       @organisations = Organisation.search_by_name(params[:q]).to_a
@@ -63,8 +64,8 @@ class OrganisationsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render json: { 
-          organisations: Organisation.organisations_for_map.map do |o| 
+        render json: {
+          organisations: Organisation.organisations_for_map.map do |o|
             {
               guid: o["org"]["value"].split('/').last,
               lat: o["lat"]["value"],
@@ -75,7 +76,7 @@ class OrganisationsController < ApplicationController
       end
     end
   end
-  
+
   def map_show
     @organisation = Organisation.find(Organisation.slug_to_uri(params[:id]))
 
