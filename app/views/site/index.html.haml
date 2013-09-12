@@ -20,6 +20,7 @@
     %script{src: "//cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"}
     %script{src: "//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.js"}
 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     = javascript_include_tag "application"
 
@@ -46,6 +47,8 @@
             = link_to "Put your organisation on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
           .log-in
             Already signed up? #{link_to "Log in", "/users/sign_in"}.
+        .credits
+          &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
 
     .mobile-small-info{style:'display:none'}
       .text

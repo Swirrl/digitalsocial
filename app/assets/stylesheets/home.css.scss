@@ -65,6 +65,7 @@
       color: $orange;
       font-style:italic;
       margin-bottom:10px;
+      font-size:30px;
     }
 
     .text {
@@ -87,6 +88,18 @@
       margin-top:10px;
       float:none;
       font-size:16px;
+    }
+
+    .credits {
+      margin-top: 12px;
+      margin-bottom: -12px;
+      font-size: 12px;
+      color: #aaa;
+      a {
+        font-weight: 600;
+        font-style: italic;
+        color: #aaa;
+      }
     }
   }
 
