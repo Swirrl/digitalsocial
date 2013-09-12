@@ -2,6 +2,12 @@ html, body {
   height: 100%;
 }
 
+#out-of-spec {
+  background: red;
+  color :white;
+  padding: 10px;
+}
+
 body {
   font-family: $chaparral;
   font-size: 18px;
