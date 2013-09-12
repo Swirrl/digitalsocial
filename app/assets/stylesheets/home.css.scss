@@ -42,7 +42,7 @@
     position: absolute;
     //left: 216px;
     right: 0px;
-    bottom: 20px;
+    bottom: 0px;
     background: rgba(255, 255, 255, 0.75);
     border-top: 9px solid $orange;
     padding: 36px;
@@ -64,13 +64,13 @@
     position: absolute;
     //left: 216px;
     right: 0px;
-    bottom: 20px;
+    bottom: 0px;
     width: 826px;
     font-size: 16px;
 
     background: rgba(255, 255, 255, 0.75);
     border-top: 9px solid $orange;
-    padding: 36px;
+    padding: 36px 36px 18px 36px;
     @include transition(all, 0.5s);
 
     .credits {
