@@ -44,7 +44,6 @@
 
     $('.show-more a').click(function(e){
       slideInPanels();
-
       e.preventDefault();
       return false;
     });
@@ -52,6 +51,18 @@
     $('a.hide-info').click(function(e) {
       e.preventDefault();
       slideOutPanels();
+      return false;
+    });
+
+    $('a.hide-info-mobile').click(function(e) {
+      e.preventDefault();
+      hideMobilePanels();
+      return false;
+    });
+
+    $('a.show-info-mobile').click(function(e) {
+      e.preventDefault();
+      showMobilePanels();
       return false;
     });
 
@@ -110,6 +121,16 @@
         $('.info').css({ right: "0" });
         $('.logo').css({ top: "0" });
       }, 250);
+    }
+
+    function showMobilePanels() {
+      $('.mobile-info').show();
+      $('.mobile-small-info').hide();
+    }
+
+    function hideMobilePanels() {
+      $('.mobile-info').hide();
+      $('.mobile-small-info').show();
     }
 
   });

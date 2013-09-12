@@ -32,6 +32,27 @@
 
     #home-map
 
+    .mobile-info
+      .text
+        %a.hide-info-mobile{href:'#'}
+          %icon.icon-circled-down
+          Hide this panel
+        %h2 Digital Social Innovation
+        :markdown
+           We’re setting up a network of organisations across the EU that use the Internet for social good.
+          [Read More](/about).
+        .cta.clearfix
+          .put-on-map
+            = link_to "Put your organisation on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
+          .log-in
+            Already signed up? #{link_to "Log in", "/users/sign_in"}.
+
+    .mobile-small-info{style:'display:none'}
+      .text
+        %a.show-info-mobile{href:'#'}
+          %icon.icon-circled-up
+          Show more info
+
     .logo
       = image_tag "logo/dsi-logo.png"
       .links
@@ -57,9 +78,9 @@
           It just takes a few minutes to get started.
 
         .cta.clearfix
-          .put-on-map{style:'float:left'}
+          .put-on-map
             = link_to "Put your organisation on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
-          .log-in{style:'float:left; margin-top:36px; margin-left:36px; font-size:18px; font-weight:600; font-style:italic;'}
+          .log-in
             Already signed up? #{link_to "Log in", "/users/sign_in"}.
 
         .info-foot
@@ -67,10 +88,15 @@
             &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
           .hide{style:'float:right'}
             %a.hide-info{href:'#', style:'font-style:italic; font-size:14px'}
-              Hide this info &raquo;
+              Hide this panel
+              %icon.icon-circled-right
 
     .small-info
-      %p.show-more= link_to "&laquo; Show more info".html_safe, "#"
+      %p.show-more
+        %a{href:'#'}
+          %icon.icon-circled-left
+          Show more info
+
       = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
 
     = render "site/index/map_js"
