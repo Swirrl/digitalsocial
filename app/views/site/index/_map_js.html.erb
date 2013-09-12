@@ -38,7 +38,11 @@
         dataType: 'json'
       });
 
-      slideOutPanels();
+      if (isMobile()) {
+        hideMobilePanels();
+      } else {
+        slideOutPanels();
+      }
 
     });
 
@@ -103,6 +107,14 @@
 
       popup.setContent(content);
 
+    }
+
+    function isMobile() {
+      var mobile = false;
+      if( window.matchMedia && window.matchMedia( "(max-width: 767px)" ).matches) {
+        mobile = true;
+      }
+      return mobile;
     }
 
     function slideOutPanels() {
