@@ -3,9 +3,10 @@
     %h1 #{current_organisation.name}'s Dashboard
   = render "dashboard/tabs", active: "Location"
 
-  %h2
-    %strong #{current_organisation.name}'s
-    location
+  .title
+    %h2
+      %strong #{current_organisation.name}'s
+      location
 
   = simple_form_for @organisation, url: [:update_location, current_organisation] do |f|
     = render 'error_messages', object: f.object

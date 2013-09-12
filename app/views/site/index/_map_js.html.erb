@@ -7,7 +7,7 @@
 
 
     var map = L.mapbox.map('home-map', "<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>", {
-      scrollWheelZoom: false
+      scrollWheelZoom: true
     }).setView(defaultCenter,defaultZoom);
 
     $.ajax({

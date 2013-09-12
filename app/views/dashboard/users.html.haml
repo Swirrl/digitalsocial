@@ -5,9 +5,10 @@
       %h1 #{current_organisation.name}'s Dashboard
     = render "dashboard/tabs", active: "Users"
 
-  %h2
-    Members of
-    %strong #{current_organisation.name}
+  .title
+    %h2
+      Members of
+      %strong #{current_organisation.name}
 
 
   %ul.users.dashboard-list
