@@ -3,6 +3,7 @@ Digitalsocial::Application.routes.draw do
   get '/blog' => 'site#blog'
   get '/events' => 'site#events'
   get '/terms' => 'site#terms'
+  get '/privacy' => 'site#privacy'
   get '/about' => 'site#about'
 
   devise_for :users
