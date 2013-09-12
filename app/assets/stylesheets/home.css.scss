@@ -3,6 +3,7 @@
   padding-bottom: 0;
 
   .logo {
+    z-index:9999;
     position: absolute;
     top: 0px;
     left: 72px;
@@ -38,6 +39,7 @@
   }
 
   .small-info {
+    z-index:9999;
     display: none;
     position: absolute;
     //left: 216px;
@@ -61,6 +63,7 @@
   }
 
   .info {
+    z-index:9999;
     position: absolute;
     //left: 216px;
     right: 0px;
