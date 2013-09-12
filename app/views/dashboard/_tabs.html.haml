@@ -1,19 +1,20 @@
-%ul.tabs.clearfix
-  %li{ class: active == 'Pending' ? 'active' : nil }
-    = link_to :dashboard do
-      Pending
-      - if current_organisation.pending_count > 0
-        (#{current_organisation.pending_count})
+.tabs-wrapper
+  %ul.tabs.clearfix
+    %li{ class:  active == 'Pending' ? 'active' : nil }
+      = link_to :dashboard do
+        Pending
+        - if current_organisation.pending_count > 0
+          (#{current_organisation.pending_count})
 
-  %li{ class: active == 'Activities' ? 'active' : nil }
-    = link_to "Activities", [:dashboard, :projects]
-  %li{ class: active == 'Users' ? 'active' : nil }
-    = link_to "Users", [:dashboard, :users]
-  %li{ class: active == 'Details' ? 'active' : nil }
-    = link_to "Details", edit_organisation_path(current_organisation.guid)
-  %li{ class: active == 'Location' ? 'active' : nil }
-    = link_to "Location", edit_location_organisation_path(current_organisation.guid)
-  %li.right{ class: active == 'Account' ? 'active' : nil }
-    = link_to "My account", [:edit, :user]
+    %li{ class: active == 'Activities' ? 'active' : nil }
+      = link_to "Activities", [:dashboard, :projects]
+    %li{ class: active == 'Users' ? 'active' : nil }
+      = link_to "Users", [:dashboard, :users]
+    %li{ class: active == 'Details' ? 'active' : nil }
+      = link_to "Details", edit_organisation_path(current_organisation.guid)
+    %li{ class: active == 'Location' ? 'active' : nil }
+      = link_to "Location", edit_location_organisation_path(current_organisation.guid)
+    %li.right{ class: active == 'Account' ? 'active' : nil }
+      = link_to "My account", [:edit, :user]
 
-.hr.hr1
+  .hr.hr1

@@ -1,5 +1,5 @@
 .dashboard.account
-  
+
   - if current_organisation
     .title
       %h1 #{current_organisation.name}'s Dashboard
@@ -25,7 +25,7 @@
               .row.clearfix
                 .address
                   %p= org.address_str
-                  
+
                   %p= link_to "Edit location", edit_location_organisation_path(org.guid)
 
                 .users
@@ -50,24 +50,26 @@
         - current_user.pending_join_org_requests.each do |r|
           %li.clearfix
             .image= image_tag r.organisation_resource.image_url
-            
+
             .details
               .header
                 #{r.organisation_resource.name} (awaiting acceptance)
-                
+
               .row.clearfix
                 .address
                   %p= r.organisation_resource.address_str
-         
 
-      = link_to "+ Add/join another organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
+      .add-or-join
+        = link_to "+ Add/join another organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
+
     - else
       .empty You are not a member of any organisations yet.
-      = link_to "+ Add/join an organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
+      .add-or-join
+        = link_to "+ Add/join an organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
 
     .user-account
       %h2 Your account details
-      
+
       = simple_form_for @user, url: user_path do |f|
         = f.input :first_name, required: true, label: 'Name'
         = f.input :email, required: true

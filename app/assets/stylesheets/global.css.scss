@@ -157,10 +157,6 @@ h1 + h2 {
   height: 8px;
 }
 
-.title {
-  @include columns(16);
-}
-
 .leaflet-control-attribution {
   display: none;
 }

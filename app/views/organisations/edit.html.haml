@@ -3,9 +3,10 @@
     %h1 #{current_organisation.name}'s Dashboard
   = render "dashboard/tabs", active: "Details"
 
-  %h2
-    %strong #{current_organisation.name}'s
-    details
+  .title
+    %h2
+      %strong #{current_organisation.name}'s
+      details
 
   = simple_form_for @organisation do |f|
     = render 'error_messages', object: f.object

@@ -1,13 +1,14 @@
 .dashboard
-  
+
   .title
     %h1 #{current_organisation.name}'s Dashboard
   = render "dashboard/tabs", active: "Activities"
 
-  %h2 
-    Edit
-    %strong #{@project.name}
-    details
+  .title
+    %h2
+      Edit
+      %strong #{@project.name}
+      details
 
   = simple_form_for @project do |f|
     = render 'error_messages', object: f.object

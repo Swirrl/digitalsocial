@@ -1,6 +1,8 @@
 .dashboard {
 
-  width: 960px;
+  .title {
+    @include columns(16);
+  }
 
   h2 {
     color: #999;
@@ -11,6 +13,10 @@
     strong {
       font-weight: 600;
     }
+  }
+
+  .tabs-wrapper {
+    @include columns(16);
   }
 
   ul.tabs {
@@ -27,6 +33,7 @@
       font-style: italic;
       font-weight: 300;
       opacity: 0.66;
+
       @include transition(opacity, 0.1s);
 
       a {
@@ -51,7 +58,21 @@
       &.right {
         float: right;
         margin-right: 0;
-        
+      }
+
+      @include media-smaller-than-desktop {
+        float:none;
+        width: 100%;
+        a {
+          margin-left:10px;
+        }
+        &:hover {
+          border-bottom:none;
+        }
+        &.active {
+          background: #f0f0f0;
+          border-bottom: none;
+        }
       }
     }
 
@@ -61,6 +82,7 @@
   }
 
   ul.dashboard-list {
+    clear:both;
     margin-bottom: 60px;
 
     li {
@@ -81,17 +103,18 @@
       }
     }
 
-    .button, .button:hover {
+
+   .button, .button:hover {
       color: #fff;
     }
 
+
   }
-  
+
 
   ul.projects {
-    
+
     li {
-      
 
       .name {
         font-size: 28px;
@@ -120,6 +143,9 @@
         .progress {
           float: left;
           @include columns(7);
+          @include media-all-mobile {
+            width: 260px; // to account for padding.
+          }
           margin-left: 0;
           padding-top: 7px;
 
@@ -162,6 +188,9 @@
           float: left;
           @include columns(7);
           @include offset(1);
+          @include media-all-mobile {
+            width: 260px; // to account for padding.
+          }
           line-height: 1;
 
           .count {
@@ -186,7 +215,7 @@
         }
 
         .progress, .organisations {
-          
+
         }
       }
     }
@@ -218,7 +247,7 @@
         max-width: 540px;
         margin-left: 94px;
 
-        
+
 
         .subheader {
           font-style: italic;
@@ -229,6 +258,10 @@
         float: right;
         width: 240px;
         text-align: right;
+
+        @include media-all-mobile {
+          margin-top:20px;
+        }
 
         .button {
           font-size: 20px;
@@ -256,7 +289,7 @@
         }
       }
 
-      
+
     }
   }
 
@@ -277,11 +310,27 @@
       right: 24px;
       font-size: 20px;
       padding: 8px 24px;
+      @include media-smaller-than-desktop {
+        position:relative;
+        margin-top:10px;
+        top:0;
+        right:0;
+      }
     }
   }
 
   ul.organisations {
     li {
+      margin: 0 10px;
+      @include media-all-mobile {
+        margin-left:0;
+        margin-right:0;
+        width: 260px;
+      }
+      @include media-mobile-landscape-to-tablet-portrait {
+        width: 380px;
+      }
+
       .image {
         float: left;
         width: 70px;
@@ -303,6 +352,14 @@
         line-height: 1.2;
         width: 600px;
         margin-left: 94px;
+
+        @include media-all-mobile {
+          border-color: red;
+          float:none;
+          clear:both;
+          // smaller mobiles
+          width: 280px;
+        }
 
         .header {
           font-size: 24px;
@@ -328,12 +385,21 @@
           p + p {
             margin-bottom: 0;
           }
+
+          @include media-all-mobile {
+            width: 60%;
+          }
         }
 
         .users {
           float: left;
           width: 250px;
 
+          @include media-all-mobile {
+            float:none;
+            width:60%;
+            clear:both;
+          }
           .count {
             line-height: 30px;
             margin-bottom: 12px;
@@ -364,6 +430,13 @@
         width: 200px;
         text-align: right;
 
+        @include media-all-mobile {
+          clear:both;
+          float:none;
+          text-align:left;
+          margin-left:90px;
+          margin-top:10px;
+        }
         .button {
           font-size: 20px;
           padding: 8px 24px;
@@ -386,17 +459,34 @@
   }
 
   .user-organisations {
+    clear:both;
     margin-bottom: 60px;
   }
 
+  .add-or-join {
+    @include columns(16);
+    @extend .row;
+  }
   .user-account {
-    padding: 36px;
-    background: #fff2e3;
-    margin-top: 90px;
+    @extend .row;
+    @include columns(16);
+    background: #f9f9f9;
+
+
+    form {
+      margin: 36px;
+      input[type=text],
+      input[type=email],
+      input[type=password] {
+        width:90%;
+      }
+    }
 
     h2 {
+      margin: 36px 0 0 36px;
       color: #f7b757;
     }
+    margin-top: 36px !important;;
   }
 
 }
