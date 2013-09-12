@@ -1,9 +1,10 @@
 <script>
   $(function() {
 
-    var defaultCenter = [50,10];
+    var defaultCenter = [45,15];
     var defaultZoom = 4;
     var selectedZoom = 16;
+
 
     var map = L.mapbox.map('home-map', "<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>", {
       scrollWheelZoom: false
