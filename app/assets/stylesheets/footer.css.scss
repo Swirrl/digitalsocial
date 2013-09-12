@@ -69,7 +69,7 @@ footer {
   padding: 36px 0;
   color: $orange;
   font-style: italic;
-  
+
   &.clearfix {
     display: block;
   }
@@ -89,7 +89,7 @@ footer {
     a {
       margin-left: 18px;
       line-height: 1;
-      
+
       [class^="icon-"], [class*=" icon-"] {
         margin-right: -2px;
       }
@@ -97,6 +97,16 @@ footer {
   }
 
   .credits {
+    .copyright {
+
+    }
+    .contact {
+      margin-top: 10px;
+      span {
+        margin-right: 18px;
+      }
+    }
+
     margin-top:0;
   }
 

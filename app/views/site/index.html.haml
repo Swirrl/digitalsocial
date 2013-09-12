@@ -49,19 +49,26 @@
           %li Be part of a growing community of Digital Social Innovation
           %li Inform better policy across the EU
           %li Showcase your work and network to potential funders and investors
-          %li Get onto our map of digital social innovators
 
         %p
-          Joining the network is very easy and it will take just a few minutes to get started. Already signed up? #{link_to "Log in here", "/users/sign_in"}.
+          It just takes a few minutes to get started.
 
-        = link_to "Put yourself on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
+        .cta.clearfix
+          .put-on-map{style:'float:left'}
+            = link_to "Put your organisation on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
+          .log-in{style:'float:left; margin-top:36px; margin-left:36px; font-size:18px; font-weight:600; font-style:italic;'}
+            Already signed up? #{link_to "Log in", "/users/sign_in"}.
 
-        .credits
-          &copy; 2013 Digital Social Innovation. Built by #{link_to 'Swirrl', 'http://swirrl.com'}
+        .info-foot
+          .credits
+            &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
+          .hide{style:'float:right'}
+            %a.hide-info{href:'#', style:'font-style:italic; font-size:14px'}
+              Hide this info &raquo;
 
     .small-info
       %p.show-more= link_to "&laquo; Show more info".html_safe, "#"
-      = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-green clear'      
+      = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
 
     = render "site/index/map_js"
 

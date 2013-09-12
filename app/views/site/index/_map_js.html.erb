@@ -19,9 +19,9 @@
     });
 
     map.on('popupopen', function(e) {
-      
+
       var guid = e.popup._source._guid;
-      
+
       $.ajax({
         type: 'GET',
         url: '/organisations/'+guid+'/map_show',
@@ -38,13 +38,19 @@
       });
 
       slideOutPanels();
-      
+
     });
 
     $('.show-more a').click(function(e){
       slideInPanels();
 
       e.preventDefault();
+      return false;
+    });
+
+    $('a.hide-info').click(function(e) {
+      e.preventDefault();
+      slideOutPanels();
       return false;
     });
 
@@ -70,9 +76,9 @@
 
       var content = '';
       content += '<h3><a href="/organisations/'+organisation.guid+'">'+organisation.name+'</a></h3>';
-      
+
       if (organisation.address) {
-        content += '<p class="address">'+organisation.address+'</p>';  
+        content += '<p class="address">'+organisation.address+'</p>';
       }
 
       if (organisation.projects.length > 0) {
@@ -82,7 +88,7 @@
         });
         content += '</ul>';
       }
-      
+
       popup.setContent(content);
 
     }
@@ -103,7 +109,7 @@
         $('.info').css({ right: "0" });
         $('.logo').css({ top: "0" });
       }, 250);
-    }    
+    }
 
   });
 

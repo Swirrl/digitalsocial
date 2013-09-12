@@ -12,13 +12,13 @@
     @include transition(top, 0.25s);
 
     img {
-      
+
     }
 
     .links {
       margin-top: 30px;
       margin-bottom: 5px;
-      
+
       a {
         font-style: italic;
         margin-right: 12px;
@@ -48,8 +48,8 @@
     padding: 36px;
 
     p.show-more {
-      
-      
+
+
       line-height: 1;
 
       a {
@@ -66,6 +66,7 @@
     right: 0px;
     bottom: 20px;
     width: 826px;
+    font-size: 16px;
 
     background: rgba(255, 255, 255, 0.75);
     border-top: 9px solid $orange;
@@ -75,7 +76,7 @@
     .credits {
       margin-top: 24px;
       margin-bottom: -12px;
-      font-size: 16px;
+      font-size: 14px;
       color: #aaa;
 
       a {
@@ -187,7 +188,7 @@
           }
 
         }
-        
+
       }
     }
   }
