@@ -17,6 +17,7 @@ gem 'entypo-rails'
 gem 'database_cleaner'
 gem 'sentry-raven'
 gem 'aws-sdk', '~> 1.3.4'
+gem 'country_select'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
