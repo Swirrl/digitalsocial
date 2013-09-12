@@ -5,9 +5,9 @@
   }
 
   ul {
-     @include columns(16);
-    li {
+    @include columns(16);
 
+    li {
       display: block;
       padding: 18px;
       background: #eee;
