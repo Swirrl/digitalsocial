@@ -76,11 +76,12 @@ module Concept
       # force other to end and sort rest alphabetically
       others = concepts.select{|x| x.label.downcase == "other"}
       other = others.first
+
+
       if other
         concepts.delete_if{|x| x.label.downcase == "other"}
-        concepts.push(other)
+        concepts.sort{|x,y| x.label.downcase <=> y.label.downcase }.push(other)
       end
-      concepts.sort {|x,y| x.label.downcase <=> y.label.downcase }
     end
 
     # makes or finds an instance of this type
