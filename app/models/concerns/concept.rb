@@ -80,7 +80,7 @@ module Concept
         concepts.delete_if{|x| x.label.downcase == "other"}
         concepts.push(other)
       end
-      concepts.sort {|x,y| x.label.downcase <=> x.label.downcase }
+      concepts.sort {|x,y| x.label.downcase <=> y.label.downcase }
     end
 
     # makes or finds an instance of this type
