@@ -10,8 +10,8 @@
    <http://purl.org/dc/terms/publisher> <http://data.digitalsocial.eu/id/project-team>;
    <http://purl.org/dc/terms/references> <http://data.digitalsocial.eu/docs>;
    <http://rdfs.org/ns/void#dataDump> <http://data.digitalsocial.eu/data/organizations-and-activities/dump>;
-   <http://purl.org/dc/terms/license> <http://creativecommons.org/licenses/by-sa/3.0/deed.en_US> ;
-   <http://purl.org/dc/terms/description> """<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">DSI Data</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://digitalsocial.eu" property="cc:attributionName" rel="cc:attributionURL">DSI Partnership</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.""";
+   <http://purl.org/dc/terms/license> <http://creativecommons.org/licenses/by-nc/3.0/deed.en_US> ;
+   <http://purl.org/dc/terms/description> """<a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">DSI Data</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://digitalsocial.eu" property="cc:attributionName" rel="cc:attributionURL">DSI Partnership</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US">Creative Commons Attribution-NonCommercial 3.0 Unported License</a>.""";
    <http://rdfs.org/ns/void#sparqlEndpoint> <http://data.digitalsocial.eu/sparql> ;
    <http://purl.org/dc/terms/issued>
       "2013-09-13T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
