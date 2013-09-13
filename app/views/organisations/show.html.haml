@@ -25,7 +25,7 @@
       %p.label Twitter
       %p
         - if @organisation.twitter_username.present?
-          = link_to @organisation.twitter_username, "https://twitter.com/#{@organisation.twitter_username}"
+          = link_to @organisation.twitter_username, "https://twitter.com/#{@organisation.twitter_username.gsub(/^@/,'')}"
         - else
           Not supplied
 
