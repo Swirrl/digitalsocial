@@ -1,5 +1,9 @@
 .dashboard {
-
+  .pending {
+    .empty {
+      @include columns(16);
+    }
+  }
   .title {
     @include columns(16);
   }
