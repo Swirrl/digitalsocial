@@ -1,5 +1,5 @@
 .dashboard {
-  .pending {
+  &.pending {
     .empty {
       @include columns(16);
     }
