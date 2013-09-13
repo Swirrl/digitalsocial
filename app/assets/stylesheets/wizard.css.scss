@@ -16,7 +16,7 @@
   li {
     float: left;
     margin-bottom: 0;
-    padding-bottom: 12px;
+    padding-bottom: 5px;
     line-height: 38px;
 
     span {
@@ -79,7 +79,8 @@
       overflow: visible;
 
       span {
-        padding: 5px !important;
+        font-size:16px;
+        padding: 7px 10px 5px 10px !important;
         float: none;
         display:inline;
         overflow: visible;
@@ -247,6 +248,7 @@
 }
 
 .skip-wizard {
+  clear:both;
   display: block;
   padding: 12px;
   background: #ffffe0;
