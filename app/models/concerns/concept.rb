@@ -62,7 +62,7 @@ module Concept
     # these are just the top-concepts
     def top_level_concepts
       # need a custom query here as the concept scheme in diff. graph
-      self.find_by_sparql("
+      concepts = self.find_by_sparql("
         SELECT ?uri (<#{self.get_graph_uri}> as ?graph) WHERE {
 
           <#{self.resource_concept_scheme_uri.to_s}> <#{RDF::SKOS.hasTopConcept}> ?uri .
@@ -73,6 +73,14 @@ module Concept
 
         }"
       )
+      # force other to end and sort rest alphabetically
+      others = concepts.select{|x| x.label.downcase == "other"}
+      other = others.first
+      if other
+        concepts.delete_if{|x| x.label.downcase == "other"}
+        concepts.push(other)
+      end
+      concepts.sort {|x,y| x.label.downcase <=> x.label.downcase }
     end
 
     # makes or finds an instance of this type
