@@ -1,12 +1,14 @@
 .field-with-notes
   .field
     - if f.object.new_record?
-      = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }
+      = f.input :name, label: 'Name of your activity', input_html: { class: 'project-auto-suggest', autocomplete: :off }, placeholder: 'Start typing to see suggestions'
 
     - else
       = f.input :name, label: 'Name of your activity', input_html: { autocomplete: :off }
   .notes
-    %p Please enter the title you would use to name this activity, eg. Name of network; event title; a research project title etc.
+    :markdown
+      The title you would use to name this activity, eg. Name of network; event title; a research project title etc.
+      We'll suggest existing activities already in the DSI network as you type. <span class='highlight'>Please request to join your activity if it appears as a suggestion</span>.
 
 = render 'suggestions', button_text: 'Request to join', action_url_template: '/projects/:project_id/request_to_join', help: "The following activities matched that name. If the activity already exists click <strong>Request to join</strong> to send a request to the activity's members."
 

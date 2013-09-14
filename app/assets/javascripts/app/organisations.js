@@ -30,7 +30,7 @@ $(function(){
       var $oas = $('input.organisation-auto-suggest');
       var str = $oas.val();
 
-      if (str.length < 3) {
+      if (str.length < 2) {
         organisations.hideSuggestions();
         return;
       }
