@@ -36,12 +36,18 @@ $(function(){
       }
 
       else {
+        var data = {
+          q: str
+        }
+
+        if ($("#project-id").length) {
+          data.p = $("#project-id").val();
+        }
+
         $.ajax({
           type: 'GET',
           url: '/organisations',
-          data: {
-            q: str
-          },
+          data: data,
           beforeSend: function(){
             $oas.addClass('loading');
           },
@@ -52,8 +58,6 @@ $(function(){
             alert('error');
           },
           success: function(data){
-
-
             $('.suggestions').slideUp('fast', function(){
               organisations.clearSuggestions();
               organisations.addSuggestions(data);
