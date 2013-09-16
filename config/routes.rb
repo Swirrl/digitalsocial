@@ -6,6 +6,8 @@ Digitalsocial::Application.routes.draw do
   get '/privacy' => 'site#privacy'
   get '/about' => 'site#about'
 
+  get '/fale' => 'site#fale'
+
   devise_for :users
 
   devise_for :admins
