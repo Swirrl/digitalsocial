@@ -15,7 +15,7 @@ gem 'activemodel', require: 'active_model'
 gem 'country_select'
 gem 'entypo-rails'
 gem 'database_cleaner'
-gem 'sentry-raven'
+gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git", :branch => 'ead49c'
 gem 'aws-sdk', '~> 1.3.4'
 gem 'country_select'
 
