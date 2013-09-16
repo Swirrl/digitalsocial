@@ -1,4 +1,10 @@
 Digitalsocial::Application.routes.draw do
+  root to: 'site#index'
+  get '/blog' => 'site#blog'
+  get '/events' => 'site#events'
+  get '/terms' => 'site#terms'
+  get '/privacy' => 'site#privacy'
+  get '/about' => 'site#about'
 
   devise_for :users
 
@@ -94,9 +100,8 @@ Digitalsocial::Application.routes.draw do
   get 'dashboard' => 'dashboard#pending'
   get 'dashboard/projects' => 'dashboard#projects'
   get 'dashboard/users' => 'dashboard#users'
-  get 'terms-and-conditions' => 'site#terms'
 
-  match ':action' => 'site'
-  root to: 'site#index'
+  # fall through - 404s
+  match '*a', :to => 'errors#routing'
 
 end

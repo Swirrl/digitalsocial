@@ -1,10 +1,13 @@
 .index {
-  width: 960px;
+
+  .title {
+    @include columns(16);
+  }
 
   ul {
+    @include columns(16);
 
     li {
-
       display: block;
       padding: 18px;
       background: #eee;
@@ -43,7 +46,7 @@
         }
 
         .subheader {
-          
+
         }
       }
 
@@ -54,7 +57,7 @@
 
         .button {
           font-size: 20px;
-          
+
         }
       }
 

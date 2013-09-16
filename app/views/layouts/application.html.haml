@@ -20,12 +20,17 @@
     %script{src: "//cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"}
     %script{src: "//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.js"}
 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     = javascript_include_tag "application"
 
     = csrf_meta_tags
     = render "typekit"
   %body
+
+    /[if lte IE 8]
+      #out-of-spec
+        Sorry - your browser is not supported. Some elements may not function or display as intended. Please upgrade to at least IE9, or a recent version of Chrome/Safari/Firefox.
 
     .container
       = render "header"
@@ -34,9 +39,9 @@
       #main.clearfix
         = yield
 
-      - unless current_user
+      - if show_partners
         = render "partners"
       = render "footer"
-    
+
     = render "analytics"
 

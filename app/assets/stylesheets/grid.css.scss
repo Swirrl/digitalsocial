@@ -37,6 +37,9 @@
 
 /* Media queries (by Ric)
 ============================================== */
+@mixin media-desktop {
+  @media only screen and (min-width: $desktop-media-min-width) { @content; }
+}
 
 @mixin media-smaller-than-desktop {
   @media only screen and (max-width: $tablet-media-max-width) { @content; }
@@ -58,9 +61,6 @@
   @media only screen and (min-width: $mobile-media-landscape-min-width) and (max-width: $mobile-media-landscape-max-width) { @content; }
 }
 
-@mixin mobile-portrait-to-landscape {
-  @media only screen and (max-width: $mobile-media-portrait-max-width) { @content; }
-}
 
 /* Grid
 ================================================== */

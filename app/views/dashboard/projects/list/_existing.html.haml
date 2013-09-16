@@ -4,7 +4,7 @@
   .row.clearfix
     .progress
       = render "dashboard/projects/list/progress_bar", project: project
-      
+
       - if project.progress_percent < 100
         = link_to "Complete details", edit_project_path(project.guid)
       - else
@@ -12,4 +12,3 @@
 
     .organisations
       = render "dashboard/projects/list/count", project: project
-      

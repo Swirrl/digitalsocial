@@ -1,5 +1,7 @@
 .show {
-
+  .title {
+    @include columns(16);
+  }
   .show-row {
     @include row;
 
@@ -134,7 +136,7 @@
         }
 
         p.name {
-          
+
 
           a {
             display: block;

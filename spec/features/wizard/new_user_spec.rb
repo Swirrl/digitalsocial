@@ -7,9 +7,9 @@ feature 'New user wizard step' do
   end
 
   scenario 'Filling in new user step successfully' do
-    fill_in 'Name', with: 'John'
-    fill_in 'Email', with: 'john@example.com'
-    fill_in 'Password', with: 'password123'
+    fill_in 'user_first_name', with: 'John'
+    fill_in 'user_email', with: 'john@example.com'
+    fill_in 'user_password', with: 'password123'
     click_button 'Next step'
 
     page.current_url.should include("organisations/build/new_organisation")
@@ -18,20 +18,20 @@ feature 'New user wizard step' do
   scenario 'Filling in new user step with existing email' do
     FactoryGirl.create(:user, email: 'john@example.com')
 
-    fill_in 'Name', with: 'John'
-    fill_in 'Email', with: 'john@example.com'
-    fill_in 'Password', with: 'password123'
+    fill_in 'user_first_name', with: 'John'
+    fill_in 'user_email', with: 'john@example.com'
+    fill_in 'user_password', with: 'password123'
     click_button 'Next step'
 
     page.current_url.should_not include("organisations/build/new_organisation")
   end
 
   scenario 'Filling in new user step with no password' do
-    fill_in 'Name', with: 'John'
-    fill_in 'Email', with: 'john@example.com'
+    fill_in 'user_first_name', with: 'John'
+    fill_in 'user_email', with: 'john@example.com'
     click_button 'Next step'
 
     page.current_url.should_not include("organisations/build/new_organisation")
   end
-  
+
 end

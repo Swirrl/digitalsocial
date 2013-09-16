@@ -25,7 +25,7 @@
       %p.label Twitter
       %p
         - if @organisation.twitter_username.present?
-          = link_to "https://twitter.com/#{@organisation.twitter_username}", "https://twitter.com/#{@organisation.twitter_username}"
+          = link_to @organisation.twitter_username, "https://twitter.com/#{@organisation.twitter_username.gsub(/^@/,'')}"
         - else
           Not supplied
 
@@ -48,7 +48,7 @@
               %p.name= link_to p.name, project_path(p), class: 'activity-name'
               %p.nature
                 %em #{p.natures_str_for_organisation(@organisation)}
-            
+
               - count = p.organisations.count
               %p.count
                 - count.times do
@@ -80,7 +80,7 @@
 
 
     - if current_user && @organisation.users.include?(current_user)
-      
+
       %span You are a member of this organisation.
       = link_to "Edit organisation", edit_organisation_path(@organisation), class: 'button'
     - else

@@ -1,22 +1,40 @@
 .hr.hr3.hr-full
 
 %footer.clearfix
-  
+
   .credits
-    &copy; 2013 Digital Social Innovation. Built by #{link_to 'Swirrl', 'http://swirrl.com'}
+    %div.copyright
+      %span
+        &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
+
+    %div.contact
+      %span.twitter
+        %i.icon-social-twitter
+        %a{ href: "https://twitter.com/digi_si" }
+          @digi_si
+
+      %span.email
+        %a{ href: "mailto:contact@digitalsocial.eu" }
+          %i.icon-paper-plane
+          contact@digitalsocial.eu
 
   %nav
-    %a{ href: "https://twitter.com/digi_si" }
-      @digi_si
+    %div
+      %a{ href: "/blog" }
+        Blog
 
-    %a{ href: "mailto:contact@digitalsocial.eu" }
-      contact@digitalsocial.eu
+      %a{ href: "/about" }
+        About
 
-    %a{ href: "/blog" }
-      Blog
+      %a{ href: "/events" }
+        Events
 
-    %a{ href: "/about" }
-      About
+      %a{ href: "http://data.digitalsocial.eu" }
+        Open Data
 
-    %a{ href: "/events" }
-      Events
+    %div{style:'margin-top:14px; font-size:14px; float:right; '}
+      %a{ href: "/terms" }
+        Terms of Use
+
+      %a{ href: "/privacy" }
+        Privacy &amp; Cookies

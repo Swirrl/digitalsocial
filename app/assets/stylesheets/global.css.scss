@@ -2,6 +2,16 @@ html, body {
   height: 100%;
 }
 
+input[type="submit"] {
+  -webkit-appearance:none !important;
+}
+
+#out-of-spec {
+  background: red;
+  color :white;
+  padding: 10px;
+}
+
 body {
   font-family: $chaparral;
   font-size: 18px;
@@ -149,10 +159,6 @@ h1 + h2 {
 
 .hr4 {
   height: 8px;
-}
-
-.title {
-  @include columns(16);
 }
 
 .leaflet-control-attribution {

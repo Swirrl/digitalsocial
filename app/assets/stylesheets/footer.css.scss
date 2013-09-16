@@ -1,5 +1,13 @@
 #partners {
   height: 360px;
+  @include media-smaller-than-desktop {
+    height: 480px;
+  }
+
+  @include media-all-mobile {
+    height: 655px;
+  }
+
   position: relative;
 
   a {
@@ -62,14 +70,75 @@
       left: 676px;
       top: 184px;
     }
+
+    @include media-smaller-than-desktop {
+      // 3 rows of 2
+      &.nesta {
+        background-image: url(image-path("partners/orange/nesta.png"));
+        width: 150px;
+        height: 35px;
+        left: 60px;
+        top: 62px;
+      }
+
+      &.esade {
+        background-image: url(image-path("partners/orange/esade.png"));
+        width: 146px;
+        height: 36px;
+        left: 371px;
+        top: 62px;
+      }
+
+      &.future-everything {
+        background-image: url(image-path("partners/orange/future-everything.png"));
+        width: 132px;
+        height: 36px;
+        left: 60px;
+        top: 180px;
+      }
+
+      &.iri {
+        background-image: url(image-path("partners/orange/iri.png"));
+        width: 100px;
+        height: 43px;
+        left: 371px;
+        top: 180px;
+      }
+
+      &.waag {
+        background-image: url(image-path("partners/orange/waag.png"));
+        width: 118px;
+        height: 36px;
+        left: 60px;
+        top: 300px;
+      }
+
+      &.swirrl {
+        background-image: url(image-path("partners/orange/swirrl.png"));
+        width: 130px;
+        height: 36px;
+        left: 371px;
+        top: 300px;
+      }
+    }
+
+    @include media-all-mobile {
+      position:relative;
+      float:left;
+      clear:both;
+      top:0 !important;
+      left:0  !important;
+      display:block;
+    }
   }
 }
 
 footer {
+  @extend .clearfix;
   padding: 36px 0;
   color: $orange;
   font-style: italic;
-  
+
   &.clearfix {
     display: block;
   }
@@ -89,14 +158,36 @@ footer {
     a {
       margin-left: 18px;
       line-height: 1;
-      
+
       [class^="icon-"], [class*=" icon-"] {
         margin-right: -2px;
+      }
+    }
+
+    @include media-all-mobile {
+      margin-top:10px;
+      float:left;
+      a {
+        margin-left:0;
+        margin-right:18px;
       }
     }
   }
 
   .credits {
+    .copyright {
+
+    }
+    .contact {
+      margin-top: 10px;
+      span {
+        margin-right: 18px;
+        @include media-all-mobile {
+          display:block;
+        }
+      }
+    }
+
     margin-top:0;
   }
 

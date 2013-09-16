@@ -30,7 +30,7 @@ $(function(){
       var $oas = $('input.project-auto-suggest');
       var str = $oas.val();
 
-      if (str.length < 3) {
+      if (str.length < 2) {
         projects.hideSuggestions();
         return;
       }

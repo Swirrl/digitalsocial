@@ -4,6 +4,8 @@ class ProjectsController < ApplicationController
   before_filter :find_project, only: [:invite, :create_new_org_invite, :create_existing_org_invite, :edit, :update, :request_to_join, :create_request, :new_invite]
   before_filter :set_project_invite, only: [:create_invite]
   before_filter :check_project_can_be_edited, only: [:edit, :update]
+  before_filter :show_partners, only: [:show, :index]
+
 
   # expects a top-level activity type label as a param.
   # returns the reach question text

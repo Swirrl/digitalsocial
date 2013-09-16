@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def show_partners
+    !current_user || @show_partners
+  end
+
   def project_membership_nature_options
     Concepts::ProjectMembershipNature.top_level_concepts.collect { |pmn| [pmn.label, pmn.uri] }
   end

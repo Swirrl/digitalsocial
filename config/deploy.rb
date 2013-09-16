@@ -59,7 +59,8 @@ namespace :deploy do
   DESC
   task :restart do
     run "touch #{current_path}/tmp/restart.txt"
-    sudo "echo 'flush_all' | nc localhost 11212" # flush memcached
+    # No caching at the mo.
+  #  sudo "echo 'flush_all' | nc localhost 11212" # flush memcached
   end
 end
 
