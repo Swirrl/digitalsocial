@@ -43,7 +43,12 @@ class OrganisationsController < ApplicationController
 
     if params[:q].present? # used for auto complete suggestions.
       @organisations = Organisation.search_by_name(params[:q]).to_a
-      current_organisation_uris = current_user.organisation_resources.map{|o| o.uri.to_s }
+      if params[:p].present?
+        @project = Project.find( Project.slug_to_uri(params[:p]) )
+        current_organisation_uris = @project.organisation_resources.map { |o| o.uri.to_s }
+      else
+        current_organisation_uris = current_user.organisation_resources.map { |o| o.uri.to_s }
+      end
     else
       @organisations = Organisation.order_by_name.resources
     end
