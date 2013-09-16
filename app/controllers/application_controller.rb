@@ -37,13 +37,27 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_uncaught_error(e)
-    show_partners
 
-    @show_partners = true
-    respond_to do |format|
-      format.html { render(:template => "errors/uncaught_error", :status => 500) and return false }
-      format.any { render(:text => "Interal Server Error" ,:status => 500, :content_type => 'text/plain') and return false }
+    @e = e
+
+    if defined?(Raven)
+      evt = Raven::Event.capture_rack_exception(e, request.env)
+      Raven.send(evt) if evt
     end
+
+    if Rails.env.development?
+      #re-raise in dev mode.
+      raise e
+    else
+      show_partners
+
+      @show_partners = true
+      respond_to do |format|
+        format.html { render(:template => "errors/uncaught_error", :status => 500) and return false }
+        format.any { render(:text => "Interal Server Error" ,:status => 500, :content_type => 'text/plain') and return false }
+      end
+    end
+
   end
 
 	def layout_by_resource
