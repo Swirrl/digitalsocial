@@ -19,8 +19,8 @@ class UserInvitePresenter
 
   def user
     @user ||= User.where(email: self.user_email).first || User.new do |u|
-      u.first_name = self.user_first_name
-      u.email      = self.user_email
+      u.first_name = self.user_first_name.strip
+      u.email      = self.user_email.strip
       u.password   = rand(36**16).to_s(36) # Temporary random password
     end
   end

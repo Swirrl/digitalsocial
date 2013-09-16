@@ -19,6 +19,8 @@ class Organisation
   validates :name, presence: true
   validate :organisation_name_is_unique
 
+  before_save :strip_whitespace
+
   attr_accessor :invited_users, :invites_to_send
 
   # override initialise
@@ -285,6 +287,10 @@ class Organisation
     if Organisation.where("?uri <#{name_predicate}> \"#{name}\"").where("FILTER(?uri != <#{self.uri}>)").count > 0
       errors.add(:name, "Organisation already exists")
     end
+  end
+
+  def strip_whitespace
+    self.name = self.name.strip
   end
 
 end

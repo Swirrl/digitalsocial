@@ -51,18 +51,18 @@ class OrganisationPresenter
 
   def address
     @address ||= Address.new
-    @address.street_address = self.street_address
-    @address.locality = self.locality
-    @address.region = self.region
+    @address.street_address = self.street_address.strip
+    @address.locality = self.locality.strip
+    @address.region = self.region.strip
     @address.country = self.country
-    @address.postal_code = self.postal_code
+    @address.postal_code = self.postal_code.strip
 
     @address
   end
 
   def organisation
     @organisation ||= Organisation.new
-    @organisation.name         = self.name
+    @organisation.name         = self.name.strip
     @organisation.primary_site = self.site.uri
     @organisation
   end

@@ -67,8 +67,8 @@ class ProjectInvitePresenter
 
       unless @user
         @user ||= User.new do |user|
-          user.first_name = self.user_first_name
-          user.email      = self.user_email
+          user.first_name = self.user_first_name.strip
+          user.email      = self.user_email.strip
           user.password   = rand(36**16).to_s(36) # Temporary random password
         end
       end
