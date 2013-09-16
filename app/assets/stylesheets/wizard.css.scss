@@ -98,13 +98,13 @@
   li {
     span {
       color: #fff;
-      background: #ccc;
+      background: #bbb;
 
       &:before {
         border-left-color: #fff; /* Gaps between crumbs are page background colour */
       }
 
-      &:after { border-left-color: #ccc; }
+      &:after { border-left-color: #bbb; }
 
       &:hover {
         //background: #000 !important; /* Default hover */
@@ -126,8 +126,8 @@
 
     &.complete {
       span {
-        background: #fccb8d;
-        &:after { border-left-color: #fccb8d; }
+        background: #f8bd66;
+        &:after { border-left-color: #f8bd66; }
       }
     }
   }
@@ -148,7 +148,7 @@
   @include columns(16);
   p, ul, ol {
     font-size: 18px;
-    color: $dark-grey;
+    //color: $dark-grey;
 
     strong {
       font-weight: 600;
