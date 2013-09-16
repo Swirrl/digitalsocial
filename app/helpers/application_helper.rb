@@ -92,4 +92,8 @@ module ApplicationHelper
     content.join
   end
 
+  def notes_project_name(project)
+    project.name.present? ? project.name : 'this activity'
+  end
+
 end

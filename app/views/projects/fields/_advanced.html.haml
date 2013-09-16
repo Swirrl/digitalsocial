@@ -26,13 +26,13 @@
     = render 'tags_js', tag_field_id: "project_areas_of_society_list", suggested_tags_selector: "p#areas-of-society-suggested-tags a", tag_source_url: tags_projects_url(tag_class: "AreaOfSociety")
   .notes
     :markdown
-      Please click the suggestions under the box to add the areas of society that #{@project.name} addresses. You can also add your own by typing into the box (please use a comma between each new entry).
+      Please click the suggestions under the box to add the areas of society that #{notes_project_name(@project)} addresses. You can also add your own by typing into the box (please use a comma between each new entry).
 .field-with-notes
   .field
     = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources, label: 'Technology Focus', :label_method => :get_view_label
   .notes
     :markdown
-      We are interested in understanding how #{@project.name} fits with broad technology trends. Please select the option that best describes #{@project.name}.
+      We are interested in understanding how #{notes_project_name(@project)} fits with broad technology trends. Please select the option that best describes #{notes_project_name(@project)}.
 
 .field-with-notes
   .field
@@ -41,7 +41,7 @@
     = render 'tags_js', tag_field_id: "project_technology_method_list", suggested_tags_selector: "p#technology-method-suggested_tags a", tag_source_url: tags_projects_url(tag_class: "TechnologyMethod")
   .notes
     :markdown
-      What type of digital technology is involved in #{@project.name}? Please choose from the suggestions under the box to add them, or add your own by typing into the box (add a comma between each new entry).
+      What type of digital technology is involved in #{notes_project_name(@project)}? Please choose from the suggestions under the box to add them, or add your own by typing into the box (add a comma between each new entry).
 
 
 -# reach
