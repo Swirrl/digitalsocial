@@ -40,7 +40,6 @@ class OrganisationsController < ApplicationController
   end
 
   def index
-    org_name_predicate =
 
     if params[:q].present? # used for auto complete suggestions.
       @organisations = Organisation.search_by_name(params[:q]).to_a
