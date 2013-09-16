@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
 	  if resource.is_a?(Admin)
 	    admin_root_path
 	  elsif resource.is_a?(User)
-	  	dashboard_path
+      session[:user_return_to].nil? ? dashboard_path : session[:user_return_to].to_s
 	  end
 	end
 
