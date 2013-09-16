@@ -1,6 +1,9 @@
 html, body {
   height: 100%;
-  -webkit-appearance:none;
+}
+
+input[type="submit"] {
+  -webkit-appearance:none !important;
 }
 
 #out-of-spec {
