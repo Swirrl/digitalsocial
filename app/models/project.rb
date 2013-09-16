@@ -338,7 +338,6 @@ class Project
   end
 
   # set the reach value literal
-  # if the ActivityType is network, network_metric can be organizations or individuals
   def reach_value_literal=(val)
     if ( (reach_value_literal.to_s != val.to_s) ) # has it changed?
 
