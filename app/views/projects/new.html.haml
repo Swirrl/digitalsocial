@@ -8,6 +8,17 @@
   .title
     %h2 Add/Join an Activity
 
+  .wizard-intro
+    :markdown
+
+      Please remember we are only interested in activities that are based in the EU and which cover all of the following features:
+
+      * Focus on grass-roots or "bottom-up" communities of users
+      * Use online/digital tools or methods in a disruptive way
+      * Make a positive social impact
+      * Create a "network effect" through collaboration online
+
+
   = simple_form_for @project do |f|
     = render 'error_messages', object: f.object
     = render "projects/fields/basic", f: f
