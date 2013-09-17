@@ -25,7 +25,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |project, evaluator|
-        FactoryGirl.create_list(:project_membership, evaluator.organisations_count, project: project.uri.to_s)
+        FactoryGirl.create_list(:project_membership, evaluator.organisations_count, project: project.uri.to_s, use_existing_organisations: true)
       end
     end
   end

@@ -1,7 +1,7 @@
 class OrganisationsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:index, :show, :map_index, :map_show]
-  before_filter :set_organisation, :except => [:map_index, :map_show]
+  before_filter :authenticate_user!, :except => [:index, :show, :map_index, :map_show, :map_partners]
+  before_filter :set_organisation, :except => [:map_index, :map_show, :map_partners]
   before_filter :ensure_user_is_organisation_owner, only: [:invite_user]
   before_filter :show_partners, only: [:show, :index]
 
@@ -64,8 +64,6 @@ class OrganisationsController < ApplicationController
   end
 
   def map_index
-    @organisations = Organisation.all.resources
-
     respond_to do |format|
       format.json do
         render json: {
@@ -79,6 +77,21 @@ class OrganisationsController < ApplicationController
         }
       end
     end
+  end
+
+  def map_partners
+    # respond_to do |format|
+    #   format.json do
+    #     render json: {
+    #       organisations: Organisation.all.resources.map do |o|
+    #         {
+    #           guid: o.guid,
+    #           partners: o.partner_organisations_with_count
+    #         }
+    #       end
+    #     }
+    #   end
+    # end
   end
 
   def map_show

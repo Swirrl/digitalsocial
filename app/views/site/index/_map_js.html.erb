@@ -4,7 +4,8 @@
     var defaultCenter = [45,15];
     var defaultZoom = 4;
     var selectedZoom = 16;
-
+    var markers;
+    var markerGuids = {};
 
     var map = L.mapbox.map('home-map', "<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>", {
       scrollWheelZoom: true
@@ -46,6 +47,10 @@
 
     });
 
+    map.on('zoomstart', function(e){
+      clearLines();
+    });
+
     $('.show-more a').click(function(e){
       slideInPanels();
       e.preventDefault();
@@ -70,22 +75,63 @@
       return false;
     });
 
+
+
     function addOrganisationPins(organisations) {
+
+      markers = new L.MarkerClusterGroup({
+        showCoverageOnHover: false,
+        iconCreateFunction: function(cluster) {
+          var childCount = cluster.getChildCount();
+
+          var c = ' marker-cluster-';
+          var iconSize;
+          if (childCount < 5) {
+            c += 'x-small';
+            iconSize = 20;
+          } else if (childCount < 10) {
+            c += 'small';
+            iconSize = 24;
+          } else if (childCount < 15) {
+            c += 'medium';
+            iconSize = 30;
+          } else if (childCount < 30) {
+            c += 'large';
+            iconSize = 36;
+          } else {
+            c += 'x-large';
+            iconSize = 48;
+          }
+
+          return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(iconSize, iconSize) });
+        }
+      });
+
+      markers.on('animationend', function(e){
+        drawPartnerLines();
+      });
 
       $.each(organisations, function(i, org) {
 
         var m = L.marker(new L.LatLng(org.lat, org.lng), {
-          icon: L.mapbox.marker.icon({
-            'marker-color': 'f39200',
-            'marker-size': 'small'
+          icon: L.divIcon({
+            iconSize: new L.Point(10, 10)
           })
         }).bindPopup('', {
           closeButton: false
         });
         m._guid = org.guid;
-        m.addTo(map);
-
+        markers.addLayer(m);
+        
+        markerGuids[org.guid] = {};
+        markerGuids[org.guid].marker = m;
+        //markerGuids[org.guid].visible_marker = markers.getVisibleParent(m);
       });
+
+      map.addLayer(markers);
+      getPartners();
+      
+      //console.log(markers);
     }
 
     function setOrganisationPopupContent(organisation, popup) {
@@ -143,6 +189,80 @@
     function hideMobilePanels() {
       $('.mobile-info').hide();
       $('.mobile-small-info').show();
+    }
+
+    function getPartners() {
+      $.ajax({
+        type: 'GET',
+        url: '/organisations/map_partners',
+        success: function(data){
+          $.each(data.organisations, function(i, org) {
+            markerGuids[org.guid].partners = org.partners;
+          });
+          drawPartnerLines();
+        },
+        dataType: 'json'
+      });
+    }
+
+    function clearLines() {
+      for (i in map._layers) {
+        if (map._layers[i]._path != undefined) {
+          try {
+            map.removeLayer(map._layers[i]);
+          }
+          catch(e){
+            console.log("problem with " + e + map._layers[i]);
+          }
+        }
+      }
+    }
+
+    function drawLine(markerA, markerB) {
+      //console.log(markerA);
+      //console.log(markerB);
+      //if (markerA._icon && markerB._icon) {
+        try {
+          var visibleMarkerA = markers.getVisibleParent(markerA);
+          var visibleMarkerB = markers.getVisibleParent(markerB);
+
+          // console.log(visibleMarkerA);
+          // console.log(visibleMarkerB);
+          // console.log(" ");
+
+          new L.Polyline([visibleMarkerA._latlng, visibleMarkerB._latlng], {
+            color: '#999999',
+            //color: '#F39200',
+            weight: 1,
+            opacity: 0.05,
+            smoothFactor: 1
+
+          }).addTo(map);
+        }
+        catch(e) {
+
+        }
+        
+        
+
+      //}
+    }
+
+    function drawPartnerLines(){
+      $.each(markerGuids, function(i, org){
+        $.each(org.partners, function(j, partner){
+          //console.log(marker);
+          //console.log(getMarkerFromGuid(partner[0]));
+          //console.log();
+          drawLine(org.marker, getMarkerFromGuid(partner[0]));
+          
+        });
+        
+      });
+    }
+
+    function getMarkerFromGuid(guid) {
+      return markerGuids[guid].marker;
     }
 
   });

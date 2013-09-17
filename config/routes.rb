@@ -95,6 +95,7 @@ Digitalsocial::Application.routes.draw do
     end
     collection do
       get 'map_index'
+      get 'map_partners'
     end
   end
 
