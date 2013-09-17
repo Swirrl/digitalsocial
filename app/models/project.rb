@@ -331,18 +331,22 @@ class Project
   # get the just set / latest reach value literal
   def reach_value_literal
     return @reach_value_literal if @reach_value_literal
+
     if latest_reach_value_resource
       @reach_value_literal ||= latest_reach_value_resource.reach_value_literal
     end
   end
 
   # set the reach value literal
-  # if the ActivityType is network, network_metric can be organizations or individuals
   def reach_value_literal=(val)
-    if (!reach_value_literal) || (reach_value_literal.to_s != val.to_s)
-      # never been set before, or has changed value
-      self.set_reach_value_changed!
+    if ( (reach_value_literal.to_s != val.to_s) ) # has it changed?
+
+      unless ( self.new_record? && val.blank? )
+        # don't set changed if it's a new record and the value is blank
+        self.set_reach_value_changed!
+      end
     end
+
     @reach_value_literal = val
   end
 
