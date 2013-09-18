@@ -86,6 +86,7 @@
       markers = new L.MarkerClusterGroup({
         showCoverageOnHover: false,
         removeOutsideVisibleBounds: false,
+        zoomToBoundsOnClick: false,
         iconCreateFunction: function(cluster) {
           var childCount = cluster.getChildCount();
 
@@ -117,15 +118,32 @@
         drawPartnerLines();
       });
 
+      markers.on('clustermouseover', function (a) {
+        highlightMarkerLines(a.layer);
+      });
+
+      markers.on('clustermouseout', function (a) {
+        unhighlightMarkerLines(a.layer);
+      });
 
       $.each(organisations, function(i, org) {
         var m = L.marker(new L.LatLng(org.lat, org.lng), {
-          icon: L.divIcon({
-            iconSize: new L.Point(10, 10)
+          // icon: new L.Icon({
+          //   iconSize: new L.Point(10, 16),
+          //   iconUrl: "assets/home/marker.png"
+          // })
+          icon: new L.DivIcon({
+            iconSize: new L.Point(10, 10),
+            color: '#0078A8'
           })
         }).bindPopup('', {
           closeButton: false
+        }).on('mouseover', function(){
+          highlightMarkerLines(this);
+        }).on('mouseout', function(){
+          unhighlightMarkerLines(this);
         });
+        
         m._guid = org.guid;
         markers.addLayer(m);
         
@@ -136,6 +154,23 @@
       map.addLayer(markers);
       getPartners();
       
+      
+    }
+
+    function highlightMarkerLines(marker) {
+      if (!marker._lines) return false;
+
+      $.each(marker._lines, function(i, line) {
+        line.setStyle({ color: '#F39200' });
+      });
+    }
+
+    function unhighlightMarkerLines(marker) {
+      if (!marker._lines) return false;
+
+      $.each(marker._lines, function(i, line) {
+        line.setStyle({ color: '#999999' });
+      });
     }
 
     function setOrganisationPopupContent(organisation, popup) {
@@ -226,13 +261,14 @@
 
     function drawLine(markerA, markerB, count) {
 
-      new L.Polyline([markerA._latlng, markerB._latlng], {
+      var line = new L.Polyline([markerA._latlng, markerB._latlng], {
         color: '#999999',
         weight: lineWeightForCount(count),
         opacity: lineOpacityForCount(count),
         smoothFactor: 1
       }).addTo(map);
-        
+      
+      return line;
     }
 
     function lineWeightForCount(count) {
@@ -246,8 +282,15 @@
 
     function drawPartnerLines() {
       $.each(currentLines, function(i, line){
-        drawLine(line.markerA, line.markerB, line.count);
+        var newLine = drawLine(line.markerA, line.markerB, line.count);
+        addLineToMarker(line.markerA, newLine);
+        addLineToMarker(line.markerB, newLine);
       });
+    }
+
+    function addLineToMarker(marker, line) {
+      if (!marker._lines) marker._lines = [];
+      marker._lines.push(line);
     }
 
     function setPartnerLines() {
@@ -259,41 +302,28 @@
         
         // Loop through each of the org's partners
         $.each(org.partners, function(j, partner){
-          //drawLine(org.marker, getMarkerFromGuid(partner[0]));
-
-
-
-          // Use Leaflet's visibleParent for marker A if it is currently available at this zoom level
           visibleMarkerA = markers.getVisibleParent(org.marker);
-          // try      { visibleMarkerA = markers.getVisibleParent(org.marker); }
-          // catch(e) { visibleMarkerA = org.marker; }
-
-          // Use Leaflet's visibleParent for marker B if it is currently available at this zoom level
           visibleMarkerB = markers.getVisibleParent(getMarkerFromGuid(partner[0]));
-          // try      { visibleMarkerB = markers.getVisibleParent(getMarkerFromGuid(partner[0])); }
-          // catch(e) { visibleMarkerB = getMarkerFromGuid(partner[0]); }
           
-          //if (visibleMarkerA && visibleMarkerB) {
-            var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
 
-            // If we have already set a line for this combination of markers increase the count (weight)
-            if (currentLines[visibleMarkers]) {
-              currentLines[visibleMarkers].count += 1;
-            } 
-            // Else initialise it
-            else {
-              currentLines[visibleMarkers] = {};
-              currentLines[visibleMarkers].count = 1;  
-              currentLines[visibleMarkers].markerA = visibleMarkerA;
-              currentLines[visibleMarkers].markerB = visibleMarkerB;
-            }
+          var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
 
-            // Ditch this
-            if (currentLines[visibleMarkers].count > currentMaxCount) {
-              currentMaxCount = currentLines[visibleMarkers].count;
-            }
-          //}
-          
+          // If we have already set a line for this combination of markers increase the count (weight)
+          if (currentLines[visibleMarkers]) {
+            currentLines[visibleMarkers].count += 1;
+          } 
+          // Else initialise it
+          else {
+            currentLines[visibleMarkers] = {};
+            currentLines[visibleMarkers].count = 1;  
+            currentLines[visibleMarkers].markerA = visibleMarkerA;
+            currentLines[visibleMarkers].markerB = visibleMarkerB;
+          }
+
+          // Ditch this
+          if (currentLines[visibleMarkers].count > currentMaxCount) {
+            currentMaxCount = currentLines[visibleMarkers].count;
+          }          
    
         });
         
