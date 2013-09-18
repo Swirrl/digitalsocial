@@ -163,7 +163,7 @@ class Organisation
 
   def self.search_by_name(search)
     name_predicate = self.fields[:name].predicate.to_s
-    self.order_by_name.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
+    self.order_by_name.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"\"\"#{search}\"\"\", \"i\")").resources
   end
 
   def twitter_username=(username)
@@ -284,7 +284,7 @@ class Organisation
 
   def organisation_name_is_unique
     name_predicate = Organisation.fields[:name].predicate.to_s
-    if Organisation.where("?uri <#{name_predicate}> \"#{name}\"").where("FILTER(?uri != <#{self.uri}>)").count > 0
+    if Organisation.where("?uri <#{name_predicate}> \"\"\"#{name}\"\"\"").where("FILTER(?uri != <#{self.uri}>)").count > 0
       errors.add(:name, "Organisation already exists")
     end
   end

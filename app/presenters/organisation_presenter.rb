@@ -109,7 +109,7 @@ class OrganisationPresenter
 
   def organisation_name_is_unique
     name_predicate = Organisation.fields[:name].predicate.to_s
-    if Organisation.where("?uri <#{name_predicate}> \"#{name}\"").where("FILTER(?uri != <#{organisation.uri}>)").count > 0
+    if Organisation.where("?uri <#{name_predicate}> \"\"\"#{name}\"\"\"").where("FILTER(?uri != <#{organisation.uri}>)").count > 0
       errors.add(:name, "Organisation already exists")
     end
   end
