@@ -200,7 +200,7 @@ class Project
 
   def self.search_by_name(search)
     name_predicate = self.fields[:name].predicate.to_s
-    self.order_by_name.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"#{search}\", \"i\")").resources
+    self.order_by_name.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"\"\"#{search}\"\"\", \"i\")").resources
   end
 
   def activity_type_label_other=(other)
@@ -367,7 +367,7 @@ class Project
 
   def project_name_is_unique
     name_predicate = Project.fields[:name].predicate.to_s
-    if Project.where("?uri <#{name_predicate}> \"#{name}\"").where("FILTER(?uri != <#{self.uri}>)").count > 0
+    if Project.where("?uri <#{name_predicate}> \"\"\"#{name}\"\"\"").where("FILTER(?uri != <#{self.uri}>)").count > 0
       errors.add(:name, "Activity already exists")
     end
   end
