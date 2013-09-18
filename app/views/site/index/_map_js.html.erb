@@ -6,6 +6,7 @@
     var selectedZoom = 16;
     var markers;
     var markerGuids = {};
+    var currentLines = {};
 
     var map = L.mapbox.map('home-map', "<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>", {
       scrollWheelZoom: true
@@ -199,6 +200,7 @@
           $.each(data.organisations, function(i, org) {
             markerGuids[org.guid].partners = org.partners;
           });
+          setPartnerLines();
           drawPartnerLines();
         },
         dataType: 'json'
@@ -219,46 +221,56 @@
     }
 
     function drawLine(markerA, markerB) {
-      //console.log(markerA);
-      //console.log(markerB);
-      //if (markerA._icon && markerB._icon) {
-        try {
-          var visibleMarkerA = markers.getVisibleParent(markerA);
-          var visibleMarkerB = markers.getVisibleParent(markerB);
 
-          // console.log(visibleMarkerA);
-          // console.log(visibleMarkerB);
-          // console.log(" ");
-
-          new L.Polyline([visibleMarkerA._latlng, visibleMarkerB._latlng], {
-            color: '#999999',
-            //color: '#F39200',
-            weight: 1,
-            opacity: 0.05,
-            smoothFactor: 1
-
-          }).addTo(map);
-        }
-        catch(e) {
-
-        }
+      new L.Polyline([markerA._latlng, markerB._latlng], {
+        color: '#999999',
+        //color: '#F39200',
+        weight: 1,
+        opacity: 0.05,
+        smoothFactor: 10
+      }).addTo(map);
         
-        
-
-      //}
     }
 
-    function drawPartnerLines(){
+    // function drawPartnerLines(){
+    //   $.each(markerGuids, function(i, org){
+    //     $.each(org.partners, function(j, partner){
+    //       drawLine(org.marker, getMarkerFromGuid(partner[0]));
+    //     });
+        
+    //   });
+    // }
+
+    function drawPartnerLines() {
+      $.each(currentLines, function(i, line){
+        
+        
+      });
+    }
+
+    function setPartnerLines() {
       $.each(markerGuids, function(i, org){
+        
         $.each(org.partners, function(j, partner){
-          //console.log(marker);
-          //console.log(getMarkerFromGuid(partner[0]));
-          //console.log();
-          drawLine(org.marker, getMarkerFromGuid(partner[0]));
-          
+          try {
+            var visibleMarkerA = markers.getVisibleParent(org.marker);
+            var visibleMarkerB = markers.getVisibleParent(getMarkerFromGuid(partner[0]));
+
+            if (currentLines[[visibleMarkerA._latlng, visibleMarkerB._latlng]]) {
+              currentLines[[visibleMarkerA._latlng, visibleMarkerB._latlng]].count += 1;
+            } else {
+              currentLines[[visibleMarkerA._latlng, visibleMarkerB._latlng]] = {};
+              currentLines[[visibleMarkerA._latlng, visibleMarkerB._latlng]].count = 1;  
+            }
+            
+          } catch(e) {
+            console.log(e);
+          }
         });
         
       });
+
+      console.log(currentLines);
     }
 
     function getMarkerFromGuid(guid) {
