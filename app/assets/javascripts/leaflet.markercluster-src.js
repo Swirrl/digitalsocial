@@ -464,7 +464,7 @@ L.MarkerClusterGroup = L.FeatureGroup.extend({
 
 	getVisibleParent: function (marker) {
 		var vMarker = marker;
-		while (vMarker !== null && !vMarker._icon) {
+		while (vMarker !== null && vMarker !== undefined && !vMarker._icon) {
 			vMarker = vMarker.__parent;
 		}
 		return vMarker;

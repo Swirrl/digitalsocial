@@ -280,6 +280,10 @@ class Organisation
     @powc = @powc.sort_by{ |_, v| v[:count] }.reverse
   end
 
+  def missing_site?
+    !primary_site
+  end
+
   private
 
   def organisation_name_is_unique

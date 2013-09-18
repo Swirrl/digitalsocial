@@ -2,11 +2,16 @@
   $(function() {
 
     var defaultCenter = [45,15];
-    var defaultZoom = 4;
+    var defaultZoom = 5;
     var selectedZoom = 16;
     var markers;
     var markerGuids = {};
     var currentLines = {};
+    var currentMaxCount = 0;
+    var maxWeight = 4;
+    var maxOpacity = 1;
+
+    L.Path.CLIP_PADDING = 9999;
 
     var map = L.mapbox.map('home-map', "<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>", {
       scrollWheelZoom: true
@@ -82,6 +87,7 @@
 
       markers = new L.MarkerClusterGroup({
         showCoverageOnHover: false,
+        maxClusterRadius: 40,
         iconCreateFunction: function(cluster) {
           var childCount = cluster.getChildCount();
 
@@ -109,11 +115,12 @@
       });
 
       markers.on('animationend', function(e){
+        //setPartnerLines();
         drawPartnerLines();
       });
 
-      $.each(organisations, function(i, org) {
 
+      $.each(organisations, function(i, org) {
         var m = L.marker(new L.LatLng(org.lat, org.lng), {
           icon: L.divIcon({
             iconSize: new L.Point(10, 10)
@@ -126,13 +133,11 @@
         
         markerGuids[org.guid] = {};
         markerGuids[org.guid].marker = m;
-        //markerGuids[org.guid].visible_marker = markers.getVisibleParent(m);
       });
 
       map.addLayer(markers);
       getPartners();
       
-      //console.log(markers);
     }
 
     function setOrganisationPopupContent(organisation, popup) {
@@ -195,12 +200,13 @@
     function getPartners() {
       $.ajax({
         type: 'GET',
-        url: '/organisations/map_partners',
+        //url: '/organisations/map_partners',
+        url: '/organisations/map_partners_static',
         success: function(data){
           $.each(data.organisations, function(i, org) {
             markerGuids[org.guid].partners = org.partners;
           });
-          setPartnerLines();
+          //setPartnerLines();
           drawPartnerLines();
         },
         dataType: 'json'
@@ -224,53 +230,76 @@
 
       new L.Polyline([markerA._latlng, markerB._latlng], {
         color: '#999999',
-        //color: '#F39200',
         weight: 1,
-        opacity: 0.05,
-        smoothFactor: 10
+        opacity: 0.1,
+        smoothFactor: 1
       }).addTo(map);
         
     }
 
-    // function drawPartnerLines(){
-    //   $.each(markerGuids, function(i, org){
-    //     $.each(org.partners, function(j, partner){
-    //       drawLine(org.marker, getMarkerFromGuid(partner[0]));
-    //     });
-        
+    // function lineWeightForCount(count) {
+    //   return (count / currentMaxCount) * maxWeight;
+    // }
+
+    // function lineOpacityForCount(count) {
+    //   return (count / currentMaxCount) * maxOpacity; 
+    // }
+
+    // function drawPartnerLines() {
+    //   $.each(currentLines, function(i, line){
+    //     drawLine(line.markerA, line.markerB, line.count);
     //   });
     // }
 
     function drawPartnerLines() {
-      $.each(currentLines, function(i, line){
-        
-        
-      });
-    }
+      // Reset line variables
+      //currentLines = {};
+      //currentMaxCount = 0;
 
-    function setPartnerLines() {
       $.each(markerGuids, function(i, org){
         
+        // Loop through each of the org's partners
         $.each(org.partners, function(j, partner){
-          try {
-            var visibleMarkerA = markers.getVisibleParent(org.marker);
-            var visibleMarkerB = markers.getVisibleParent(getMarkerFromGuid(partner[0]));
+          drawLine(org.marker, getMarkerFromGuid(partner[0]));
 
-            if (currentLines[[visibleMarkerA._latlng, visibleMarkerB._latlng]]) {
-              currentLines[[visibleMarkerA._latlng, visibleMarkerB._latlng]].count += 1;
-            } else {
-              currentLines[[visibleMarkerA._latlng, visibleMarkerB._latlng]] = {};
-              currentLines[[visibleMarkerA._latlng, visibleMarkerB._latlng]].count = 1;  
-            }
-            
-          } catch(e) {
-            console.log(e);
-          }
+
+
+          // // Use Leaflet's visibleParent for marker A if it is currently available at this zoom level
+          // visibleMarkerA = markers.getVisibleParent(org.marker);
+          // // try      { visibleMarkerA = markers.getVisibleParent(org.marker); }
+          // // catch(e) { visibleMarkerA = org.marker; }
+
+          // // Use Leaflet's visibleParent for marker B if it is currently available at this zoom level
+          // visibleMarkerB = markers.getVisibleParent(getMarkerFromGuid(partner[0]));
+          // // try      { visibleMarkerB = markers.getVisibleParent(getMarkerFromGuid(partner[0])); }
+          // // catch(e) { visibleMarkerB = getMarkerFromGuid(partner[0]); }
+          
+          // if (visibleMarkerA && visibleMarkerB) {
+          //   var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
+
+          //   // If we have already set a line for this combination of markers increase the count (weight)
+          //   if (currentLines[visibleMarkers]) {
+          //     currentLines[visibleMarkers].count += 1;
+          //   } 
+          //   // Else initialise it
+          //   else {
+          //     currentLines[visibleMarkers] = {};
+          //     currentLines[visibleMarkers].count = 1;  
+          //     currentLines[visibleMarkers].markerA = visibleMarkerA;
+          //     currentLines[visibleMarkers].markerB = visibleMarkerB;
+          //   }
+
+          //   // Ditch this
+          //   if (currentLines[visibleMarkers].count > currentMaxCount) {
+          //     currentMaxCount = currentLines[visibleMarkers].count;
+          //   }
+          //}
+          
+   
         });
         
       });
 
-      console.log(currentLines);
     }
 
     function getMarkerFromGuid(guid) {
