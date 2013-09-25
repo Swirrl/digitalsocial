@@ -9,7 +9,7 @@
     var currentLines = {};
     var currentMaxCount = 0;
     var maxWeight = 8;
-    var maxOpacity = 1;
+    var maxOpacity = 0.666;
 
     var map = L.mapbox.map('home-map', "<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>", {
       scrollWheelZoom: true
@@ -25,7 +25,28 @@
     });
 
     map.on('popupopen', function(e) {
+      if (e.popup._source._guid) {
+        loadPinPopupContent(e);
+      } else if (e.popup._source._childCount) {
+        loadClusterPopupContent(e);
+      }
+    });
 
+    $(document.body).on('click', 'a.org-zoom', function(e) {
+      var guid = e.target.hash.substring(1);
+      var marker = getMarkerFromGuid(guid);
+
+      map.setZoom(18);
+      map.panTo(marker._latlng);
+      
+      //map.closePopup().openPopup(marker._popup);
+      marker.openPopup();
+
+      e.preventDefault();
+      return false;
+    });
+
+    function loadPinPopupContent(e) {
       var guid = e.popup._source._guid;
 
       $.ajax({
@@ -35,7 +56,7 @@
           e.popup.setContent('<div class="spinner"></div>');
         },
         success: function(data){
-          setOrganisationPopupContent(data.organisation, e.popup);
+          setPinPopupContent(data.organisation, e.popup);
         },
         error: function() {
           e.popup.setContent('<div class="popup-error">Oops - something went wrong.</div>');
@@ -48,8 +69,40 @@
       } else {
         slideOutPanels();
       }
+    }
 
-    });
+    function loadClusterPopupContent(e) {
+
+      var guids = [];
+      $.each(e.popup._source.getAllChildMarkers(), function(i, marker){
+        guids.push(marker._guid);
+      });
+
+      $.ajax({
+        type: 'GET',
+        url: '/organisations/map_cluster',
+        data: {
+          guids: guids
+        },
+        beforeSend: function(){
+          e.popup.setContent('<div class="spinner"></div>');
+        },
+        success: function(data){
+          
+          setClusterPopupContent(data.organisations, e.popup);
+        },
+        error: function() {
+          e.popup.setContent('<div class="popup-error">Oops - something went wrong.</div>');
+        },
+        dataType: 'json'
+      });
+
+      if (isMobile()) {
+        hideMobilePanels();
+      } else {
+        slideOutPanels();
+      }
+    }
 
     map.on('zoomstart', function(e){
       clearLines();
@@ -126,21 +179,31 @@
         unhighlightMarkerLines(a.layer);
       });
 
+      // markers.on('clusterdblclick', function (a) {
+      //   a.layer.zoomToBounds();
+      // });
+
+      markers.on('clusterclick', function (a) {
+        a.layer.bindPopup('').openPopup();
+      });
+
       $.each(organisations, function(i, org) {
         var m = L.marker(new L.LatLng(org.lat, org.lng), {
-          // icon: new L.Icon({
-          //   iconSize: new L.Point(10, 16),
-          //   iconUrl: "assets/home/marker.png"
-          // })
-          icon: new L.DivIcon({
-            iconSize: new L.Point(10, 10),
-            color: '#0078A8'
+          icon: new L.Icon({
+            iconSize: new L.Point(10, 16),
+            iconUrl: "assets/home/marker.png"
           })
+          // icon: new L.DivIcon({
+          //   iconSize: new L.Point(10, 10),
+          //   color: '#0078A8'
+          // })
         }).bindPopup('', {
           closeButton: false
-        }).on('mouseover', function(){
+        }).on('mouseover', function(mkr){
+          this._icon.src = "assets/home/marker-hover.png";
           highlightMarkerLines(this);
-        }).on('mouseout', function(){
+        }).on('mouseout', function(mkr){
+          this._icon.src = "assets/home/marker.png";
           unhighlightMarkerLines(this);
         });
         
@@ -173,7 +236,7 @@
       });
     }
 
-    function setOrganisationPopupContent(organisation, popup) {
+    function setPinPopupContent(organisation, popup) {
 
       var content = '';
       content += '<h3><a href="/organisations/'+organisation.guid+'">'+organisation.name+'</a></h3>';
@@ -192,6 +255,18 @@
 
       popup.setContent(content);
 
+    }
+
+    function setClusterPopupContent(organisations, popup) {
+      var content = '';
+
+      content += '<ul class="organisations">';
+      $.each(organisations, function(i, organisation) {
+        content += '<li><a class="org-zoom" href="#'+organisation.guid+'">'+organisation.name+'</a></>';
+      });
+      content += '</ul>';
+
+      popup.setContent(content);
     }
 
     function isMobile() {
@@ -266,6 +341,10 @@
         weight: lineWeightForCount(count),
         opacity: lineOpacityForCount(count),
         smoothFactor: 1
+      }).bindPopup('').on('mouseover', function(){
+        this.setStyle({ color: '#F39200' });
+      }).on('mouseout', function(){
+        this.setStyle({ color: '#999999' });
       }).addTo(map);
       
       return line;
@@ -276,7 +355,7 @@
     }
 
     function lineOpacityForCount(count) {
-      return 0.25;
+      //return 0.15;
       return (count / currentMaxCount) * maxOpacity; 
     }
 

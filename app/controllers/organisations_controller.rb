@@ -1,7 +1,7 @@
 class OrganisationsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:index, :show, :map_index, :map_show, :map_partners, :map_partners_static]
-  before_filter :set_organisation, :except => [:map_index, :map_show, :map_partners, :map_partners_static]
+  before_filter :authenticate_user!, :except => [:index, :show, :map_index, :map_show, :map_partners, :map_partners_static, :map_cluster]
+  before_filter :set_organisation, :except => [:map_index, :map_show, :map_partners, :map_partners_static, :map_cluster]
   before_filter :ensure_user_is_organisation_owner, only: [:invite_user]
   before_filter :show_partners, only: [:show, :index]
 
@@ -102,6 +102,29 @@ class OrganisationsController < ApplicationController
     respond_to do |format|
       format.json do
         render json: { organisation: @organisation.as_json(map_show: true) }
+      end
+    end
+  end
+
+  def map_cluster
+    filter_clause = params[:guids].collect do |guid|
+      "?uri = <#{Organisation.slug_to_uri(guid)}>"
+    end.join(" || ")
+
+    @organisations = Organisation.find_by_sparql(
+      "SELECT ?uri ?label
+      WHERE {
+        ?uri <http://www.w3.org/2000/01/rdf-schema#label> ?label .
+        ?uri a <http://www.w3.org/ns/org#Organization> .
+        FILTER (
+          #{filter_clause}
+        )
+      }"
+    )
+    
+    respond_to do |format|
+      format.json do
+        render json: { organisations: @organisations.as_json(map_cluster: true) }
       end
     end
   end

@@ -128,6 +128,11 @@ class Organisation
         address: self.address_str,
         projects: project_resources.collect { |p| { name: p.name, guid: p.guid } }
       }
+    elsif options[:map_cluster]
+      {
+        guid: self.guid,
+        name: self.name
+      }
     else
       {
         name: self.name,

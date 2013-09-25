@@ -36,16 +36,21 @@ namespace :db do
       2.times { FactoryGirl.create(:organisation_near_lat_lng, near: [46.198524,6.142913]) }   # Geneva
       
       10.times { FactoryGirl.create(:organisation) } # Random
-
-      organisations = Organisation.all.resources.to_a
-
-      100.times do |n|
-        puts "Seeding activity #{n}"
-        FactoryGirl.create(:project_membership, organisation: organisations.sample.uri.to_s)
-      end
     rescue => e
-      puts e.message
+
     end
+
+    organisations = Organisation.all.resources.to_a
+
+    20.times do |n|
+      puts "Seeding activity #{n}"
+      project = FactoryGirl.create(:project_with_organisations, organisations_count: 0)
+
+      (rand(6) + 1).times do
+        FactoryGirl.create(:project_membership, project: project.uri.to_s, organisation: organisations.sample.uri.to_s) rescue nil
+      end
+    end
+    
   end  
 
 end
