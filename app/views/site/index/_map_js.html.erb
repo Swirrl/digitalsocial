@@ -11,9 +11,14 @@
     var maxWeight = 8;
     var maxOpacity = 0.666;
 
-    var map = L.mapbox.map('home-map', "<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>", {
+    var map = L.map('home-map', {
       scrollWheelZoom: true
-    }).setView(defaultCenter,defaultZoom);
+    }).setView(defaultCenter, defaultZoom);
+    
+    var layer_without_labels = L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>");
+    var layer_with_labels    = L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>");
+
+    map.addLayer(layer_without_labels);
 
     $.ajax({
       type: 'GET',
@@ -32,6 +37,16 @@
       }
     });
 
+    map.on('zoomend', function(e){
+      if (e.target._zoom > 6) {
+        map.removeLayer(layer_without_labels);
+        map.addLayer(layer_with_labels);
+      } else {
+        map.removeLayer(layer_with_labels);
+        map.addLayer(layer_without_labels);
+      }
+    });
+
     $(document.body).on('click', 'a.org-zoom', function(e) {
       var guid = e.target.hash.substring(1);
       var marker = getMarkerFromGuid(guid);
@@ -39,7 +54,6 @@
       map.setZoom(18);
       map.panTo(marker._latlng);
       
-      //map.closePopup().openPopup(marker._popup);
       marker.openPopup();
 
       e.preventDefault();
