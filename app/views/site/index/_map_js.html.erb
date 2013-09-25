@@ -53,8 +53,26 @@
 
       map.setZoom(18);
       map.panTo(marker._latlng);
-      
       marker.openPopup();
+
+      e.preventDefault();
+      return false;
+    });
+
+    $(document.body).on('click', 'a.show-org-network', function(e) {
+      var guid = e.target.hash.substring(1);
+      var markerLatLng = getMarkerFromGuid(guid)._latlng;
+      var partnerLatLngs = [];
+
+      $.each(markerGuids[guid].partners, function(i, partner) {
+        partnerLatLngs.push(getMarkerFromGuid(partner[0])._latlng);
+      });
+
+      var networkLatLngs = partnerLatLngs;
+      networkLatLngs.push(markerLatLng);
+
+      var bounds = new L.LatLngBounds(networkLatLngs);
+      map.fitBounds(bounds);
 
       e.preventDefault();
       return false;
@@ -146,8 +164,6 @@
       return false;
     });
 
-
-
     function addOrganisationPins(organisations) {
 
       markers = new L.MarkerClusterGroup({
@@ -193,10 +209,6 @@
         unhighlightMarkerLines(a.layer);
       });
 
-      // markers.on('clusterdblclick', function (a) {
-      //   a.layer.zoomToBounds();
-      // });
-
       markers.on('clusterclick', function (a) {
         a.layer.bindPopup('').openPopup();
       });
@@ -207,10 +219,6 @@
             iconSize: new L.Point(10, 16),
             iconUrl: "assets/home/marker.png"
           })
-          // icon: new L.DivIcon({
-          //   iconSize: new L.Point(10, 10),
-          //   color: '#0078A8'
-          // })
         }).bindPopup('', {
           closeButton: false
         }).on('mouseover', function(mkr){
@@ -266,6 +274,10 @@
         });
         content += '</ul>';
       }
+
+      content += '<div class="divider"></div>'
+
+      content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show network</a></div>';
 
       popup.setContent(content);
 
