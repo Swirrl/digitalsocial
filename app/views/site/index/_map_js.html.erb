@@ -97,6 +97,7 @@
         this.bindZoomEnd();
         this.bindShowOrgNetworkClick();
         this.bindOrgZoomClick();
+        this.bindResetMapClick();
 
         map.on('zoomstart', function(e){
           DSIMap.clearLines();
@@ -153,20 +154,32 @@
         $(document.body).on('click', 'a.show-org-network', function(e) {
           var guid = e.target.hash.substring(1);
           var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
+          DSIMap.visibleOrganisations = {};
           var partnerLatLngs = [];
 
           $.each(DSIMap.allOrganisations[guid].partners, function(partnerGuid, partner) {
+            DSIMap.visibleOrganisations[partnerGuid] = DSIMap.allOrganisations[partnerGuid];
             partnerLatLngs.push(DSIMap.allOrganisations[partnerGuid].marker._latlng);
           });
 
-          var networkLatLngs = partnerLatLngs;
-          networkLatLngs.push(markerLatLng);
-
-          var bounds = new L.LatLngBounds(networkLatLngs);
-          map.fitBounds(bounds);
-
           $('.active-organisation .name').text(DSIMap.allOrganisations[guid].name);
           $('.active-organisation').css({ top: 0 });
+
+          //clusters.clearLayers();
+          //DSIMap.clearLines();
+
+          DSIMap.visibleOrganisations[guid] = DSIMap.allOrganisations[guid];
+
+          DSIMap.addOrganisationPins();
+
+          DSIMap.config.maxLineWeight = 4;
+          DSIMap.config.maxLineOpacity = 0.333;
+          DSIMap.addPartnerLines();
+
+          var networkLatLngs = partnerLatLngs;
+          networkLatLngs.push(markerLatLng);
+          var bounds = new L.LatLngBounds(networkLatLngs);
+          map.fitBounds(bounds);
 
           e.preventDefault();
           return false;
@@ -187,13 +200,39 @@
         });
       },
 
+      bindResetMapClick: function() {
+        $('a.reset-map').click(function(e){
+          DSIMap.visibleOrganisations = DSIMap.allOrganisations;
+          
+
+          clusters.clearLayers();
+          DSIMap.clearLines();
+
+          DSIMap.addOrganisationPins();
+
+          DSIMap.config.maxLineWeight = 8;
+          DSIMap.config.maxLineOpacity = 0.666;
+          DSIMap.addPartnerLines(); 
+
+          map.setZoom(DSIMap.config.defaultZoom);
+          
+          var top = $('.active-organisation').height() + 30;
+          $('.active-organisation').css({ top: '-'+top+'px' });
+
+          e.preventDefault();
+          return false;
+        });
+        
+      },
+
       fetchOrganisations: function(e) {
         $.ajax({
           type: 'GET',
           url: '/organisations/map_index',
           success: function(data){
             DSIMap.setAllOrganisations(data.organisations);
-            DSIMap.addOrganisationPins(DSIMap.allOrganisations);
+            DSIMap.visibleOrganisations = DSIMap.allOrganisations;
+            DSIMap.addOrganisationPins();
 
             DSIMap.fetchPartners();
           },
@@ -209,8 +248,11 @@
         });
       },
 
-      addOrganisationPins: function(organisations) {
-        $.each(organisations, function(guid, organisation) {
+      addOrganisationPins: function() {
+        map.removeLayer(clusters);
+        clusters.clearLayers();
+
+        $.each(DSIMap.visibleOrganisations, function(guid, organisation) {
           clusters.addLayer(DSIMap.allOrganisations[guid].marker);
         });
 
@@ -400,6 +442,8 @@
       },
 
       addPartnerLines: function(organisations) {
+        DSIMap.clearLines();
+
         var lines = this.buildPartnerLines(organisations);
 
         $.each(lines, function(i, line){
@@ -430,40 +474,42 @@
       },
 
       lineOpacityForCount: function(count) {
-        //return 0.15;
         return (count / DSIMap.currentMaxLineCount) * config.maxLineOpacity; 
       },
 
-      buildPartnerLines: function(organisations) {
+      buildPartnerLines: function() {
         var lines = {};
         DSIMap.currentMaxLineCount = 0;
 
-        $.each(organisations, function(orgGuid, org){
+        $.each(DSIMap.visibleOrganisations, function(orgGuid, org){
           
           // Loop through each of the org's partners
           $.each(org.partners, function(partnerGuid, partner){
-            visibleMarkerA = clusters.getVisibleParent(org.marker);
-            visibleMarkerB = clusters.getVisibleParent(DSIMap.allOrganisations[partnerGuid].marker);
-            
 
-            var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
+            if (DSIMap.visibleOrganisations[partnerGuid]) {
 
-            // If we have already set a line for this combination of markers increase the count (weight)
-            if (lines[visibleMarkers]) {
-              lines[visibleMarkers].count += 1;
-            } 
-            // Else initialise it
-            else {
-              lines[visibleMarkers] = {};
-              lines[visibleMarkers].count = 1;  
-              lines[visibleMarkers].markerA = visibleMarkerA;
-              lines[visibleMarkers].markerB = visibleMarkerB;
+              visibleMarkerA = clusters.getVisibleParent(org.marker);
+              visibleMarkerB = clusters.getVisibleParent(DSIMap.allOrganisations[partnerGuid].marker);              
+
+              var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
+
+              // If we have already set a line for this combination of markers increase the count (weight)
+              if (lines[visibleMarkers]) {
+                lines[visibleMarkers].count += 1;
+              } 
+              // Else initialise it
+              else {
+                lines[visibleMarkers] = {};
+                lines[visibleMarkers].count = 1;  
+                lines[visibleMarkers].markerA = visibleMarkerA;
+                lines[visibleMarkers].markerB = visibleMarkerB;
+              }
+
+              if (lines[visibleMarkers].count > DSIMap.currentMaxLineCount) {
+                DSIMap.currentMaxLineCount = lines[visibleMarkers].count;
+              }
             }
-
-            if (lines[visibleMarkers].count > DSIMap.currentMaxLineCount) {
-              DSIMap.currentMaxLineCount = lines[visibleMarkers].count;
-            }          
-     
+       
           });
           
         });

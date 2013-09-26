@@ -225,7 +225,6 @@
     border-bottom: 3px solid $orange;
     width: 300px;
     padding: 12px;
-    height: 58px;
     overflow: hidden;
     @include transition(all, 0.5s);
 
@@ -233,12 +232,17 @@
       color: #999;
       font-size: 14px;
       margin-bottom: 0;
-      line-height: 1.2;
+      line-height: 1;
+      margin-bottom: 3px;
 
       &.name {
         color: $orange;
         font-size: 24px;
         font-style: italic;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
       }
     }
   }
