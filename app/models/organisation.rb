@@ -155,10 +155,11 @@ class Organisation
 
   def self.organisations_for_map
     Tripod::SparqlClient::Query.select("
-      SELECT ?org ?lat ?lng WHERE {       
+      SELECT ?org ?lat ?lng ?name WHERE {       
         GRAPH <#{Digitalsocial::DATA_GRAPH}> {
           ?org a <http://www.w3.org/ns/org#Organization> .
           ?org <http://www.w3.org/ns/org#hasPrimarySite> ?site .
+          ?org <http://www.w3.org/2000/01/rdf-schema#label> ?name .
           ?site <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat .
           ?site <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?lng .
         }
@@ -282,7 +283,7 @@ class Organisation
       end
     end
 
-    @powc = @powc.sort_by{ |_, v| v[:count] }.reverse
+    @powc# = @powc.sort_by{ |_, v| v[:count] }.reverse
   end
 
   def missing_site?

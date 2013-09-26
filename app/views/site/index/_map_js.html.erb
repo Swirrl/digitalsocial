@@ -1,444 +1,500 @@
 <script>
   $(function() {
 
-    var defaultCenter = [45,15];
-    var defaultZoom = 5;
-    var selectedZoom = 16;
-    var markers;
-    var markerGuids = {};
-    var currentLines = {};
-    var currentMaxCount = 0;
-    var maxWeight = 8;
-    var maxOpacity = 0.666;
+    var config,
+    DSIMap = {
 
-    var map = L.map('home-map', {
-      scrollWheelZoom: true
-    }).setView(defaultCenter, defaultZoom);
-    
-    var layer_without_labels = L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>");
-    var layer_with_labels    = L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>");
+      map: null,
+      clusters: null,
+      allOrganisations: {},
+      visibleOrganisations: {},
+      currentMaxLineCount: 0,
 
-    map.addLayer(layer_without_labels);
-
-    $.ajax({
-      type: 'GET',
-      url: '/organisations/map_index',
-      success: function(data){
-        addOrganisationPins(data.organisations);
+      config: {
+        defaultCenter: [45, 15],
+        defaultZoom: 5,
+        maxLineWeight: 8,
+        maxLineOpacity: 0.666,
+        layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>"),
+        layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>")
       },
-      dataType: 'json'
-    });
 
-    map.on('popupopen', function(e) {
-      if (e.popup._source._guid) {
-        loadPinPopupContent(e);
-      } else if (e.popup._source._childCount) {
-        loadClusterPopupContent(e);
-      }
-    });
+      init: function() {
+        config = this.config;
 
-    map.on('zoomend', function(e){
-      if (e.target._zoom > 6) {
-        map.removeLayer(layer_without_labels);
-        map.addLayer(layer_with_labels);
-      } else {
-        map.removeLayer(layer_with_labels);
-        map.addLayer(layer_without_labels);
-      }
-    });
+        this.initMap();
+        this.bindMapEvents();
+        this.initClusters();
 
-    $(document.body).on('click', 'a.org-zoom', function(e) {
-      var guid = e.target.hash.substring(1);
-      var marker = getMarkerFromGuid(guid);
+        this.fetchOrganisations();
+      },
 
-      map.setZoom(18);
-      map.panTo(marker._latlng);
-      marker.openPopup();
+      initMap: function() {
+        map = L.map('home-map', { scrollWheelZoom: true })
+          .setView(config.defaultCenter, config.defaultZoom)
+          .addLayer(config.layerWithoutLabels)
+      },
 
-      e.preventDefault();
-      return false;
-    });
+      initClusters: function() {
+        clusters = new L.MarkerClusterGroup({
+          showCoverageOnHover: false,
+          removeOutsideVisibleBounds: false,
+          zoomToBoundsOnClick: false,
+          iconCreateFunction: function(cluster) {
+            var childCount = cluster.getChildCount();
 
-    $(document.body).on('click', 'a.show-org-network', function(e) {
-      var guid = e.target.hash.substring(1);
-      var markerLatLng = getMarkerFromGuid(guid)._latlng;
-      var partnerLatLngs = [];
+            var c = ' marker-cluster-';
+            var iconSize;
+            if (childCount < 2.5) {
+              c += 'x-small';
+              iconSize = 20;
+            } else if (childCount < 5) {
+              c += 'small';
+              iconSize = 24;
+            } else if (childCount < 7.5) {
+              c += 'medium';
+              iconSize = 30;
+            } else if (childCount < 10) {
+              c += 'large';
+              iconSize = 36;
+            } else {
+              c += 'x-large';
+              iconSize = 48;
+            }
 
-      $.each(markerGuids[guid].partners, function(i, partner) {
-        partnerLatLngs.push(getMarkerFromGuid(partner[0])._latlng);
-      });
-
-      var networkLatLngs = partnerLatLngs;
-      networkLatLngs.push(markerLatLng);
-
-      var bounds = new L.LatLngBounds(networkLatLngs);
-      map.fitBounds(bounds);
-
-      e.preventDefault();
-      return false;
-    });
-
-    function loadPinPopupContent(e) {
-      var guid = e.popup._source._guid;
-
-      $.ajax({
-        type: 'GET',
-        url: '/organisations/'+guid+'/map_show',
-        beforeSend: function(){
-          e.popup.setContent('<div class="spinner"></div>');
-        },
-        success: function(data){
-          setPinPopupContent(data.organisation, e.popup);
-        },
-        error: function() {
-          e.popup.setContent('<div class="popup-error">Oops - something went wrong.</div>');
-        },
-        dataType: 'json'
-      });
-
-      if (isMobile()) {
-        hideMobilePanels();
-      } else {
-        slideOutPanels();
-      }
-    }
-
-    function loadClusterPopupContent(e) {
-
-      var guids = [];
-      $.each(e.popup._source.getAllChildMarkers(), function(i, marker){
-        guids.push(marker._guid);
-      });
-
-      $.ajax({
-        type: 'GET',
-        url: '/organisations/map_cluster',
-        data: {
-          guids: guids
-        },
-        beforeSend: function(){
-          e.popup.setContent('<div class="spinner"></div>');
-        },
-        success: function(data){
-          
-          setClusterPopupContent(data.organisations, e.popup);
-        },
-        error: function() {
-          e.popup.setContent('<div class="popup-error">Oops - something went wrong.</div>');
-        },
-        dataType: 'json'
-      });
-
-      if (isMobile()) {
-        hideMobilePanels();
-      } else {
-        slideOutPanels();
-      }
-    }
-
-    map.on('zoomstart', function(e){
-      clearLines();
-    });
-
-    $('.show-more a').click(function(e){
-      slideInPanels();
-      e.preventDefault();
-      return false;
-    });
-
-    $('a.hide-info').click(function(e) {
-      e.preventDefault();
-      slideOutPanels();
-      return false;
-    });
-
-    $('a.hide-info-mobile').click(function(e) {
-      e.preventDefault();
-      hideMobilePanels();
-      return false;
-    });
-
-    $('a.show-info-mobile').click(function(e) {
-      e.preventDefault();
-      showMobilePanels();
-      return false;
-    });
-
-    function addOrganisationPins(organisations) {
-
-      markers = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        removeOutsideVisibleBounds: false,
-        zoomToBoundsOnClick: false,
-        iconCreateFunction: function(cluster) {
-          var childCount = cluster.getChildCount();
-
-          var c = ' marker-cluster-';
-          var iconSize;
-          if (childCount < 2.5) {
-            c += 'x-small';
-            iconSize = 20;
-          } else if (childCount < 5) {
-            c += 'small';
-            iconSize = 24;
-          } else if (childCount < 7.5) {
-            c += 'medium';
-            iconSize = 30;
-          } else if (childCount < 10) {
-            c += 'large';
-            iconSize = 36;
-          } else {
-            c += 'x-large';
-            iconSize = 48;
+            return new L.DivIcon({ 
+              html: '<div><span>' + childCount + '</span></div>',
+              className: 'marker-cluster' + c,
+              iconSize: new L.Point(iconSize, iconSize)
+            });
           }
+        });
 
-          return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(iconSize, iconSize) });
-        }
-      });
+        this.bindClusterEvents();
+        
+      },
 
-      markers.on('animationend', function(e){
-        setPartnerLines();
-        drawPartnerLines();
-      });
+      bindClusterEvents: function() {
+        clusters.on('animationend', function(e){
+          DSIMap.addPartnerLines(DSIMap.allOrganisations);
+        });
 
-      markers.on('clustermouseover', function (a) {
-        highlightMarkerLines(a.layer);
-      });
+        clusters.on('clustermouseover', function (a) {
+          DSIMap.highlightMarkerLines(a.layer);
+        });
 
-      markers.on('clustermouseout', function (a) {
-        unhighlightMarkerLines(a.layer);
-      });
+        clusters.on('clustermouseout', function (a) {
+          DSIMap.unhighlightMarkerLines(a.layer);
+        });
 
-      markers.on('clusterclick', function (a) {
-        a.layer.bindPopup('').openPopup();
-      });
+        clusters.on('clusterclick', function (a) {
+          a.layer.bindPopup('').openPopup();
+        });
+      },
 
-      $.each(organisations, function(i, org) {
-        var m = L.marker(new L.LatLng(org.lat, org.lng), {
+      bindMapEvents: function() {
+        this.bindPopupOpen();
+        this.bindZoomEnd();
+        this.bindShowOrgNetworkClick();
+        this.bindOrgZoomClick();
+
+        map.on('zoomstart', function(e){
+          DSIMap.clearLines();
+        });
+
+        $('.show-more a').click(function(e){
+          DSIMap.slideInPanels();
+          e.preventDefault();
+          return false;
+        });
+
+        $('a.hide-info').click(function(e) {
+          e.preventDefault();
+          DSIMap.slideOutPanels();
+          return false;
+        });
+
+        $('a.hide-info-mobile').click(function(e) {
+          e.preventDefault();
+          DSIMap.hideMobilePanels();
+          return false;
+        });
+
+        $('a.show-info-mobile').click(function(e) {
+          e.preventDefault();
+          DSIMap.showMobilePanels();
+          return false;
+        });
+      },
+
+      bindPopupOpen: function(e) {
+        map.on('popupopen', function(e) {
+          if (e.popup._source._guid) {
+            DSIMap.fetchPinPopupContent(e);
+          } else if (e.popup._source._childCount) {
+            DSIMap.fetchClusterPopupContent(e);
+          }
+        });
+      },
+
+      bindZoomEnd: function(e) {
+        map.on('zoomend', function(e){
+          if (e.target._zoom > 6) {
+            map.removeLayer(config.layerWithoutLabels);
+            map.addLayer(config.layerWithLabels);
+          } else {
+            map.removeLayer(config.layerWithLabels);
+            map.addLayer(config.layerWithoutLabels);
+          }
+        });
+      },
+
+      bindShowOrgNetworkClick: function(e) {
+        $(document.body).on('click', 'a.show-org-network', function(e) {
+          var guid = e.target.hash.substring(1);
+          var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
+          var partnerLatLngs = [];
+
+          $.each(DSIMap.allOrganisations[guid].partners, function(partnerGuid, partner) {
+            partnerLatLngs.push(DSIMap.allOrganisations[partnerGuid].marker._latlng);
+          });
+
+          var networkLatLngs = partnerLatLngs;
+          networkLatLngs.push(markerLatLng);
+
+          var bounds = new L.LatLngBounds(networkLatLngs);
+          map.fitBounds(bounds);
+
+          $('.active-organisation .name').text(DSIMap.allOrganisations[guid].name);
+          $('.active-organisation').css({ top: 0 });
+
+          e.preventDefault();
+          return false;
+        });
+      },
+
+      bindOrgZoomClick: function(e) {
+        $(document.body).on('click', 'a.org-zoom', function(e) {
+          var guid = e.target.hash.substring(1);
+          var marker = DSIMap.allOrganisations[guid].marker;
+
+          map.setZoom(18);
+          map.panTo(marker._latlng);
+          marker.openPopup();
+
+          e.preventDefault();
+          return false;
+        });
+      },
+
+      fetchOrganisations: function(e) {
+        $.ajax({
+          type: 'GET',
+          url: '/organisations/map_index',
+          success: function(data){
+            DSIMap.setAllOrganisations(data.organisations);
+            DSIMap.addOrganisationPins(DSIMap.allOrganisations);
+
+            DSIMap.fetchPartners();
+          },
+          dataType: 'json'
+        });
+      },
+
+      setAllOrganisations: function(organisations) {
+        $.each(organisations, function(i, organisation) {
+          DSIMap.allOrganisations[organisation.guid] = {};
+          DSIMap.allOrganisations[organisation.guid].name = organisation.name;
+          DSIMap.allOrganisations[organisation.guid].marker = DSIMap.buildOrganisationPin(organisation);     
+        });
+      },
+
+      addOrganisationPins: function(organisations) {
+        $.each(organisations, function(guid, organisation) {
+          clusters.addLayer(DSIMap.allOrganisations[guid].marker);
+        });
+
+        map.addLayer(clusters);
+      },
+
+      buildOrganisationPin: function(organisation) {
+        var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
           icon: new L.Icon({
             iconSize: new L.Point(10, 16),
             iconUrl: "assets/home/marker.png"
           })
-        }).bindPopup('', {
+        })
+        .bindPopup('', {
           closeButton: false
         }).on('mouseover', function(mkr){
           this._icon.src = "assets/home/marker-hover.png";
-          highlightMarkerLines(this);
+          DSIMap.highlightMarkerLines(this);
         }).on('mouseout', function(mkr){
           this._icon.src = "assets/home/marker.png";
-          unhighlightMarkerLines(this);
+          DSIMap.unhighlightMarkerLines(this);
         });
-        
-        m._guid = org.guid;
-        markers.addLayer(m);
-        
-        markerGuids[org.guid] = {};
-        markerGuids[org.guid].marker = m;
-      });
 
-      map.addLayer(markers);
-      getPartners();
-      
-      
-    }
+        marker._guid = organisation.guid;
 
-    function highlightMarkerLines(marker) {
-      if (!marker._lines) return false;
+        return marker;
+        //clusters.addLayer(marker);
+      },
 
-      $.each(marker._lines, function(i, line) {
-        line.setStyle({ color: '#F39200' });
-      });
-    }
+      fetchPinPopupContent: function(e) {
+        var guid = e.popup._source._guid;
 
-    function unhighlightMarkerLines(marker) {
-      if (!marker._lines) return false;
+        $.ajax({
+          type: 'GET',
+          url: '/organisations/'+guid+'/map_show',
+          beforeSend: function(){
+            e.popup.setContent('<div class="spinner"></div>');
+          },
+          success: function(data){
+            DSIMap.setPinPopupContent(data.organisation, e.popup);
+          },
+          error: function() {
+            e.popup.setContent('<div class="popup-error">Oops - something went wrong.</div>');
+          },
+          dataType: 'json'
+        });
 
-      $.each(marker._lines, function(i, line) {
-        line.setStyle({ color: '#999999' });
-      });
-    }
+        if (this.isMobile()) {
+          this.hideMobilePanels();
+        } else {
+          this.slideOutPanels();
+        }
+      },
 
-    function setPinPopupContent(organisation, popup) {
+      setPinPopupContent: function(organisation, popup) {
+        var content = '';
+        content += '<h3><a href="/organisations/'+organisation.guid+'">'+organisation.name+'</a></h3>';
 
-      var content = '';
-      content += '<h3><a href="/organisations/'+organisation.guid+'">'+organisation.name+'</a></h3>';
+        if (organisation.address) {
+          content += '<p class="address">'+organisation.address+'</p>';
+        }
 
-      if (organisation.address) {
-        content += '<p class="address">'+organisation.address+'</p>';
-      }
+        if (organisation.projects.length > 0) {
+          content += '<ul class="projects">';
+          $.each(organisation.projects, function(i, project) {
+            content += '<li><a href="/projects/'+project.guid+'">'+project.name+'</a></li>';
+          });
+          content += '</ul>';
+        }
 
-      if (organisation.projects.length > 0) {
-        content += '<ul class="projects">';
-        $.each(organisation.projects, function(i, project) {
-          content += '<li><a href="/projects/'+project.guid+'">'+project.name+'</a></li>';
+        content += '<div class="divider"></div>';
+        content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show network</a></div>';
+
+        popup.setContent(content);
+      },
+
+      fetchClusterPopupContent: function(e) {
+        var guids = [];
+
+        $.each(e.popup._source.getAllChildMarkers(), function(i, marker){
+          guids.push(marker._guid);
+        });
+
+        $.ajax({
+          type: 'GET',
+          url: '/organisations/map_cluster',
+          data: {
+            guids: guids
+          },
+          beforeSend: function(){
+            e.popup.setContent('<div class="spinner"></div>');
+          },
+          success: function(data){
+            DSIMap.setClusterPopupContent(data.organisations, e.popup);
+          },
+          error: function() {
+            e.popup.setContent('<div class="popup-error">Oops - something went wrong.</div>');
+          },
+          dataType: 'json'
+        });
+
+        if (this.isMobile()) {
+          this.hideMobilePanels();
+        } else {
+          this.slideOutPanels();
+        }
+      },
+
+      setClusterPopupContent: function(organisations, popup) {
+        var content = '';
+
+        content += '<ul class="organisations">';
+        $.each(organisations, function(i, organisation) {
+          content += '<li><a class="org-zoom" href="#'+organisation.guid+'">'+organisation.name+'</a></>';
         });
         content += '</ul>';
-      }
 
-      content += '<div class="divider"></div>'
+        popup.setContent(content);
+      },
 
-      content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show network</a></div>';
+      isMobile: function() {
+        var mobile = false;
+        if( window.matchMedia && window.matchMedia( "(max-width: 767px)" ).matches) {
+          mobile = true;
+        }
+        return mobile;
+      },
 
-      popup.setContent(content);
+      slideOutPanels: function() {
+        $('.logo').css({ top: "-128px" });
+        $('.info').css({ right: "-898px" });
+        setTimeout(function(){
+          $('.info').hide();
+          $('.small-info').fadeIn();
+        }, 500);
+      },
 
-    }
+      slideInPanels: function() {
+        $('.info').show();
+        $('.small-info').fadeOut();
+        setTimeout(function(){
+          $('.info').css({ right: "0" });
+          $('.logo').css({ top: "0" });
+        }, 250);
+      },
 
-    function setClusterPopupContent(organisations, popup) {
-      var content = '';
+      showMobilePanels: function() {
+        $('.mobile-info').show();
+        $('.mobile-small-info').hide();
+      },
 
-      content += '<ul class="organisations">';
-      $.each(organisations, function(i, organisation) {
-        content += '<li><a class="org-zoom" href="#'+organisation.guid+'">'+organisation.name+'</a></>';
-      });
-      content += '</ul>';
+      hideMobilePanels: function() {
+        $('.mobile-info').hide();
+        $('.mobile-small-info').show();
+      },
 
-      popup.setContent(content);
-    }
-
-    function isMobile() {
-      var mobile = false;
-      if( window.matchMedia && window.matchMedia( "(max-width: 767px)" ).matches) {
-        mobile = true;
-      }
-      return mobile;
-    }
-
-    function slideOutPanels() {
-      $('.logo').css({ top: "-128px" });
-      $('.info').css({ right: "-898px" });
-      setTimeout(function(){
-        $('.info').hide();
-        $('.small-info').fadeIn();
-      }, 500);
-    }
-
-    function slideInPanels() {
-      $('.info').show();
-      $('.small-info').fadeOut();
-      setTimeout(function(){
-        $('.info').css({ right: "0" });
-        $('.logo').css({ top: "0" });
-      }, 250);
-    }
-
-    function showMobilePanels() {
-      $('.mobile-info').show();
-      $('.mobile-small-info').hide();
-    }
-
-    function hideMobilePanels() {
-      $('.mobile-info').hide();
-      $('.mobile-small-info').show();
-    }
-
-    function getPartners() {
-      $.ajax({
-        type: 'GET',
-        //url: '/organisations/map_partners',
-        url: '/organisations/map_partners_static',
-        success: function(data){
-          $.each(data.organisations, function(i, org) {
-            markerGuids[org.guid].partners = org.partners;
-          });
-          setPartnerLines();
-          drawPartnerLines();
-        },
-        dataType: 'json'
-      });
-    }
-
-    function clearLines() {
-      for (i in map._layers) {
-        if (map._layers[i]._path != undefined) {
-          try {
-            map.removeLayer(map._layers[i]);
-          }
-          catch(e){
-            console.log("problem with " + e + map._layers[i]);
+      clearLines: function() {
+        for (i in map._layers) {
+          if (map._layers[i]._path != undefined) {
+            try {
+              map.removeLayer(map._layers[i]);
+            }
+            catch(e){
+              console.log("problem with " + e + map._layers[i]);
+            }
           }
         }
+      },
+
+      fetchPartners: function() {
+        $.ajax({
+          type: 'GET',
+          //url: '/organisations/map_partners',
+          url: '/organisations/map_partners_static',
+          success: function(data){
+            DSIMap.setAllOrganisationPartners(data.organisations);
+            DSIMap.addPartnerLines(DSIMap.allOrganisations);
+          },
+          dataType: 'json'
+        });
+      },
+
+      setAllOrganisationPartners: function(organisations) {
+        $.each(organisations, function(i, organisation) {
+          DSIMap.allOrganisations[organisation.guid].partners = organisation.partners;
+        });
+      },
+
+      addPartnerLines: function(organisations) {
+        var lines = this.buildPartnerLines(organisations);
+
+        $.each(lines, function(i, line){
+          var newLine = DSIMap.drawLine(line.markerA, line.markerB, line.count);
+          DSIMap.addLineToMarker(line.markerA, newLine);
+          DSIMap.addLineToMarker(line.markerB, newLine);
+        });
+      },
+
+      drawLine: function(markerA, markerB, count) {
+
+        var line = new L.Polyline([markerA._latlng, markerB._latlng], {
+          color: '#999999',
+          weight: DSIMap.lineWeightForCount(count),
+          opacity: DSIMap.lineOpacityForCount(count),
+          smoothFactor: 1
+        }).bindPopup('').on('mouseover', function(){
+          this.setStyle({ color: '#F39200' });
+        }).on('mouseout', function(){
+          this.setStyle({ color: '#999999' });
+        }).addTo(map);
+        
+        return line;
+      },
+
+      lineWeightForCount: function(count) {
+        return (count / DSIMap.currentMaxLineCount) * config.maxLineWeight;
+      },
+
+      lineOpacityForCount: function(count) {
+        //return 0.15;
+        return (count / DSIMap.currentMaxLineCount) * config.maxLineOpacity; 
+      },
+
+      buildPartnerLines: function(organisations) {
+        var lines = {};
+        DSIMap.currentMaxLineCount = 0;
+
+        $.each(organisations, function(orgGuid, org){
+          
+          // Loop through each of the org's partners
+          $.each(org.partners, function(partnerGuid, partner){
+            visibleMarkerA = clusters.getVisibleParent(org.marker);
+            visibleMarkerB = clusters.getVisibleParent(DSIMap.allOrganisations[partnerGuid].marker);
+            
+
+            var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
+
+            // If we have already set a line for this combination of markers increase the count (weight)
+            if (lines[visibleMarkers]) {
+              lines[visibleMarkers].count += 1;
+            } 
+            // Else initialise it
+            else {
+              lines[visibleMarkers] = {};
+              lines[visibleMarkers].count = 1;  
+              lines[visibleMarkers].markerA = visibleMarkerA;
+              lines[visibleMarkers].markerB = visibleMarkerB;
+            }
+
+            if (lines[visibleMarkers].count > DSIMap.currentMaxLineCount) {
+              DSIMap.currentMaxLineCount = lines[visibleMarkers].count;
+            }          
+     
+          });
+          
+        });
+
+        return lines;
+      },
+
+      addLineToMarker: function(marker, line) {
+        if (!marker._lines) marker._lines = [];
+        marker._lines.push(line);
+      },
+
+      highlightMarkerLines: function(marker) {
+        if (!marker._lines) return false;
+
+        $.each(marker._lines, function(i, line) {
+          line.setStyle({ color: '#F39200' });
+        });
+      },
+
+      unhighlightMarkerLines: function(marker) {
+        if (!marker._lines) return false;
+
+        $.each(marker._lines, function(i, line) {
+          line.setStyle({ color: '#999999' });
+        });
       }
     }
 
-    function drawLine(markerA, markerB, count) {
+    DSIMap.init();
 
-      var line = new L.Polyline([markerA._latlng, markerB._latlng], {
-        color: '#999999',
-        weight: lineWeightForCount(count),
-        opacity: lineOpacityForCount(count),
-        smoothFactor: 1
-      }).bindPopup('').on('mouseover', function(){
-        this.setStyle({ color: '#F39200' });
-      }).on('mouseout', function(){
-        this.setStyle({ color: '#999999' });
-      }).addTo(map);
-      
-      return line;
-    }
-
-    function lineWeightForCount(count) {
-      return (count / currentMaxCount) * maxWeight;
-    }
-
-    function lineOpacityForCount(count) {
-      //return 0.15;
-      return (count / currentMaxCount) * maxOpacity; 
-    }
-
-    function drawPartnerLines() {
-      $.each(currentLines, function(i, line){
-        var newLine = drawLine(line.markerA, line.markerB, line.count);
-        addLineToMarker(line.markerA, newLine);
-        addLineToMarker(line.markerB, newLine);
-      });
-    }
-
-    function addLineToMarker(marker, line) {
-      if (!marker._lines) marker._lines = [];
-      marker._lines.push(line);
-    }
-
-    function setPartnerLines() {
-      // Reset line variables
-      currentLines = {};
-      currentMaxCount = 0;
-
-      $.each(markerGuids, function(i, org){
-        
-        // Loop through each of the org's partners
-        $.each(org.partners, function(j, partner){
-          visibleMarkerA = markers.getVisibleParent(org.marker);
-          visibleMarkerB = markers.getVisibleParent(getMarkerFromGuid(partner[0]));
-          
-
-          var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
-
-          // If we have already set a line for this combination of markers increase the count (weight)
-          if (currentLines[visibleMarkers]) {
-            currentLines[visibleMarkers].count += 1;
-          } 
-          // Else initialise it
-          else {
-            currentLines[visibleMarkers] = {};
-            currentLines[visibleMarkers].count = 1;  
-            currentLines[visibleMarkers].markerA = visibleMarkerA;
-            currentLines[visibleMarkers].markerB = visibleMarkerB;
-          }
-
-          // Ditch this
-          if (currentLines[visibleMarkers].count > currentMaxCount) {
-            currentMaxCount = currentLines[visibleMarkers].count;
-          }          
-   
-        });
-        
-      });
-
-    }
-
-    function getMarkerFromGuid(guid) {
-      return markerGuids[guid].marker;
-    }
 
   });
 

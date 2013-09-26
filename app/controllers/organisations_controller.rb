@@ -70,6 +70,7 @@ class OrganisationsController < ApplicationController
           organisations: Organisation.organisations_for_map.map do |o|
             {
               guid: o["org"]["value"].split('/').last,
+              name: o["name"]["value"],
               lat: o["lat"]["value"],
               lng: o["lng"]["value"]
             }

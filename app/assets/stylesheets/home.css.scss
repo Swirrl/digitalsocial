@@ -217,6 +217,32 @@
     }
   }
 
+  .active-organisation {
+    position: absolute;
+    right: 72px;
+    top: -90px;
+    background: rgba(255, 255, 255, 0.75);
+    border-bottom: 3px solid $orange;
+    width: 300px;
+    padding: 12px;
+    height: 58px;
+    overflow: hidden;
+    @include transition(all, 0.5s);
+
+    p {
+      color: #999;
+      font-size: 14px;
+      margin-bottom: 0;
+      line-height: 1.2;
+
+      &.name {
+        color: $orange;
+        font-size: 24px;
+        font-style: italic;
+      }
+    }
+  }
+
   .controls {
     position: absolute;
     background: rgba(0, 0, 0, 0.5);

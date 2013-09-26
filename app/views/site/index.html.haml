@@ -105,6 +105,13 @@
 
       = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-green clear'
 
+    .active-organisation
+      %p Currently viewing
+      %p.name Swirrl
+
+      %p= link_to "Reset map", "#", class: 'reset-map'
+
+
     = render "site/index/map_js"
 
 

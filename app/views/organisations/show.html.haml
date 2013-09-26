@@ -62,11 +62,13 @@
       .hr.hr1
       %h2 Partner Organisations
 
-      - if @organisation.partner_organisations_with_count.present?
-        - max = @organisation.partner_organisations_with_count[0].last[:count]
+      - powc = @organisation.partner_organisations_with_count.sort_by{ |_, v| v[:count] }.reverse
+
+      - if powc.present?
+        - max = powc[0].last[:count]
 
         %ul
-          - @organisation.partner_organisations_with_count.each do |k, v|
+          - powc.each do |k, v|
             - progress = ((v[:count].to_f / max) * 100).round
             %li
               %p.name= link_to v[:name], organisation_path(k)
