@@ -14,8 +14,10 @@
       config: {
         defaultCenter: [45, 15],
         defaultZoom: 5,
+        minLineWeight: 1,
         maxLineWeight: 8,
-        maxLineOpacity: 0.666,
+        minLineOpacity: 0.1,
+        maxLineOpacity: 0.6,
         layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>"),
         layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>")
       },
@@ -512,11 +514,17 @@
       },
 
       lineWeightForCount: function(count) {
-        return (count / DSIMap.currentMaxLineCount) * config.maxLineWeight;
+        var ratio = (count / DSIMap.currentMaxLineCount);
+        var difference = config.maxLineWeight - config.minLineWeight;
+        
+        return config.minLineWeight + (ratio * difference);
       },
 
       lineOpacityForCount: function(count) {
-        return (count / DSIMap.currentMaxLineCount) * config.maxLineOpacity; 
+        var ratio = (count / DSIMap.currentMaxLineCount);
+        var difference = config.maxLineOpacity - config.minLineOpacity;
+        
+        return config.minLineOpacity + (ratio * difference);
       },
 
       buildPartnerLines: function() {
