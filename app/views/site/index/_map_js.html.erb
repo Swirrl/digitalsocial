@@ -15,9 +15,9 @@
         defaultCenter: [45, 15],
         defaultZoom: 5,
         minLineWeight: 1,
-        maxLineWeight: 8,
+        maxLineWeight: 10,
         minLineOpacity: 0.1,
-        maxLineOpacity: 0.6,
+        maxLineOpacity: 0.5,
         layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>"),
         layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>")
       },
@@ -33,9 +33,12 @@
       },
 
       initMap: function() {
-        map = L.map('home-map', { scrollWheelZoom: true })
-          .setView(config.defaultCenter, config.defaultZoom)
-          .addLayer(config.layerWithoutLabels)
+        map = L.map('home-map', { 
+          scrollWheelZoom: true,
+          minZoom: config.defaultZoom
+        })
+        .setView(config.defaultCenter, config.defaultZoom)
+        .addLayer(config.layerWithoutLabels);
       },
 
       initClusters: function() {
@@ -173,19 +176,11 @@
           $('.active-organisation .name').text(DSIMap.allOrganisations[guid].name);
           $('.active-organisation').css({ top: 0 });
 
-          //clusters.clearLayers();
-          //DSIMap.clearLines();
-
           DSIMap.visibleOrganisations[guid] = DSIMap.allOrganisations[guid];
 
           DSIMap.addOrganisationPins();
 
-          DSIMap.config.maxLineWeight = 4;
-          DSIMap.config.maxLineOpacity = 0.333;
           DSIMap.addPartnerLines();
-
-          
-
 
           var networkLatLngs = partnerLatLngs;
           networkLatLngs.push(markerLatLng);
@@ -200,8 +195,7 @@
               iconSize: new L.Point(14, 20),
               iconUrl: "assets/home/pin-hover.png"
             })); 
-          }, 300);
-          
+          }, 500);
 
           e.preventDefault();
           return false;
@@ -226,6 +220,7 @@
         $(document.body).on('click', '.show-all-orgs a', function(e) {
           $(this).parents('.leaflet-popup-content').find('.organisations li').show();
           $(this).hide();
+          e.preventDefault();
         });
       },
 
@@ -240,8 +235,6 @@
 
           DSIMap.addOrganisationPins();
 
-          DSIMap.config.maxLineWeight = 8;
-          DSIMap.config.maxLineOpacity = 0.666;
           DSIMap.addPartnerLines(); 
 
           map.setZoom(DSIMap.config.defaultZoom);
@@ -259,7 +252,7 @@
         $(document.body).on('click', 'a.zoom-cluster', function(e) {
           var popup_id = $(this).data('cluster-id');
           map._layers[popup_id].zoomToBounds();
-          
+          e.preventDefault();
         });
       },
 
@@ -307,11 +300,16 @@
         .bindPopup('', {
           closeButton: false
         }).on('mouseover', function(mkr){
-          this._icon.src = "assets/home/pin-hover.png";
-          if(!DSIMap.networkView) DSIMap.highlightMarkerLines(this);
+          
+          if (!DSIMap.networkView) {
+            this._icon.src = "assets/home/pin-hover.png";
+            DSIMap.highlightMarkerLines(this);
+          }
         }).on('mouseout', function(mkr){
-          this._icon.src = "assets/home/pin.png";
-          if(!DSIMap.networkView) DSIMap.unhighlightMarkerLines(this);
+          if (!DSIMap.networkView) {
+            this._icon.src = "assets/home/pin.png";
+            DSIMap.unhighlightMarkerLines(this);
+          }
         });
 
         marker._guid = organisation.guid;
@@ -363,7 +361,7 @@
         var noOfPartners = $.map(DSIMap.allOrganisations[organisation.guid].partners, function(n, i) { return i; }).length;
         if (noOfPartners) {
           content += '<div class="divider"></div>';
-          content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show network for this organisation</a></div>';
+          content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show this organisation\'s network</a></div>';
         }
 
         popup.setContent(content);
@@ -503,11 +501,8 @@
           color: '#999999',
           weight: DSIMap.lineWeightForCount(count),
           opacity: DSIMap.lineOpacityForCount(count),
-          smoothFactor: 1
-        }).bindPopup('').on('mouseover', function(){
-          if(!DSIMap.networkView) this.setStyle({ color: '#F39200' });
-        }).on('mouseout', function(){
-          if(!DSIMap.networkView) this.setStyle({ color: '#999999' });
+          smoothFactor: 1,
+          clickable: false
         }).addTo(map);
         
         return line;
@@ -529,7 +524,6 @@
 
       buildPartnerLines: function() {
         var lines = {};
-        DSIMap.currentMaxLineCount = 0;
 
         $.each(DSIMap.visibleOrganisations, function(orgGuid, org){
           

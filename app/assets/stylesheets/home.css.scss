@@ -228,6 +228,10 @@
     overflow: hidden;
     @include transition(all, 0.5s);
 
+    @include media-all-mobile {
+      right: 0;
+    }
+
     p {
       color: #999;
       font-size: 14px;
