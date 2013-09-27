@@ -9,6 +9,7 @@
       allOrganisations: {},
       visibleOrganisations: {},
       currentMaxLineCount: 0,
+      networkView: false,
 
       config: {
         defaultCenter: [45, 15],
@@ -80,11 +81,11 @@
         });
 
         clusters.on('clustermouseover', function (a) {
-          DSIMap.highlightMarkerLines(a.layer);
+          if(!DSIMap.networkView) DSIMap.highlightMarkerLines(a.layer);
         });
 
         clusters.on('clustermouseout', function (a) {
-          DSIMap.unhighlightMarkerLines(a.layer);
+          if(!DSIMap.networkView) DSIMap.unhighlightMarkerLines(a.layer);
         });
 
         clusters.on('clusterclick', function (a) {
@@ -156,6 +157,7 @@
 
       bindShowOrgNetworkClick: function(e) {
         $(document.body).on('click', 'a.show-org-network', function(e) {
+          DSIMap.networkView = true;
           var guid = e.target.hash.substring(1);
           var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
           DSIMap.visibleOrganisations = {};
@@ -180,10 +182,24 @@
           DSIMap.config.maxLineOpacity = 0.333;
           DSIMap.addPartnerLines();
 
+          
+
+
           var networkLatLngs = partnerLatLngs;
           networkLatLngs.push(markerLatLng);
           var bounds = new L.LatLngBounds(networkLatLngs);
           map.fitBounds(bounds);
+
+          setTimeout(function(){
+            var visibleMarker = clusters.getVisibleParent(DSIMap.allOrganisations[guid].marker);
+          
+            DSIMap.highlightMarkerLines(visibleMarker);
+            visibleMarker.setIcon(new L.Icon({
+              iconSize: new L.Point(14, 20),
+              iconUrl: "assets/home/pin-hover.png"
+            })); 
+          }, 300);
+          
 
           e.preventDefault();
           return false;
@@ -213,6 +229,7 @@
 
       bindResetMapClick: function() {
         $('a.reset-map').click(function(e){
+          DSIMap.networkView = false;
           DSIMap.visibleOrganisations = DSIMap.allOrganisations;
           
 
@@ -281,18 +298,18 @@
       buildOrganisationPin: function(organisation) {
         var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
           icon: new L.Icon({
-            iconSize: new L.Point(10, 16),
-            iconUrl: "assets/home/marker.png"
+            iconSize: new L.Point(14, 20),
+            iconUrl: "assets/home/pin.png"
           })
         })
         .bindPopup('', {
           closeButton: false
         }).on('mouseover', function(mkr){
-          this._icon.src = "assets/home/marker-hover.png";
-          DSIMap.highlightMarkerLines(this);
+          this._icon.src = "assets/home/pin-hover.png";
+          if(!DSIMap.networkView) DSIMap.highlightMarkerLines(this);
         }).on('mouseout', function(mkr){
-          this._icon.src = "assets/home/marker.png";
-          DSIMap.unhighlightMarkerLines(this);
+          this._icon.src = "assets/home/pin.png";
+          if(!DSIMap.networkView) DSIMap.unhighlightMarkerLines(this);
         });
 
         marker._guid = organisation.guid;
@@ -341,8 +358,11 @@
           content += '</ul>';
         }
 
-        content += '<div class="divider"></div>';
-        content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show network for this organisation</a></div>';
+        var noOfPartners = $.map(DSIMap.allOrganisations[organisation.guid].partners, function(n, i) { return i; }).length;
+        if (noOfPartners) {
+          content += '<div class="divider"></div>';
+          content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show network for this organisation</a></div>';
+        }
 
         popup.setContent(content);
       },
@@ -483,9 +503,9 @@
           opacity: DSIMap.lineOpacityForCount(count),
           smoothFactor: 1
         }).bindPopup('').on('mouseover', function(){
-          this.setStyle({ color: '#F39200' });
+          if(!DSIMap.networkView) this.setStyle({ color: '#F39200' });
         }).on('mouseout', function(){
-          this.setStyle({ color: '#999999' });
+          if(!DSIMap.networkView) this.setStyle({ color: '#999999' });
         }).addTo(map);
         
         return line;
