@@ -268,6 +268,7 @@
     border-top: 4px solid $orange;
     width: 300px;
     min-height: 60px;
+    
 
     .leaflet-popup-content {
       font-family: $chaparral;
@@ -310,9 +311,22 @@
         line-height: 1;
       }
 
+      p.show-all-orgs {
+        margin: 6px 0 0;
+
+        a {
+          color: #999;
+          font-size: 16px;
+        }
+      }
+
       ul.projects, ul.organisations {
         font-size: 15px;
         margin: 0;
+        margin-right: -12px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        max-height: 240px;
 
         li {
           line-height: 1;
@@ -325,12 +339,22 @@
 
         }
 
+        &::-webkit-scrollbar {
+          -webkit-appearance: none;
+          width: 7px;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 4px;
+          background-color: rgba(0,0,0,.5);
+          -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+        }
+
       }
 
       .divider {
         height: 1px;
         border-top: 1px solid #ddd;
-        margin: 18px -18px 6px;
+        margin: 6px -18px 6px;
       }
 
       .actions {
@@ -343,5 +367,9 @@
         margin-bottom: -6px;
       }
     }
+
+
   }
 }
+
+

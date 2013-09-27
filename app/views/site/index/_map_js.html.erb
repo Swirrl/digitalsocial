@@ -45,16 +45,16 @@
 
             var c = ' marker-cluster-';
             var iconSize;
-            if (childCount < 2.5) {
+            if (childCount < 5) {
               c += 'x-small';
               iconSize = 20;
-            } else if (childCount < 5) {
+            } else if (childCount < 10) {
               c += 'small';
               iconSize = 24;
-            } else if (childCount < 7.5) {
+            } else if (childCount < 15) {
               c += 'medium';
               iconSize = 30;
-            } else if (childCount < 10) {
+            } else if (childCount < 20) {
               c += 'large';
               iconSize = 36;
             } else {
@@ -88,7 +88,9 @@
         });
 
         clusters.on('clusterclick', function (a) {
-          a.layer.bindPopup('').openPopup();
+          a.layer.bindPopup('', {
+            closeButton: false
+          }).openPopup();
         });
       },
 
@@ -98,6 +100,8 @@
         this.bindShowOrgNetworkClick();
         this.bindOrgZoomClick();
         this.bindResetMapClick();
+        this.bindShowAllOrgsClick();
+        this.bindZoomClusterClick();
 
         map.on('zoomstart', function(e){
           DSIMap.clearLines();
@@ -200,6 +204,13 @@
         });
       },
 
+      bindShowAllOrgsClick: function(e) {
+        $(document.body).on('click', '.show-all-orgs a', function(e) {
+          $(this).parents('.leaflet-popup-content').find('.organisations li').show();
+          $(this).hide();
+        });
+      },
+
       bindResetMapClick: function() {
         $('a.reset-map').click(function(e){
           DSIMap.visibleOrganisations = DSIMap.allOrganisations;
@@ -223,6 +234,14 @@
           return false;
         });
         
+      },
+
+      bindZoomClusterClick: function() {
+        $(document.body).on('click', 'a.zoom-cluster', function(e) {
+          var popup_id = $(this).data('cluster-id');
+          map._layers[popup_id].zoomToBounds();
+          
+        });
       },
 
       fetchOrganisations: function(e) {
@@ -279,7 +298,6 @@
         marker._guid = organisation.guid;
 
         return marker;
-        //clusters.addLayer(marker);
       },
 
       fetchPinPopupContent: function(e) {
@@ -369,6 +387,10 @@
           content += '<li><a class="org-zoom" href="#'+organisation.guid+'">'+organisation.name+'</a></>';
         });
         content += '</ul>';
+
+        content += '<div class="divider"></div>';
+        content += '<div class="actions"><a href="#" data-cluster-id="'+popup._source._leaflet_id+'" class="zoom-cluster">Zoom in</a></div>';
+    
 
         popup.setContent(content);
       },
