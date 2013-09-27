@@ -81,17 +81,39 @@ class OrganisationsController < ApplicationController
   end
 
   def map_partners
+    partner_guids_results = Tripod::SparqlClient::Query.select("
+      SELECT DISTINCT ?org ?org2 {
+        ?mem a <http://data.digitalsocial.eu/def/ontology/ActivityMembership> .
+        ?mem2 a <http://data.digitalsocial.eu/def/ontology/ActivityMembership> .
+        
+        ?mem <http://data.digitalsocial.eu/def/ontology/activity> ?proj .
+        ?mem <http://data.digitalsocial.eu/def/ontology/organization> ?org .
+
+        ?mem2 <http://data.digitalsocial.eu/def/ontology/activity> ?proj .
+        ?mem2 <http://data.digitalsocial.eu/def/ontology/organization> ?org2 .
+
+        ?org2 <http://www.w3.org/ns/org#hasPrimarySite> ?site2 .
+        ?org <http://www.w3.org/ns/org#hasPrimarySite> ?site . 
+      }
+      ORDER BY ASC(?org)
+    ")
+
+    partner_guids = {}
+    partner_guids_results.each do |result|
+      org_guid = result['org']['value'].split("/").last
+      org2_guid = result['org2']['value'].split("/").last
+
+      partner_guids[org_guid] ||= []
+
+      if org_guid != org2_guid && !partner_guids[org_guid].include?(org2_guid)
+        partner_guids[org_guid].push(org2_guid)
+      end
+    end    
+
     respond_to do |format|
       format.json do
         render json: {
-          organisations: Organisation.all.resources.map do |o|
-            if o.primary_site
-              {
-                guid: o.guid,
-                partners: o.partner_organisations_with_count
-              }
-            end
-          end.compact
+          organisations: partner_guids
         }
       end
     end
