@@ -12,7 +12,7 @@
       networkViewMarker: null,
 
       config: {
-        defaultCenter: [52, 10],
+        defaultCenter: [49,12],
         defaultZoom: 5,
         minLineWeight: 0.25,
         maxLineWeight: 10,
@@ -33,7 +33,7 @@
       },
 
       initMap: function() {
-        map = L.map('home-map', { 
+        map = L.map('home-map', {
           scrollWheelZoom: true,
           minZoom: config.defaultZoom
         })
@@ -68,7 +68,7 @@
               iconSize = 48;
             }
 
-            return new L.DivIcon({ 
+            return new L.DivIcon({
               html: '<div><span>' + childCount + '</span></div>',
               className: 'marker-cluster' + c,
               iconSize: new L.Point(iconSize, iconSize)
@@ -77,7 +77,7 @@
         });
 
         this.bindClusterEvents();
-        
+
       },
 
       bindClusterEvents: function() {
@@ -175,7 +175,7 @@
 
           clusters.clearLayers();
           DSIMap.clearLines();
-          
+
           var guid = e.target.hash.substring(1);
           var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
           DSIMap.visibleOrganisations = {};
@@ -251,7 +251,7 @@
           }));
           DSIMap.networkViewMarker = null;
           DSIMap.visibleOrganisations = DSIMap.allOrganisations;
-          
+
           map.setZoom(DSIMap.config.defaultZoom);
 
           clusters.clearLayers();
@@ -259,17 +259,17 @@
 
           DSIMap.addOrganisationPins();
 
-          DSIMap.addPartnerLines(); 
+          DSIMap.addPartnerLines();
 
-          
-          
+
+
           var top = $('.active-organisation').height() + 30;
           $('.active-organisation').css({ top: '-'+top+'px' });
 
           e.preventDefault();
           return false;
         });
-        
+
       },
 
       bindZoomClusterClick: function() {
@@ -325,7 +325,7 @@
         .bindPopup('', {
           closeButton: false
         }).on('mouseover', function(mkr){
-          
+
           if (!DSIMap.networkViewMarker) {
             this._icon.src = "assets/home/pin-hover.png";
             DSIMap.highlightMarkerLines(this);
@@ -434,7 +434,7 @@
 
         content += '<div class="divider"></div>';
         content += '<div class="actions"><a href="#" data-cluster-id="'+popup._source._leaflet_id+'" class="zoom-cluster">Zoom in</a></div>';
-    
+
 
         popup.setContent(content);
       },
@@ -528,21 +528,21 @@
           smoothFactor: 1,
           clickable: false
         }).addTo(map);
-        
+
         return line;
       },
 
       lineWeightForCount: function(count) {
         var ratio = (count / DSIMap.currentMaxLineCount);
         var difference = config.maxLineWeight - config.minLineWeight;
-        
+
         return config.minLineWeight + (ratio * difference);
       },
 
       lineOpacityForCount: function(count) {
         var ratio = (count / DSIMap.currentMaxLineCount);
         var difference = config.maxLineOpacity - config.minLineOpacity;
-        
+
         return config.minLineOpacity + (ratio * difference);
       },
 
@@ -550,25 +550,25 @@
         var lines = {};
 
         $.each(DSIMap.visibleOrganisations, function(orgGuid, org){
-          
+
           // Loop through each of the org's partners
           $.each(org.partners, function(i, partnerGuid){
 
             if (DSIMap.visibleOrganisations[partnerGuid]) {
 
               visibleMarkerA = clusters.getVisibleParent(org.marker);
-              visibleMarkerB = clusters.getVisibleParent(DSIMap.allOrganisations[partnerGuid].marker);              
+              visibleMarkerB = clusters.getVisibleParent(DSIMap.allOrganisations[partnerGuid].marker);
 
               var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
 
               // If we have already set a line for this combination of markers increase the count (weight)
               if (lines[visibleMarkers]) {
                 lines[visibleMarkers].count += 1;
-              } 
+              }
               // Else initialise it
               else {
                 lines[visibleMarkers] = {};
-                lines[visibleMarkers].count = 1;  
+                lines[visibleMarkers].count = 1;
                 lines[visibleMarkers].markerA = visibleMarkerA;
                 lines[visibleMarkers].markerB = visibleMarkerB;
               }
@@ -577,9 +577,9 @@
                 DSIMap.currentMaxLineCount = lines[visibleMarkers].count;
               }
             }
-       
+
           });
-          
+
         });
 
         return lines;
