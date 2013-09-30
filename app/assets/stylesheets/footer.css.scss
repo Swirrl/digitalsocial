@@ -13,7 +13,7 @@
   a {
     display: block;
     position: absolute;
-    opacity: 0.75;
+    opacity: 0.66;
     @include transition(opacity, 0.2s);
     padding: 36px;
     background-position: 36px 36px;
@@ -57,10 +57,15 @@
 
     &.waag {
       background-image: url(image-path("partners/orange/waag.png"));
-      width: 118px;
-      height: 36px;
+      width: 138px;
+      height: 42px;
       left: 385px;
       top: 184px;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+      }
     }
 
     &.swirrl {

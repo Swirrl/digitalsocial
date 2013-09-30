@@ -6,6 +6,7 @@
 
   ul {
     @include columns(16);
+    margin-bottom: 60px;
 
     li {
       display: block;
@@ -61,6 +62,25 @@
         }
       }
 
+    }
+  }
+
+  .cta {
+    @include columns(16);
+    padding: 18px;
+    background: #ffffe0;
+    text-align: center;
+    color: #7f7f75;
+    font-size: 20px;
+    font-style: italic;
+
+    span {
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .button {
+      margin-left: 18px;
     }
   }
 }

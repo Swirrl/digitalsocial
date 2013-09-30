@@ -60,7 +60,7 @@ class ProjectsController < ApplicationController
 
     if @project.update_attributes(params[:project], transaction: transaction) && @project.save_reach_value(transaction: transaction)
       transaction.commit
-      redirect_to [:dashboard, :projects], notice: "Project created!"
+      redirect_to [:invite, @project], notice: "Activity was created. Use the form below to invite an organisation you worked with on this activity."
     else
       transaction.abort
       render :new
