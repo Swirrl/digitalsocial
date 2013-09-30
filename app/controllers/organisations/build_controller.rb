@@ -101,11 +101,15 @@ class Organisations::BuildController < ApplicationController
     @project_invite.invitor_organisation_uri = current_organisation.uri
 
     if @project_invite.save
-      redirect_to dashboard_path, notice: "Organisation invited. We'll email the contact you entered."
+      redirect_to [:organisations, :build, :finish], notice: "Organisation invited. We'll email the contact you entered."
     else
       flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
       render :invite_organisations
     end
+  end
+
+  def finish
+    
   end
 
   private

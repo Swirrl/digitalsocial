@@ -14,7 +14,7 @@
   .skip-wizard.clearfix
     %span Inviting organistaions to your activities can be done later.
 
-    = link_to "Skip for now &raquo;".html_safe, :dashboard, class: 'button'
+    = link_to "Skip for now &raquo;".html_safe, [:organisations, :build, :finish], class: 'button'
 
 
   = simple_form_for @project_invite, url: [:organisations, :build, :create_new_organisation_invite] do |f|

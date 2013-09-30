@@ -37,18 +37,18 @@ feature 'Invite organisation wizard step' do
 
     click_button 'Next step'
 
-    page.current_path.should == dashboard_path
+    page.current_path.should == organisations_build_finish_path
   end
 
   scenario 'Invite a new organisation unsuccessfully' do
     click_button 'Next step'
 
-    page.current_path.should_not == dashboard_path
+    page.current_path.should_not == organisations_build_finish_path
     page.should have_css('.error')
   end
 
   scenario 'Skipping the invite organisation step' do
-    page.should have_link('Skip', href: dashboard_path)
+    page.should have_link('Skip', href: organisations_build_finish_path)
   end
 
 end

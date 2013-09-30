@@ -1,0 +1,18 @@
+.wizard
+  = render "breadcrumbs", active_index: 6
+
+  .wizard-intro
+    :markdown
+
+      ### #{current_organisation.name} have been added to the map
+
+      You will now be able to #{link_to 'see your organisation on the map', '/' }.
+
+    - if current_organisation.projects.count == 0
+      %p To add links to your organisation on the map #{link_to 'add or join an activity', [:new, :project] }.
+    - else
+      %p To add more links to your organisation #{link_to 'add/join another activity', [:new, :project] } or #{link_to 'invite a partner to join an activity', [:invite, current_organisation.project_resources.first] }.
+
+    = link_to 'Go to dashboard', "/dashboard", class: 'button'
+
+  .clearfix

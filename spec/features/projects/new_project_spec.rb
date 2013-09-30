@@ -26,13 +26,13 @@ feature 'New project' do
 
     click_button 'Create'
 
-    page.current_path.should == dashboard_projects_path
+    page.current_path.should match(/projects\/(.+)\/invite/)
   end
 
   scenario 'Filling in new project step unsuccessfully' do
     click_button 'Create'
 
-    page.current_path.should_not == dashboard_projects_path
+    page.current_path.should_not match(/projects\/(.+)\/invite/)
   end
 
   scenario 'Show other field if other radio button selected', js: true do
@@ -60,7 +60,7 @@ feature 'New project' do
     fill_in 'project_activity_type_label_other', with: 'Something else'
     click_button 'Create'
 
-    page.current_path.should == dashboard_projects_path
+    page.current_path.should match(/projects\/(.+)\/invite/)
   end
 
   scenario 'Activity type radio buttons should be validated' do
@@ -71,7 +71,7 @@ feature 'New project' do
 
     click_button 'Create'
 
-    page.current_path.should_not == dashboard_projects_path
+    page.current_path.should_not match(/projects\/(.+)\/invite/)
     page.should have_css('.error')
   end
 
@@ -82,7 +82,7 @@ feature 'New project' do
 
     click_button 'Create'
 
-    page.current_path.should_not == dashboard_projects_path
+    page.current_path.should_not match(/projects\/(.+)\/invite/)
     page.should have_css('.project_organisation_natures .error')
   end
 
