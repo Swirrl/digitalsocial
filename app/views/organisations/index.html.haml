@@ -13,6 +13,8 @@
           .header= link_to o.name, o
           .subheader= o.address_str
 
+  = paginate @organisations
+
   .cta
     - if current_user && current_organisation
       - if current_user.organisation_memberships.count == 1

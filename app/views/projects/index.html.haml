@@ -13,6 +13,8 @@
           .header= link_to p.name, p
           .subheader= p.description
 
+  = paginate @projects
+
   .cta
     - if current_user && current_organisation
       - if current_organisation.projects.count.zero?

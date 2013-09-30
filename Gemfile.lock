@@ -125,6 +125,9 @@ GEM
       json (>= 1.7.5)
       rdf (>= 1.0)
     json_pure (1.8.0)
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.3.0)
       addressable (~> 2.3)
     mail (2.5.4)
@@ -278,6 +281,7 @@ DEPENDENCIES
   faker
   haml
   jquery-rails
+  kaminari
   launchy
   mongoid
   mongoid-paperclip

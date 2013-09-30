@@ -83,4 +83,24 @@
       margin-left: 18px;
     }
   }
+
+  .pagination {
+    @include columns(16);
+    margin: 0 0 60px;
+    text-align: center;
+    font-size: 20px;
+
+    span {
+      text-align: center;
+      margin: 0 9px;
+
+      &.page, &.current {
+        margin: 0 3px;       
+      }
+
+      a, &.current {
+        padding: 6px 12px;
+      }
+    }
+  }
 }

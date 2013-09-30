@@ -50,7 +50,14 @@ class OrganisationsController < ApplicationController
         current_organisation_uris = current_user.organisation_resources.map { |o| o.uri.to_s }
       end
     else
-      @organisations = Organisation.order_by_name.resources
+      page = params[:page].present? ? params[:page].to_i : 1
+      limit = Kaminari.config.default_per_page
+      offset = (page - 1) * limit
+
+      data = Organisation.order_by_name.limit(limit).offset(offset).resources.to_a
+      total_count = Organisation.count
+
+      @organisations = Kaminari.paginate_array(data, total_count: total_count).page(page).per(limit)
     end
 
     respond_to do |format|

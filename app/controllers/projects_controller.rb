@@ -34,7 +34,14 @@ class ProjectsController < ApplicationController
       @projects = Project.search_by_name(params[:q]).to_a
       current_project_uris = current_organisation.project_resource_uris
     else
-      @projects = Project.order_by_name.resources
+      page = params[:page].present? ? params[:page].to_i : 1
+      limit = Kaminari.config.default_per_page
+      offset = (page - 1) * limit
+
+      data = Project.order_by_name.limit(limit).offset(offset).resources.to_a
+      total_count = Project.count
+
+      @projects = Kaminari.paginate_array(data, total_count: total_count).page(page).per(limit)
     end
 
     respond_to do |format|

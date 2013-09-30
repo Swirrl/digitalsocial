@@ -18,6 +18,7 @@ gem 'database_cleaner'
 gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git", :branch => 'ead49c'
 gem 'aws-sdk', '~> 1.3.4'
 gem 'country_select'
+gem 'kaminari'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
