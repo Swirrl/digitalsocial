@@ -82,17 +82,7 @@
 
       bindClusterEvents: function() {
         clusters.on('animationend', function(e){
-          DSIMap.addPartnerLines(DSIMap.allOrganisations);
-
-          if (DSIMap.networkViewMarker) {
-            var visibleMarker = clusters.getVisibleParent(DSIMap.networkViewMarker);
-
-            DSIMap.highlightMarkerLines(visibleMarker);
-            visibleMarker.setIcon(new L.Icon({
-              iconSize: new L.Point(14, 20),
-              iconUrl: "assets/home/pin-hover.png"
-            }));
-          }
+          DSIMap.addVisibleLines();
         });
 
         clusters.on('clustermouseover', function (a) {
@@ -122,6 +112,13 @@
         map.on('zoomstart', function(e){
           DSIMap.clearLines();
         });
+
+        // IE9 and below do not fire animation end
+        if($.browser.msie && $.browser.version <= 9) {
+          map.on('zoomend', function(e){
+            setTimeout(DSIMap.addVisibleLines, 1000);
+          });
+        }
 
         $('.show-more a').click(function(e){
           DSIMap.slideInPanels();
@@ -302,6 +299,20 @@
           DSIMap.allOrganisations[organisation.guid].marker = DSIMap.buildOrganisationPin(organisation);
           DSIMap.allOrganisations[organisation.guid].partners = [];
         });
+      },
+
+      addVisibleLines: function() {
+        DSIMap.addPartnerLines(DSIMap.allOrganisations);
+
+        if (DSIMap.networkViewMarker) {
+          var visibleMarker = clusters.getVisibleParent(DSIMap.networkViewMarker);
+
+          DSIMap.highlightMarkerLines(visibleMarker);
+          visibleMarker.setIcon(new L.Icon({
+            iconSize: new L.Point(14, 20),
+            iconUrl: "assets/home/pin-hover.png"
+          }));
+        }
       },
 
       addOrganisationPins: function() {

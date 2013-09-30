@@ -15,4 +15,5 @@
 //= require jquery_ujs
 //= require jquery.autosize
 //= require tag-it
+//= require jquery.uaMatch
 //= require_tree "./app"
