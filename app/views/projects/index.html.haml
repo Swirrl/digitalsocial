@@ -13,4 +13,15 @@
           .header= link_to p.name, p
           .subheader= p.description
 
+  .cta
+    - if current_user && current_organisation
+      - if current_organisation.projects.count.zero?
+        #{current_organisation.name} is not a member of any activities
+        = link_to "Add/Join an activity", [:new, :project], class: 'button button-green'
+      - else
+        #{current_organisation.name} is a member of #{pluralize(current_organisation.projects.count, 'activity')}
+        = link_to "Add/Join another activity", [:new, :project], class: 'button button-green'
+    - else
+      %span Are you a partner on any of these activities?
+      = link_to "Add/Join an activity", [:new, :project], class: 'button button-green'
         

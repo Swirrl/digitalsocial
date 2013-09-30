@@ -12,3 +12,15 @@
         .details
           .header= link_to o.name, o
           .subheader= o.address_str
+
+  .cta
+    - if current_user && current_organisation
+      - if current_user.organisation_memberships.count == 1
+        You are a member of an organisation
+      - else
+        You are a member of #{current_user.organisation_memberships.count} organisations
+      = link_to "Add another organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
+    - else
+      %span Are you are a member of an organisation?
+      = link_to "Add your organisation", [:organisations, :build, :new_user], class: 'button button-green'
+      
