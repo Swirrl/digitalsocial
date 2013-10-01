@@ -55,7 +55,7 @@ $(function(){
             $oas.removeClass('loading');
           },
           error: function(){
-            alert('error');
+            
           },
           success: function(data){
             $('.suggestions').slideUp('fast', function(){
