@@ -149,7 +149,8 @@ class OrganisationsController < ApplicationController
         FILTER (
           #{filter_clause}
         )
-      }"
+      }
+      ORDER BY ASC(lcase(str(?label)))"
     )
     
     respond_to do |format|
