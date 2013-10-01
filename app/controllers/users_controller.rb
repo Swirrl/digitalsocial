@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!, only: [:show, :edit_invited, :update_invited, :edit, :update]
+  before_filter :authenticate_user!, only: [:show, :edit_invited, :update_invited, :edit, :update, :unsubscribe]
 
   # user dashboard
   def show
@@ -36,6 +36,11 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def unsubscribe
+    @user = current_user
+    @user.update_attribute :receive_notifications, false
   end
 
 end

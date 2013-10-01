@@ -5,6 +5,7 @@ FactoryGirl.define do
     first_name { Faker::Name.first_name }
     email      { Faker::Internet.email }
     password   { "password" }
+    sign_in_count 1
 
     factory :user_with_organisations do
       ignore do

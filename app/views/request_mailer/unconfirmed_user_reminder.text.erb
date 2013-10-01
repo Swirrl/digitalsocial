@@ -1,0 +1,14 @@
+Hi <%= @user.first_name %>,
+
+This is a reminder that you have been invited to join digitalsocial.eu by either a team member or an activity partner.
+
+To accept your invitation click the link below:
+
+<%= edit_password_url(@user, :reset_password_token => @user.reset_password_token, :new => 1) %>
+
+<%= render 'footer' %>
+--
+
+If you wish to stop receiving these emails click the link below:
+
+<%= unsubscribe_user_url(auth_token: @user.authentication_token) %>

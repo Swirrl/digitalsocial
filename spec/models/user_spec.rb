@@ -79,6 +79,16 @@ describe User do
           lambda { User.send_request_digests }.should_not change(ActionMailer::Base.deliveries, :count)
         end
 
+        it 'should not send if a user has never signed in' do
+          user.update_attribute :sign_in_count, 0
+          FactoryGirl.create(:project_invite, project_uri: project.uri, invitor_organisation_uri: other_org.uri.to_s, invited_organisation_uri: organisation.uri.to_s, open: true)
+
+          pm = FactoryGirl.create(:project_membership, organisation: organisation.uri.to_s)
+          FactoryGirl.create(:project_request, project_uri: pm.project.to_s, requestor_organisation_uri: other_org.uri.to_s, open: true)
+
+          lambda { User.send_request_digests }.should_not change(ActionMailer::Base.deliveries, :count)
+        end
+
       end
 
       context 'multiple organisations' do

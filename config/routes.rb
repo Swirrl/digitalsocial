@@ -20,7 +20,9 @@ Digitalsocial::Application.routes.draw do
     root to: 'pages#index'
   end
 
-  resource :user, :only => [:edit, :update]
+  resource :user, :only => [:edit, :update] do
+    get 'unsubscribe'
+  end
 
   resources :users, only: [:new, :create] do
     member do

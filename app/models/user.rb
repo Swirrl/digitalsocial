@@ -59,11 +59,19 @@ class User
     UserRequest.where(responded_to: false, is_invite: true, requestor_id: self.id)
   end
 
+  # Only send digest to users who have signed in
   def self.send_request_digests
-    User.where(receive_notifications: true).all.each do |user|
+    User.where(receive_notifications: true).gt(sign_in_count: 0).all.each do |user|
       user.organisation_resources.each do |organisation|
         user.send_request_digest(organisation) if organisation.has_respondables?
       end
+    end
+  end
+
+  # Users who have not signed in at all
+  def self.send_unconfirmed_user_reminders
+    User.where(receive_notifications: true).where(sign_in_count: 0).all.each do |user|
+      RequestMailer.unconfirmed_user_reminder(user).deliver
     end
   end
 

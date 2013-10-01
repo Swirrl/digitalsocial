@@ -22,7 +22,7 @@ The following organisations have requested to join <%= @organisation.name %>'s a
 The following users have requested to join your organisation:
 
 <% @organisation.respondable_user_requests.each do |request| %>
-* <%= request.user.first_name %> (<%= request.user.email %>).requestor_organisation_resource.name
+* <%= request.user.first_name %> (<%= request.user.email %>)
 <% end %>
 <% end %>
 
