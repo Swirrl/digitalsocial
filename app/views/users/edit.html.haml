@@ -67,12 +67,13 @@
       .add-or-join
         = link_to "+ Add/join an organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
 
-    .user-account
+    .user-account#ua
       %h2 Your account details
 
       = simple_form_for @user, url: user_path do |f|
         = f.input :first_name, required: true, label: 'Name'
         = f.input :email, required: true
         = f.input :password, label: 'Change password'
+        = f.input :receive_notifications, as: :boolean, label: "I want to be notified by email when I receive activity requests or invites."
 
         = f.button :submit, 'Update account', class: 'button-green'

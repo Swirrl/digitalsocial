@@ -30,6 +30,7 @@ class User
   field :authentication_token, type: String
 
   field :first_name, type: String
+  field :receive_notifications, type: Boolean, default: true
 
   has_many :organisation_memberships
   has_many :user_requests
@@ -59,7 +60,7 @@ class User
   end
 
   def self.send_request_digests
-    User.all.each do |user|
+    User.where(receive_notifications: true).all.each do |user|
       user.organisation_resources.each do |organisation|
         user.send_request_digest(organisation) if organisation.has_respondables?
       end

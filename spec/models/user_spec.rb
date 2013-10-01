@@ -72,6 +72,13 @@ describe User do
           lambda { User.send_request_digests }.should change(ActionMailer::Base.deliveries, :count).by(1)
         end
 
+        it 'should not send if a user is unsubscribed from notifications' do
+          user.update_attribute :receive_notifications, false
+          FactoryGirl.create(:user_request, organisation_uri: organisation.uri.to_s, open: true, user: other_user)
+
+          lambda { User.send_request_digests }.should_not change(ActionMailer::Base.deliveries, :count)
+        end
+
       end
 
       context 'multiple organisations' do
