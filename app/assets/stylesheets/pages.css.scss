@@ -34,11 +34,11 @@
     ul.timeline {
       list-style-type: none;
       padding: 0 0 4px;
-      background: url(image-path("dot.png")) repeat-y 288px 0px;
+      background: url(image-path("dot2.png")) repeat-y 288px 0px;
       margin: 0 60px;
 
       @include media-all-mobile {
-         background: url(image-path("dot.png")) repeat-y 0px 0px;
+         background: url(image-path("dot2.png")) repeat-y 0px 0px;
       }
 
       li.year {
@@ -46,7 +46,7 @@
         margin-left: 264px;
 
         span {
-          background: $dblue;
+          background: $orange;
           color: #fff;
           @include border-radius(50%);
           display: inline-block;
@@ -60,7 +60,7 @@
       li.month {
         width: 308px;
         //padding-left: 112px;
-        background: url(image-path("dot.png")) repeat-x 0 0;
+        background: url(image-path("dot2.png")) repeat-x 0 0;
         margin-bottom: 32px;
         padding-top: 8px;
         height: 8px;
@@ -69,9 +69,8 @@
           background: #fff;
           padding: 0 0 0 6px;
           font-size: 36px;
-          font-weight: bold;
-          color: $lblue;
-          text-transform: uppercase;
+          
+          color: #f9c980;
         }
       }
 
@@ -89,7 +88,7 @@
       li.event {
         margin-left: 288px;
         padding-left: 82px;
-        background: url(image-path("dot.png")) repeat-x 0 0;
+        background: url(image-path("dot2.png")) repeat-x 0 0;
         line-height: 16px;
         margin-bottom: 56px;
 
@@ -103,7 +102,7 @@
 
           p.name {
             color: $black;
-            font-weight: bold;
+            
           }
 
           p {
