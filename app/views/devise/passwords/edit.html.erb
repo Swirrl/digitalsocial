@@ -1,8 +1,20 @@
 <% if params[:new].present? %>
 
-  <h1>Set your password</h1>
+  <h1>Welcome to DSI</h1>
 
-  <p>To get started please set a new password:</p>
+  <p>We're setting up a network of organisations that use the Internet for social good.</p>
+
+  <p>Joining our network allows you to:</p>
+
+  <ul>
+    <li>Be part of a growing community of Digital Social Innovation</li>
+    <li>Inform better policy across the EU</li>
+    <li>Showcase your work and network to potential funders and investors</li>
+  </ul>
+
+  <p>You have been added to an organisation by a team member.</p>
+
+  <p>To get started <em>enter a new password</em> which you can use to login later on:</p>
 
   <%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
     <%= hidden_field_tag :new, params[:new] %>
@@ -12,11 +24,43 @@
     <%= f.full_error :reset_password_token %>
 
     <div class="form-inputs">
-      <%= f.input :password, :label => "New password", :required => true, :autofocus => true %>
+      <%= f.input :password, :label => "Enter a new password", :required => true, :autofocus => true %>
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit, "Set password", class: 'button-green' %>
+      <%= f.button :submit, "Get started", class: 'button-green' %>
+    </div>
+  <% end %>
+
+<% elsif params[:neworg].present? %>
+
+  <h1>Welcome to DSI</h1>
+
+  <p>We're setting up a network of organisations that use the Internet for social good.</p>
+
+  <p>Adding your organisation to our network allows you to:</p>
+
+  <ul>
+    <li>Be part of a growing community of Digital Social Innovation</li>
+    <li>Inform better policy across the EU</li>
+    <li>Showcase your work and network to potential funders and investors</li>
+  </ul>
+       
+  <p>To get started <em>enter a new password</em> which you can use to login later on:</p>
+
+  <%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+    <%= hidden_field_tag :neworg, params[:neworg] %>
+    <%= f.error_notification %>
+
+    <%= f.input :reset_password_token, :as => :hidden %>
+    <%= f.full_error :reset_password_token %>
+
+    <div class="form-inputs">
+      <%= f.input :password, :label => "Enter a new password", :required => true, :autofocus => true %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit, "Get started", class: 'button-green' %>
     </div>
   <% end %>
 
