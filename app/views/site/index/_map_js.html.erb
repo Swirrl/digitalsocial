@@ -178,10 +178,7 @@
           DSIMap.visibleOrganisations = {};
 
           if (DSIMap.networkViewMarker) {
-            DSIMap.networkViewMarker.setIcon(new L.Icon({
-              iconSize: new L.Point(14, 20),
-              iconUrl: "assets/home/pin.png"
-            }));
+            DSIMap.highlightMarker(visibleMarker);
           }
 
           DSIMap.networkViewMarker = DSIMap.allOrganisations[guid].marker;
@@ -208,10 +205,7 @@
           var visibleMarker = clusters.getVisibleParent(DSIMap.networkViewMarker);
 
           DSIMap.highlightMarkerLines(visibleMarker);
-          visibleMarker.setIcon(new L.Icon({
-            iconSize: new L.Point(14, 20),
-            iconUrl: "assets/home/pin-hover.png"
-          }));
+          DSIMap.highlightMarker(visibleMarker);
 
           e.preventDefault();
           return false;
@@ -255,10 +249,7 @@
           DSIMap.clearLines();
 
           DSIMap.addOrganisationPins();
-
           DSIMap.addPartnerLines();
-
-
 
           var top = $('.active-organisation').height() + 30;
           $('.active-organisation').css({ top: '-'+top+'px' });
@@ -308,10 +299,7 @@
           var visibleMarker = clusters.getVisibleParent(DSIMap.networkViewMarker);
 
           DSIMap.highlightMarkerLines(visibleMarker);
-          visibleMarker.setIcon(new L.Icon({
-            iconSize: new L.Point(14, 20),
-            iconUrl: "assets/home/pin-hover.png"
-          }));
+          DSIMap.highlightMarker(visibleMarker);
         }
       },
 
@@ -599,6 +587,18 @@
       addLineToMarker: function(marker, line) {
         if (!marker._lines) marker._lines = [];
         marker._lines.push(line);
+      },
+
+      highlightMarker: function(marker) {
+        if (marker._childCount) {
+          console.log(marker);
+          marker._icon.className = marker._icon.className + ' hover';
+        } else {
+          marker.setIcon(new L.Icon({
+            iconSize: new L.Point(14, 20),
+            iconUrl: "assets/home/pin-hover.png"
+          }));
+        }
       },
 
       highlightMarkerLines: function(marker) {

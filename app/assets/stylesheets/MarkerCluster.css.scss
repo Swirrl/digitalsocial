@@ -95,7 +95,7 @@
   background-clip: padding-box;
   color: #fff;
 
-  &:hover {
+  &:hover, &.hover {
     background: #F39200;
   }
 
