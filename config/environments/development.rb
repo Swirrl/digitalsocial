@@ -49,6 +49,7 @@ Digitalsocial::Application.configure do
     config.update_endpoint = 'http://127.0.0.1:3030/dsidev/update'
     config.query_endpoint = 'http://127.0.0.1:3030/dsidev/sparql'
     config.timeout_seconds = 30
+    # e.g memcached -m 1024 -p 11214 -I 5M -u memcache -l 127.0.0.1
     config.cache_store  = Tripod::CacheStores::MemcachedCacheStore.new('localhost:11214')
   end
 
