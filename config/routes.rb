@@ -100,7 +100,7 @@ Digitalsocial::Application.routes.draw do
       get 'map_index'
       get 'map_partners'
       get 'map_partners_static'
-      get 'map_cluster'
+      post 'map_cluster'
     end
   end
 

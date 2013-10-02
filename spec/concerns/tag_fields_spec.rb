@@ -14,6 +14,7 @@ end
 class TestModel
   include Tripod::Resource
   include ConceptFields
+  include TripodCache
 
   concept_field :taggy, 'http://example.com/def/taggy', TestConcept, :multivalued => true
   concept_field :taggy2, 'http://example.com/def/taggy', TestConcept

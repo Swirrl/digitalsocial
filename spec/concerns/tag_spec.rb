@@ -3,6 +3,8 @@ require "spec_helper"
 class TestConcept
   include Tripod::Resource
 
+  include TripodCache
+
   include Concept
   uri_root 'http://example.com/def/concept/test/'
   concept_scheme_uri 'http://example.com/def/concept-scheme/test'

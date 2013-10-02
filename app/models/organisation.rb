@@ -2,6 +2,7 @@ class Organisation
 
   include Tripod::Resource
   include ConceptFields
+  include TripodCache
 
   rdf_type 'http://www.w3.org/ns/org#Organization'
   graph_uri Digitalsocial::DATA_GRAPH

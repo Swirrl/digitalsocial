@@ -1,6 +1,7 @@
 class ProjectMembership
 
   include Tripod::Resource
+  include TripodCache
 
   rdf_type 'http://data.digitalsocial.eu/def/ontology/ActivityMembership'
   graph_uri Digitalsocial::DATA_GRAPH

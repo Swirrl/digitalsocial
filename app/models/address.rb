@@ -1,5 +1,6 @@
 class Address
   include Tripod::Resource
+  include TripodCache
 
   rdf_type 'http://www.w3.org/2006/vcard/ns#Address'
   graph_uri Digitalsocial::DATA_GRAPH

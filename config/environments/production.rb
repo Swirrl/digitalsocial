@@ -79,5 +79,6 @@ Digitalsocial::Application.configure do
     config.update_endpoint = 'http://sparql3.publishmydata.com/dsi/update'
     config.query_endpoint = 'http://sparql3.publishmydata.com/dsi/sparql'
     config.timeout_seconds = 30
+    config.cache_store = Tripod::CacheStores::MemcachedCacheStore.new('localhost:11214')
   end
 end

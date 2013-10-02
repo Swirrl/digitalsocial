@@ -1,6 +1,7 @@
 class TimeInterval
 
   include Tripod::Resource
+  include TripodCache
 
   rdf_type 'http://purl.org/NET/c4dm/timeline.owl#Interval'
   graph_uri Digitalsocial::DATA_GRAPH

@@ -2,6 +2,7 @@ class Project
 
   include Tripod::Resource
   include ConceptFields
+  include TripodCache
 
   rdf_type 'http://data.digitalsocial.eu/def/ontology/Activity'
   graph_uri Digitalsocial::DATA_GRAPH

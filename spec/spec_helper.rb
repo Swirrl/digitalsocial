@@ -47,6 +47,8 @@ RSpec.configure do |config|
   DatabaseCleaner.orm = "mongoid"
 
   config.before(:suite) do
+    Tripod.cache_store.clear!
+    
     #delete everything from fuseki
     Tripod::SparqlClient::Update.update('
       # delete from default graph:
@@ -58,6 +60,7 @@ RSpec.configure do |config|
     # seed everything.
     puts 'seeding'
     load "#{Rails.root}/db/seeds.rb"
+
   end
 
   config.before(:each) do
@@ -99,6 +102,8 @@ RSpec.configure do |config|
 
     # clean mongo
     DatabaseCleaner.clean
+
+    Tripod.cache_store.clear!
 
   end
 

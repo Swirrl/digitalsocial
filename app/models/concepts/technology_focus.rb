@@ -3,6 +3,8 @@ class Concepts::TechnologyFocus
   include Tripod::Resource
   rdf_type 'http://data.digitalsocial.eu/def/ontology/TechnologyFocus'
 
+  include TripodCache
+
   include Concept
   uri_root 'http://data.digitalsocial.eu/def/concept/technology-focus/'
   concept_scheme_uri 'http://data.digitalsocial.eu/def/concept-scheme/technology-focus'

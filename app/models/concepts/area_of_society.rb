@@ -3,6 +3,8 @@ class Concepts::AreaOfSociety
   include Tripod::Resource
   rdf_type 'http://data.digitalsocial.eu/def/ontology/AreaOfSociety'
 
+  include TripodCache
+
   include Concept
   uri_root 'http://data.digitalsocial.eu/def/concept/area-of-society/'
   concept_scheme_uri 'http://data.digitalsocial.eu/def/concept-scheme/area-of-society'

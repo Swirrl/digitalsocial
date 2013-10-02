@@ -1,6 +1,7 @@
 class ReachValue
 
   include Tripod::Resource
+  include TripodCache
 
   rdf_type 'http://data.digitalsocial.eu/def/ontology/ReachValue'
   graph_uri Digitalsocial::DATA_GRAPH
