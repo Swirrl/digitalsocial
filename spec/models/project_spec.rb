@@ -6,7 +6,7 @@ describe Project do
 
   context "when the activity type is not other" do
     context "when the reach value literal is non-numeric" do
-      it "should be invalud" do
+      it "should be invalid" do
         project.reach_value_literal = 'twenty'
         project.should be_invalid
         project.errors[:reach_value_literal].should include("must be a whole number")
