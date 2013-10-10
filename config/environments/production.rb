@@ -73,6 +73,18 @@ Digitalsocial::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'beta.digitalsocial.eu' }
 
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.mandrillapp.com",
+    :port                 => 587,
+    :enable_starttls_auto => true,
+    :user_name            => 'hello@swirrl.com',
+    :password             => '_tF-Qf4kVBQbdFnNaYAEag',
+    :domain               => 'digitalsocial.eu',
+    :authentication       => 'plain'
+  }
+
   Digitalsocial::DATA_ENDPOINT = 'http://sparql3.publishmydata.com/dsi/data'
 
   Tripod.configure do |config|
