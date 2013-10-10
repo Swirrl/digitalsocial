@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Project
 
   include Tripod::Resource
@@ -21,7 +22,8 @@ class Project
   concept_field :technology_method, 'http://data.digitalsocial.eu/def/ontology/technologyMethod', Concepts::TechnologyMethod, multivalued: true
 
   attr_accessor :scoped_organisation
-
+  validates :terms, acceptance: true
+  
   validates :name, :activity_type, presence: true
   validate :ensure_scoped_organisation_has_membership
 
