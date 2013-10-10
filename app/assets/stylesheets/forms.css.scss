@@ -51,6 +51,16 @@ form {
     }
   }
 
+  #activity_terms_note {
+    .notes {
+       padding-top: 0px;
+    }
+
+    label.checkbox {
+      padding-left: 0px;
+    }
+  }
+
   label {
     display: block;
     font-style: italic;

@@ -11,6 +11,7 @@ feature 'New project' do
   end
 
   scenario 'Filling in new project step successfully' do
+    check 'project_terms'
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     choose 'Research Project'
@@ -51,6 +52,7 @@ feature 'New project' do
   end
 
   scenario 'Fill in with specifying other field', js: true do
+    check 'project_terms'
     fill_in 'Name', with: 'A great project'
     fill_in 'Description', with: 'Lorem ispum'
     check 'Sole funder'

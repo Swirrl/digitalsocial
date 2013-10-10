@@ -12,6 +12,7 @@ feature 'Edit project' do
   end
 
   scenario 'Updating the organisation successfully' do
+    check "project_terms"
     fill_in 'Name', with: 'A different name'
     fill_in 'Description', with: 'Lorem ispum etc'
     choose 'Event'
