@@ -7,12 +7,19 @@ namespace :db do
     DatabaseCleaner.orm = "mongoid"
     DatabaseCleaner.clean
 
+    puts "mongoid cleaned"
+    
     Tripod::SparqlClient::Update.update('
       # delete from default graph:
       DELETE {?s ?p ?o} WHERE {?s ?p ?o};
       # delete from named graphs:
       DELETE {graph ?g {?s ?p ?o}} WHERE {graph ?g {?s ?p ?o}};
     ')
+
+    puts "fuseki cleaned"
+    `echo "flush_all" | nc localhost 11211`
+
+    puts "WARNING: memcached flushed on default port 11211 (sorry if it's the wrong one :-\\ )"
   end
 
   desc 'Seed data for map visualisation'
