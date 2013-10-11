@@ -20,7 +20,7 @@
   
   = simple_form_for @project, url: [:organisations, :build, :create_project] do |f|
     = render 'error_messages', object: f.object
-
+    = render "projects/fields/terms", f: f
     = render "projects/fields/basic", f: f
 
     .wizard-button-wrapper
