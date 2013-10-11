@@ -26,6 +26,7 @@ end
 
 group :development, :test do
   gem 'capistrano'
+  gem 'rvm-capistrano'
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 2.0'
   gem 'capybara'
