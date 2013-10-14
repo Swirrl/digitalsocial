@@ -1,7 +1,7 @@
 .field-with-notes
 
   .field
-    = f.input :webpage_label, label: 'Website URL'
+    = f.input :webpage, label: 'Website URL'
 
   .notes
     :markdown
@@ -21,22 +21,23 @@
 .field-with-notes
 
   .field
-    = f.input :areas_of_society_list, label: "Areas of Society Impacted"
+    = f.input :areas_of_society_list, label: "Areas of Society Impacted", required: true
     = render 'suggested_tags', tag_class: Concepts::AreaOfSociety, p_id: 'areas-of-society-suggested-tags'
     = render 'tags_js', tag_field_id: "project_areas_of_society_list", suggested_tags_selector: "p#areas-of-society-suggested-tags a", tag_source_url: tags_projects_url(tag_class: "AreaOfSociety")
   .notes
     :markdown
       Please click the suggestions under the box to add the areas of society that #{notes_project_name(@project)} addresses. You can also add your own by typing into the box (please use a comma between each new entry).
+
 .field-with-notes
   .field
-    = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources, label: 'Technology Focus', :label_method => :get_view_label
+    = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources, label: 'Technology Focus', required: true, :label_method => :get_view_label
   .notes
     :markdown
       We are interested in understanding how #{notes_project_name(@project)} fits with broad technology trends. Please select the option that best describes #{notes_project_name(@project)}.
 
 .field-with-notes
   .field
-    = f.input :technology_method_list, label: "Technology Method"
+    = f.input :technology_method_list, label: "Technology Method", required: true
     = render 'suggested_tags', tag_class: Concepts::TechnologyMethod, p_id: 'technology-method-suggested_tags'
     = render 'tags_js', tag_field_id: "project_technology_method_list", suggested_tags_selector: "p#technology-method-suggested_tags a", tag_source_url: tags_projects_url(tag_class: "TechnologyMethod")
   .notes
@@ -47,7 +48,7 @@
 -# reach
 .field-with-notes
   .field
-    = f.input :reach_value_literal, label: (@project && @project.activity_type_resource) ? @project.activity_type_resource.get_reach_question_text : "Reach"
+    = f.input :reach_value_literal, label: (@project && @project.activity_type_resource) ? @project.activity_type_resource.get_reach_question_text : "Reach", required: false
 
     - network_metric_style = "display:none" unless @project.activity_type_slug == "network"
 
@@ -60,7 +61,7 @@
 
 .field-with-notes
   .field
-    = f.input :social_impact, as: :text, input_html: { rows: 6 }, label: 'Social Impact'
+    = f.input :social_impact, as: :text, input_html: { rows: 6 }, label: 'Social Impact', required: true
   .notes
     %p Please give a short description of the type of social impact that you are seeking to achieve through your activity, and any evidence you have of achieving this.
 

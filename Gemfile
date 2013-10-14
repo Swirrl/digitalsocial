@@ -36,3 +36,7 @@ group :development, :test do
   gem 'email_spec'
   gem 'debugger'
 end
+
+group :test do
+  gem 'rack_session_access'
+end

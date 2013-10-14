@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Organisation
 
   include Tripod::Resource
@@ -301,7 +302,7 @@ class Organisation
   end
 
   def strip_whitespace
-    self.name = self.name.strip
+    self.name = self.name.strip unless self.name.nil?
   end
 
 end

@@ -2,8 +2,12 @@ class Organisations::BuildController < ApplicationController
 
   before_filter :authenticate_user!, except: [:new_user, :create_user]
   before_filter :redirect_to_new_organisation_if_logged_in, only: [:new_user, :create_user]
-  before_filter :find_project_and_ensure_current_organisation_is_member,
-    only: [:edit_project, :update_project, :invite_organisations, :create_new_organisation_invite]
+
+  before_filter :get_project_from_session, only: [:edit_project, :update_project]
+  before_filter :find_project_from_id_param, only: [:invite_organisations, :create_new_organisation_invite]
+
+  before_filter :ensure_current_organisation_is_project_member, only: [:edit_project, :update_project,
+                                                                       :invite_organisations, :create_new_organisation_invite]
 
   def new_user
     @user = User.new
@@ -30,7 +34,7 @@ class Organisations::BuildController < ApplicationController
     @organisation.user       = current_user
 
     if @organisation.save
-      set_current_organisation( @organisation.organisation_guid ) # so that the following steps are for the righ org.
+      set_current_organisation( @organisation.organisation_guid ) # so that the following steps are for the right org.
       redirect_to [:organisations, :build, :edit_organisation]
     else
       render :new_organisation
@@ -64,20 +68,21 @@ class Organisations::BuildController < ApplicationController
     @project.scoped_organisation = current_organisation
     @project.creator             = current_organisation.uri
 
-    if @project.update_attributes(params[:project])
-      redirect_to organisations_build_edit_project_path(id: @project.guid)
+    @project.assign_attributes params[:project]
+    
+    if @project.valid_for_first_page?
+      session[:project_page_one_data] = params[:project].to_json
+      redirect_to organisations_build_edit_project_path
     else
       render :new_project
     end
   end
 
   def edit_project
-    @project.scoped_organisation = current_organisation
+
   end
 
   def update_project
-    @project.scoped_organisation = current_organisation
-
     transaction = Tripod::Persistence::Transaction.new
     if @project.update_attributes(params[:project], transaction: transaction ) && @project.save_reach_value(transaction: transaction)
       transaction.commit
@@ -109,7 +114,7 @@ class Organisations::BuildController < ApplicationController
   end
 
   def finish
-    
+
   end
 
   private
@@ -118,12 +123,26 @@ class Organisations::BuildController < ApplicationController
     redirect_to [:organisations, :build, :new_organisation] if user_signed_in?
   end
 
-  def find_project_and_ensure_current_organisation_is_member
+  def get_project_from_session
+    project_data = session[:project_page_one_data]
+    if project_data
+      @project = Project.new
+      @project.scoped_organisation = current_organisation
+      project_json_data = JSON.parse(project_data)
+      @project.assign_attributes project_json_data
+      @project
+    else
+      redirect_to [:organisations, :build, :new_project], notice: "You must first fill in this form."
+    end
+  end
+  
+  def find_project_from_id_param
     @project = Project.find(Project.slug_to_uri(params[:id]))
-
+  end
+  
+  def ensure_current_organisation_is_project_member
     unless current_organisation.is_member_of_project?(@project)
       redirect_to :dashboard, notice: "Your current organisation is not a member of that activity."
     end
   end
-
 end

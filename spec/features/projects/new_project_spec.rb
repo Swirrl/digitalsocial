@@ -60,6 +60,12 @@ feature 'New project' do
 
     choose 'Other'
     fill_in 'project_activity_type_label_other', with: 'Something else'
+
+    fill_in 'project_areas_of_society_list', with: 'Finance', visible: false
+    check 'Open Hardware'
+    fill_in 'project_technology_method_list', with: 'big data', visible: false
+    fill_in 'Social Impact', with: 'Lorem ipsum'
+
     click_button 'Create'
 
     page.current_path.should match(/projects\/(.+)\/invite/)

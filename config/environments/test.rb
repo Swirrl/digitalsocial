@@ -52,4 +52,7 @@ Digitalsocial::Application.configure do
     config.timeout_seconds = 30
     config.cache_store  = Tripod::CacheStores::MemcachedCacheStore.new('localhost:11214')
   end
+
+  # Allow capybara sessions to initialise rack sessions
+  config.middleware.use RackSessionAccess::Middleware
 end

@@ -9,16 +9,18 @@ FactoryGirl.define do
     #creator      { FactoryGirl.create(:organisation).uri.to_s }
     scoped_organisation { FactoryGirl.create(:organisation) }
     organisation_natures { [Concepts::ProjectMembershipNature.all.first.uri] }
-
+    
     activity_type { Concepts::ActivityType.first.uri }
     areas_of_society { [Concepts::AreaOfSociety.first.uri] }
     technology_focus { [Concepts::TechnologyFocus.first.uri] }
     technology_method { [Concepts::TechnologyMethod.first.uri] }
-
+    
+    social_impact { Faker::Lorem.paragraph }
+    
     factory :project_with_network_activity do
       activity_type { Concepts::ActivityType.from_label("network").uri }
     end
-
+    
     factory :project_with_organisations do
       ignore do
         organisations_count { rand(6) }
@@ -28,5 +30,10 @@ FactoryGirl.define do
         FactoryGirl.create_list(:project_membership, evaluator.organisations_count, project: project.uri.to_s, use_existing_organisations: true)
       end
     end
+  end
+  
+  factory :first_page_project, :class => Project do
+    name         { Faker::Company.catch_phrase.titleize }
+    activity_type { Concepts::ActivityType.first.uri }
   end
 end

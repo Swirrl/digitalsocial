@@ -5,13 +5,9 @@
     %h3 Additional activity details
   .clearfix
 
-  .skip-wizard.clearfix
-    %span This step lets you add more details about your organisation's activity
-
-    = link_to "Skip for now &raquo;".html_safe, organisations_build_invite_organisations_path(id: @project.guid), class: 'button'
-
-  = simple_form_for @project, url: [:organisations, :build, :update_project] do |f|
+  = simple_form_for @project, url: [:organisations, :build, :update_project], method: 'put' do |f|
     = hidden_field_tag :id, @project.guid
+
 
     = render "projects/fields/advanced", f: f
 

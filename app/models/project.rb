@@ -23,8 +23,10 @@ class Project
 
   attr_accessor :scoped_organisation
   validates :terms, acceptance: true
-  
+
   validates :name, :activity_type, presence: true
+  validates :areas_of_society_list, :technology_focus_array, :technology_method_list, :social_impact, presence: true, :unless => :first_page?
+  
   validate :ensure_scoped_organisation_has_membership
 
   validate :validate_reach_data_type
@@ -130,7 +132,8 @@ class Project
       pm.nature       = nature
       pm.save
 
-      self.save
+      # self.save # Don't automatically save this object, as it can
+                  # cause validations/errors to run before their time.
     end
   end
 
@@ -366,8 +369,30 @@ class Project
     end
   end
 
+  # As the creation process is multi-page, we provide a check to see
+  # whether or not the object is valid for the first page, in which
+  # case the controller can decide to save it into the session or
+  # display errors.
+  def valid_for_first_page?
+    @first_page = true
+    valid_so_far = self.valid?
+    @first_page = false
+    valid_so_far
+  end
+
+  # TODO remove when implemented in tripod
+  def assign_attributes(attributes)
+    attributes.each_pair do |name, value|
+      send "#{name}=", value
+    end
+  end
+  
   private
 
+  def first_page?
+    @first_page
+  end
+  
   def project_name_is_unique
     name_predicate = Project.fields[:name].predicate.to_s
     if Project.where("?uri <#{name_predicate}> \"\"\"#{name}\"\"\"").where("FILTER(?uri != <#{self.uri}>)").count > 0

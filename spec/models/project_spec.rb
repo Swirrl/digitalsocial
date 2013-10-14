@@ -2,6 +2,18 @@ require 'spec_helper'
 
 describe Project do
 
+  context 'when only the name and activity_type are set' do
+    let(:project) {FactoryGirl.build(:first_page_project)}
+    
+    it 'should be invalid' do
+      project.should_not be_valid
+    end
+    
+    it 'should be #valid_first_page' do
+      project.should be_valid_for_first_page
+    end
+  end
+  
   let(:project) {FactoryGirl.create(:project)}
 
   context "when the activity type is not other" do
@@ -39,7 +51,6 @@ describe Project do
         project.should be_valid
       end
     end
-
   end
 
   describe "#save_reach_value" do
