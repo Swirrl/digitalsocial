@@ -8,7 +8,8 @@ class ProjectInvitePresenter
   # mass assignable
   attr_accessible :invited_organisation_name,
     :user_first_name,
-    :user_email
+    :user_email,
+    :personalised_message
 
   attr_accessor :invitor_organisation_uri,
     :invited_organisation_uri,
@@ -18,7 +19,8 @@ class ProjectInvitePresenter
     :user_first_name,
     :user_email,
 
-    :project_uri
+    :project_uri,
+    :personalised_message
 
 
   validates :invited_organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation? }
@@ -103,6 +105,7 @@ class ProjectInvitePresenter
       i.invitor_organisation_uri  = self.invitor_organisation_uri
       i.invited_organisation_uri  = self.invited_organisation.uri # the invited_organisation method will instatiate the org for new ones.
       i.project_uri = self.project_uri
+      i.personalised_message = self.personalised_message
     end
   end
 

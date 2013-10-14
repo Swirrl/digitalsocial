@@ -27,7 +27,15 @@
         = f.input :user_email, required: false
       .notes
         %p
-          If the organisation you're trying to add doesn't appear in our suggestions, please add a contact email so we can let your partner organisation know #{@project.name} is now part of the DSI network, and invite them to sign up themselves.
+          If the organisation you're trying to add doesn't appear in our suggestions, please add a contact email so we can let your partner organisation know that #{@project.name} is now part of the DSI network, and invite them to sign up themselves.
+
+    .field-with-notes
+      .fields
+        = f.input :personalised_message, required: false, as: :text, input_html: { :cols => 50, :rows => 3 }
+      .notes
+        %p 
+          Add a message to help the 
+
 
     .wizard-button-wrapper
       = f.button :submit, 'Invite organisation', class: 'button-green'

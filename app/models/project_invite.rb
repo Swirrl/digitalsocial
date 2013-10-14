@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class ProjectInvite
 
   include Mongoid::Document
@@ -5,6 +6,9 @@ class ProjectInvite
   field :invitor_organisation_uri, type: String
   field :invited_organisation_uri, type: String
   field :project_uri, type: String
+
+  field :personalised_message, type: String
+  
   field :open, type: Boolean, default: true
   field :accepted, type: Boolean # nil until decision made.
 
