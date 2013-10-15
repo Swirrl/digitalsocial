@@ -1,5 +1,5 @@
 class RequestMailer < ActionMailer::Base
-  default from: "contact@digitalsocial.eu"
+  default from: "contact@digitalsocial.eu", bcc: "digitalsocial@swirrl.com"
 
   def project_new_organisation_invite(invite, user)
     return false unless (@user = user).receive_notifications?
