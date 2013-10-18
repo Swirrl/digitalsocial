@@ -18,7 +18,8 @@ online at:
 
 <% unless @invite.personalised_message.blank? %>
 They provided the following message to jog your memory about this project:
-  <%= @invite.personalised_message %>
+ 
+"<%= @invite.personalised_message %>"
 <% end %>
 
 If you'd like to join them in this activity together click the link
@@ -42,5 +43,3 @@ Write policy recommendations to the European Commission
 
 Led by Nesta, the project partners are Esade, FutureEverything, IRI,
 Swirrl and Waag Society.
-
-<%= render 'footer' %>
