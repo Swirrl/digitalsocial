@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class OrganisationsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:index, :show, :map_index, :map_show, :map_partners, :map_partners_static, :map_cluster]
@@ -169,7 +170,7 @@ class OrganisationsController < ApplicationController
     user_request.organisation_uri = @organisation.uri.to_s
 
     if user_request.save
-      redirect_to :dashboard, :notice => "You have requested to join #{@organisation.name}. Members of #{@organisation.name} have be notified and we'll let you know when your request is accepted"
+      redirect_to :dashboard, :notice => "You have requested to join #{@organisation.name}. Members of #{@organisation.name} have been notified and we'll let you know when your request is accepted"
     else
       error_message = user_request.errors.messages.values.join(', ')
       redirect_to :dashboard, :notice => "Your request failed. #{error_message}"
