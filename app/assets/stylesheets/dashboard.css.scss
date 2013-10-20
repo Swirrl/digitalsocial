@@ -89,6 +89,17 @@
     clear:both;
     margin-bottom: 60px;
 
+    h3 {
+      color: $orange;
+      font-size: 26px;
+      font-weight: 300;
+    }
+
+    blockquote {
+      font-style: italic;
+      margin-top: 15px;
+    }
+
     li {
       padding: 24px;
       background: #f0f0f0;
@@ -107,11 +118,9 @@
       }
     }
 
-
    .button, .button:hover {
       color: #fff;
     }
-
 
   }
 
