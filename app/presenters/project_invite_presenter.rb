@@ -13,12 +13,12 @@ class ProjectInvitePresenter
 
   attr_accessor :invitor_organisation_uri,
     :invited_organisation_uri,
-
+    :invited_by_user,
     # for making new org
     :invited_organisation_name,
     :user_first_name,
     :user_email,
-
+  
     :project_uri,
     :personalised_message
 
@@ -157,6 +157,7 @@ class ProjectInvitePresenter
 
       self.user.save unless self.user.persisted?
       self.organisation_membership.save
+      self.project_invite.invited_by_user = self.invited_by_user
       self.project_invite.save
 
       transaction.commit

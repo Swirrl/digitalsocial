@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class ProjectsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:index, :show]
@@ -146,6 +147,7 @@ class ProjectsController < ApplicationController
     @project_invite.attributes = params[:project_invite_presenter]
     @project_invite.project_uri = @project.uri
     @project_invite.invitor_organisation_uri = current_organisation.uri
+    @project_invite.invited_by_user = current_user
 
     if @project_invite.save
       redirect_to [:dashboard, :projects], notice: "Organisation invited. We'll email the contact you entered."

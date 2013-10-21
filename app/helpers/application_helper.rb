@@ -96,4 +96,12 @@ module ApplicationHelper
     project.name.present? ? project.name : 'this activity'
   end
 
+  # Takes a User and titlecases their username
+  #
+  # Rails titlecase has odd behaviour i.e. it converts "RIck" into "R Ick"
+  # so we downcase first.
+  def titlecase_users_name(user)
+    user.first_name.downcase.titlecase
+  end
+  
 end

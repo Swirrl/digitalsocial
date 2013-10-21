@@ -8,6 +8,7 @@ class ProjectInvite
   field :project_uri, type: String
 
   field :personalised_message, type: String
+  belongs_to :invited_by_user, class_name: 'User'
   
   field :open, type: Boolean, default: true
   field :accepted, type: Boolean # nil until decision made.
