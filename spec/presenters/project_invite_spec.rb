@@ -140,6 +140,14 @@ describe ProjectInvitePresenter do
       end
     end
 
+    describe "#organisation_id=" do
+      it "should translate the id to a uri and assign invited_organisation_uri" do
+        project = ProjectInvitePresenter.new
+        project.organisation_id = '10'
+        project.invited_organisation_uri.should eql('http://data.digitalsocial.eu/id/organization/10')
+      end
+    end
+    
     context "when an open invite already exists" do
 
       before do

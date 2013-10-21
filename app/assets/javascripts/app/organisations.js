@@ -94,7 +94,8 @@ $(function(){
 
           var anchor = $suggestion.find('.action a');
           var urlTemplate = anchor.attr('href');
-          anchor.attr('href', urlTemplate.replace(':organisation_id', org.guid));
+          anchor.attr('href', '#');
+          // urlTemplate.replace(':organisation_id', org.guid));
           
           $suggestion.click(function(ev) {
             that.clearSuggestions();

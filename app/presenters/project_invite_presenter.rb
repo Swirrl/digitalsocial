@@ -9,10 +9,12 @@ class ProjectInvitePresenter
   attr_accessible :invited_organisation_name,
     :user_first_name,
     :user_email,
-    :personalised_message
+    :personalised_message,
+    :organisation_id
 
   attr_accessor :invitor_organisation_uri,
     :invited_organisation_uri,
+    :invited_organisation_id,
     :invited_by_user,
     # for making new org
     :invited_organisation_name,
@@ -23,8 +25,8 @@ class ProjectInvitePresenter
     :personalised_message
 
 
-  validates :invited_organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation?, unless: :invited_organisation_uri_present? }
-  validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation?, unless: :invited_organisation_uri_present? }
+  validates :invited_organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation?}
+  validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation? }
 
   validate :organisation_is_not_already_member_of_project
   validate :invite_doesnt_already_exist
@@ -39,7 +41,7 @@ class ProjectInvitePresenter
 
   def new_organisation?
     # if org uri of invited org not set, must be a new org.
-    !self.invited_organisation_uri
+    self.invited_organisation_uri.nil?
   end
 
   def invitor_organisation
@@ -121,6 +123,11 @@ class ProjectInvitePresenter
     false
   end
 
+  def invited_organisation_id= org_id
+    @invited_organisation_id = org_id
+    self.invited_organisation_uri = Organisation.slug_to_uri(org_id)
+  end
+
   private
 
   def existing_project_membership?
@@ -192,7 +199,4 @@ class ProjectInvitePresenter
     errors.add(:project_uri, "Someone has invited this organisation to this project") if open_invite?
   end
 
-  def invited_organisation_uri_present?
-    invited_organisation_uri.present?
-  end
 end

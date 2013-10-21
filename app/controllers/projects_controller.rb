@@ -126,8 +126,9 @@ class ProjectsController < ApplicationController
   # One click invite
   # Should prob be a put or post but we want to generate the link in the JS suggestions.
   def create_existing_org_invite
-    invite_params = params[:project_invite_presenter];
-    invite_params.merge!(:project_uri => @project.url, :invitor_organisation_uri => current_organisation.uri,
+    puts params.inspect
+    invite_params = params[:project_invite_presenter]
+    invite_params.merge!(:project_uri => @project.uri, :invitor_organisation_uri => current_organisation.uri,
                          :invited_organisation_uri => Organisation.slug_to_uri(params[:organisation_id]))
 
     @project_invite = ProjectInvitePresenter.new invite_params
