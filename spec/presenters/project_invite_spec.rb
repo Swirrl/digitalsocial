@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe ProjectInvitePresenter do
@@ -40,7 +41,7 @@ describe ProjectInvitePresenter do
         end
       end
 
-      context "the usser doesn't exist" do
+      context "the user doesn't exist" do
         it "should instantiate a (unsaved) user" do
           project_invite_presenter.user.new_record?.should be_true
         end
