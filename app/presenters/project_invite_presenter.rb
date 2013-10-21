@@ -23,8 +23,8 @@ class ProjectInvitePresenter
     :personalised_message
 
 
-  validates :invited_organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation? }
-  validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation? }
+  validates :invited_organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation?, unless: :invited_organisation_uri_present? }
+  validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation?, unless: :invited_organisation_uri_present? }
 
   validate :organisation_is_not_already_member_of_project
   validate :invite_doesnt_already_exist
@@ -192,4 +192,7 @@ class ProjectInvitePresenter
     errors.add(:project_uri, "Someone has invited this organisation to this project") if open_invite?
   end
 
+  def invited_organisation_uri_present?
+    invited_organisation_uri.present?
+  end
 end

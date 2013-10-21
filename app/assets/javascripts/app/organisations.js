@@ -69,13 +69,14 @@ $(function(){
     },
 
     addSuggestions: function(data) {
+      var that = this;
       if (data.organisations && data.organisations.length > 0) {
 
         var orgs = data.organisations;
         var current_organisation_uris = data.current_organisation_uris;
 
         $.each(orgs, function(index, org){
-          var $suggestion = $('.suggestion-template').clone()
+          var $suggestion = $('.suggestion-template').clone();
           $suggestion.removeClass('suggestion-template').addClass('suggestion');
           $suggestion.find('.header').text(org.name);
           if(org.address) {
@@ -94,7 +95,21 @@ $(function(){
           var anchor = $suggestion.find('.action a');
           var urlTemplate = anchor.attr('href');
           anchor.attr('href', urlTemplate.replace(':organisation_id', org.guid));
+          
+          $suggestion.click(function(ev) {
+            that.clearSuggestions();
+            $('.remove-if-org').remove();
 
+            anchor.text('Remove').click(function(ev) {
+              window.location = window.location;
+              ev.preventDefault();
+            });
+            
+            $('#organisation-id').val(org.guid);
+            $('.suggestions').append($suggestion);
+            ev.preventDefault();
+          });
+          
           $('.suggestions').append($suggestion);
         });
 

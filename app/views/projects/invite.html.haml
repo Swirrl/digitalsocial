@@ -11,7 +11,7 @@
 
   = simple_form_for @project_invite, url: [:create_new_org_invite, @project] do |f|
 
-    .field-with-notes
+    .field-with-notes.remove-if-org
       .field
         = f.input :invited_organisation_name, label: 'Organisation Name', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
       .notes
@@ -20,8 +20,10 @@
 
     = render 'suggestions', button_text: 'Invite', action_url_template: "/projects/#{@project.guid}/create_existing_org_invite?organisation_id=:organisation_id", help: "The following organisations matched that name. Click <strong>Invite</strong> to invite an organisation to be a partner on this activity."
     = hidden_field_tag :project_id, @project.guid, id: 'project-id'
+    = hidden_field_tag :organisation_id, nil, id: 'organisation-id'
 
-    .field-with-notes
+    = f.hidden_field :organisation_id, id: 'organisation-id'
+    .field-with-notes.remove-if-org
       .fields
         = f.input :user_first_name, required: false
         = f.input :user_email, required: false
