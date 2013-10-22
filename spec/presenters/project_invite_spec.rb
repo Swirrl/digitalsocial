@@ -3,6 +3,10 @@ require 'spec_helper'
 
 describe ProjectInvitePresenter do
 
+  context "#valid" do
+    let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
+  end
+  
   context "#new organisation" do
     let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
 
@@ -206,4 +210,14 @@ describe ProjectInvitePresenter do
 
   end
 
+  context "existing organisation by guid" do
+    let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_by_organisation_guid) }
+
+    it "must have a valid factory" do
+      project_invite_presenter.should be_valid
+    end
+  end
+  
+
+  
 end

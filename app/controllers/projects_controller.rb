@@ -2,7 +2,9 @@
 class ProjectsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:index, :show]
-  before_filter :find_project, only: [:invite, :create_new_org_invite, :create_existing_org_invite, :edit, :update, :request_to_join, :create_request, :new_invite]
+  before_filter :find_project, only: [:invite, :create_organisation_invite,
+                                      #:create_new_org_invite, :create_existing_org_invite,
+                                      :edit, :update, :request_to_join, :create_request, :new_invite]
   before_filter :set_project_invite, only: [:create_invite]
   before_filter :check_project_can_be_edited, only: [:edit, :update]
   before_filter :show_partners, only: [:show, :index]
@@ -121,18 +123,26 @@ class ProjectsController < ApplicationController
     @project_invite.invitor_organisation_uri = current_organisation.uri
   end
 
+  # Invite either an existing organisation or a new organisation to join the project.
+  # POST /projects/:id/create_organisation_invite
+  def create_organisation_invite
+    if params[:project_invite_presenter] && params[:project_invite_presenter][:invited_organisation_id]
+      create_existing_org_invite
+    else
+      create_new_org_invite
+    end
+  end
+
+  private
+  
   # Actually invite an existing org to a project
-  # GET /projects/:id/create_existing_org_invite?organisation_id=blah
-  # One click invite
-  # Should prob be a put or post but we want to generate the link in the JS suggestions.
+  # POST /projects/:id/create_existing_org_invite?organisation_id=blah
   def create_existing_org_invite
-    puts params.inspect
     invite_params = params[:project_invite_presenter]
-    invite_params.merge!(:project_uri => @project.uri, :invitor_organisation_uri => current_organisation.uri,
-                         :invited_organisation_uri => Organisation.slug_to_uri(params[:organisation_id]))
+    invite_params.merge! :invitor_organisation_uri => current_organisation.uri, :project_uri => @project.uri
 
     @project_invite = ProjectInvitePresenter.new invite_params
-
+    logger.info "invite #{@project_invite.inspect}"
     if @project_invite.save
       redirect_to [:dashboard, :projects], notice: "Organisation invited. Members of the organisation you invited will be notified."
     else
@@ -141,7 +151,7 @@ class ProjectsController < ApplicationController
       render :invite
     end
   end
-
+  
   # Actually invite a new org to a project
   # posting a form.
   def create_new_org_invite
@@ -157,11 +167,8 @@ class ProjectsController < ApplicationController
       flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
       render :invite
     end
-
   end
-
-  private
-
+  
   def find_project
     @project = Project.find(Project.slug_to_uri(params[:id]))
   end
@@ -174,4 +181,5 @@ class ProjectsController < ApplicationController
     redirect_to dashboard_projects_path unless current_organisation.can_edit_project?(@project)
   end
 
+  
 end

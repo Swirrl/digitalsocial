@@ -10,7 +10,8 @@ class ProjectInvitePresenter
     :user_first_name,
     :user_email,
     :personalised_message,
-    :organisation_id
+    :project_uri,
+    :invited_organisation_id
 
   attr_accessor :invitor_organisation_uri,
     :invited_organisation_uri,
@@ -33,6 +34,10 @@ class ProjectInvitePresenter
 
   validates :project_uri, presence: true
 
+  def initialize(attrs={})
+    self.attributes = attrs
+  end
+      
   def attributes=(values)
     sanitize_for_mass_assignment(values).each do |attr, value|
       public_send("#{attr}=", value)

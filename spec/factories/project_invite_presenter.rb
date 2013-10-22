@@ -14,5 +14,9 @@ FactoryGirl.define do
       invited_organisation_uri  { FactoryGirl.create(:organisation).uri.to_s }
     end
 
+    factory :project_invite_presenter_by_organisation_guid do
+      invited_organisation_id  { FactoryGirl.create(:organisation).guid }
+    end
+
   end
 end
