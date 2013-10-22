@@ -35,25 +35,16 @@ feature 'Invite another Organisation to Join Project' do
     visit invite_project_path(project)
   end
 
-  scenario 'supplying email address', js: true do
+  scenario 'supplying email address' do
     partial_name = another_organisation.name.slice(0, 3)
     fill_in 'Organisation Name', with: partial_name
-    # within(".suggestions") do
-    #   click_link 'Invite', match: :first
-    # end
     
-    hidden_field = find(:xpath, "//input[@id='invited-organisation-id']")
-    hidden_field.set(another_organisation.guid)
+    find('#invited-organisation-id', visible: false).set(another_organisation.guid)
 
-    find("#invited-organisation-id").set(another_organisation.guid)
-
-    page.save_screenshot '/tmp/foo.png', :full => true
     fill_in 'Personalised message', with: "Hi, it's me!"
-    
-    page.save_screenshot '/tmp/foo2.png', :full => true
     click_button 'Invite organisation'
+    
     page.current_path.should == dashboard_projects_path
-    page.save_screenshot '/tmp/foo3.png', :full => true
   end
 
 end
