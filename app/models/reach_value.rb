@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class ReachValue
 
   include Tripod::Resource
@@ -24,6 +25,11 @@ class ReachValue
   # memoized getter for project resource, based on the uri in self.activity field.
   def project_resource
     @project ||= Project.find(self.activity)
+  end
+
+  def project_resource=(project_obj)
+    self.activity = project_obj.uri # set the field
+    @project = project_obj
   end
 
   def activity_type_slug
@@ -59,7 +65,7 @@ class ReachValue
   def self.build_reach_value(project_resource, reach_value_literal)
 
     rv = ReachValue.new
-    rv.activity = project_resource.uri
+    rv.project_resource = project_resource
     rv.dataset = 'http://data.digitalsocial.eu/data/reach'
     rv.measure_type = ReachValue.determine_measure_type_uri(project_resource)
     rv.ref_period = DateTime.now
