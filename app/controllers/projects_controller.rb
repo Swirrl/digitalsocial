@@ -126,7 +126,7 @@ class ProjectsController < ApplicationController
   # Invite either an existing organisation or a new organisation to join the project.
   # POST /projects/:id/create_organisation_invite
   def create_organisation_invite
-    if params[:project_invite_presenter] && params[:project_invite_presenter][:invited_organisation_id]
+    if params[:project_invite_presenter] && params[:invited_organisation_id].present?
       create_existing_org_invite
     else
       create_new_org_invite
@@ -139,10 +139,12 @@ class ProjectsController < ApplicationController
   # POST /projects/:id/create_existing_org_invite?organisation_id=blah
   def create_existing_org_invite
     invite_params = params[:project_invite_presenter]
-    invite_params.merge! :invitor_organisation_uri => current_organisation.uri, :project_uri => @project.uri
+    organisation_id = params[:invited_organisation_id]
+    org_uri = Organisation.slug_to_uri(organisation_id)
+    invite_params.merge! :invitor_organisation_uri => current_organisation.uri, :project_uri => @project.uri, :invited_organisation_uri => org_uri
 
     @project_invite = ProjectInvitePresenter.new invite_params
-    logger.info "invite #{@project_invite.inspect}"
+
     if @project_invite.save
       redirect_to [:dashboard, :projects], notice: "Organisation invited. Members of the organisation you invited will be notified."
     else
@@ -155,10 +157,12 @@ class ProjectsController < ApplicationController
   # Actually invite a new org to a project
   # posting a form.
   def create_new_org_invite
+    logger.info "Current Organisation uri: #{current_organisation.uri}"
     @project_invite = ProjectInvitePresenter.new
     @project_invite.attributes = params[:project_invite_presenter]
     @project_invite.project_uri = @project.uri
     @project_invite.invitor_organisation_uri = current_organisation.uri
+
     @project_invite.invited_by_user = current_user
 
     if @project_invite.save

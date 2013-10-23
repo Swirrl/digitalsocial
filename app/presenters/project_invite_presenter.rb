@@ -11,11 +11,11 @@ class ProjectInvitePresenter
     :user_email,
     :personalised_message,
     :project_uri,
-    :invited_organisation_id
+    :invited_organisation_uri
 
   attr_accessor :invitor_organisation_uri,
     :invited_organisation_uri,
-    :invited_organisation_id,
+    #:invited_organisation_id,
     :invited_by_user,
     # for making new org
     :invited_organisation_name,
@@ -38,15 +38,9 @@ class ProjectInvitePresenter
     self.attributes = attrs
   end
       
-  def attributes=(values)
-    sanitize_for_mass_assignment(values).each do |attr, value|
-      public_send("#{attr}=", value)
-    end
-  end
-
   def new_organisation?
-    # if org uri of invited org not set, must be a new org.
-    self.invited_organisation_uri.nil?
+    org_id = Organisation.uri_to_slug(self.invited_organisation_uri)
+    @is_new_organisation = org_id.blank?
   end
 
   def invitor_organisation
@@ -61,6 +55,7 @@ class ProjectInvitePresenter
     if new_organisation?
       @organisation = Organisation.new
       @organisation.name = self.invited_organisation_name
+#     @invited_organisation_uri = @organisation.uri
     else
       @organisation = Organisation.find(self.invited_organisation_uri)
     end
@@ -111,6 +106,7 @@ class ProjectInvitePresenter
     @project_invite ||= ProjectInvite.new do |i|
       i.invitor_organisation_uri  = self.invitor_organisation_uri
       i.invited_organisation_uri  = self.invited_organisation.uri # the invited_organisation method will instatiate the org for new ones.
+      i.invited_by_user = self.invited_by_user
       i.project_uri = self.project_uri
       i.personalised_message = self.personalised_message
     end
@@ -118,7 +114,9 @@ class ProjectInvitePresenter
 
   def save
     if new_organisation?
-      save_for_new_organisation
+      if save_for_new_organisation
+        RequestMailer.project_new_organisation_invite(self, user).deliver
+      end
     else
       save_for_existing_organisation
     end
@@ -128,11 +126,12 @@ class ProjectInvitePresenter
     false
   end
 
-  def invited_organisation_id= org_id
-    @invited_organisation_id = org_id
-    self.invited_organisation_uri = Organisation.slug_to_uri(org_id)
+  def attributes=(values)
+    sanitize_for_mass_assignment(values).each do |attr, value|
+      public_send("#{attr}=", value)
+    end
   end
-
+  
   private
 
   def existing_project_membership?
@@ -159,29 +158,28 @@ class ProjectInvitePresenter
       return false
     end
 
-    transaction = Tripod::Persistence::Transaction.new
+    begin
+      transaction = Tripod::Persistence::Transaction.new
 
-    if self.invited_organisation.save(transaction: transaction)
-
-      # so the user needs a password reset.
-      self.user.reset_password_token   = User.reset_password_token
-      self.user.reset_password_sent_at = Time.now
-
-      self.user.save unless self.user.persisted?
-      self.organisation_membership.save
-      self.project_invite.invited_by_user = self.invited_by_user
-      self.project_invite.save
-
-      transaction.commit
-      RequestMailer.project_new_organisation_invite(self, user).deliver
-    else
-      transaction.abort
+      if self.invited_organisation.save(transaction: transaction)
+        # so the user needs a password reset.
+        self.user.reset_password_token   = User.reset_password_token
+        self.user.reset_password_sent_at = Time.now
+        
+        self.user.save(transaction: transaction) unless self.user.persisted?
+        self.organisation_membership.save(transaction: transaction)
+        self.project_invite.save(transaction: transaction)
+        transaction.commit
+      else
+        transaction.abort
+      end
+      
+      true
+    rescue => e
+      Rails.logger.debug( e.inspect )
+      Rails.logger.debug( e.backtrace.join("\n") )
+      false
     end
-
-    true
-  rescue => e
-    Rails.logger.debug( e.inspect )
-    false
   end
 
   def save_for_existing_organisation
@@ -193,6 +191,7 @@ class ProjectInvitePresenter
     self.project_invite.save
   rescue => e
     Rails.logger.debug( e.inspect )
+    Rails.logger.debug( e.backtrace.join("\n") )
     false
   end
 

@@ -5,6 +5,8 @@ class RequestMailer < ActionMailer::Base
     return false unless (@user = user).receive_notifications?
 
     @invite = invite
+    @invitor_organisation = invite.invitor_organisation
+    @project = invite.project
     mail to: @user.email, subject: "You've been invited to join a project on DigitalSocialInnovation"
   end
 
