@@ -146,11 +146,9 @@ class ProjectsController < ApplicationController
     @project_invite = ProjectInvitePresenter.new invite_params
 
     if @project_invite.save
-      redirect_to [:dashboard, :projects], notice: "Organisation invited. Members of the organisation you invited will be notified."
+      render_invited_ok
     else
-      Rails.logger.debug "Failed"
-      flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
-      render :invite
+      render_invited_error
     end
   end
   
@@ -166,10 +164,9 @@ class ProjectsController < ApplicationController
     @project_invite.invited_by_user = current_user
 
     if @project_invite.save
-      redirect_to [:dashboard, :projects], notice: "Organisation invited. We'll email the contact you entered."
+      render_invited_ok
     else
-      flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
-      render :invite
+      render_invited_error
     end
   end
   
@@ -185,5 +182,29 @@ class ProjectsController < ApplicationController
     redirect_to dashboard_projects_path unless current_organisation.can_edit_project?(@project)
   end
 
+  private
+
+  def render_invited_ok
+    message = "Organisation invited. Members of the organisation you invited will be notified."
+    if params[:in_signup].present?
+      # If in_signup param is set, then the user is in the signup
+      # process so redirect them to the finishing page of the wizard.
+      redirect_to [:organisations, :build, :finish], notice: message
+    else
+      redirect_to [:dashboard, :projects], notice: message
+    end
+  end
+
+  def render_invited_error
+    error_message = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
+
+    if params[:in_signup].present?
+      render "organisations/build/invite_organisations", notice: error_message
+      #redirect_to organisations_build_invite_organisations_path(id: @project.guid), notice: error_message
+    else
+      flash[:notice] = error_message
+      render :invite
+    end
+  end
   
 end
