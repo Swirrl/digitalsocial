@@ -1,3 +1,13 @@
+nav {
+  a {
+    color: $orange;
+
+    &:hover {
+      color: $orange;
+    }
+  }
+}
+
 #partners {
   height: 360px;
   @include media-smaller-than-desktop {
