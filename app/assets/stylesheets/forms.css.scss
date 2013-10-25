@@ -25,7 +25,7 @@ form {
     .notes {
 
       span.highlight {
-        background: lemonChiffon;
+        background: $highlight;
       }
 
       @include columns(7);
