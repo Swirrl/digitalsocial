@@ -2,19 +2,19 @@ Hi <%= @user.first_name %>,
 
 You have been invited to join an activity on digitalsocial.eu 
 
-Someone at <%= @invite.invitor_organisation.name %> 
-has indicated that you worked on <%= @invite.project.name %> together.
+Someone at <%= @invitor_organisation.name %> has indicated that
+you worked on <%= @project.name %> together.
 
-<% unless @invite.project.description.blank? %>
+<% unless @project.description.blank? %>
 They described this project as:
 
-<%= @invite.project.description %>
+<%= @project.description %>
 <% end %>
 
 You can find out more about what they've said about this activity
 online at:
 
-<%= project_url(@invite.project) %>
+<%= project_url(@project) %>
 
 <% unless @invite.personalised_message.blank? %>
 They provided the following message to jog your memory about this project:

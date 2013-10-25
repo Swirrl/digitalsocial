@@ -2,7 +2,9 @@
 class ProjectsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:index, :show]
-  before_filter :find_project, only: [:invite, :create_new_org_invite, :create_existing_org_invite, :edit, :update, :request_to_join, :create_request, :new_invite]
+  before_filter :find_project, only: [:invite, :create_organisation_invite,
+                                      #:create_new_org_invite, :create_existing_org_invite,
+                                      :edit, :update, :request_to_join, :create_request, :new_invite]
   before_filter :set_project_invite, only: [:create_invite]
   before_filter :check_project_can_be_edited, only: [:edit, :update]
   before_filter :show_partners, only: [:show, :index]
@@ -121,45 +123,53 @@ class ProjectsController < ApplicationController
     @project_invite.invitor_organisation_uri = current_organisation.uri
   end
 
-  # Actually invite an existing org to a project
-  # GET /projects/:id/create_existing_org_invite?organisation_id=blah
-  # One click invite
-  # Should prob be a put or post but we want to generate the link in the JS suggestions.
-  def create_existing_org_invite
-    @project_invite = ProjectInvitePresenter.new
-    @project_invite.project_uri = @project.uri
-    @project_invite.invitor_organisation_uri = current_organisation.uri
-    @project_invite.invited_organisation_uri = Organisation.slug_to_uri(params[:organisation_id])
-
-    if @project_invite.save
-      redirect_to [:dashboard, :projects], notice: "Organisation invited. Members of the organisation you invited will be notified."
+  # Invite either an existing organisation or a new organisation to join the project.
+  # POST /projects/:id/create_organisation_invite
+  def create_organisation_invite
+    if params[:project_invite_presenter] && params[:invited_organisation_id].present?
+      create_existing_org_invite
     else
-      Rails.logger.debug "Failed"
-      flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
-      render :invite
+      create_new_org_invite
     end
   end
 
+  private
+  
+  # Actually invite an existing org to a project
+  # POST /projects/:id/create_existing_org_invite?organisation_id=blah
+  def create_existing_org_invite
+    invite_params = params[:project_invite_presenter]
+    organisation_id = params[:invited_organisation_id]
+    org_uri = Organisation.slug_to_uri(organisation_id)
+    invite_params.merge! :invitor_organisation_uri => current_organisation.uri, :project_uri => @project.uri, :invited_organisation_uri => org_uri
+
+    @project_invite = ProjectInvitePresenter.new invite_params
+
+    if @project_invite.save
+      render_invited_ok
+    else
+      render_invited_error
+    end
+  end
+  
   # Actually invite a new org to a project
   # posting a form.
   def create_new_org_invite
+    logger.info "Current Organisation uri: #{current_organisation.uri}"
     @project_invite = ProjectInvitePresenter.new
     @project_invite.attributes = params[:project_invite_presenter]
     @project_invite.project_uri = @project.uri
     @project_invite.invitor_organisation_uri = current_organisation.uri
+
     @project_invite.invited_by_user = current_user
 
     if @project_invite.save
-      redirect_to [:dashboard, :projects], notice: "Organisation invited. We'll email the contact you entered."
+      render_invited_ok
     else
-      flash.now[:alert] = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
-      render :invite
+      render_invited_error
     end
-
   end
-
-  private
-
+  
   def find_project
     @project = Project.find(Project.slug_to_uri(params[:id]))
   end
@@ -172,4 +182,29 @@ class ProjectsController < ApplicationController
     redirect_to dashboard_projects_path unless current_organisation.can_edit_project?(@project)
   end
 
+  private
+
+  def render_invited_ok
+    message = "Organisation invited. Members of the organisation you invited will be notified."
+    if params[:in_signup].present?
+      # If in_signup param is set, then the user is in the signup
+      # process so redirect them to the finishing page of the wizard.
+      redirect_to [:organisations, :build, :finish], notice: message
+    else
+      redirect_to [:dashboard, :projects], notice: message
+    end
+  end
+
+  def render_invited_error
+    error_message = "Invite failed. #{@project_invite.errors.messages.values.join(', ')}"
+
+    if params[:in_signup].present?
+      render "organisations/build/invite_organisations", notice: error_message
+      #redirect_to organisations_build_invite_organisations_path(id: @project.guid), notice: error_message
+    else
+      flash[:notice] = error_message
+      render :invite
+    end
+  end
+  
 end

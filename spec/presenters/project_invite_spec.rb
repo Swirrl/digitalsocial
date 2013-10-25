@@ -1,6 +1,11 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe ProjectInvitePresenter do
+
+  context "#valid" do
+    let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
+  end
 
   context "#new organisation" do
     let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
@@ -9,9 +14,25 @@ describe ProjectInvitePresenter do
       project_invite_presenter.should be_valid
     end
 
+    it 'must save' do
+      project_invite_presenter.save.should be_true
+    end
+    
     describe ".new_organisation?" do
-      it "should return true" do
-        project_invite_presenter.new_organisation?.should be_true
+      let(:pip) { pip = ProjectInvitePresenter.new }
+      
+      it "should default to true" do
+        pip.new_organisation?.should be_true
+      end
+
+      it "should be true if the uri is initialised to nil" do
+        pip.invited_organisation_uri = nil
+        pip.new_organisation?.should be_true
+      end
+      
+      it "returns true when initialised with a blank uri" do
+        pip.invited_organisation_uri = ""
+        pip.should be_new_organisation
       end
     end
 
@@ -40,7 +61,7 @@ describe ProjectInvitePresenter do
         end
       end
 
-      context "the usser doesn't exist" do
+      context "the user doesn't exist" do
         it "should instantiate a (unsaved) user" do
           project_invite_presenter.user.new_record?.should be_true
         end
@@ -97,18 +118,21 @@ describe ProjectInvitePresenter do
 
       it "should create an invite with the right details" do
         project_invite_presenter.save
-        project_invite_presenter.project_invite.should be_persisted
-        project_invite_presenter.project_invite.invited_organisation_uri.should_not be_nil
-        project_invite_presenter.project_invite.invited_organisation_uri.should == project_invite_presenter.invited_organisation.uri
-        project_invite_presenter.project_invite.invitor_organisation_uri.should == project_invite_presenter.invitor_organisation_uri
-        project_invite_presenter.project_invite.project_uri.should == project_invite_presenter.project_uri
+        pi = project_invite_presenter.project_invite
+
+        pi.should be_persisted
+        pi.invited_organisation_uri.should_not be_nil
+        pi.invited_organisation_uri.should == project_invite_presenter.invited_organisation.uri
+        pi.invitor_organisation_uri.should == project_invite_presenter.invitor_organisation_uri
+        pi.project_uri.should == project_invite_presenter.project_uri
       end
 
       it "should create an org membership for the user" do
         project_invite_presenter.save
-        project_invite_presenter.organisation_membership.should be_persisted
-        project_invite_presenter.organisation_membership.organisation_uri.should == project_invite_presenter.invited_organisation.uri.to_s
-        project_invite_presenter.organisation_membership.user.should == project_invite_presenter.user
+        organisation_membership = project_invite_presenter.organisation_membership
+        organisation_membership.should be_persisted
+        organisation_membership.organisation_uri.should == project_invite_presenter.invited_organisation.uri.to_s
+        organisation_membership.user.should == project_invite_presenter.user
       end
 
     end
@@ -118,6 +142,8 @@ describe ProjectInvitePresenter do
     let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_existing_organisation) }
 
     it "must have a valid factory" do
+      project_invite_presenter.valid?
+      Rails.logger.info project_invite_presenter.errors.messages.inspect
       project_invite_presenter.should be_valid
     end
 

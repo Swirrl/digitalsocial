@@ -35,7 +35,8 @@ class Organisation
   end
 
   def self.uri_to_slug(uri)
-    uri.split("/").last
+    uri = uri.to_s # in case it's an RDF URI
+    uri.present? ? uri.split("/").last : nil
   end
 
   def guid

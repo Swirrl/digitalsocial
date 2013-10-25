@@ -1,0 +1,25 @@
+.field-with-notes.remove-if-org
+  .field
+    = f.input :invited_organisation_name, label: 'Organisation Name', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
+  .notes
+    %p
+      Start typing an organisation name and we'll suggest members of the DSI network.
+
+= render 'suggestions', button_text: 'Invite', action_url_template: "/projects/#{@project.guid}/create_existing_org_invite?organisation_id=:organisation_id", help: "The following organisations matched that name. Click <strong>Invite</strong> to invite an organisation to be a partner on this activity."
+= hidden_field_tag :project_id, @project.guid, id: 'project-id'
+= hidden_field_tag :invited_organisation_id, '', id: 'invited-organisation-id'
+
+.field-with-notes.remove-if-org
+  .fields
+    = f.input :user_first_name, required: false
+    = f.input :user_email, required: false
+  .notes
+    %p
+      If the organisation you're trying to add doesn't appear in our suggestions, please add a contact email so we can let your partner organisation know that #{@project.name} is now part of the DSI network, and invite them to sign up themselves.
+
+.field-with-notes
+  .fields
+    = f.input :personalised_message, required: false, as: :text, input_html: { :cols => 50, :rows => 3 }
+  .notes
+    %p 
+      Add a message to help the organisation verify you've worked on this project with them.  The person processing this information might be different from your contact, so try to be specific.

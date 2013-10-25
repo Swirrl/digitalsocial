@@ -4,3 +4,5 @@
 /public/system
 .DS_Store
 /public/assets
+*.patch
+.sass-cache/

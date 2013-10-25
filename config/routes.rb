@@ -34,6 +34,8 @@ Digitalsocial::Application.routes.draw do
   resources :projects, only: [:new, :create, :index, :edit, :update, :show] do
     member do
       get 'invite'
+
+      post 'create_organisation_invite'
       post 'create_new_org_invite'
 
       #these are one-click. Prob should be a PUT/POST but we want to do it from JS.
