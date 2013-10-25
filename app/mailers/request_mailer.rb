@@ -40,7 +40,7 @@ class RequestMailer < ActionMailer::Base
     @user_request = user_request
     @organisation = @user_request.organisation_resource
 
-    mail to: @user.email, subject: "Your requst to join an organisation has been accepted"
+    mail to: @user.email, subject: "Your request to join an organisation has been accepted"
   end
 
   def unconfirmed_user_reminder(user)
