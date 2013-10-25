@@ -46,7 +46,7 @@ body {
 
 a {
   text-decoration: none;
-  color: $link-blue;
+  color: $link-burnt-orange;
   @include transition(all, 0.1s);
 
   &:hover {
