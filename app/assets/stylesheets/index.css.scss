@@ -78,9 +78,10 @@
   }
 
   .cta {
-    @include columns(16);
+    @include columns(15);
+    width: 915px;
     padding: 18px;
-    background: $light-grey; //#ffffe0;
+    background: $light-grey;
     text-align: center;
     color: #7f7f75;
     font-size: 20px;
