@@ -11,22 +11,27 @@
     li {
       display: block;
       padding: 18px;
-      background: #eee;
       position: relative;
+      height: 64px;
+      margin-bottom: 18px;
 
-      &:nth-child(even) {
-        background: #f8f8f8;
+      + li:before {
+        content: " ";
+        border-top: 10px solid #f8f8f8;
+        display: block;
+        top: -32px;
+        height: 0px;
+        position: relative;
       }
 
       .image {
         float: left;
         width: 70px;
-        //height: 70px;
         margin-right: 18px;
         position: absolute;
         top: 0;
         bottom: 0;
-        //background: rgba(255, 255, 255, 0.75);
+
         img {
           position: absolute;
           top: 0;
@@ -44,10 +49,17 @@
         .header {
           font-size: 24px;
           font-style: italic;
+
+          width: 840px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
 
         .subheader {
-
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
       }
 
