@@ -126,18 +126,26 @@
   padding: 0 180px 0 0;
 
   .blog-post {
-    h1, h2 {
-    }
-
     .title {
-      @include columns(9);
-      @include offset(4);
+        @include columns(16);
+        h1 { 
+            @include columns(9);
+        }
+        
+        h2 {
+            @include offset(10);
+            margin-top: 15px;
+            padding-left: 570px;
+            color: $orange;
+        }
     }
 
     .blog-meta {
-      @include columns(3);
+      @include offset(10);
+      padding-left: 580px;
+
       img {
-        margin: 6px 0 4px;
+          margin: 6px 0 4px;
       }
 
       > p {
@@ -155,9 +163,10 @@
       }
     }
 
+
+    
     .blog-content {
-      @include columns(9);
-      @include offset(1);
+        @include columns(9);
     }
 
   }
