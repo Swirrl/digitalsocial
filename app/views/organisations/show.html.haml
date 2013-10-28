@@ -88,6 +88,6 @@
     - else
       %span Are you are a member of this organisation?
       - if current_user
-        = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-green', confirm: 'Are you sure you wish to send a request to join this organisation?'
+        = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-black', confirm: 'Are you sure you wish to send a request to join this organisation?'
       - else
-        = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-green'
+        = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-black'

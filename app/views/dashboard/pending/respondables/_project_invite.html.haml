@@ -20,12 +20,12 @@
     .subheader
 
   .action
-    = link_to "Accept", "#", class: 'button button-green accept'
+    = link_to "Accept", "#", class: 'button button-black accept'
     = link_to "Ignore", [:reject, respondable], method: :put, class: 'button'
 
 
   .natures
     = simple_form_for [:accept, respondable] do |f|
       = f.input :natures, as: :check_boxes, label: "What is your organisation's role in this activity", collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
-      = f.button :submit, 'Confirm', class: 'button-green'
+      = f.button :submit, 'Confirm', class: 'button-black'
 

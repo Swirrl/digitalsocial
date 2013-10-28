@@ -21,8 +21,8 @@
         You are a member of an organisation
       - else
         You are a member of #{current_user.organisation_memberships.count} organisations
-      = link_to "Add another organisation", [:organisations, :build, :new_organisation], class: 'button button-green'
+      = link_to "Add another organisation", [:organisations, :build, :new_organisation], class: 'button button-black'
     - else
       %span Are you are a member of an organisation?
-      = link_to "Add your organisation", [:organisations, :build, :new_user], class: 'button button-green'
+      = link_to "Add your organisation", [:organisations, :build, :new_user], class: 'button button-black'
       

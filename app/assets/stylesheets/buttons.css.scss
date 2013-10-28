@@ -20,13 +20,13 @@
     text-decoration: none;
   }
 
-  &.button-green {
-    background: $green;
-    color: #eff7f3;
+  &.button-black {
+    background: $black;
+    color: white;
 
     &:hover {
-      background: $green-hover;
-      color: #fff;
+      background: $black;
+      color: $orange;
     }
   }
 
