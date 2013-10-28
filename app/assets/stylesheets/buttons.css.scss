@@ -30,6 +30,16 @@
     }
   }
 
+  &.button-front-page {
+    background: $orange-shadow;
+    color: white;
+
+    &:hover {
+      background: $orange;
+      color: white;
+    }
+  }
+
   &.button-red {
     background: $red;
 
