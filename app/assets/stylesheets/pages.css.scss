@@ -21,7 +21,7 @@
 
 #about, #terms, #privacy {
   #content {
-    @include columns(16);
+    @include columns(10);
   }
 }
 
