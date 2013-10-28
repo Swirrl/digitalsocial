@@ -16,7 +16,8 @@
 
 
   .logo-wrapper {
-    @include columns(4);
+    @include columns(16);
+    position: relative;
 
     .logo {
       float: left;
@@ -25,7 +26,7 @@
       background: url(image-path("logo/dsi-logo.png")) no-repeat;
       display: block;
       margin-left: -100px;
-
+      
       @include media-tablet-and-mobile {
         margin-left: 0;
       }
