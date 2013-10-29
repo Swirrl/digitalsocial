@@ -162,8 +162,8 @@
 
     .blog-meta {
         @include offset(10);
-
-        top: 100px;
+        
+        margin-left: -20px;
         img {
             margin: 6px 0 4px;
         }
