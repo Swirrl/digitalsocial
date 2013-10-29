@@ -137,13 +137,16 @@ h1 + h2 {
 
 #main {
   margin-bottom: 90px;
+  margin-left: 0;
 }
 
 .hr {
   display: block;
   background-color: $orange;
-  //width: 10000px;
   margin-left: 10px;
+  @include media-all-mobile { 
+      margin-left: 0px;
+  }
 }
 
 .hr1 {
