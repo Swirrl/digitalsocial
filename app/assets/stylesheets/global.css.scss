@@ -75,7 +75,8 @@ h1 {
   font-size: 48px;
   color: $orange;
   font-style: italic;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
+  margin-top: 32px;
   font-weight: 300;
 }
 
@@ -135,7 +136,6 @@ h1 + h2 {
 }
 
 #main {
-  padding-top: 9px;
   margin-bottom: 90px;
 }
 
