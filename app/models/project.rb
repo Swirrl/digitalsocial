@@ -273,7 +273,8 @@ class Project
 
   def validate_reach_data_type
     if @reach_value_literal && activity_type_slug != "other"
-      errors.add(:reach_value_literal, "must be a whole number") unless !!(/^[\d]*$/.match(@reach_value_literal.to_s))
+      @reach_value_literal = @reach_value_literal.to_s.strip
+      errors.add(:reach_value_literal, "must be a whole number") unless !!(/^[\d]*$/.match(@reach_value_literal))
     else
       true
     end
