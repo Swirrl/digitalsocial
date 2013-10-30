@@ -1,4 +1,6 @@
 .dashboard {
+  margin-left: 10px;
+
   &.pending {
     .empty {
       @include columns(16);
@@ -6,6 +8,7 @@
   }
   .title {
     @include columns(16);
+    margin-left: 0px;
   }
 
   h2 {
@@ -27,6 +30,8 @@
     display: block;
     width: 100%;
     margin-bottom: 0;
+    margin-left: -10px;
+    margin-right: -11px;
     //border-bottom: 3px solid $orange;
 
     li {
@@ -61,7 +66,7 @@
 
       &.right {
         float: right;
-        margin-right: 0;
+        margin-right: -10px;
       }
 
       @include media-smaller-than-desktop {
@@ -82,6 +87,7 @@
 
     + .hr {
       margin-bottom: 48px;
+      margin-left: -10px;
     }
   }
 
@@ -496,6 +502,10 @@
       color: #f7b757;
     }
     margin-top: 36px !important;;
+  }
+
+  form .field-with-notes {
+      margin-left: -10px;
   }
 
 }
