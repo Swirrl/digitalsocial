@@ -1,6 +1,6 @@
-Hi <%= @user.first_name %>, 
+Hi <%= @user.first_name %>,
 
-You have been invited to join an activity on digitalsocial.eu 
+You have been invited to join an activity on digitalsocial.eu
 
 Someone at <%= @invitor_organisation.name %> has indicated that
 you worked on <%= @project.name %> together.
@@ -18,7 +18,7 @@ online at:
 
 <% unless @invite.personalised_message.blank? %>
 They provided the following message to jog your memory about this project:
- 
+
 "<%= @invite.personalised_message %>"
 <% end %>
 
@@ -27,8 +27,9 @@ below to complete the sign up and accept this invitation.
 
 <%= edit_password_url(@user, :reset_password_token => @user.reset_password_token, :neworg => 1) %>
 
-About the Digital Social Innovation (DSI) project The European
-Commission has funded the DSI project to build a living map of
+About the Digital Social Innovation (DSI) project:
+
+The European Commission has funded the DSI project to build a living map of
 organisations that work on Digital Social Innovation. By joining the
 network, we're asking you to give us some information about your
 organisation. This information will be visually represented on a map
