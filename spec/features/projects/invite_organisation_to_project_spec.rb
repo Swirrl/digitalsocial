@@ -13,8 +13,8 @@ feature 'Invite a new Organisation to Join Project' do
 
   scenario 'supplying email address' do
     fill_in 'Organisation Name', with: "Swirrl"
-    fill_in 'User first name', with: "Ric"
-    fill_in 'User email', with: "ric@swirrl.com"
+    fill_in 'Their Name', with: "Ric"
+    fill_in 'Their email', with: "ric@swirrl.com"
     fill_in 'Personalised message', with: "We worked on linked data together"
     click_button 'Invite organisation'
 

@@ -15,7 +15,7 @@ feature 'Invite organisation wizard step' do
   scenario 'Suggest an organisation to invite', js: true do
     FactoryGirl.create(:organisation, name: 'Testing123')
 
-    fill_in 'Name', with: 'testing'
+    fill_in 'Organisation Name', with: 'testing'
 
     page.should have_content 'Testing123'
     page.should have_link 'Invite'
@@ -45,8 +45,8 @@ feature 'Invite organisation wizard step' do
   
   scenario 'Invite a new organisation successfully' do
     fill_in 'Organisation Name', with: 'New org'
-    fill_in 'User first name', with: 'Bob'
-    fill_in 'User email', with: 'bob@test.com'
+    fill_in 'Their Name', with: 'Bob'
+    fill_in 'Their email', with: 'bob@test.com'
 
     click_button 'Next step'
 
