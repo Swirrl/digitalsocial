@@ -66,6 +66,10 @@
 
 }
 
+ol.breadcrumbs {
+    margin-left: 10px;
+}
+
 // non-desktop breadcrumbs
 @include media-smaller-than-desktop {
   .breadcrumbs {
@@ -134,13 +138,18 @@
 }
 
 .wizard {
-  margin-top: -4px;
+  margin-top: 32px;
+  margin-left: 0px;
 
   h3 {
     color: $orange;
     font-weight: 500;
     font-style: italic;
     font-size: 36px;
+  }
+
+  .wizard-intro { 
+      margin-left: 10px;
   }
 }
 
@@ -159,6 +168,7 @@
       margin-bottom: 0;
     }
   }
+  margin-left: 0px;
   margin-bottom: 48px;
   @include clearfix;
 }
