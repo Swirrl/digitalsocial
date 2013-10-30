@@ -11,7 +11,8 @@ class ProjectInvitePresenter
     :user_email,
     :personalised_message,
     :project_uri,
-    :invited_organisation_uri
+    :invited_organisation_uri,
+    :invitor_organisation_uri
 
   attr_accessor :invitor_organisation_uri,
     :invited_organisation_uri,

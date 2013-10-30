@@ -46,6 +46,19 @@ describe ProjectInvitePresenter do
       end
     end
 
+    describe "invitor_organisation_uri" do
+      it "should be setable from constructor" do
+        pip = ProjectInvitePresenter.new invitor_organisation_uri: 'http://example.org/1'
+        pip.invitor_organisation_uri.should == 'http://example.org/1'
+      end
+
+      it 'should be mass assignable via #attributes' do
+        pip = ProjectInvitePresenter.new
+        pip.attributes = {:invitor_organisation_uri => 'http://example.org/1'}
+        pip.invitor_organisation_uri.should == 'http://example.org/1'
+      end
+    end
+
     describe "#user" do
 
       context "the user already exists" do
