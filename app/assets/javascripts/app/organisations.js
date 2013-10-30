@@ -69,8 +69,6 @@ $(function(){
     },
 
     addSuggestions: function(data) {
-      $('body').append("Suggestions");
-
       var that = this;
       if (data.organisations && data.organisations.length > 0) {
 
@@ -101,13 +99,11 @@ $(function(){
             that.clearSuggestions();
             $('.remove-if-org').remove();
 
-            console.log('Clicked suggestion');
             anchor.text('Remove').click(function(ev) {
               window.location = window.location;
               ev.preventDefault();
             });
             
-            $('body').append("Organisation ID: " + org.guid);
             $('#invited-organisation-id').val(org.guid);
             $('.suggestions').append($suggestion);
             ev.preventDefault();
