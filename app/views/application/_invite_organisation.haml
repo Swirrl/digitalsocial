@@ -11,8 +11,8 @@
 
 .field-with-notes.remove-if-org
   .fields
-    = f.input :user_first_name, required: false, label: 'Name'
-    = f.input :user_email, required: false
+    = f.input :user_first_name, required: false, label: 'Their Name'
+    = f.input :user_email, required: false, label: 'Their email'
   .notes
     %p
       If the organisation you're trying to add doesn't appear in our suggestions, please add a contact email so we can let your partner organisation know that #{@project.name} is now part of the DSI network, and invite them to sign up themselves.
