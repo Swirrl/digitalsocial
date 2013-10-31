@@ -99,7 +99,7 @@ $(function(){
             that.clearSuggestions();
             $('.remove-if-org').remove();
 
-            anchor.text('Remove').click(function(ev) {
+            anchor.text('Cancel Invite').click(function(ev) {
               window.location = window.location;
               ev.preventDefault();
             });
