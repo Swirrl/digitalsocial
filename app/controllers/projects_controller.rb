@@ -141,8 +141,11 @@ class ProjectsController < ApplicationController
     invite_params = params[:project_invite_presenter]
     organisation_id = params[:invited_organisation_id]
     org_uri = Organisation.slug_to_uri(organisation_id)
-    invite_params.merge! :invitor_organisation_uri => current_organisation.uri, :project_uri => @project.uri, :invited_organisation_uri => org_uri
-
+    invite_params.merge! :invitor_organisation_uri => current_organisation.uri,
+                         :project_uri => @project.uri,
+                         :invited_organisation_uri => org_uri,
+                         :invited_by_user => current_user
+    
     @project_invite = ProjectInvitePresenter.new invite_params
 
     if @project_invite.save

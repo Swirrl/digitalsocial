@@ -7,6 +7,18 @@ class ProjectInvite
   field :invited_organisation_uri, type: String
   field :project_uri, type: String
 
+  # These two fields should only be set on invites for existing
+  # organisations.  They support the case where a you want to invite a
+  # specific user that might be different to who is currently
+  # administering the DSI profile.
+  #
+  # The invited_organisation administrator can then make a decision
+  # about whether or not to invite the suggested member to their
+  # organisation.  At which point this data will be copied into a new
+  # User account.
+  field :invited_email, type: String
+  field :invited_user_name, type: String
+  
   field :personalised_message, type: String
   belongs_to :invited_by_user, class_name: 'User' # crappy name, this is the invitor_user
   

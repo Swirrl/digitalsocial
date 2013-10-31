@@ -9,12 +9,12 @@
 = hidden_field_tag :project_id, @project.guid, id: 'project-id'
 = hidden_field_tag :invited_organisation_id, '', id: 'invited-organisation-id'
 
-.field-with-notes.remove-if-org
+.field-with-notes
   .fields
-    = f.input :user_first_name, required: false, label: "Contact's Name"
-    = f.input :user_email, required: false, label: "Contact's email"
+    = f.input :invited_user_name, required: false, label: "Contact's Name"
+    = f.input :invited_email, required: false, label: "Contact's email"
   .notes
-    %p
+    %p.change-email-help-on-org-select
       If the organisation you're trying to add doesn't appear in our suggestions, please add a contact email so we can let your partner organisation know that #{@project.name} is now part of the DSI network, and invite them to sign up themselves.
 
 .field-with-notes

@@ -1,14 +1,19 @@
 class ProjectInvitePresenter
 
+  extend ActiveModel::Callbacks
   include ActiveModel::Validations
+  include ActiveModel::Validations::Callbacks
+
   include ActiveModel::Conversion
   extend  ActiveModel::Naming
   include ActiveModel::MassAssignmentSecurity
 
+  before_validation :strip_fields
+
   # mass assignable
   attr_accessible :invited_organisation_name,
-    :user_first_name,
-    :user_email,
+    :invited_user_name,
+    :invited_email,
     :personalised_message,
     :project_uri,
     :invited_organisation_uri,
@@ -16,32 +21,38 @@ class ProjectInvitePresenter
 
   attr_accessor :invitor_organisation_uri,
     :invited_organisation_uri,
-    #:invited_organisation_id,
     :invited_by_user,
     # for making new org
     :invited_organisation_name,
-    :user_first_name,
-    :user_email,
+    :invited_user_name,
+    :invited_email,
   
     :project_uri,
     :personalised_message
 
 
-  validates :invited_organisation_name, :user_first_name, :user_email, presence: { if: :new_organisation?}
-  validates :user_email, format: { with: Devise.email_regexp, if: :new_organisation? }
+  validates :invited_organisation_name, :invited_user_name, :invited_email, presence: { if: :new_organisation?}
+  validates :invited_email, format: { with: Devise.email_regexp, if: -> { self.new_organisation? || self.invited_email.present? } }
 
   validate :organisation_is_not_already_member_of_project
   validate :invite_doesnt_already_exist
 
   validates :project_uri, presence: true
 
+  def strip_fields
+    self.invited_email.strip! if self.invited_email.present?
+    self.invited_user_name.strip! if self.invited_user_name.present?
+  end
+      
   def initialize(attrs={})
     self.attributes = attrs
   end
       
   def new_organisation?
+    return @is_new_organisation if @is_new_organisation
     org_id = Organisation.uri_to_slug(self.invited_organisation_uri)
     @is_new_organisation = org_id.blank?
+    @is_new_organisation
   end
 
   def invitor_organisation
@@ -56,7 +67,6 @@ class ProjectInvitePresenter
     if new_organisation?
       @organisation = Organisation.new
       @organisation.name = self.invited_organisation_name
-#     @invited_organisation_uri = @organisation.uri
     else
       @organisation = Organisation.find(self.invited_organisation_uri)
     end
@@ -68,13 +78,13 @@ class ProjectInvitePresenter
     return @user if @user
 
     if new_organisation?
-      @user = User.where(email: self.user_email).first
+      @user = User.where(email: self.invited_email).first
 
       unless @user
         @user ||= User.new do |user|
-          user.first_name = self.user_first_name.strip
-          user.email      = self.user_email.strip
-          user.password   = rand(36**16).to_s(36) # Temporary random password
+          user.first_name = self.invited_user_name.strip
+          user.email      = self.invited_email.strip
+          user.password   = User.random_password
         end
       end
 
@@ -109,6 +119,8 @@ class ProjectInvitePresenter
       i.invited_organisation_uri  = self.invited_organisation.uri # the invited_organisation method will instatiate the org for new ones.
       i.invited_by_user = self.invited_by_user
       i.project_uri = self.project_uri
+      i.invited_email = self.invited_email
+      i.invited_user_name = self.invited_user_name
       i.personalised_message = self.personalised_message
     end
   end

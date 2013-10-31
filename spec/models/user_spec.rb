@@ -111,4 +111,13 @@ describe User do
 
   end
 
+  describe '#create_from_project_invite' do
+    let(:project_invite) { FactoryGirl.create(:project_invite_with_invited_user) }
+
+    it 'creates a valid User' do
+      user = User.create_from_project_invite(project_invite)
+      user.should be_valid
+    end
+  end
+  
 end

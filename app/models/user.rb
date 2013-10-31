@@ -75,4 +75,13 @@ class User
     end
   end
 
+  def self.create_from_project_invite project_invite
+    User.create :email => project_invite.invited_email,
+                :first_name => project_invite.invited_user_name,
+                :password => User.random_password
+  end
+
+  def self.random_password
+    rand(36**16).to_s(36) # Temporary random password
+  end
 end

@@ -5,6 +5,12 @@ describe ProjectInvitePresenter do
 
   context "#valid" do
     let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_new_organisation) }
+
+    it 'should strip whitespace from email' do
+      project_invite_presenter.invited_email = 'rick.m@swirrl.com '
+      project_invite_presenter.valid?
+      project_invite_presenter.invited_email.should == 'rick.m@swirrl.com'
+    end
   end
 
   context "#new organisation" do
@@ -64,7 +70,7 @@ describe ProjectInvitePresenter do
       context "the user already exists" do
         let!(:user) {
           u = FactoryGirl.build(:user)
-          u.email = project_invite_presenter.user_email
+          u.email = project_invite_presenter.invited_email
           u.save!
           u
         }
@@ -86,7 +92,7 @@ describe ProjectInvitePresenter do
 
       it "should instantiate a new Org Membership for the user and org" do
         om.new_record?.should be_true
-        om.user.email.should == project_invite_presenter.user_email
+        om.user.email.should == project_invite_presenter.invited_email
         om.organisation_uri.should == project_invite_presenter.invited_organisation.uri.to_s
       end
     end
@@ -105,8 +111,8 @@ describe ProjectInvitePresenter do
           User.any_instance.should_receive(:save).and_call_original
           project_invite_presenter.save
           project_invite_presenter.user.should be_persisted
-          project_invite_presenter.user.first_name.should == project_invite_presenter.user_first_name
-          project_invite_presenter.user.email.should      == project_invite_presenter.user_email
+          project_invite_presenter.user.first_name.should == project_invite_presenter.invited_user_name
+          project_invite_presenter.user.email.should      == project_invite_presenter.invited_email
         end
       end
 
@@ -114,7 +120,7 @@ describe ProjectInvitePresenter do
 
         let!(:user) {
           u = FactoryGirl.build(:user)
-          u.email = project_invite_presenter.user_email
+          u.email = project_invite_presenter.invited_email
           u.save!
           u
         }
@@ -122,7 +128,7 @@ describe ProjectInvitePresenter do
           User.any_instance.should_not_receive(:save)
           project_invite_presenter.save
           project_invite_presenter.user.should be_persisted
-          project_invite_presenter.user.email.should      == project_invite_presenter.user_email
+          project_invite_presenter.user.email.should      == project_invite_presenter.invited_email
         end
       end
 
@@ -178,6 +184,20 @@ describe ProjectInvitePresenter do
       end
     end
 
+    context "with an email and user name" do
+      let(:project_invite_presenter) { FactoryGirl.build(:project_invite_presenter_for_existing_organisation_with_email_and_user_name) }
+
+      it "must be valid" do
+        project_invite_presenter.should be_valid
+      end
+
+      describe "#user" do
+        it "should return nil" do
+          project_invite_presenter.user.should be_nil
+        end
+      end
+    end
+    
     context "when an open invite already exists" do
 
       before do
@@ -232,6 +252,7 @@ describe ProjectInvitePresenter do
         project_invite_presenter.project_invite.invitor_organisation_uri.should == project_invite_presenter.invitor_organisation_uri
         project_invite_presenter.project_invite.project_uri.should == project_invite_presenter.project_uri
       end
+
     end
 
   end
