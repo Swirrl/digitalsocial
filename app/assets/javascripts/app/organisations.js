@@ -98,6 +98,7 @@ $(function(){
           $suggestion.click(function(ev) {
             that.clearSuggestions();
             $('.remove-if-org').remove();
+            $('.change-email-help-on-org-select').html("Add your contact's name and email address if you know it, to help " + org.name + " process your invitation.");
 
             anchor.text('Cancel Invite').click(function(ev) {
               window.location = window.location;
