@@ -45,8 +45,8 @@ feature 'Invite organisation wizard step' do
   
   scenario 'Invite a new organisation successfully' do
     fill_in 'Organisation Name', with: 'New org'
-    fill_in 'Their Name', with: 'Bob'
-    fill_in 'Their email', with: 'bob@test.com'
+    fill_in "Contact's Name", with: 'Bob'
+    fill_in "Contact's email", with: 'bob@test.com'
 
     click_button 'Next step'
 
