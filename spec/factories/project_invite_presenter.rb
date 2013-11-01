@@ -14,7 +14,6 @@ FactoryGirl.define do
     factory :project_invite_presenter_for_existing_organisation do
       invited_organisation_uri  { FactoryGirl.create(:organisation).uri.to_s }
 
-
       factory :project_invite_presenter_for_existing_organisation_with_email_and_user_name do
         invited_organisation_uri  { FactoryGirl.create(:organisation).uri.to_s }
         invited_email { Faker::Internet.email }

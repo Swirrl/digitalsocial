@@ -58,6 +58,7 @@ Digitalsocial::Application.routes.draw do
     member do
       put 'accept'
       put 'reject'
+      put 'delegate'
     end
   end
 
