@@ -75,10 +75,30 @@ class User
     end
   end
 
-  def self.create_from_project_invite project_invite
-    User.create :email => project_invite.invited_email,
-                :first_name => project_invite.invited_user_name,
-                :password => User.random_password
+  def self.create_with_organisation_membership_from_project_invite project_invite
+    user = User.create :email => project_invite.invited_email,
+                       :first_name => project_invite.invited_user_name,
+                       :password => User.random_password,
+                       :reset_password_token => User.reset_password_token,
+                       :reset_password_sent_at => Time.now
+
+    if user.persisted?
+      invited_organisation_uri = project_invite.invited_organisation_uri
+      membership = OrganisationMembership.create user: user, organisation_uri: invited_organisation_uri.to_s
+
+      unless membership.persisted?
+        raise "Could not persist membership for a new user for an unknown reason. #{membership.errors.inspect}"
+      end
+      
+      project_invite.invited_user = user
+      unless project_invite.save
+        user.destroy
+        membership.destroy
+        raise "Could not persist changes to project_invite #{membership.errors.inspect}"
+      end
+    end
+
+    user
   end
 
   def self.random_password

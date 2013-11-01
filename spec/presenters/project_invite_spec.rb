@@ -252,9 +252,7 @@ describe ProjectInvitePresenter do
         project_invite_presenter.project_invite.invitor_organisation_uri.should == project_invite_presenter.invitor_organisation_uri
         project_invite_presenter.project_invite.project_uri.should == project_invite_presenter.project_uri
       end
-
     end
-
   end
 
 end

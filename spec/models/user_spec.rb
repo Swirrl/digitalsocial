@@ -111,13 +111,29 @@ describe User do
 
   end
 
-  describe '#create_from_project_invite' do
+  describe '#create_with_organisation_membership_from_project_invite' do
     let(:project_invite) { FactoryGirl.create(:project_invite_with_invited_user) }
-
-    it 'creates a valid User' do
-      user = User.create_from_project_invite(project_invite)
-      user.should be_valid
+    before :each do 
+      @user = User.create_with_organisation_membership_from_project_invite(project_invite)
     end
+
+    it 'should create a valid User' do
+      @user.should be_valid
+    end
+
+    it 'should set a reset password token' do 
+      @user.reset_password_token.should_not be_blank
+    end
+
+    it 'should record when the reset password token was created' do 
+      @user.reset_password_sent_at.should be_present
+    end
+
+    it 'should create an organisation membership' do 
+      organisation = @user.organisation_resources.first 
+      organisation.should == project_invite.invited_organisation_resource      
+    end
+
   end
   
 end
