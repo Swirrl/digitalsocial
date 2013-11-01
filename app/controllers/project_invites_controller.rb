@@ -1,7 +1,7 @@
 class ProjectInvitesController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :set_invite, only: [:accept, :reject]
+  before_filter :set_invite, only: [:accept, :reject, :delegate]
   
   def accept
     @invite.attributes = params[:project_invite]
@@ -21,11 +21,21 @@ class ProjectInvitesController < ApplicationController
     end
   end
 
+  # PUT :id/delegate
+  #
+  # invites the suggested user
+  def delegate
+    render text: 'TODO'
+  end
+  
   private
 
   def set_invite
-    # TODO Need to check current_organisation is allowed to accept/reject this invite
     @invite = ProjectInvite.find(params[:id])
+
+    unless @invite.invited_organisation_resource == current_organisation
+      redirect_to :dashboard, alert: "You do not have permission to edit this resource."
+    end
   end
 
 end
