@@ -179,9 +179,9 @@ class ProjectInvitePresenter
         self.user.reset_password_token   = User.reset_password_token
         self.user.reset_password_sent_at = Time.now
         
-        self.user.save(transaction: transaction) unless self.user.persisted?
-        self.organisation_membership.save(transaction: transaction)
-        self.project_invite.save(transaction: transaction)
+        self.user.save unless self.user.persisted?
+        self.organisation_membership.save
+        self.project_invite.save
         transaction.commit
       else
         transaction.abort
