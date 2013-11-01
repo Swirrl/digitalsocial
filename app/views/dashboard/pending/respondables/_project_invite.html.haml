@@ -24,9 +24,10 @@
   .action
     = link_to "Accept", "#", class: 'button button-black accept'
     = link_to "Ignore", [:reject, respondable], method: :put, class: 'button'
-    
-  .action
-    = link_to "Invite", [:delegate, respondable], method: :put, class: 'button button-black accept'
+
+  - if respondable.suggested_invite?
+    .action
+      = link_to "Invite", [:invite_via_suggestion, respondable], method: :put, class: 'button button-black invite'
 
   .natures
     = simple_form_for [:accept, respondable] do |f|

@@ -1,0 +1,16 @@
+Hello <%= @invited_user.first_name %>,
+
+<%= @authorised_by_user_name %> (<%= @authorised_by_user_email %>) from <%= @organisation.name %> has added you to their team on digitalsocial.eu
+
+<% if @invited_user.organisation_memberships.count == 1 %>
+Click the link below to sign in and set your password.
+<%= edit_password_url(@invited_user, :reset_password_token => @invited_user.reset_password_token, :new => 1) %>
+<% else %>
+Click below to log in to the <%= @organisation.name %> dashboard.
+<%= dashboard_url(org_id: @organisation.guid) %>
+<% end %>
+
+<%= render 'footer' %>
+<% if @invited_user.organisation_memberships.count > 1 %>
+<%= render 'unsubscribe' %>
+<% end %>

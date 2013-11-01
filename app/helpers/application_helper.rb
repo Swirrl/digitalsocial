@@ -103,5 +103,16 @@ module ApplicationHelper
   def titlecase_users_name(user)
     user.first_name.downcase.titlecase
   end
-  
+
+  def maybe_display_user_name_and_email(respondable, current_user)
+    maybe_user_name = (respondable.invited_email.blank? || respondable.invited_email == current_user.email) ? 'you' : respondable.invited_user_name
+    
+    maybe_email = if respondable.invited_email.present?
+                    ' (' + respondable.invited_email + ') '
+                  else
+                    ''
+                  end
+    "#{maybe_user_name} #{maybe_email}"
+  end
+
 end

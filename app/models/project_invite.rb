@@ -18,7 +18,9 @@ class ProjectInvite
   # User account.
   field :invited_email, type: String
   field :invited_user_name, type: String
-  
+
+  belongs_to :invited_user, class_name: 'User' # crappy name, this is the invitor_user
+
   field :personalised_message, type: String
   belongs_to :invited_by_user, class_name: 'User' # crappy name, this is the invitor_user
   
@@ -39,6 +41,17 @@ class ProjectInvite
     Organisation.find(self.invited_organisation_uri)
   end
 
+  def suggested_invite?
+    !self.invited_email.blank?
+  end
+
+  def set_invited_suggested_user!
+    self.invited_email = nil
+    self.invited_user_name = nil
+
+    self.save
+  end
+  
   def accept!
     return false unless natures.reject(&:blank?).any?
 

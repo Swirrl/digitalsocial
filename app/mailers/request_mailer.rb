@@ -17,6 +17,19 @@ class RequestMailer < ActionMailer::Base
     mail to: @user.email, subject: "You've been invited to join an organisation on DigitalSocialInnovation"
   end
 
+  # the user is being invited by an existing organisation member on
+  # the suggestion of a 3rd party project invite.
+  def invite_via_suggestion(invited_user, project_invite, authorised_by_user)
+    return false unless (@invited_user = invited_user).receive_notifications?
+
+    @organisation = project_invite.invited_organisation_resource
+    @invited_user = project_invite.invited_user
+    @authorised_by_user_name = authorised_by_user.first_name.blank? ? 'Someone' : authorised_by_user.first_name
+    @authorised_by_user_email = authorised_by_user.email
+    
+    mail to: @invited_user.email, subject: "You've been invited to join an organisation on DigitalSocialInnovation"
+  end
+  
   def request_digest(user, organisation)
     return false unless (@user = user).receive_notifications?
 
