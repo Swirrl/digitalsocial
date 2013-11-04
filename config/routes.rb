@@ -59,6 +59,7 @@ Digitalsocial::Application.routes.draw do
       put 'accept'
       put 'reject'
       put 'invite_via_suggestion'
+      put 'reject_suggestion'
     end
   end
 

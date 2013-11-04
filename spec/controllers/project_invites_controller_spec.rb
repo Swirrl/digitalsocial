@@ -50,7 +50,7 @@ describe ProjectInvitesController do
     it 'marks the suggested user as invited' do
       put :invite_via_suggestion, id: project_invite.id
       project_invite.reload
-      project_invite.should_not be_suggested_invite
+      project_invite.should be_handled_suggested_invite
     end
 
     it 'sends the invitation email to the suggested user' do
@@ -64,7 +64,29 @@ describe ProjectInvitesController do
       response.should redirect_to :dashboard
     end
 
-    
+    context 'when inviting a user that has already been invited' do
+      
+      let(:project_invite) { FactoryGirl.create(:project_invite, project_uri: project.uri.to_s, invitor_organisation_uri: invitor.uri.to_s, invited_organisation_uri: organisation.uri.to_s, invited_email: user.email) }
+
+      it 'sets the project_invite to not be a handled_invite' do 
+        put :invite_via_suggestion, id: project_invite.id
+        project_invite.reload
+        project_invite.should be_handled_suggested_invite
+      end
+
+      it 'displays a notification' do 
+        put :invite_via_suggestion, id: project_invite.id
+        flash.notice.should be_present
+      end
+    end
+  end
+
+  context '#reject_suggestion' do
+    it 'should mark the suggestion as handled' do 
+      put :reject_suggestion, id: project_invite.id
+      project_invite.reload
+      project_invite.should be_handled_suggested_invite
+    end
   end
   
 end

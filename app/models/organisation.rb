@@ -92,6 +92,12 @@ class Organisation
     ProjectInvite.where(invited_organisation_uri: self.uri, open: true)
   end
 
+  # projects where the invitor has suggested I invite someone to join
+  # my organisation.
+  def pending_suggested_invites
+    ProjectInvite.where(invited_organisation_uri: self.uri, handled_suggested_invite: false)
+  end
+  
   # projects I've requested to join
   def pending_project_requests_by_self
     ProjectRequest.where(requestor_organisation_uri: self.uri, open: true)
@@ -113,6 +119,7 @@ class Organisation
 
   def respondables
     pending_project_invites +
+      pending_suggested_invites +
       pending_project_requests_by_others +
       respondable_user_requests
   end
@@ -305,5 +312,4 @@ class Organisation
   def strip_whitespace
     self.name = self.name.strip unless self.name.nil?
   end
-
 end

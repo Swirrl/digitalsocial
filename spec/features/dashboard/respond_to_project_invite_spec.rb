@@ -16,7 +16,7 @@ feature 'Respond to project invite' do
   end
 
   scenario 'Should see project invite' do
-    page.should have_content "NSA has invited you and your organisation to join Prism"
+    page.should have_content "NSA has invited your organisation to join their Prism activity."
   end
 
   scenario 'Should allow confirmation if nature is specified', js: true do

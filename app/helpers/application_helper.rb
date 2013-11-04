@@ -115,4 +115,11 @@ module ApplicationHelper
     "#{maybe_user_name} #{maybe_email}"
   end
 
+  def maybe_display_provided_message_preamble project_invite
+    if project_invite.personalised_message
+      "They indicated that they worked with #{project_invite.invited_user_name} (#{project_invite.invited_email}) and provided the following message: "
+    else
+      ''
+    end
+  end
 end

@@ -1,8 +1,8 @@
 class ProjectInvitesController < ApplicationController
-
+  
   before_filter :authenticate_user!
-  before_filter :set_invite, only: [:accept, :reject, :invite_via_suggestion]
-  before_filter :ensure_permission_to_change_invite, only: [:accept, :reject, :invite_via_suggestion]
+  before_filter :set_invite, only: [:accept, :reject, :invite_via_suggestion, :reject_suggestion]
+  before_filter :ensure_permission_to_change_invite, only: [:accept, :reject, :invite_via_suggestion, :reject_suggestion]
   
   def accept
     @invite.attributes = params[:project_invite]
@@ -31,14 +31,22 @@ class ProjectInvitesController < ApplicationController
     if @user.valid?
       RequestMailer.invite_via_suggestion @user, @invite, current_user
 
-      @invite.set_invited_suggested_user!
+      @invite.set_handled_suggested_user!
       redirect_to :dashboard, notice: "#{@user.email} has been sent an invite"
     elsif account_has_been_claimed? @user
-      @invite.set_invited_suggested_user!
+      @invite.set_handled_suggested_user!
       redirect_to :dashboard, notice: "This user has already been invited to Digital Social" 
     else
       redirect_to :dashboard, alert: "There was an error inviting #{@user.email}, please try again later." 
     end
+  end
+  
+  # PUT :id/delegate
+  #
+  # Rejects a suggested_user inivitation
+  def reject_suggestion
+    @invite.set_handled_suggested_user!
+    redirect_to :dashboard, notice: "You have declined the invitation suggestion."
   end
   
   private

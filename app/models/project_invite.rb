@@ -26,9 +26,16 @@ class ProjectInvite
   
   field :open, type: Boolean, default: true
   field :accepted, type: Boolean # nil until decision made.
-
+  field :handled_suggested_invite, type: Boolean, default: true
+  
   attr_accessor :natures
 
+  def invited_email= email
+    write_attribute(:invited_email, email)
+    # when setting the email mark invite as being unhandled
+    write_attribute(:handled_suggested_invite, email.blank?)
+  end
+  
   def project_resource
     Project.find(self.project_uri)
   end
@@ -41,17 +48,13 @@ class ProjectInvite
     Organisation.find(self.invited_organisation_uri)
   end
 
+  # When suggested_invite? returns true this project_invite instance
+  # also provides a suggestion that the receiving organisation should
+  # invite another user into their organisation.
   def suggested_invite?
     !self.invited_email.blank?
   end
-
-  def set_invited_suggested_user!
-    self.invited_email = nil
-    self.invited_user_name = nil
-
-    self.save
-  end
-  
+    
   def accept!
     return false unless natures.reject(&:blank?).any?
 
@@ -67,6 +70,11 @@ class ProjectInvite
     self.save
   end
 
+  def set_handled_suggested_user!
+    self.handled_suggested_invite = true
+    self.save
+  end
+  
   private
 
   def add_invited_to_project
@@ -82,5 +90,4 @@ class ProjectInvite
     self.open = false
     self.accepted = false
   end
-
 end

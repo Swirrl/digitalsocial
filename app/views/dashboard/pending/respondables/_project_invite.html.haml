@@ -1,36 +1,30 @@
-%li.respondable.clearfix{ class: respondable.class.to_s.underscore }
+%li.respondable.clearfix{ class: project_invite.class.to_s.underscore }
   .image
     = image_tag asteroid_image_path
 
   .text
     .header
-      = link_to respondable.invitor_organisation_resource.name, respondable.invitor_organisation_resource
-      has invited  
-      = maybe_display_user_name_and_email(respondable, current_user)
-      and your organisation to join
-      = link_to respondable.project_resource.name, respondable.project_resource
-
-    - if respondable.personalised_message
+      = link_to project_invite.invitor_organisation_resource.name, project_invite.invitor_organisation_resource
+      has invited your organisation to join their
+      = link_to project_invite.project_resource.name, project_invite.project_resource
+      activity. 
+      = maybe_display_provided_message_preamble project_invite
       %blockquote.personalised_message
-        - if respondable.invited_by_user.present?
-          = titlecase_users_name(respondable.invited_by_user)
+        - if project_invite.invited_by_user.present?
+          = titlecase_users_name(project_invite.invited_by_user)
           (
-          = respondable.invited_by_user.email
+          = project_invite.invited_by_user.email
           ) provided the following message: 
       %blockquote.personalised_message
-        = respondable.personalised_message
+        = project_invite.personalised_message
     .subheader
 
   .action
     = link_to "Accept", "#", class: 'button button-black accept'
-    = link_to "Ignore", [:reject, respondable], method: :put, class: 'button'
-
-  - if respondable.suggested_invite?
-    .action
-      = link_to "Invite", [:invite_via_suggestion, respondable], method: :put, class: 'button button-black invite'
+    = link_to "Ignore", [:reject, project_invite], method: :put, class: 'button'
 
   .natures
-    = simple_form_for [:accept, respondable] do |f|
+    = simple_form_for [:accept, project_invite] do |f|
       = f.input :natures, as: :check_boxes, label: "What is your organisation's role in this activity", collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
       = f.button :submit, 'Confirm', class: 'button-black'
 

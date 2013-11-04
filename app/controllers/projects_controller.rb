@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
   # expects a term param with the search term
   def tags
     klass = Object.const_get("Concepts").const_get(params[:tag_class])
-    results = klass.search_for_label_starting_with(params[:term]).map &:label
+    results = klass.search_for_label_starting_with(params[:term]).map(&:label)
     render :json => results.uniq.sort
   end
 

@@ -7,6 +7,11 @@ describe ProjectInvite do
     it '#suggested_invite? should be true' do
       project_invite.should_not be_suggested_invite
     end
+
+    it 'should be marked as handled' do
+      project_invite.should be_handled_suggested_invite
+    end
+    
   end
 
   context 'with suggested user invite' do
@@ -16,14 +21,18 @@ describe ProjectInvite do
       project_invite.should be_suggested_invite
     end
 
-    context '#set_invited_suggested_user' do
+    it 'should not be marked as handled' do
+      project_invite.should_not be_handled_suggested_invite
+    end
+    
+    context '#set_handled_suggested_user' do
       it 'should remove suggested user details' do
-        project_invite.set_invited_suggested_user!
-        project_invite.should_not be_suggested_invite
+        project_invite.set_handled_suggested_user!
+        project_invite.should be_handled_suggested_invite
       end
       
       it 'should persist changes' do
-        project_invite.set_invited_suggested_user!
+        project_invite.set_handled_suggested_user!
         project_invite.should be_persisted
       end
     end
