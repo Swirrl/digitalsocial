@@ -1,9 +1,17 @@
 .show {
+
+  margin-left: 0px;
+
   .title {
     @include columns(16);
   }
+
   .show-row {
     @include row;
+
+    .hr { 
+      margin-left: 0px;
+    }
 
     .left-column {
       @include columns(8);
@@ -15,6 +23,9 @@
     .right-column {
       @include columns(7);
       @include offset(1);
+      .hr { 
+        margin-right: -10px;
+      }
     }
 
     .left-column, .right-column {
@@ -184,6 +195,7 @@
     color: #7f7f75;
     font-size: 20px;
     font-style: italic;
+    margin-left: 10px;
 
     span {
       display: inline-block;
@@ -203,6 +215,7 @@
   .project-map {
     margin-top: -24px;
     margin-bottom: 72px;
+    margin-left: 10px;
   }
 
 }
