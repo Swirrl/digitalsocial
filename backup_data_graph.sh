@@ -54,6 +54,20 @@ OPTIONAL {?ds <http://purl.org/dc/terms/modified> ?mod} } }' $datestr`
     echo "Modification Date Set"
 }
 
+function remove_dsi_backup() {
+    FNAME=$1
+    rm $FNAME
+    echo "Removed old local backup: $FNAME"
+}
+
+export -f remove_dsi_backup # export the function so we can use it with find
+
+function remove_old_backups() {
+    # NOTE the crazy syntax for calling an exported function and
+    # passing an arg to find -exec.
+    find $LOCAL_BACKUP_DIR -mtime +14 -exec bash -c 'remove_dsi_backup "$0"' {} \;
+}
+
 MAIN_DATA_SET="dataset_organizations-and-activities_$DATESTR.nt"
 ACTIVITY_TYPES="concept-scheme_activity_types_$DATESTR.nt"
 ACTIVITY_TECHNOLOGY_METHODS="concept-scheme_activity-technology-methods_$DATESTR.nt"
@@ -70,5 +84,7 @@ upload_to_s3 $ACTIVITY_TECHNOLOGY_METHODS
 upload_to_s3 $AREA_OF_SOCIETY
 
 set_modified_date
+
+remove_old_backups
 
 echo "$DATESTR Backup Complete."
