@@ -1,7 +1,12 @@
 source 'https://rubygems.org'
 
 gem 'tripod'
-gem 'rdf'
+
+# NOTE we have locked the rdf gem to 1.0.8 to prevent UTF-8 encoding
+# bug.  We can unlock this once we have resolved this trello ticket in
+# tripod: https://trello.com/c/6wbOZIEJ
+gem 'rdf', '1.0.8' 
+
 gem 'rails', '3.2.13'
 gem 'jquery-rails'
 gem 'haml'
