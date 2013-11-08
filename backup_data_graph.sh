@@ -41,7 +41,7 @@ function set_modified_date() {
 DELETE {?ds <http://purl.org/dc/terms/modified> ?mod}
 INSERT {?ds <http://purl.org/dc/terms/modified> "%s"^^<http://www.w3.org/2001/XMLSchema#dateTime>}
 WHERE { GRAPH <http://data.digitalsocial.eu/graph/organizations-and-activities/metadata> { ?ds a <http://publishmydata.com/def/dataset#Dataset> .
-OPTIONAL {?ds <http://purl.org/dc/terms/modified> ?mod} } }' $datestr`
+OPTIONAL {?ds <http://purl.org/dc/terms/modified> ?mod} } }' $DATESTR`
 
     curl -s -f -d "request=$query" http://sparql3.publishmydata.com/dsi/update > /dev/null
     CURL_STATUS=$?
