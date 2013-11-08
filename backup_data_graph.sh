@@ -68,7 +68,7 @@ function remove_old_backups() {
     find $LOCAL_BACKUP_DIR -mtime +14 -exec bash -c 'remove_dsi_backup "$0"' {} \;
 }
 
-MAIN_DATA_SET="dataset_organizations-and-activities_$DATESTR.nt"
+MAIN_DATA_SET="dataset_data_organizations-and-activities_$DATESTR.nt"
 ACTIVITY_TYPES="concept-scheme_activity_types_$DATESTR.nt"
 ACTIVITY_TECHNOLOGY_METHODS="concept-scheme_activity-technology-methods_$DATESTR.nt"
 AREA_OF_SOCIETY="concept-scheme_area-of-society_$DATESTR.nt"
