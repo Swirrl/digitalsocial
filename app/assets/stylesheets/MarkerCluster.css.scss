@@ -22,6 +22,20 @@
   border-radius: 10px;
 
   div {
+    width: 16px;
+    height: 16px;
+  }
+
+  span {
+    line-height: 20px;
+  }
+}
+
+.marker-cluster-small {
+  font-size: 12px;
+  border-radius: 12px;
+
+  div {
     width: 20px;
     height: 20px;
   }
@@ -31,9 +45,9 @@
   }
 }
 
-.marker-cluster-small {
-  font-size: 12px;
-  border-radius: 12px;
+.marker-cluster-medium {
+  font-size: 15px;
+  border-radius: 15px;
 
   div {
     width: 24px;
@@ -45,31 +59,17 @@
   }
 }
 
-.marker-cluster-medium {
-  font-size: 15px;
-  border-radius: 15px;
-
-  div {
-    width: 30px;
-    height: 30px;
-  }
-
-  span {
-    line-height: 32px;
-  }
-}
-
 .marker-cluster-large {
   font-size: 18px;
   border-radius: 18px;
   
   div {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
   }
 
   span {
-    line-height: 38px;
+    line-height: 32px;
   }
 }
 
