@@ -46,6 +46,7 @@
           showCoverageOnHover: false,
           removeOutsideVisibleBounds: false,
           zoomToBoundsOnClick: false,
+          maxClusterRadius: 60,
           iconCreateFunction: function(cluster) {
             var childCount = cluster.getChildCount();
 
@@ -57,10 +58,10 @@
             } else if (childCount < 10) {
               c += 'small';
               iconSize = 24;
-            } else if (childCount < 15) {
+            } else if (childCount < 20) {
               c += 'medium';
               iconSize = 30;
-            } else if (childCount < 20) {
+            } else if (childCount < 40) {
               c += 'large';
               iconSize = 36;
             } else {
@@ -316,9 +317,13 @@
 
       buildOrganisationPin: function(organisation) {
         var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
-          icon: new L.Icon({
-            iconSize: new L.Point(14, 20),
-            iconUrl: "assets/home/pin.png"
+          // icon: new L.Icon({
+          //   iconSize: new L.Point(14, 20),
+          //   iconUrl: "assets/home/pin.png"
+          // })
+
+          icon: new L.DivIcon({
+            iconSize: new L.Point(10, 10)
           })
         })
         .bindPopup('', {
