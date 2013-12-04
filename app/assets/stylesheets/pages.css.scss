@@ -158,6 +158,12 @@
 
     .blog-content {
         @include columns(9);
+
+        img {
+          max-width:100% !important;
+          height:auto;
+          display:block;
+        }
     }
 
     .blog-meta {
