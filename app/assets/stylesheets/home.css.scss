@@ -227,6 +227,7 @@
     padding: 12px;
     overflow: hidden;
     @include transition(all, 0.5s);
+    z-index: 999;
 
     @include media-all-mobile {
       right: 0;

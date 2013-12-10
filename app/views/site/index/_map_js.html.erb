@@ -238,9 +238,8 @@
 
       bindResetMapClick: function() {
         $('a.reset-map').click(function(e){
-          DSIMap.networkViewMarker.setIcon(new L.Icon({
-            iconSize: new L.Point(14, 20),
-            iconUrl: "assets/home/pin.png"
+          DSIMap.networkViewMarker.setIcon(new L.DivIcon({
+            iconSize: new L.Point(10, 10)
           }));
           DSIMap.networkViewMarker = null;
           DSIMap.visibleOrganisations = DSIMap.allOrganisations;
@@ -330,14 +329,11 @@
         .bindPopup('', {
           closeButton: false
         }).on('mouseover', function(mkr){
-
           if (!DSIMap.networkViewMarker) {
-            this._icon.src = "assets/home/pin-hover.png";
             DSIMap.highlightMarkerLines(this);
           }
         }).on('mouseout', function(mkr){
           if (!DSIMap.networkViewMarker) {
-            this._icon.src = "assets/home/pin.png";
             DSIMap.unhighlightMarkerLines(this);
           }
         });
@@ -596,14 +592,7 @@
       },
 
       highlightMarker: function(marker) {
-        if (marker._childCount) {
-          marker._icon.className = marker._icon.className + ' hover';
-        } else {
-          marker.setIcon(new L.Icon({
-            iconSize: new L.Point(14, 20),
-            iconUrl: "assets/home/pin-hover.png"
-          }));
-        }
+        marker._icon.className = marker._icon.className + ' hover';
       },
 
       highlightMarkerLines: function(marker) {
