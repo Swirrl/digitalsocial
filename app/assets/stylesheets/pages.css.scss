@@ -148,7 +148,6 @@
             @include media-all-mobile {
                 margin-bottom: 32px;
             }
-
         }
 
         @include media-all-mobile {
@@ -158,6 +157,18 @@
 
     .blog-content {
         @include columns(9);
+
+        img {
+          max-width:100% !important;
+          height:auto;
+          display:block;
+        }
+
+        blockquote {
+          font-style: italic;
+          padding-left: 24px;
+          margin-right: 48px;
+        }
     }
 
     .blog-meta {
