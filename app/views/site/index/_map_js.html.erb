@@ -14,10 +14,10 @@
       config: {
         defaultCenter: [49,12],
         defaultZoom: 5,
-        minLineWeight: 0.25,
-        maxLineWeight: 2,
-        minLineOpacity: 0.1,
-        maxLineOpacity: 0.1,
+        minLineWeight: 2.5, // Min no longer used
+        maxLineWeight: 2.5,
+        minLineOpacity: 0.125, // Min no longer used
+        maxLineOpacity: 0.125,
         layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>"),
         layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>")
       },
@@ -597,7 +597,6 @@
 
       highlightMarker: function(marker) {
         if (marker._childCount) {
-          console.log(marker);
           marker._icon.className = marker._icon.className + ' hover';
         } else {
           marker.setIcon(new L.Icon({
