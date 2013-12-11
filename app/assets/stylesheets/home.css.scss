@@ -252,6 +252,116 @@
     }
   }
 
+  .filter {
+    position: absolute;
+    right: 48px;
+    top: -400px;
+    background: rgba(255, 255, 255, 0.75);
+    border-bottom: 6px solid $orange;
+    z-index: 999;
+    width: 242px;
+    @include transition(all, 0.5s);
+
+    .filter-section {
+      padding: 12px;
+      border-bottom: 2px solid #e8e8e8;
+
+      a {
+        font-size: 16px;
+        font-weight: normal;
+        font-style: italic;
+        margin: 0;
+        display: inline-block;
+        color: $black;
+      }
+
+      a.reset {
+        font-size: 14px;
+        float: right;
+        color: $orange;
+        line-height: 18px;
+      }
+
+      &.expanded {
+        .expand-triangle {
+          display: none;
+        }
+        .collapse-triangle {
+          display: inline-block;
+        }
+
+        .options {
+          display: block;
+          padding: 6px;
+
+          .option {
+            line-height: 24px;
+
+            label {
+              display: inline-block;
+              font-size: 14px;
+              font-style: normal;
+            }
+
+            input {
+              margin: 0;
+            }
+
+            input, label {
+              vertical-align: middle;
+            }
+          }
+        }
+      }
+
+      .options {
+        background: #eee;
+        height: 90px;
+        display: none;
+        margin-top: 6px;
+      }
+
+      .expand-triangle, .collapse-triangle {
+        display: inline-block;
+        width: 0px;
+        height: 0px;
+        border-style: solid;
+        margin-right: 3px;
+      }
+
+      .expand-triangle {
+        border-width: 6px 0 6px 9px;
+        border-color: transparent transparent transparent #ccc;
+        margin-left: 3px;        
+      }
+
+      .collapse-triangle {
+        border-width: 9px 6px 0 6px;
+        border-color: #ccc transparent transparent transparent;
+        margin-top: 2px;
+        display: none;
+      }
+    }
+  }
+
+  .show-filter {
+    position: absolute;
+    right: 48px;
+    top: 0px;
+    background: rgba(255, 255, 255, 0.75);
+    border-bottom: 6px solid $orange;
+    padding: 12px;
+    z-index: 999;
+    width: 168px;
+    @include transition(all, 0.5s);
+    text-align: center;
+
+    a {
+      font-style: italic;
+      font-size: 20px;
+    }
+  }
+
   .controls {
     position: absolute;
     background: rgba(0, 0, 0, 0.5);

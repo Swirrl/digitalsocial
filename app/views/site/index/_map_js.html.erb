@@ -28,6 +28,7 @@
         this.initMap();
         this.bindMapEvents();
         this.initClusters();
+        this.initFilter();
 
         this.fetchOrganisations();
       },
@@ -80,6 +81,17 @@
 
         this.bindClusterEvents();
 
+      },
+
+      initFilter: function() {
+        this.bindFilterEvents();
+      },
+
+      bindFilterEvents: function() {
+        $('.filter a.title').click(function(e){
+          $(this).parents('.filter-section').toggleClass('expanded');
+          e.preventDefault();
+        });
       },
 
       bindClusterEvents: function() {
@@ -143,6 +155,12 @@
         $('a.show-info-mobile').click(function(e) {
           e.preventDefault();
           DSIMap.showMobilePanels();
+          return false;
+        });
+
+        $('.show-filter a').click(function(e) {
+          e.preventDefault();
+          DSIMap.slideOutPanels();
           return false;
         });
       },
@@ -451,18 +469,24 @@
       slideOutPanels: function() {
         $('.logo').css({ top: "-128px" });
         $('.info').css({ right: "-898px" });
+        $('.show-filter').css({ top: "-60px" });
+
         setTimeout(function(){
           $('.info').hide();
           $('.small-info').fadeIn();
+          $('.filter').css({ top: "0" });
         }, 500);
       },
 
       slideInPanels: function() {
         $('.info').show();
         $('.small-info').fadeOut();
+        $('.filter').css({ top: "-400px" });
+
         setTimeout(function(){
           $('.info').css({ right: "0" });
           $('.logo').css({ top: "0" });
+          $('.show-filter').css({ top: "0" });
         }, 250);
       },
 
