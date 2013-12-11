@@ -10,6 +10,7 @@
       visibleOrganisations: {},
       currentMaxLineCount: 0,
       networkViewMarker: null,
+      currentFilters: <%= params[:filters].to_json.html_safe %>,
 
       config: {
         defaultCenter: [49,12],
@@ -18,8 +19,8 @@
         maxLineWeight: 1.5,
         minLineOpacity: 0.125, // Min no longer used
         maxLineOpacity: 0.2,
-        layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>"),
-        layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>")
+        layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
+        layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>")
       },
 
       init: function() {
@@ -35,8 +36,7 @@
 
       initMap: function() {
         map = L.map('home-map', {
-          scrollWheelZoom: true,
-          minZoom: config.defaultZoom
+          scrollWheelZoom: true
         })
         .setView(config.defaultCenter, config.defaultZoom)
         .addLayer(config.layerWithoutLabels);
@@ -291,6 +291,9 @@
         $.ajax({
           type: 'GET',
           url: '/organisations/map_index',
+          data: {
+            filters: DSIMap.currentFilters
+          },
           success: function(data){
             DSIMap.setAllOrganisations(data.organisations);
             DSIMap.visibleOrganisations = DSIMap.allOrganisations;
@@ -517,6 +520,9 @@
         $.ajax({
           type: 'GET',
           url: '/organisations/map_partners',
+          data: {
+            filters: DSIMap.currentFilters
+          },
           //url: '/organisations/map_partners_static',
           success: function(data){
             DSIMap.setAllOrganisationPartners(data.organisations);
@@ -547,7 +553,7 @@
       drawLine: function(markerA, markerB, count) {
 
         var line = new L.Polyline([markerA._latlng, markerB._latlng], {
-          color: '#999999',
+          color: '#777',
           weight: DSIMap.lineWeightForCount(count),
           opacity: DSIMap.lineOpacityForCount(count),
           smoothFactor: 1,
@@ -623,7 +629,7 @@
         if (!marker._lines) return false;
 
         $.each(marker._lines, function(i, line) {
-          line.setStyle({ color: '#F39200' });
+          line.setStyle({ color: '#777' });
         });
       },
 
@@ -631,7 +637,7 @@
         if (!marker._lines) return false;
 
         $.each(marker._lines, function(i, line) {
-          line.setStyle({ color: '#999999' });
+          line.setStyle({ color: '#777' });
         });
       }
     }

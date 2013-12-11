@@ -28,6 +28,11 @@ module Digitalsocial
     "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "United Kingdom"
   ]
 
+  MAPBOX_TEST_1 = 'swirrl.gh3197b8'
+  MAPBOX_TEST_2 = 'swirrl.gh2ohh7p'
+  MAPBOX_TEST_3 = 'swirrl.gh31khc2'
+  MAPBOX_TEST_4 = 'swirrl.gh328348'
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
