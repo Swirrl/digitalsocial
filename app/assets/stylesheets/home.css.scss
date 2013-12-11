@@ -3,6 +3,8 @@
   padding-bottom: 0;
 
   .logo {
+    display: none;
+
     @include media-all-mobile {
       display:none;
     }
@@ -120,6 +122,8 @@
   }
 
   .info {
+
+    display: none;
 
     @include media-all-mobile {
       display:none;
