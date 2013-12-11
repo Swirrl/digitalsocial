@@ -117,8 +117,8 @@
           .options
             - Concepts::TechnologyFocus.all.resources.each do |tf|
               .option
-                = check_box_tag "filter[technology_focus][]"
-                = label_tag "filter[technology_focus][]", tf.label
+                = check_box_tag "filter[technology_focus][]", tf.uri, false, id: "filter_technology_focus_#{tf.label.parameterize('_')}"
+                = label_tag "filter_technology_focus_#{tf.label.parameterize('_')}", tf.label
             
         .filter-section
           .filter-section-header

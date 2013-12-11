@@ -293,6 +293,8 @@
         .options {
           display: block;
           padding: 6px;
+          overflow-y: auto;
+          height: 78px;
 
           .option {
             line-height: 24px;
@@ -305,6 +307,7 @@
 
             input {
               margin: 0;
+              margin-bottom: 2px;
             }
 
             input, label {
