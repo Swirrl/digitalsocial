@@ -139,6 +139,12 @@
             - Digitalsocial::EU_COUNTRIES.each do |c|
               = filter_option(c, 'country', label_method: 'to_s', value_method: 'to_s')
 
+        .filter-section{ class: params[:cluster].present? }
+          = filter_section_header(:clustering).html_safe
+
+          .options
+            = text_field_tag :cluster, params[:cluster].to_i, id: 'cluster-level'
+
         .filter-section.filter-button-section
           = submit_tag "Apply filter", class: 'button filter-button', disabled: 'disabled'
             

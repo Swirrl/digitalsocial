@@ -1,7 +1,6 @@
 <script>
   $(function() {
 
-    var config,
     DSIMap = {
 
       map: null,
@@ -10,24 +9,47 @@
       visibleOrganisations: {},
       currentMaxLineCount: 0,
       networkViewMarker: null,
+      
       currentFilters: <%= params[:filters].to_json.html_safe %>,
+      clusterLevel: $('input#cluster-level').val(),
 
-      config: {
-        defaultCenter: [49,12],
-        defaultZoom: 5,
-        minLineWeight: 2.5, // Min no longer used
-        maxLineWeight: 1.5,
-        minLineOpacity: 0.125, // Min no longer used
-        maxLineOpacity: 0.2,
-        layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
-        layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>")
-      },
+      defaultCenter: [49, 12],
+      defaultZoom: 5,
+      minLineWeight: 1,
+      maxLineWeight: 20,
+      minLineOpacity: 0.1,
+      maxLineOpacity: 0.6,
+      maxClusterRadius: 80,
+      disableClusteringAtZoom: 20,
+      layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
+      layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
+
+      clusterConfig: [{
+          // Level 0
+          disableClusteringAtZoom: 1, // 1 = no clustering
+          maxLineWeight: 1.5,
+          maxLineOpacity: 0.2
+        }, {
+          // Level 1
+          maxClusterRadius: 20
+        }, {
+          // Level 2
+          maxClusterRadius: 30
+        }, {
+          // Level 3
+          maxClusterRadius: 50
+        }, {
+          // Level 4
+          maxClusterRadius: 80
+        }
+      ],
 
       init: function() {
-        config = this.config;
+        $.extend(DSIMap, DSIMap.clusterConfig[DSIMap.clusterLevel]);
 
         this.initMap();
         this.bindMapEvents();
+
         this.initClusters();
         this.initFilter();
 
@@ -38,8 +60,8 @@
         map = L.map('home-map', {
           scrollWheelZoom: true
         })
-        .setView(config.defaultCenter, config.defaultZoom)
-        .addLayer(config.layerWithoutLabels);
+        .setView(DSIMap.defaultCenter, DSIMap.defaultZoom)
+        .addLayer(DSIMap.layerWithoutLabels);
       },
 
       initClusters: function() {
@@ -47,8 +69,8 @@
           showCoverageOnHover: false,
           removeOutsideVisibleBounds: false,
           zoomToBoundsOnClick: false,
-          maxClusterRadius: 24,
-          disableClusteringAtZoom: 1, // Remove this to restore clustering
+          maxClusterRadius: DSIMap.maxClusterRadius,
+          disableClusteringAtZoom: DSIMap.disableClusteringAtZoom,
           iconCreateFunction: function(cluster) {
             var childCount = cluster.getChildCount();
 
@@ -62,10 +84,10 @@
               iconSize = 20;
             } else if (childCount < 20) {
               c += 'medium';
-              iconSize = 24;
+              iconSize = 26;
             } else if (childCount < 40) {
               c += 'large';
-              iconSize = 28;
+              iconSize = 36;
             } else {
               c += 'x-large';
               iconSize = 48;
@@ -189,11 +211,11 @@
       bindZoomEnd: function(e) {
         map.on('zoomend', function(e){
           if (e.target._zoom > 6) {
-            map.removeLayer(config.layerWithoutLabels);
-            map.addLayer(config.layerWithLabels);
+            map.removeLayer(DSIMap.layerWithoutLabels);
+            map.addLayer(DSIMap.layerWithLabels);
           } else {
-            map.removeLayer(config.layerWithLabels);
-            map.addLayer(config.layerWithoutLabels);
+            map.removeLayer(DSIMap.layerWithLabels);
+            map.addLayer(DSIMap.layerWithoutLabels);
           }
         });
       },
@@ -273,7 +295,7 @@
           DSIMap.networkViewMarker = null;
           DSIMap.visibleOrganisations = DSIMap.allOrganisations;
 
-          map.setZoom(DSIMap.config.defaultZoom);
+          map.setZoom(DSIMap.defaultZoom);
 
           clusters.clearLayers();
           DSIMap.clearLines();
@@ -576,16 +598,16 @@
 
       lineWeightForCount: function(count) {
         var ratio = (count / DSIMap.currentMaxLineCount);
-        var difference = config.maxLineWeight - config.minLineWeight;
+        var difference = DSIMap.maxLineWeight - DSIMap.minLineWeight;
 
-        return config.minLineWeight + (ratio * difference);
+        return DSIMap.minLineWeight + (ratio * difference);
       },
 
       lineOpacityForCount: function(count) {
         var ratio = (count / DSIMap.currentMaxLineCount);
-        var difference = config.maxLineOpacity - config.minLineOpacity;
+        var difference = DSIMap.maxLineOpacity - DSIMap.minLineOpacity;
 
-        return config.minLineOpacity + (ratio * difference);
+        return DSIMap.minLineOpacity + (ratio * difference);
       },
 
       buildPartnerLines: function() {
