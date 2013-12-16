@@ -105,60 +105,42 @@
       = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
 
     .filter
-      = form_tag '/test' do
-        .filter-section.expanded
-          .filter-section-header
-            %a.title{ href: '#' }
-              .expand-triangle
-              .collapse-triangle
-              Technology type
-            %a.reset{ href: '#' } Reset
+      = form_tag '/', method: :get do
+        .filter-section{ class: params[:filters].nil? || (params[:filters][:technology_focus].to_a.any?) ? 'expanded' : nil }
 
+          = filter_section_header(:technology_focus).html_safe
           .options
             - Concepts::TechnologyFocus.all.resources.each do |tf|
-              .option
-                = check_box_tag "filter[technology_focus][]", tf.uri, false, id: "filter_technology_focus_#{tf.label.parameterize('_')}"
-                = label_tag "filter_technology_focus_#{tf.label.parameterize('_')}", tf.label
+              = filter_option(tf, 'technology_focus').html_safe
             
-        .filter-section
-          .filter-section-header
-            %a.title{ href: '#' }
-              .expand-triangle
-              .collapse-triangle
-              Organisation type
-            %a.reset{ href: '#' } Reset
+        .filter-section{ class: params[:filters].present? && params[:filters][:organisation_type].to_a.any? ? 'expanded' : nil }
+          = filter_section_header(:organisation_type).html_safe
 
           .options
+            - Concepts::OrganisationType.all.resources.each do |ot|
+              = filter_option(ot, 'organisation_type').html_safe
             
-        .filter-section
-          .filter-section-header
-            %a.title{ href: '#' }
-              .expand-triangle
-              .collapse-triangle
-              Activity type
-            %a.reset{ href: '#' } Reset
+        .filter-section{ class: params[:filters].present? && params[:filters][:activity_type].to_a.any? ? 'expanded' : nil }
+          = filter_section_header(:activity_type).html_safe
+          .options
+            - Concepts::ActivityType.top_level_concepts.each do |at|
+              = filter_option(at, 'activity_type')
+
+        .filter-section{ class: params[:filters].present? && params[:filters][:areas_of_society].to_a.any? ? 'expanded' : nil }
+          = filter_section_header(:areas_of_society, label: 'Domain').html_safe
+          .options
+            - Concepts::AreaOfSociety.top_level_concepts.each do |aos|
+              = filter_option(aos, 'areas_of_society')
+            
+        .filter-section{ class: params[:filters].present? && params[:filters][:country].to_a.any? ? 'expanded' : nil }
+          = filter_section_header(:country).html_safe
 
           .options
-            
-        .filter-section
-          .filter-section-header
-            %a.title{ href: '#' }
-              .expand-triangle
-              .collapse-triangle
-              Domain
-            %a.reset{ href: '#' } Reset
+            - Digitalsocial::EU_COUNTRIES.each do |c|
+              = filter_option(c, 'country', label_method: 'to_s', value_method: 'to_s')
 
-          .options
-            
-        .filter-section
-          .filter-section-header
-            %a.title{ href: '#' }
-              .expand-triangle
-              .collapse-triangle
-              Country
-            %a.reset{ href: '#' } Reset
-
-          .options
+        .filter-section.filter-button-section
+          = submit_tag "Apply filter", class: 'button filter-button', disabled: 'disabled'
             
 
     .show-filter
@@ -174,3 +156,8 @@
     = render "site/index/map_js"
     = render "analytics"
 
+    - if params[:filters].present?
+      :javascript
+        $(function(){
+          $('.show-filter a').click();
+        });

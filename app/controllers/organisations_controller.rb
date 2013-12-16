@@ -73,8 +73,8 @@ class OrganisationsController < ApplicationController
 
   def map_index
     config = {
-      :organization_type =>
-        "?org <http://data.digitalsocial.eu/def/ontology/organizationType> ?organization_type .",
+      :organisation_type =>
+        "?org <http://data.digitalsocial.eu/def/ontology/organizationType> ?organisation_type .",
       :activity_type =>
         "?am <http://data.digitalsocial.eu/def/ontology/organization> ?org .
          ?am <http://data.digitalsocial.eu/def/ontology/activity> ?activity .
@@ -99,7 +99,7 @@ class OrganisationsController < ApplicationController
     filters = ""
 
     if params[:filters].present?
-      [:organization_type, :activity_type, :technology_focus, :areas_of_society].each do |attr|
+      [:organisation_type, :activity_type, :technology_focus, :areas_of_society].each do |attr|
         if params[:filters][attr].present?
           extra_clauses += config[attr]
           filters += "VALUES ?#{attr.to_s} { <#{ params[:filters][attr].join('> <')}> }"
@@ -125,6 +125,7 @@ class OrganisationsController < ApplicationController
         }
       }
     "
+    Rails.logger.debug query
     organisations = Tripod::SparqlClient::Query.select(query)
 
     Rails.logger.debug "http://data.digitalsocial.eu/sparql.csv?query=#{CGI.escape(query)}"      
@@ -147,30 +148,27 @@ class OrganisationsController < ApplicationController
 
   def map_partners
     config = {
-      :organization_type =>
-        "?org <http://data.digitalsocial.eu/def/ontology/organizationType> ?organization_type .
-         ?org2 <http://data.digitalsocial.eu/def/ontology/organizationType> ?organization_type_2",
+      :organisation_type =>
+        "?org <http://data.digitalsocial.eu/def/ontology/organizationType> ?organisation_type .
+         ?org2 <http://data.digitalsocial.eu/def/ontology/organizationType> ?organisation_type_2",
       :activity_type =>
         "?am <http://data.digitalsocial.eu/def/ontology/organization> ?org .
          ?am <http://data.digitalsocial.eu/def/ontology/activity> ?activity .
          ?activity <http://data.digitalsocial.eu/def/ontology/activityType> ?activity_type .
          ?am_2 <http://data.digitalsocial.eu/def/ontology/organization> ?org2 .
-         ?am_2 <http://data.digitalsocial.eu/def/ontology/activity> ?activity_2 .
-         ?activity_2 <http://data.digitalsocial.eu/def/ontology/activityType> ?activity_type_2 .",
+         ?am_2 <http://data.digitalsocial.eu/def/ontology/activity> ?activity .",
       :technology_focus =>
         "?am <http://data.digitalsocial.eu/def/ontology/organization> ?org .
          ?am <http://data.digitalsocial.eu/def/ontology/activity> ?activity .
          ?activity <http://data.digitalsocial.eu/def/ontology/technologyFocus> ?technology_focus .
          ?am_2 <http://data.digitalsocial.eu/def/ontology/organization> ?org2 .
-         ?am_2 <http://data.digitalsocial.eu/def/ontology/activity> ?activity_2 .
-         ?activity_2 <http://data.digitalsocial.eu/def/ontology/technologyFocus> ?technology_focus_2 .",
+         ?am_2 <http://data.digitalsocial.eu/def/ontology/activity> ?activity .",
       :areas_of_society =>
         "?am <http://data.digitalsocial.eu/def/ontology/organization> ?org .
          ?am <http://data.digitalsocial.eu/def/ontology/activity> ?activity .
          ?activity <http://data.digitalsocial.eu/def/ontology/areaOfSociety> ?areas_of_society .
          ?am_2 <http://data.digitalsocial.eu/def/ontology/organization> ?org2 .
-         ?am_2 <http://data.digitalsocial.eu/def/ontology/activity> ?activity_2 .
-         ?activity_2 <http://data.digitalsocial.eu/def/ontology/areaOfSociety> ?areas_of_society_2 .",
+         ?am_2 <http://data.digitalsocial.eu/def/ontology/activity> ?activity .",
       :country =>
         "?org <http://www.w3.org/ns/org#hasPrimarySite> ?primarySite .
          ?primarySite <http://www.w3.org/ns/org#siteAddress> ?siteAddress .
@@ -184,24 +182,30 @@ class OrganisationsController < ApplicationController
     filters = ""
 
     if params[:filters].present?
-      [:organization_type, :activity_type, :technology_focus, :areas_of_society].each do |attr|
+      [:activity_type, :technology_focus, :areas_of_society].each do |attr|
         if params[:filters][attr].present?
           extra_clauses += config[attr]
           filters += "
-            VALUES ?#{attr.to_s} { <#{ params[:filters][attr].join('> <')}> }
-            VALUES ?#{attr.to_s}_2 { <#{ params[:filters][attr].join('> <')}> }"
+            VALUES ?#{attr.to_s} { <#{ params[:filters][attr].join('> <')}> }"
         end
+      end
+
+      if params[:filters][:organisation_type].present?
+        extra_clauses += config[:organisation_type]
+        filters += "
+            VALUES ?organisation_type { <#{ params[:filters][:organisation_type].join('> <')}> } .
+            VALUES ?organisation_type_2 { <#{ params[:filters][:organisation_type].join('> <')}> }"
       end
 
       if params[:filters][:country].present?
         extra_clauses += config[:country]
         filters += "
-            VALUES ?country { '#{ params[:filters][:country].join("' '")}' }
+            VALUES ?country { '#{ params[:filters][:country].join("' '")}' } .
             VALUES ?country_2 { '#{ params[:filters][:country].join("' '")}' }"
       end
     end
 
-    partner_guids_results = Tripod::SparqlClient::Query.select("
+    query = "
       SELECT DISTINCT ?org ?org2 {
         ?mem a <http://data.digitalsocial.eu/def/ontology/ActivityMembership> .
         ?mem2 a <http://data.digitalsocial.eu/def/ontology/ActivityMembership> .
@@ -219,7 +223,10 @@ class OrganisationsController < ApplicationController
         #{ filters }
       }
       ORDER BY ASC(?org)
-    ")
+    "
+    Rails.logger.debug query
+
+    partner_guids_results = Tripod::SparqlClient::Query.select(query)
 
     partner_guids = {}
     partner_guids_results.each do |result|

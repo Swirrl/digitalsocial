@@ -122,4 +122,33 @@ module ApplicationHelper
       ''
     end
   end
+
+  def filter_section_header(criteria, opts={})
+    label   = opts[:label] || criteria.to_s.humanize
+    
+    content = "<a href='#' class='title'><div class='expand-triangle'></div> <div class='collapse-triangle'></div>"
+    if params[:filters].present? && params[:filters][criteria].present? && params[:filters][criteria].any?
+      content += "<strong>#{label} (#{params[:filters][criteria].length})</strong></a>"
+      content += "<a href='#' class='reset'>Reset</a>"
+    else
+      content += "#{label}</a>"
+    end
+
+    "<div class='filter-section-header'>#{content}</div>"
+  end
+
+
+  def filter_option(object, klass, opts={})
+    object_label = object.send(opts[:label_method] || 'label')
+    object_value = object.send(opts[:value_method] || 'uri')
+
+    return nil if object_label == 'Other'
+
+    checked = params[:filters].present? && params[:filters][klass.to_sym].present? && params[:filters][klass.to_sym].include?(object_value)
+
+    checkbox = check_box_tag "filters[#{klass}][]", object_value, checked, id: "filter_#{klass}_#{object_label.parameterize('_')}"
+    label    = label_tag "filter_#{klass}_#{object_label.parameterize('_')}", object_label
+
+    content_tag :div, [checkbox, label].join(" ").html_safe, class: 'option'
+  end
 end
