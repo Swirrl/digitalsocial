@@ -319,6 +319,56 @@
         }
       }
 
+      &.cluster-section {
+        .options {
+          background: transparent;
+          height: auto;
+          overflow-x: auto;
+        }
+
+        #slider {
+          @include border-radius(0);
+          border: 0;
+          height: 6px;
+          background: #ccc;
+          width: 192px;
+          margin-left: 9px;
+          margin-bottom: 6px;
+
+          a {
+            @include border-radius(3px);
+            border: 0;
+            outline: 0;
+            cursor: pointer;
+            background: $orange;
+            height: 18px;
+            width: 18px;
+            top: -6px;
+            margin-left: -9px;
+            margin-bottom: -6px;
+
+            &.ui-state-hover {
+              background: $orange-hover;
+            }
+
+            &.ui-state-active {
+              background: $orange-shadow;
+            }
+          }
+        }
+
+        p {
+          font-size: 12px;
+          color: #999;
+          margin-left: -6px;
+          margin-right: -6px;
+          cursor: default;
+
+          span.left { float: left; }
+          span.right { float: right; }
+        }
+      }
+
       .options {
         background: #eee;
         height: 90px;

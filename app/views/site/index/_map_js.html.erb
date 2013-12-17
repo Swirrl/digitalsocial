@@ -16,9 +16,9 @@
       defaultCenter: [49, 12],
       defaultZoom: 5,
       minLineWeight: 1,
-      maxLineWeight: 20,
+      maxLineWeight: 5,
       minLineOpacity: 0.1,
-      maxLineOpacity: 0.6,
+      maxLineOpacity: 0.4,
       maxClusterRadius: 80,
       disableClusteringAtZoom: 20,
       layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
@@ -125,6 +125,18 @@
 
           e.preventDefault();
         });
+
+        $("#slider" ).slider({
+          value: DSIMap.clusterLevel,
+          min: 0,
+          max: 4,
+          step: 1,
+          slide: function(event, ui) {
+            $( "#cluster-level" ).val(ui.value);
+            $('.filter .filter-button').removeAttr('disabled');
+          }
+        });
+        //$( "#amount" ).val( "$" + $( "#slider" ).slider( "value" ) );
       },
 
       bindClusterEvents: function() {
@@ -537,6 +549,8 @@
       },
 
       clearLines: function() {
+        DSIMap.currentMaxLineCount = 0;
+
         for (i in map._layers) {
           if (map._layers[i]._path != undefined) {
             try {
@@ -622,6 +636,8 @@
 
               visibleMarkerA = clusters.getVisibleParent(org.marker);
               visibleMarkerB = clusters.getVisibleParent(DSIMap.allOrganisations[partnerGuid].marker);
+
+              if (visibleMarkerA._latlng == visibleMarkerB._latlng) return true;
 
               var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
 

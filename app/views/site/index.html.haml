@@ -139,11 +139,17 @@
             - Digitalsocial::EU_COUNTRIES.each do |c|
               = filter_option(c, 'country', label_method: 'to_s', value_method: 'to_s')
 
-        .filter-section{ class: params[:cluster].present? }
+        .filter-section.cluster-section.expanded
           = filter_section_header(:clustering).html_safe
 
           .options
-            = text_field_tag :cluster, params[:cluster].to_i, id: 'cluster-level'
+            #slider
+
+            %p
+              %span.left None
+              %span.right Max
+
+            = hidden_field_tag :cluster, params[:cluster].to_i, id: 'cluster-level'
 
         .filter-section.filter-button-section
           = submit_tag "Apply filter", class: 'button filter-button', disabled: 'disabled'
@@ -162,7 +168,7 @@
     = render "site/index/map_js"
     = render "analytics"
 
-    - if params[:filters].present?
+    - if params[:filters].present? || params[:cluster].present?
       :javascript
         $(function(){
           $('.show-filter a').click();
