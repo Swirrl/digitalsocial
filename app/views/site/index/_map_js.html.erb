@@ -23,6 +23,7 @@
       disableClusteringAtZoom: 20,
       layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
       layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
+      maxClusterChildCount: 40,
 
       clusterConfig: [{
           // Level 0
@@ -31,22 +32,32 @@
           maxLineOpacity: 0.2
         }, {
           // Level 1
+          disableClusteringAtZoom: 20,
+          maxLineWeight: 5,
+          maxLineOpacity: 0.4,
           maxClusterRadius: 20
         }, {
           // Level 2
+          disableClusteringAtZoom: 20,
+          maxLineWeight: 5,
+          maxLineOpacity: 0.4,
           maxClusterRadius: 30
         }, {
           // Level 3
+          disableClusteringAtZoom: 20,
+          maxLineWeight: 5,
+          maxLineOpacity: 0.4,
           maxClusterRadius: 50
         }, {
           // Level 4
+          disableClusteringAtZoom: 20,
+          maxLineWeight: 5,
+          maxLineOpacity: 0.4,
           maxClusterRadius: 80
         }
       ],
 
       init: function() {
-        $.extend(DSIMap, DSIMap.clusterConfig[DSIMap.clusterLevel]);
-
         this.initMap();
         this.bindMapEvents();
 
@@ -65,6 +76,9 @@
       },
 
       initClusters: function() {
+        var level = $('.filter #cluster-level').val();
+        $.extend(DSIMap, DSIMap.clusterConfig[level]);
+
         clusters = new L.MarkerClusterGroup({
           showCoverageOnHover: false,
           removeOutsideVisibleBounds: false,
@@ -76,16 +90,16 @@
 
             var c = ' marker-cluster-';
             var iconSize;
-            if (childCount < 5) {
+            if (childCount < DSIMap.maxClusterChildCount / 4) {
               c += 'x-small';
               iconSize = 16;
-            } else if (childCount < 10) {
+            } else if (childCount < DSIMap.maxClusterChildCount / 3) {
               c += 'small';
               iconSize = 20;
-            } else if (childCount < 20) {
+            } else if (childCount < DSIMap.maxClusterChildCount / 2) {
               c += 'medium';
               iconSize = 26;
-            } else if (childCount < 40) {
+            } else if (childCount < DSIMap.maxClusterChildCount) {
               c += 'large';
               iconSize = 36;
             } else {
@@ -132,16 +146,23 @@
           max: 4,
           step: 1,
           slide: function(event, ui) {
-            $( "#cluster-level" ).val(ui.value);
-            $('.filter .filter-button').removeAttr('disabled');
+            $('.filter #cluster-level').val(ui.value);
+            
+            clusters.clearLayers();
+            DSIMap.clearLines();
+
+            DSIMap.initClusters();
+            DSIMap.addOrganisationPins();
+            DSIMap.resizeClusters();
+            DSIMap.addPartnerLines();
           }
         });
-        //$( "#amount" ).val( "$" + $( "#slider" ).slider( "value" ) );
       },
 
       bindClusterEvents: function() {
         clusters.on('animationend', function(e){
           DSIMap.addVisibleLines();
+          DSIMap.resizeClusters();
         });
 
         clusters.on('clustermouseover', function (a) {
@@ -343,6 +364,7 @@
             DSIMap.setAllOrganisations(data.organisations);
             DSIMap.visibleOrganisations = DSIMap.allOrganisations;
             DSIMap.addOrganisationPins();
+            DSIMap.resizeClusters();
 
             DSIMap.fetchPartners();
           },
@@ -370,6 +392,46 @@
         }
       },
 
+      resizeClusters: function() {
+        DSIMap.maxClusterChildCount = 0;
+        $.each(clusters._featureGroup._layers, function(i, e){
+          if (e._childCount && e._childCount > DSIMap.maxClusterChildCount) {
+            DSIMap.maxClusterChildCount = e._childCount;
+          }
+        });
+
+        $.each(clusters._featureGroup._layers, function(i, e){
+          var childCount = e._childCount;
+          if (childCount){
+            var c = ' marker-cluster-';
+            var iconSize;
+            if (childCount < DSIMap.maxClusterChildCount / 10) {
+              c += 'x-small';
+              iconSize = 16;
+            } else if (childCount < DSIMap.maxClusterChildCount / 5) {
+              c += 'small';
+              iconSize = 20;
+            } else if (childCount < DSIMap.maxClusterChildCount / 2.5) {
+              c += 'medium';
+              iconSize = 26;
+            } else if (childCount < DSIMap.maxClusterChildCount) {
+              c += 'large';
+              iconSize = 36;
+            } else {
+              c += 'x-large';
+              iconSize = 48;
+            }
+
+            e.setIcon(new L.DivIcon({
+              html: '<div><span>' + childCount + '</span></div>',
+              className: 'marker-cluster' + c,
+              iconSize: new L.Point(iconSize, iconSize)
+            }));
+          }
+        });
+
+      },
+
       addOrganisationPins: function() {
         map.removeLayer(clusters);
         clusters.clearLayers();
@@ -383,11 +445,6 @@
 
       buildOrganisationPin: function(organisation) {
         var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
-          // icon: new L.Icon({
-          //   iconSize: new L.Point(14, 20),
-          //   iconUrl: "assets/home/pin.png"
-          // })
-
           icon: new L.DivIcon({
             iconSize: new L.Point(10, 10)
           })

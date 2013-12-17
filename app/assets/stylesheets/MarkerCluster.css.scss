@@ -101,10 +101,14 @@ $cluster-color: #777;
     background: #F39200;
   }
 
-  -webkit-transition: background 0.1s ease-in-out;
-  -moz-transition: background 0.1s ease-in-out;
-  -o-transition: background 0.1s ease-in-out;
-  transition: background 0.1s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+
+.leaflet-cluster-anim .marker-cluster {
+  color: transparent;
 }
 
 .marker-cluster div {

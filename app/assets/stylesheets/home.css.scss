@@ -262,9 +262,13 @@
     width: 242px;
     @include transition(all, 0.5s);
 
+    @include media-all-mobile {
+      display:none;
+    }
+
     .filter-section {
       padding: 12px;
-      border-bottom: 2px solid #e8e8e8;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.05);
 
       a {
         font-size: 16px;
@@ -370,7 +374,7 @@
       }
 
       .options {
-        background: #eee;
+        background: rgba(0, 0, 0, 0.05);
         height: 90px;
         display: none;
         margin-top: 6px;
@@ -418,6 +422,10 @@
   }
 
   .show-filter {
+    @include media-all-mobile {
+      display:none;
+    }
+    
     position: absolute;
     right: 48px;
     top: 0px;
