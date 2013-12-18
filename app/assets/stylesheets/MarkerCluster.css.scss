@@ -1,4 +1,5 @@
 $cluster-color: #777;
+$faded-cluster-color: #ccc;
 
 .leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
 	-webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-in;
@@ -101,10 +102,26 @@ $cluster-color: #777;
     background: #F39200;
   }
 
+  &.faded {
+    background: #aaa;
+    opacity: 0.5;
+    cursor: default;
+    z-index: -1 !important;
+    display: none;
+
+    &:hover {
+      background: #aaa;
+    }
+  }
+
   -webkit-transition: all 0.15s ease-in-out;
   -moz-transition: all 0.15s ease-in-out;
   -o-transition: all 0.15s ease-in-out;
   transition: all 0.15s ease-in-out;
+}
+
+.cluster-level-0 .leaflet-div-icon.faded {
+  display: block;
 }
 
 .leaflet-cluster-anim .marker-cluster {
@@ -112,14 +129,12 @@ $cluster-color: #777;
 }
 
 .marker-cluster div {
-
-
   text-align: center;
   
   font-family: "chaparral-pro", sans-serif;
   font-style: italic;
 }
 
-.marker-cluster span {
-  
+.leaflet-overlay-pane {
+
 }

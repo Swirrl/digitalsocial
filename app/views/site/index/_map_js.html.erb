@@ -64,6 +64,10 @@
         this.initClusters();
         this.initFilter();
 
+        if (this.currentFilters) {
+          this.fetchFilterOrganisations();
+        }
+
         this.fetchOrganisations();
       },
 
@@ -73,6 +77,8 @@
         })
         .setView(DSIMap.defaultCenter, DSIMap.defaultZoom)
         .addLayer(DSIMap.layerWithoutLabels);
+
+        map._container.className = "leaflet-container leaflet-fade-anim cluster-level-" + DSIMap.clusterLevel;
       },
 
       initClusters: function() {
@@ -90,13 +96,13 @@
 
             var c = ' marker-cluster-';
             var iconSize;
-            if (childCount < DSIMap.maxClusterChildCount / 4) {
+            if (childCount < DSIMap.maxClusterChildCount / 10) {
               c += 'x-small';
               iconSize = 16;
-            } else if (childCount < DSIMap.maxClusterChildCount / 3) {
+            } else if (childCount < DSIMap.maxClusterChildCount / 5) {
               c += 'small';
               iconSize = 20;
-            } else if (childCount < DSIMap.maxClusterChildCount / 2) {
+            } else if (childCount < DSIMap.maxClusterChildCount / 2.5) {
               c += 'medium';
               iconSize = 26;
             } else if (childCount < DSIMap.maxClusterChildCount) {
@@ -146,7 +152,10 @@
           max: 4,
           step: 1,
           slide: function(event, ui) {
-            $('.filter #cluster-level').val(ui.value);
+            DSIMap.clusterLevel = ui.value;
+            $('.filter #cluster-level').val(DSIMap.clusterLevel);
+
+            map._container.className = "leaflet-container leaflet-fade-anim cluster-level-" + DSIMap.clusterLevel;
             
             clusters.clearLayers();
             DSIMap.clearLines();
@@ -375,6 +384,17 @@
         });
       },
 
+      fetchFilterOrganisations: function(e) {
+        $.ajax({
+          type: 'GET',
+          url: '/organisations/map_index',
+          success: function(data){
+            DSIMap.addFilterOrganisationPins(data.organisations);
+          },
+          dataType: 'json'
+        });
+      },
+
       setAllOrganisations: function(organisations) {
         $.each(organisations, function(i, organisation) {
           DSIMap.allOrganisations[organisation.guid] = {};
@@ -469,6 +489,18 @@
         return marker;
       },
 
+      addFilterOrganisationPins: function(organisations) {
+        $.each(organisations, function(i, organisation){
+          var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
+            icon: new L.DivIcon({
+              iconSize: new L.Point(10, 10),
+              className: 'leaflet-div-icon faded'
+            })
+          });
+          marker.addTo(map);
+        });
+      },
+
       fetchPinPopupContent: function(e) {
         var guid = e.popup._source._guid;
 
@@ -561,7 +593,6 @@
 
         content += '<div class="divider"></div>';
         content += '<div class="actions"><a href="#" data-cluster-id="'+popup._source._leaflet_id+'" class="zoom-cluster">Zoom in</a></div>';
-
 
         popup.setContent(content);
       },
