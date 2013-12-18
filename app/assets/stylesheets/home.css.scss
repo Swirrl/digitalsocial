@@ -20,8 +20,11 @@
     }
 
     .links {
-      margin-top: 30px;
+      margin-top: 12px;
       margin-bottom: 5px;
+      //text-align: center;
+      padding-left: 102px;
+
 
       a {
         font-style: italic;
@@ -286,12 +289,28 @@
         line-height: 18px;
       }
 
+      p.browse {
+        margin-top: 6px;
+        margin-bottom: 0;
+        line-height: 1;
+        text-align: right;
+
+        a {
+          color: $orange;
+          font-size: 14px;
+        }
+      }
+
       &.expanded {
         .expand-triangle {
           display: none;
         }
         .collapse-triangle {
           display: inline-block;
+        }
+
+        .expandable {
+          display: block;
         }
 
         .options {
@@ -376,8 +395,11 @@
       .options {
         background: rgba(0, 0, 0, 0.05);
         height: 90px;
-        display: none;
         margin-top: 6px;
+      }
+
+      .expandable {
+        display: none;
       }
 
       .expand-triangle, .collapse-triangle {
