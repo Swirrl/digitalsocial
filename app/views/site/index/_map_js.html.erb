@@ -76,8 +76,8 @@
       },
 
       initClusters: function() {
-        var level = $('.filter #cluster-level').val();
-        $.extend(DSIMap, DSIMap.clusterConfig[level]);
+        DSIMap.clusterLevel = $('.filter #cluster-level').val();
+        $.extend(DSIMap, DSIMap.clusterConfig[DSIMap.clusterLevel]);
 
         clusters = new L.MarkerClusterGroup({
           showCoverageOnHover: false,
@@ -278,6 +278,7 @@
 
           $('.active-organisation .name').text(DSIMap.allOrganisations[guid].name);
           $('.active-organisation').css({ top: 0 });
+          $('.filter').css({ top: "-800px" });
 
           DSIMap.visibleOrganisations[guid] = DSIMap.allOrganisations[guid];
           DSIMap.addOrganisationPins();
@@ -335,9 +336,11 @@
 
           DSIMap.addOrganisationPins();
           DSIMap.addPartnerLines();
+          DSIMap.resizeClusters();
 
           var top = $('.active-organisation').height() + 30;
           $('.active-organisation').css({ top: '-'+top+'px' });
+          $('.filter').css({ top: "0" });
 
           e.preventDefault();
           return false;
@@ -668,14 +671,20 @@
       },
 
       lineWeightForCount: function(count) {
-        var ratio = (count / DSIMap.currentMaxLineCount);
+        var max = DSIMap.currentMaxLineCount;
+        if (max <= 1 && DSIMap.clusterLevel != 0) max = 2;
+
+        var ratio = (count / max);
         var difference = DSIMap.maxLineWeight - DSIMap.minLineWeight;
 
         return DSIMap.minLineWeight + (ratio * difference);
       },
 
       lineOpacityForCount: function(count) {
-        var ratio = (count / DSIMap.currentMaxLineCount);
+        var max = DSIMap.currentMaxLineCount;
+        if (max <= 1 && DSIMap.clusterLevel != 0) max = 2;
+
+        var ratio = (count / max);
         var difference = DSIMap.maxLineOpacity - DSIMap.minLineOpacity;
 
         return DSIMap.minLineOpacity + (ratio * difference);
