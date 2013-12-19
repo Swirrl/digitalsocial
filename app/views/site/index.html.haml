@@ -92,12 +92,12 @@
           .hide{style:'float:right'}
             %a.hide-info{href:'#', style:'font-style:italic; font-size:14px'}
               Hide this panel
-              %icon.icon-circled-right
+              %icon.icon-circled-left
 
     .small-info
       %p.show-more
         %a{href:'#'}
-          %icon.icon-circled-left
+          %icon.icon-circled-right
           Show more info
 
       = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'

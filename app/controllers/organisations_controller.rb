@@ -150,7 +150,7 @@ class OrganisationsController < ApplicationController
     config = {
       :organisation_type =>
         "?org <http://data.digitalsocial.eu/def/ontology/organizationType> ?organisation_type .
-         ?org2 <http://data.digitalsocial.eu/def/ontology/organizationType> ?organisation_type_2",
+         ?org2 <http://data.digitalsocial.eu/def/ontology/organizationType> ?organisation_type_2 .",
       :activity_type =>
         "?am <http://data.digitalsocial.eu/def/ontology/organization> ?org .
          ?am <http://data.digitalsocial.eu/def/ontology/activity> ?activity .
