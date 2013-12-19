@@ -10,9 +10,6 @@
       currentMaxLineCount: 0,
       networkViewMarker: null,
       
-      currentFilters: <%= params[:filters].to_json.html_safe %>,
-      clusterLevel: $('input#cluster-level').val(),
-
       defaultCenter: [49, 12],
       defaultZoom: 5,
       minLineWeight: 1,
@@ -24,6 +21,16 @@
       layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
       layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
       maxClusterChildCount: 40,
+
+      // Adjustable settings
+      currentFilters: <%= params[:filters].to_json.html_safe %>,
+      
+      paramsClusterLevel: <%= params[:cluster].to_json.html_safe %>,
+      paramsZoom: <%= params[:zoom].to_json.html_safe %>,
+      paramsCenter: [<%= params[:center] %>],
+      paramsPopup: <%= params[:popup].to_json.html_safe %>,
+
+      clusterLevel: (this.paramsClusterLevel || $('input#cluster-level').val()),
 
       clusterConfig: [{
           // Level 0
@@ -69,13 +76,17 @@
         }
 
         this.fetchOrganisations();
+        this.paramsActions();
       },
 
       initMap: function() {
+        var center = (DSIMap.paramsCenter.length) ? DSIMap.paramsCenter : DSIMap.defaultCenter;
+        var zoom = DSIMap.paramsZoom || DSIMap.defaultZoom;
+
         map = L.map('home-map', {
           scrollWheelZoom: true
         })
-        .setView(DSIMap.defaultCenter, DSIMap.defaultZoom)
+        .setView(center, zoom)
         .addLayer(DSIMap.layerWithoutLabels);
 
         map._container.className = "leaflet-container leaflet-fade-anim cluster-level-" + DSIMap.clusterLevel;
@@ -184,7 +195,8 @@
 
         clusters.on('clusterclick', function (a) {
           a.layer.bindPopup('', {
-            closeButton: false
+            closeButton: false,
+            autoPan: false
           }).openPopup();
         });
       },
@@ -379,6 +391,10 @@
             DSIMap.resizeClusters();
 
             DSIMap.fetchPartners();
+
+            if (DSIMap.paramsPopup) {
+              DSIMap.allOrganisations[DSIMap.paramsPopup].marker.openPopup();
+            }
           },
           dataType: 'json'
         });
@@ -785,6 +801,16 @@
         $.each(marker._lines, function(i, line) {
           line.setStyle({ color: '#777' });
         });
+      },
+
+      paramsActions: function() {
+
+        if (DSIMap.currentFilters || DSIMap.paramsClusterLevel) {
+          if (!DSIMap.isMobile()) {
+            $('.show-filter a').click();
+          }
+        }
+
       }
     }
 

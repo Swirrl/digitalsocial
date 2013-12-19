@@ -173,10 +173,4 @@
     = render "site/index/map_js"
     = render "analytics"
 
-    - if params[:filters].present? || params[:cluster].present?
-      :javascript
-        $(function(){
-          if (!DSIMap.isMobile()) {
-            $('.show-filter a').click();
-          }
-        });
+
