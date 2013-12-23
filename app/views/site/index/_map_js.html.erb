@@ -29,6 +29,7 @@
       paramsZoom: <%= params[:zoom].to_json.html_safe %>,
       paramsCenter: [<%= params[:center] %>],
       paramsPopup: <%= params[:popup].to_json.html_safe %>,
+      paramsNetwork: <%= params[:network].to_json.html_safe %>,
 
       clusterLevel: (this.paramsClusterLevel || $('input#cluster-level').val()),
 
@@ -157,6 +158,15 @@
           e.preventDefault();
         });
 
+        $('.filter .filter-share-section a.show-url').click(function(e){
+          DSIMap.setShareUrl();
+
+          $('.filter .filter-share-section input').fadeIn(function(){
+            $(this).select();
+          });
+          e.preventDefault();
+        });
+
         $("#slider" ).slider({
           value: DSIMap.clusterLevel,
           min: 0,
@@ -276,48 +286,53 @@
 
       bindShowOrgNetworkClick: function(e) {
         $(document.body).on('click', 'a.show-org-network', function(e) {
-
-          clusters.clearLayers();
-          DSIMap.clearLines();
-
           var guid = e.target.hash.substring(1);
-          var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
-          DSIMap.visibleOrganisations = {};
-
-          if (DSIMap.networkViewMarker) {
-            DSIMap.highlightMarker(visibleMarker);
-          }
-
-          DSIMap.networkViewMarker = DSIMap.allOrganisations[guid].marker;
-
-          var partnerLatLngs = [];
-
-          $.each(DSIMap.allOrganisations[guid].partners, function(i, partnerGuid) {
-            DSIMap.visibleOrganisations[partnerGuid] = DSIMap.allOrganisations[partnerGuid];
-            partnerLatLngs.push(DSIMap.allOrganisations[partnerGuid].marker._latlng);
-          });
-
-          $('.active-organisation .name').text(DSIMap.allOrganisations[guid].name);
-          $('.active-organisation').css({ top: 0 });
-          $('.filter').css({ top: "-800px" });
-
-          DSIMap.visibleOrganisations[guid] = DSIMap.allOrganisations[guid];
-          DSIMap.addOrganisationPins();
-          DSIMap.addPartnerLines();
-
-          var networkLatLngs = partnerLatLngs;
-          networkLatLngs.push(markerLatLng);
-          var bounds = new L.LatLngBounds(networkLatLngs);
-          map.fitBounds(bounds);
-
-          var visibleMarker = clusters.getVisibleParent(DSIMap.networkViewMarker);
-
-          DSIMap.highlightMarkerLines(visibleMarker);
-          DSIMap.highlightMarker(visibleMarker);
+          DSIMap.showOrgNetwork(guid);
 
           e.preventDefault();
           return false;
         });
+      },
+
+      showOrgNetwork: function(guid) {
+        clusters.clearLayers();
+        DSIMap.clearLines();
+        
+        var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
+        DSIMap.visibleOrganisations = {};
+
+        if (DSIMap.networkViewMarker) {
+          DSIMap.highlightMarker(visibleMarker);
+        }
+
+        DSIMap.networkViewMarker = DSIMap.allOrganisations[guid].marker;
+
+        var partnerLatLngs = [];
+
+        $.each(DSIMap.allOrganisations[guid].partners, function(i, partnerGuid) {
+          DSIMap.visibleOrganisations[partnerGuid] = DSIMap.allOrganisations[partnerGuid];
+          partnerLatLngs.push(DSIMap.allOrganisations[partnerGuid].marker._latlng);
+        });
+
+        $('.active-organisation .name').text(DSIMap.allOrganisations[guid].name);
+        $('.active-organisation').css({ top: 0 });
+
+        DSIMap.visibleOrganisations[guid] = DSIMap.allOrganisations[guid];
+        DSIMap.addOrganisationPins();
+        DSIMap.addPartnerLines();
+
+        var networkLatLngs = partnerLatLngs;
+        networkLatLngs.push(markerLatLng);
+        var bounds = new L.LatLngBounds(networkLatLngs);
+        map.fitBounds(bounds);
+
+        var visibleMarker = clusters.getVisibleParent(DSIMap.networkViewMarker);
+
+        DSIMap.highlightMarkerLines(visibleMarker);
+        DSIMap.highlightMarker(visibleMarker);
+
+        DSIMap.slideOutPanels();
+        $('.filter').hide();
       },
 
       bindOrgZoomClick: function(e) {
@@ -361,7 +376,7 @@
 
           var top = $('.active-organisation').height() + 30;
           $('.active-organisation').css({ top: '-'+top+'px' });
-          $('.filter').css({ top: "0" });
+          $('.filter').css({ top: "0" }).show();
 
           e.preventDefault();
           return false;
@@ -681,6 +696,10 @@
           success: function(data){
             DSIMap.setAllOrganisationPartners(data.organisations);
             DSIMap.addPartnerLines(DSIMap.allOrganisations);
+
+            if (DSIMap.paramsNetwork) {
+              DSIMap.showOrgNetwork(DSIMap.paramsNetwork);
+            }
           },
           dataType: 'json'
         });
@@ -804,13 +823,35 @@
       },
 
       paramsActions: function() {
-
         if (DSIMap.currentFilters || DSIMap.paramsClusterLevel) {
           if (!DSIMap.isMobile()) {
             $('.show-filter a').click();
           }
         }
+      },
 
+      setShareUrl: function() {
+        var params = [];
+        params.push('zoom=' + map.getZoom());
+        params.push('center=' + map.getCenter().lat + ',' + map.getCenter().lng);
+        params.push('cluster=' + DSIMap.clusterLevel);
+
+        if ($('.leaflet-popup:visible').length) {
+          var guid = $('.leaflet-popup:visible').find('h3 a').attr('href').split('/')[2];
+          params.push('popup=' + guid);
+        }
+
+        $.each(DSIMap.currentFilters, function(category, values){
+          $.each(values, function(i, value){
+            var key = encodeURIComponent('filters['+category+'][]');
+            var val = encodeURIComponent(value);
+            params.push(key+'='+val);
+          });
+        });
+
+        var url = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+        url += '/?' + params.join('&');
+        $('.filter-share-section input').val(url);
       }
     }
 

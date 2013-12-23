@@ -446,6 +446,41 @@
           
       }
     }
+
+    .filter-share-section {
+      padding-top: 0;
+
+      p {
+        margin: 0;
+        color: #999;
+        font-size: 16px;
+        line-height: 16px;
+        text-align: center;
+
+        [class^="icon-"], [class*=" icon-"] {          
+          font-style: normal;
+          margin: 0;
+        }
+
+        a {
+          color: #888;
+
+          &:hover {
+            text-decoration: none;
+            color: $orange;
+          }
+        }
+      }
+
+      input {
+        display: none;
+        padding: 3px;
+        font-size: 14px;
+        font-family: $chaparral;
+        margin: 6px 0 0;
+        width: 206px;
+      }
+    }
   }
 
   .show-filter {
@@ -594,5 +629,4 @@
 
   }
 }
-
 
