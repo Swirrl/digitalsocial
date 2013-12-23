@@ -841,13 +841,15 @@
           params.push('popup=' + guid);
         }
 
-        $.each(DSIMap.currentFilters, function(category, values){
-          $.each(values, function(i, value){
-            var key = encodeURIComponent('filters['+category+'][]');
-            var val = encodeURIComponent(value);
-            params.push(key+'='+val);
+        if (DSIMap.currentFilters) {
+          $.each(DSIMap.currentFilters, function(category, values){
+            $.each(values, function(i, value){
+              var key = encodeURIComponent('filters['+category+'][]');
+              var val = encodeURIComponent(value);
+              params.push(key+'='+val);
+            });
           });
-        });
+        }
 
         var url = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
         url += '/?' + params.join('&');
