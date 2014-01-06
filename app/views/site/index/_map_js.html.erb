@@ -31,6 +31,9 @@
       paramsPopup: <%= params[:popup].to_json.html_safe %>,
       paramsNetwork: <%= params[:network].to_json.html_safe %>,
 
+      preNetworkZoom: null,
+      preNetworkCenter: null,
+
       clusterLevel: (this.paramsClusterLevel || $('input#cluster-level').val()),
 
       clusterConfig: [{
@@ -159,7 +162,7 @@
         });
 
         $('.filter .filter-share-section a.show-url').click(function(e){
-          DSIMap.setShareUrl();
+          DSIMap.updateShareUrlInput();
 
           $('.filter .filter-share-section input').fadeIn(function(){
             $(this).select();
@@ -297,6 +300,9 @@
       showOrgNetwork: function(guid) {
         clusters.clearLayers();
         DSIMap.clearLines();
+
+        DSIMap.preNetworkZoom = map.getZoom();
+        DSIMap.preNetworkCenter = map.getCenter();
         
         var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
         DSIMap.visibleOrganisations = {};
@@ -359,29 +365,8 @@
 
       bindResetMapClick: function() {
         $('a.reset-map').click(function(e){
-          DSIMap.networkViewMarker.setIcon(new L.DivIcon({
-            iconSize: new L.Point(10, 10)
-          }));
-          DSIMap.networkViewMarker = null;
-          DSIMap.visibleOrganisations = DSIMap.allOrganisations;
-
-          map.setZoom(DSIMap.defaultZoom);
-
-          clusters.clearLayers();
-          DSIMap.clearLines();
-
-          DSIMap.addOrganisationPins();
-          DSIMap.addPartnerLines();
-          DSIMap.resizeClusters();
-
-          var top = $('.active-organisation').height() + 30;
-          $('.active-organisation').css({ top: '-'+top+'px' });
-          $('.filter').css({ top: "0" }).show();
-
-          e.preventDefault();
-          return false;
+          $(this).attr('href', DSIMap.getShareUrl());
         });
-
       },
 
       bindZoomClusterClick: function() {
@@ -830,15 +815,22 @@
         }
       },
 
-      setShareUrl: function() {
+      getShareUrl: function() {
         var params = [];
-        params.push('zoom=' + map.getZoom());
-        params.push('center=' + map.getCenter().lat + ',' + map.getCenter().lng);
+
+        var zoom = DSIMap.preNetworkZoom || map.getZoom();
+        params.push('zoom=' + zoom);
+
+        var center = DSIMap.preNetworkCenter || map.getCenter();
+        params.push('center=' + center.lat + ',' + center.lng);
+        
         params.push('cluster=' + DSIMap.clusterLevel);
 
         if ($('.leaflet-popup:visible').length) {
           var guid = $('.leaflet-popup:visible').find('h3 a').attr('href').split('/')[2];
           params.push('popup=' + guid);
+        } else if (DSIMap.networkViewMarker) {
+          params.push('popup=' + DSIMap.networkViewMarker._guid);
         }
 
         if (DSIMap.currentFilters) {
@@ -853,7 +845,11 @@
 
         var url = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
         url += '/?' + params.join('&');
-        $('.filter-share-section input').val(url);
+        return url;
+      },
+
+      updateShareUrlInput: function() {
+        $('.filter-share-section input').val(DSIMap.getShareUrl());
       }
     }
 
