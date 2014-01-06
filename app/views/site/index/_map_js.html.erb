@@ -807,7 +807,9 @@
 
       paramsActions: function() {
         if (DSIMap.currentFilters || DSIMap.paramsClusterLevel) {
-          if (!DSIMap.isMobile()) {
+          if (DSIMap.isMobile()) {
+            $('.mobile-filter').show();
+          } else {
             $('.show-filter a').click();
           }
         }
