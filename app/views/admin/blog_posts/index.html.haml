@@ -10,7 +10,7 @@
 
   - @blog_posts.all.each do |blog_post|
     %tr
-      %td.name= blog_post.name
+      %td.text= blog_post.name
       %td.center= blog_post.status.titleize
       %td.center= blog_post.publish_at.strftime("%-d %B %Y")
       %td.center= blog_post.admin.present? ? blog_post.admin.name : '-'

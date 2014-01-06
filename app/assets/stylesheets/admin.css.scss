@@ -16,9 +16,15 @@ body.admin {
       padding: 24px;
       text-align: left;
       vertical-align: middle;
+      white-space: nowrap;
 
       &.center {
         text-align: center;
+      }
+
+      &.text {
+        white-space: normal;
+        line-height: 1.2;
       }
     }
 
@@ -36,17 +42,6 @@ body.admin {
     tr:nth-child(even) {
       td {
         background: #eee;
-      }
-    }
-
-    &.blog-posts, &.pages {
-      td, th {
-        white-space: nowrap;
-
-        &.name, &.body {
-          white-space: normal;
-          line-height: 1.2;
-        }
       }
     }
 

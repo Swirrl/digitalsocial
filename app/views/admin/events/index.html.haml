@@ -10,7 +10,7 @@
 
   - @events.each do |event|
     %tr
-      %td= event.name
+      %td.text= event.name
       %td.center= event.start_date.strftime("%-d %B %Y")
       %td.center= event.end_date.strftime("%-d %B %Y")
       %td= link_to 'Link', event.url
