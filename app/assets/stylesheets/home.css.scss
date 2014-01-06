@@ -125,7 +125,7 @@
   .info {
 
     @include media-all-mobile {
-      display:none;
+      display:none !important;
     }
 
     .text {
