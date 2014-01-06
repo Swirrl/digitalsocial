@@ -4,13 +4,18 @@ body.admin {
     line-height: 36px;
   }
 
+  .admin-main {
+    @include columns(16);
+  }
+
   table.index {
     width: 100%;
     margin-bottom: 36px;
 
     th, td {
-      padding: 12px 12px;
+      padding: 24px;
       text-align: left;
+      vertical-align: middle;
 
       &.center {
         text-align: center;
@@ -19,6 +24,7 @@ body.admin {
 
     th {
       color: #ccc;
+      font-weight: normal;
     }
 
     td.actions {
@@ -29,7 +35,18 @@ body.admin {
 
     tr:nth-child(even) {
       td {
-        background: #f8f8f8;
+        background: #eee;
+      }
+    }
+
+    &.blog-posts, &.pages {
+      td, th {
+        white-space: nowrap;
+
+        &.name, &.body {
+          white-space: normal;
+          line-height: 1.2;
+        }
       }
     }
 

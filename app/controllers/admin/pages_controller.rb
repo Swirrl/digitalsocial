@@ -18,6 +18,10 @@ class Admin::PagesController < AdminController
     end
   end
 
+  def new
+    @page = Page.new
+  end
+
   def destroy
     @page = Page.find(params[:id])
 

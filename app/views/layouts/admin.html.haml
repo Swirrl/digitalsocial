@@ -3,8 +3,12 @@
   %head
     %title= [@title, "Digital Social Innovation"].compact.join(" | ")
     = stylesheet_link_tag    "application"
+
+    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
     = javascript_include_tag "application"
+    
     = csrf_meta_tags
+    = render "typekit"
 
   %body.admin
     
@@ -12,4 +16,5 @@
       = render "header"
 
       #main.clearfix
-        = yield
+        .admin-main= yield
+        

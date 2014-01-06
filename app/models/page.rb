@@ -4,5 +4,6 @@ class Page
 
   field :name, type: String
   field :body, type: String
+  field :path, type: String
 
 end

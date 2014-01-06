@@ -5,4 +5,4 @@
   = f.input :publish_at, label: "Publish date", as: :date, order: [:day, :month, :year]
   = f.association :admin, as: :select, label: "Author", collection: Admin.all, include_blank: false
   
-  = f.submit (blog_post.new_record? ? "Create blog post" : "Update blog post")
+  = f.submit (blog_post.new_record? ? "Create blog post" : "Update blog post"), class: 'button'

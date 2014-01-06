@@ -4,4 +4,4 @@
   = f.input :start_date, as: :date, order: [:day, :month, :year]
   = f.input :end_date, as: :date, order: [:day, :month, :year]
   
-  = f.submit (event.new_record? ? "Create event" : "Update event")
+  = f.submit (event.new_record? ? "Create event" : "Update event"), class: 'button'

@@ -1,0 +1,5 @@
+= simple_form_for [:admin, page] do |f|
+  = f.input :name, label: 'Title'
+  = f.input :path
+  = f.input :body, as: :text
+  = f.submit (page.new_record? ? "Create page" : "Update page"), class: 'button'
