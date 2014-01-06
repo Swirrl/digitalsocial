@@ -2,10 +2,11 @@
   #content
     .title
       %h1 Events
-    %p
-      Some upcoming events of interest in the field of Digital Social Innovation.
-      %br
-      %br
+    :markdown
+      #{@page.body}
+      
+    %br
+    %br
 
     %ul.timeline
       %li.year

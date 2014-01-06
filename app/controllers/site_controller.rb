@@ -13,6 +13,20 @@ class SiteController < ApplicationController
     #foo trigger an error
   end
 
+  def events
+    @page = Page.where(path: 'events').first
+  end
+
+  def about
+    @page = Page.where(path: 'about').first
+  end
+
+  def custom_page
+    unless @page = Page.where(path: params[:path]).first
+      raise Tripod::Errors::ResourceNotFound
+    end
+  end
+
   private
 
   def set_title

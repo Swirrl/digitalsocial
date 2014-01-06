@@ -113,6 +113,8 @@ Digitalsocial::Application.routes.draw do
   get 'dashboard/projects' => 'dashboard#projects'
   get 'dashboard/users' => 'dashboard#users'
 
+  get ':path' => "site#custom_page"
+
   # fall through - 404s
   match '*a', :to => 'errors#routing'
 

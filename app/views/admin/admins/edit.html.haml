@@ -9,7 +9,7 @@
     = f.input :organisation_url, label: 'Organisation URL (including http://)'
     - if @admin.photo.present?
       = image_tag @admin.photo.url(:small)
-    = f.input :photo, as: :file, label: 'Set new password'
-    = f.input :password
+    = f.input :photo, as: :file
+    = f.input :password, label: 'Set new password'
 
     = f.submit 'Update account', class: 'button'

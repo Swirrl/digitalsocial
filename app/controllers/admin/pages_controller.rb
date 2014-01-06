@@ -22,6 +22,16 @@ class Admin::PagesController < AdminController
     @page = Page.new
   end
 
+  def create
+    @page = Page.new(params[:page])
+
+    if @page.save
+      redirect_to [:admin, :pages], notice: "Page was created!"
+    else
+      render :new
+    end
+  end
+
   def destroy
     @page = Page.find(params[:id])
 

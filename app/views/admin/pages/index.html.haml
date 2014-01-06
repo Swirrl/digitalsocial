@@ -3,13 +3,14 @@
 %table.index.pages
   %tr
     %th.center Page
-    %th Body
+    %th.center URL path
+    %th Content
     %th
 
   - @pages.each do |page|
     %tr
       %td.center= page.name.titleize
-      %td.center= link_to "/#{page.path}", "/#{page.path}"
+      %td.center= link_to page.path, "/#{page.path}"
       %td.body= page.body.truncate(80)
       %td.actions
         = link_to "Edit", [:edit, :admin, page]

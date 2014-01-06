@@ -6,4 +6,8 @@ class Page
   field :body, type: String
   field :path, type: String
 
+  def core?
+    ['about', 'events'].include?(path)
+  end
+
 end
