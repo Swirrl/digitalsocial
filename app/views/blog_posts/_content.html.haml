@@ -1,0 +1,21 @@
+.blog-post.clearfix
+
+  .title
+    %h1= link_to blog_post.name, blog_post
+    %h2= blog_post.publish_at.strftime("#{blog_post.publish_at.day.ordinalize} %B %Y")
+    
+  .blog-content
+    :markdown
+      #{blog_post.body}
+
+  - if blog_post.admin.present?
+    .blog-meta
+      - if blog_post.admin.photo.present?
+        = image_tag blog_post.admin.photo.url(:small), alt: blog_post.admin.name
+      %p.author= blog_post.admin.name
+
+      - if blog_post.admin.job_title.present?
+        %p.author-role= blog_post.admin.job_title
+      
+      - if blog_post.admin.organisation_name.present?
+        %p.author-company= link_to blog_post.admin.organisation_name, blog_post.admin.organisation_url

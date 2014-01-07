@@ -175,7 +175,7 @@ Admin.create(email: 'admin@test.com', password: 'password', name: 'Test Admin', 
 Event.create(name: 'The GovLab Experiment, New York', start_date: '18 April 2013', end_date: '19 April 2013', url: 'http://www.thegovlab.org')
 
 # Seed blog posts
-BlogPost.create(name: 'Understanding the potential in digital social innovation', publish_at: '27th June 2013', status: 'published', body: <<eos)
+BlogPost.create(name: 'Understanding the potential in digital social innovation', publish_at: '27th June 2013', body: <<eos)
 Following the nuclear catastrophe at the Fukushima nuclear power plant in March 2011, Safecast, a global sensor network for collecting and sharing radiation measurements, used crowdfunding platform Kickstarter to raise money for [a project that would help them crowdsource radiation levels in Japan](http://www.fastcoexist.com/1680065/safecasts-new-geiger-counter-lets-anyone-collect-and-share-data-on-radiation).
 
 This allowed volunteers to upload their own Geiger counter readings to a [crowdsourced map](http://blog.safecast.org/maps/) to provide accurate radiation levels to the public.

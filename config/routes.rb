@@ -1,12 +1,13 @@
 Digitalsocial::Application.routes.draw do
   root to: 'site#index'
-  get '/blog' => 'site#blog'
   get '/events' => 'site#events'
   get '/terms' => 'site#terms'
   get '/privacy' => 'site#privacy'
   get '/about' => 'site#about'
 
   get '/fale' => 'site#fale'
+
+  resources :blog_posts, only: [:index, :show], path: 'blog'
 
   devise_for :users
 
