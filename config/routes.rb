@@ -4,8 +4,9 @@ Digitalsocial::Application.routes.draw do
   get '/terms' => 'site#terms'
   get '/privacy' => 'site#privacy'
   get '/about' => 'site#about'
-
   get '/fale' => 'site#fale'
+  get '/pages/:page_category_id' => 'pages#index', as: :page_category
+  get '/pages/:page_category_id/:id' => 'pages#show', as: :page
 
   resources :blog_posts, only: [:index, :show], path: 'blog'
 
@@ -113,8 +114,6 @@ Digitalsocial::Application.routes.draw do
   get 'dashboard' => 'dashboard#pending'
   get 'dashboard/projects' => 'dashboard#projects'
   get 'dashboard/users' => 'dashboard#users'
-
-  get ':path' => "site#custom_page"
 
   # fall through - 404s
   match '*a', :to => 'errors#routing'

@@ -21,12 +21,6 @@ class SiteController < ApplicationController
     @page = Page.where(path: 'about').first
   end
 
-  def custom_page
-    unless @page = Page.where(path: params[:path]).first
-      raise Tripod::Errors::ResourceNotFound
-    end
-  end
-
   private
 
   def set_title

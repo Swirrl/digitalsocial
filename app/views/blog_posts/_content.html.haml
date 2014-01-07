@@ -11,7 +11,7 @@
       #{blog_post.body}
 
     - if disqus
-      = render "blog_posts/disqus", blog_post: blog_post
+      = render "application/disqus", title: blog_post.name
 
   - if blog_post.admin.present?
     .blog-meta

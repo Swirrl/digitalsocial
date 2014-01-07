@@ -1,6 +1,7 @@
 = simple_form_for [:admin, page] do |f|
   - unless page.core?
     = f.input :name, label: 'Title'
-    = f.input :path, label: 'URL path (e.g. name-of-page)'
+    = f.input :page_category_id, as: :select, collection: PageCategory.all, include_blank: false
+    = f.input :show_comments, as: :select, include_blank: false
   = f.input :body, as: :text, input_html: { cols: 80 }, label: "Content"
   = f.submit (page.new_record? ? "Create page" : "Update page"), class: 'button'

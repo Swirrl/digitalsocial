@@ -24,6 +24,10 @@
   #content {
     @include columns(10);
   }
+
+  .page + .page {
+    margin-top: 90px;
+  }
 }
 
 #events {
@@ -198,12 +202,12 @@
         }
     }
 
-    #disqus_thread {
-      margin-top: 90px;
-    }
   }
 
+}
 
+#disqus_thread {
+  margin-top: 90px;
 }
 
 #terms {

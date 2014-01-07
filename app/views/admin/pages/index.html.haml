@@ -10,7 +10,11 @@
   - @pages.each do |page|
     %tr
       %td.text= page.name.titleize
-      %td= link_to page.path, "/#{page.path}"
+      %td
+        - if page.page_category.present?
+          = link_to page_path(page.page_category, page), page_path(page.page_category, page)
+        - else
+          = link_to "/#{page.slug}", "/#{page.slug}"
       %td.text= page.body.truncate(80)
       %td.actions
         = link_to "Edit", [:edit, :admin, page]
