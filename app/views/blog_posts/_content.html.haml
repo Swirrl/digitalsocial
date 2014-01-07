@@ -1,3 +1,5 @@
+- disqus = local_assigns[:disqus] || false
+
 .blog-post.clearfix
 
   .title
@@ -7,6 +9,9 @@
   .blog-content
     :markdown
       #{blog_post.body}
+
+    - if disqus
+      = render "blog_posts/disqus", blog_post: blog_post
 
   - if blog_post.admin.present?
     .blog-meta

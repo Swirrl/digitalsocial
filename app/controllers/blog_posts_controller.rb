@@ -2,6 +2,7 @@ class BlogPostsController < ApplicationController
 
   def show
     @blog_post = BlogPost.published.find(params[:id])
+    @title = "#{@blog_post.name} | Blog"
   end
 
   def index
