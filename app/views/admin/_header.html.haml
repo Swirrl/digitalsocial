@@ -3,9 +3,11 @@
     %a.logo{ href: '/' }
 
     .menu
-      = link_to "Pages", [:admin, :pages]
-      = link_to "Blog", [:admin, :blog_posts]
       = link_to "Events", [:admin, :events]
+      = link_to "Blog", [:admin, :blog_posts]
+      = link_to "Pages", [:admin, :pages]
+      = link_to "Attachments", [:admin, :attachments]
+      
       = link_to "Account", [:edit, :admin, current_admin]
       = link_to "Sign out", destroy_admin_session_path, method: :delete
 

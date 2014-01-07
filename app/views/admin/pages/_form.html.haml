@@ -4,4 +4,8 @@
     = f.input :page_category_id, as: :select, collection: PageCategory.all, include_blank: false
     = f.input :show_comments, as: :select, include_blank: false
   = f.input :body, as: :text, input_html: { cols: 80 }, label: "Content"
+
+  - unless page.core?
+    = f.association :attachments, as: :check_boxes, collection: Attachment.all
+
   = f.submit (page.new_record? ? "Create page" : "Update page"), class: 'button'

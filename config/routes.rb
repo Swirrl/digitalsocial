@@ -18,6 +18,7 @@ Digitalsocial::Application.routes.draw do
     resources :pages
     resources :blog_posts
     resources :events
+    resources :attachments
     resources :admins, only: [:index, :edit, :update]
     root to: 'pages#index'
   end

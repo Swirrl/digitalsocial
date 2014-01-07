@@ -10,6 +10,7 @@ class Page
   slug :name
 
   belongs_to :page_category
+  has_and_belongs_to_many :attachments
 
   def core?
     ['About', 'Events'].include?(name)
