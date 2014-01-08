@@ -9,8 +9,7 @@
   - @attachments.each do |attachment|
     %tr
       %td.text= attachment.name
-      %td
-        = link_to attachment.file.url.truncate(50), attachment.file.url
+      %td= link_to attachment.file.url.truncate(50), attachment.file.url
       %td.actions
         = link_to "Edit", [:edit, :admin, attachment]
         = link_to "Delete", [:admin, attachment], method: :delete, confirm: "Are you sure you wish to delete this attachment?"
