@@ -558,7 +558,7 @@
           content += '</ul>';
         }
 
-        if (DSIMap.allOrganisations[organisation.guid].partners.length) {
+        if (DSIMap.allOrganisations[organisation.guid].partners.length && !DSIMap.networkViewMarker) {
           content += '<div class="divider"></div>';
           content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show this organisation\'s network</a></div>';
         }
