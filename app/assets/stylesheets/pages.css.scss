@@ -31,11 +31,13 @@
     }
 
     .title {
-      h2 {
+      p {
         font-size: 24px;
         margin-bottom: -32px;
         font-weight: 300;
         margin-top: 36px;
+        line-height: 1;
+        font-style: italic;
       }
     }
 
@@ -43,9 +45,26 @@
       font-weight: normal;
       font-style: italic;
       font-size: 24px;
-      margin: 36px 0 12px;
+      margin: 60px 0 18px;
+    }
+
+    .attachments li {
+      padding-left: 16px;
+      text-indent: -16px;
+      margin-bottom: 16px;
+      line-height: 1.2;
     }
   }
+
+  .page-intro {
+    margin-bottom: 60px;
+
+    h2 {
+      margin-bottom: 12px;
+    }
+
+  }
+
 }
 
 #events {

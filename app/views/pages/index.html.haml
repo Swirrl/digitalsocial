@@ -1,4 +1,12 @@
 #page
   #content
-    = render partial: "page", collection: @pages
+    %h1= @page_category.name
+
+    - @pages.each do |page|
+      .page-intro
+        %h2= link_to page.name, page_path(page.page_category, page)
+        %p
+          = strip_tags(markdown(page.body)).truncate(280)
+          %br/
+          = link_to "Read more &raquo;".html_safe, page_path(page.page_category, page)
         
