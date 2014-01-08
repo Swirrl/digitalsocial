@@ -3,12 +3,20 @@
 .blog-post.clearfix
 
   .title
-    %h1= link_to blog_post.name, blog_post
+    %p
+      = link_to "Blog", '/blog'
+      &raquo;
+    %h1= blog_post.name
     %h2= blog_post.publish_at.strftime("#{blog_post.publish_at.day.ordinalize} %B %Y")
     
   .blog-content
     :markdown
       #{blog_post.body}
+
+    - if blog_post.tags.to_a.any?
+      %p.blog-tags
+        Posted in
+        = blog_post.tags.to_a.collect { |tag| link_to tag, "/blog/tag/#{tag}" }.join(", ").html_safe
 
     - if disqus
       = render "application/disqus", title: blog_post.name

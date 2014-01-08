@@ -3,5 +3,13 @@
   = f.input :body, as: :text, input_html: { cols: 80 }
   = f.input :publish_at, label: "Publish date", as: :date, order: [:day, :month, :year]
   = f.association :admin, as: :select, label: "Author", collection: Admin.all, include_blank: false
+
+  = f.input :tags_list, as: :string, label: 'Tags'
+
+  = content_tag :p, id: 'blog-suggested_tags', class: 'suggested-tags' do
+    Suggestions (click to add):
+    = BlogPost.all.collect(&:tags).flatten.compact.uniq.map { |tag| "<a href='#'>#{tag}</a>" }.join(", ").html_safe
+
+  = render 'tags_js', tag_field_id: "blog_post_tags_list", suggested_tags_selector: "p#blog-suggested_tags a", tag_source_url: '#'
   
   = f.submit (blog_post.new_record? ? "Create blog post" : "Update blog post"), class: 'button'

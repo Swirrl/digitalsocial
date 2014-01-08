@@ -9,4 +9,10 @@ class BlogPostsController < ApplicationController
     @blog_posts = BlogPost.published.order_by(publish_at: :desc)
   end
 
+  def tag
+    @tag = params[:tag]
+    @title = @tag.humanize
+    @blog_posts = BlogPost.published.order_by(publish_at: :desc).where(tags: @tag)
+  end
+
 end

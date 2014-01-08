@@ -3,7 +3,9 @@
 
 .page
   .title
-    %p= link_to page.page_category.name, page_category_path(page.page_category)
+    %p
+      = link_to page.page_category.name, page_category_path(page.page_category)
+      &raquo;
 
     %h1= page.name
 

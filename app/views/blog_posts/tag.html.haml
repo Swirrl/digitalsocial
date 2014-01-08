@@ -1,6 +1,7 @@
 #page
   #content
-    %h1 Blog
+    %h1
+      = @tag.humanize
 
     - @blog_posts.each do |blog_post|
       .page-intro
