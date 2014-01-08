@@ -28,7 +28,7 @@ The following users have requested to join your organisation:
 
 To respond to these items, please log in to the digitalsocial.eu dashboard for <%= @organisation.name %> (link below).
 
-<%= dashboard_url(org_id: @organisation.guid) %>
+<%= dashboard_url(org_id: @organisation.guid, source: 'email') %>
 
 <%= render 'footer' %>
 <%= render 'unsubscribe' %>

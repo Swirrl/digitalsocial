@@ -36,4 +36,7 @@
 
     - else
       .empty
-        You have no pending invites or requests to respond to.
+        %p You have no pending invites or requests to respond to.
+
+        - if params[:source] == 'email'
+          %p (Another member of your team/activity may have already responded).
