@@ -75,6 +75,14 @@ class User
     end
   end
 
+  def self.send_projectless_user_reminders
+    User.where(receive_notifications: true).all.each do |user|
+      user.organisation_resources.each do |organisation|
+        RequestMailer.projectless_user_reminder(user, organisation).deliver unless organisation.any_projects?
+      end
+    end
+  end
+
   def self.create_with_organisation_membership_from_project_invite project_invite
     user = User.create :email => project_invite.invited_email,
                        :first_name => project_invite.invited_user_name,
