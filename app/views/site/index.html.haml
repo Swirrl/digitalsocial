@@ -59,8 +59,12 @@
           %icon.icon-circled-up
           Show more info
 
+    .mobile-filter
+      Visible organisations are filtered.
+      = link_to "Reset filter", "/"
+
     .logo
-      = image_tag "logo/dsi-logo.png"
+      %a{ href: '/' }= image_tag "logo/dsi-logo.png"
       .links
         = link_to "About", "/about"
         = link_to "Blog", "/blog"

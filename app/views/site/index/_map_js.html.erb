@@ -558,7 +558,7 @@
           content += '</ul>';
         }
 
-        if (DSIMap.allOrganisations[organisation.guid].partners.length) {
+        if (DSIMap.allOrganisations[organisation.guid].partners.length && !DSIMap.networkViewMarker) {
           content += '<div class="divider"></div>';
           content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show this organisation\'s network</a></div>';
         }
@@ -622,7 +622,6 @@
       },
 
       slideOutPanels: function() {
-        $('.logo').css({ top: "-154px" });
         $('.info').css({ left: "-898px" });
         $('.show-filter').css({ top: "-60px" });
 
@@ -640,7 +639,6 @@
 
         setTimeout(function(){
           $('.info').css({ left: "0" });
-          $('.logo').css({ top: "0" });
           $('.show-filter').css({ top: "0" });
         }, 250);
       },
@@ -809,7 +807,9 @@
 
       paramsActions: function() {
         if (DSIMap.currentFilters || DSIMap.paramsClusterLevel) {
-          if (!DSIMap.isMobile()) {
+          if (DSIMap.isMobile()) {
+            $('.mobile-filter').show();
+          } else {
             $('.show-filter a').click();
           }
         }
@@ -844,7 +844,7 @@
         }
 
         var url = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
-        url += '/?' + params.join('&');
+        url += '?' + params.join('&');
         return url;
       },
 

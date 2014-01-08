@@ -10,7 +10,7 @@
     position: absolute;
     top: 0px;
     left: 72px;
-    padding: 30px 18px 0px;
+    padding: 18px 18px 0px;
     background: rgba(255, 255, 255, 0.75);
     border-bottom: 3px solid $orange;
     @include transition(top, 0.25s);
@@ -49,6 +49,10 @@
 
     @include media-all-mobile {
       display:block;
+    }
+
+    @media only screen and (min-width: $mobile-media-max-width) {
+      display: none !important;
     }
 
     a.hide-info-mobile {
@@ -106,7 +110,35 @@
     }
   }
 
+  .mobile-filter {
+    display: none;
+
+    @include media-larger-than-mobile {
+      display: none !important;
+    }
+
+    width: 100%;
+    z-index: 9999;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.75);
+    border-bottom: 3px solid $orange;
+    top:0;
+    padding: 6px 0;
+    font-size: 16px;
+    text-align: center;
+
+    a {
+      margin-left: 6px;
+    }
+  }
+
   .mobile-small-info {
+    display: none;
+
+    @include media-larger-than-mobile {
+      display: none !important;
+    }
+
     width: 100%;
     z-index:9999;
     position: absolute;
@@ -125,7 +157,7 @@
   .info {
 
     @include media-all-mobile {
-      display:none;
+      display:none !important;
     }
 
     .text {
@@ -627,6 +659,12 @@
     }
 
 
+  }
+
+  .leaflet-control {
+    @include media-all-mobile {
+      display:none;
+    }
   }
 }
 
