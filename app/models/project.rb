@@ -388,6 +388,20 @@ class Project
     end
   end
 
+  def only_organisation?(organisation)
+    organisations.count == 1 && organisations.first == organisation
+  end
+
+  def unjoin(organisation)
+    project_membership_project_predicate = ProjectMembership.fields[:project].predicate.to_s
+    project_membership_org_predicate = ProjectMembership.fields[:organisation].predicate.to_s
+    ProjectMembership
+      .where("?uri <#{project_membership_project_predicate}> <#{self.uri.to_s}>")
+      .where("?uri <#{project_membership_org_predicate}> <#{organisation.uri.to_s}>").resources.each do |pm|
+        pm.destroy
+    end
+  end
+
   private
 
   def first_page?

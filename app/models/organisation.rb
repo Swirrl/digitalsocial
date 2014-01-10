@@ -305,9 +305,7 @@ class Organisation
 
   def destroy_solely_associated_projects
     project_resources.each do |project|
-      if project.organisations.count == 1 && project.organisations.first == self
-        project.destroy
-      end
+      project.destroy if project.only_organisation?(self)
     end
   end
 

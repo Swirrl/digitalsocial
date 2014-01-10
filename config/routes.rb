@@ -49,6 +49,8 @@ Digitalsocial::Application.routes.draw do
       #these are one-click. Prob should be a PUT/POST but we want to do it from JS.
       get 'create_existing_org_invite'
       get 'request_to_join'
+
+      get 'unjoin'
     end
     collection do
       get 'tags'
