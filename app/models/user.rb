@@ -104,4 +104,12 @@ class User
   def self.random_password
     rand(36**16).to_s(36) # Temporary random password
   end
+
+  def self.to_csv
+    CSV.generate do |csv|
+      all.each do |user|
+        csv << [user.first_name, user.email]
+      end
+    end
+  end
 end

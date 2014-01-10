@@ -1,0 +1,13 @@
+%h1 Admin &raquo; Users
+
+%table.index.users
+  %tr
+    %th Name
+    %th Email
+
+  - @users.each do |user|
+    %tr
+      %td= user.first_name
+      %td= user.email
+      
+= link_to "Download CSV", admin_users_path(format: :csv), class: 'button'
