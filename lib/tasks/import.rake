@@ -1,3 +1,4 @@
+# rake import:admins import:events import:pages import:page_categories import:blog_posts
 namespace :import do
 
   desc 'Import DSI admins'
@@ -140,6 +141,15 @@ namespace :import do
       end_date: "14 June 2014"
     })
 
+  end
+
+  desc 'Import DSI pages'
+  task page_categories: :environment do
+    DatabaseCleaner.strategy = :truncation, { only: ["page_categories"] }
+    DatabaseCleaner.orm = "mongoid"
+    DatabaseCleaner.clean
+
+    PageCategory.create(name: 'Case studies')
   end
 
   desc 'Import DSI pages'
