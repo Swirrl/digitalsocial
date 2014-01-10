@@ -1,0 +1,9 @@
+#admin-banner
+  .container
+    .admin-banner-message.clearfix
+      You are currently logged in as an admin.
+      %span.links
+        = yield :admin_actions
+        = link_to 'Admin area', '/admin'
+        \|
+        = link_to 'Sign out', destroy_admin_session_path, method: :delete

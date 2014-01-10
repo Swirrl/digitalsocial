@@ -98,7 +98,7 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
-  resources :organisations, only: [:edit, :update, :index, :show] do
+  resources :organisations, only: [:edit, :update, :index, :show, :destroy] do
     member do
       get 'invite_users'
       put 'create_user_invites'

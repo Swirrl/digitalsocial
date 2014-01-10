@@ -56,3 +56,21 @@ body.admin {
   }
 	
 }
+
+#admin-banner {
+  width: 100%;
+  padding: 15px 0;
+  background: $orange;
+  color: #ffce8f;
+  text-align: center;
+
+  a {
+    text-decoration: underline;
+    color: #fff;
+  }
+
+  .links {
+    margin-left: 18px;
+  }
+
+}

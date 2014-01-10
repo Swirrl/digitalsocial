@@ -387,7 +387,7 @@ class Project
       send "#{name}=", value
     end
   end
-  
+
   private
 
   def first_page?

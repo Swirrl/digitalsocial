@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 class OrganisationsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:index, :show, :map_index, :map_show, :map_partners, :map_partners_static, :map_cluster]
+  before_filter :authenticate_user!, :except => [:index, :show, :map_index, :map_show, :map_partners, :map_partners_static, :map_cluster, :destroy]
   before_filter :set_organisation, :except => [:map_index, :map_show, :map_partners, :map_partners_static, :map_cluster]
   before_filter :ensure_user_is_organisation_owner, only: [:invite_user]
   before_filter :show_partners, only: [:show, :index]
+  before_filter :authenticate_admin!, only: [:destroy]
 
   def edit
     @organisation = current_organisation
@@ -19,6 +20,13 @@ class OrganisationsController < ApplicationController
       Rails.logger.debug @organisation.errors.inspect
       render :edit
     end
+  end
+
+  def destroy
+    @organisation = Organisation.find(Organisation.slug_to_uri(params[:id]))
+    @organisation.destroy
+
+    redirect_to :organisations, notice: 'Organisation was removed.'
   end
 
   def edit_location
