@@ -320,6 +320,14 @@ class Organisation
     OrganisationMembership.where(organisation_uri: self.uri.to_s).destroy_all
   end
 
+  def only_user?(user)
+    users.count == 1 && users.first == user
+  end
+
+  def unjoin(user)
+    user.organisation_memberships.where(organisation_uri: self.uri.to_s).destroy_all
+  end
+
   private
 
   def organisation_name_is_unique

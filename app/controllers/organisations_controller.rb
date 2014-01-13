@@ -48,6 +48,19 @@ class OrganisationsController < ApplicationController
     @organisation = Organisation.find( Organisation.slug_to_uri(params[:id]) )
   end
 
+  def unjoin
+    @organisation = Organisation.find(Organisation.slug_to_uri(params[:id]))
+
+    if @organisation.only_user?(current_user)
+      @organisation.unjoin(current_user)
+      @organisation.destroy
+      redirect_to [:edit, :user], notice: 'Organisation successfully removed.'
+    else
+      @organisation.unjoin(current_user)
+      redirect_to [:edit, :user], notice: 'Organisation successfully unjoined.'
+    end
+  end
+
   def index
 
     if params[:q].present? # used for auto complete suggestions.

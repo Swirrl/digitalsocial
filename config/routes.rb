@@ -109,6 +109,7 @@ Digitalsocial::Application.routes.draw do
       get 'edit_location'
       post 'update_location'
       get 'map_show'
+      get 'unjoin'
     end
     collection do
       get 'map_index'
