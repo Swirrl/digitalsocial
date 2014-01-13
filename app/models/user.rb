@@ -45,6 +45,10 @@ class User
     organisation_memberships.collect(&:organisation_resource)
   end
 
+  def any_organisations?
+    organisation_memberships.count > 0
+  end
+
   def send_request_digest(organisation)
     RequestMailer.request_digest(self, organisation).deliver
   end
