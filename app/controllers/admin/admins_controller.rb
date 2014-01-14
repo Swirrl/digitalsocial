@@ -10,7 +10,7 @@ class Admin::AdminsController < AdminController
     @admin = Admin.find(params[:id])
 
     if @admin.update_attributes(params[:admin])
-      redirect_to [:edit, :admin, current_admin], notice: "Profile updated!"
+      redirect_to [:admin, :admins], notice: "Admin updated!"
     else
       render :edit
     end
