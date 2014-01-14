@@ -18,7 +18,7 @@
   = f.input :body, as: :text, input_html: { cols: 80 }, label: "Content"
   = render layout: 'admin/help' do
     :markdown
-      The content of the page. The content accepts <a href="http://greg.brim.net/markdown_cheatsheet.html" target="_blank">Markdown</a> *(opens new window)* to format the page.
+      The content of the page. The content accepts <a href="http://packetlife.net/media/library/16/Markdown.pdf" target="_blank">Markdown</a> *(opens new window)* to format the page.
 
   - unless page.core?
     = f.association :attachments, as: :check_boxes, collection: Attachment.all

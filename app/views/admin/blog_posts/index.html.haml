@@ -3,6 +3,7 @@
 %table.index.blog-posts
   %tr
     %th.name Blog post title
+    %th URL
     %th.center Publish date
     %th.center Author
     %th
@@ -10,6 +11,7 @@
   - @blog_posts.all.each do |blog_post|
     %tr
       %td.text= blog_post.name
+      %td.text= link_to blog_post_path(blog_post), blog_post_path(blog_post)
       %td.center= blog_post.publish_at.strftime("%-d %B %Y")
       %td.center= blog_post.admin.present? ? blog_post.admin.name : '-'
           
