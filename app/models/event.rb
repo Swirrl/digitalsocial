@@ -9,6 +9,8 @@ class Event
   field :url, type: String
   field :dates_confirmed, type: Boolean, default: true
 
+  validates :name, :url, presence: true
+
   def date_string
     if dates_confirmed?
       if start_date == end_date

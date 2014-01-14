@@ -139,10 +139,9 @@ form {
     }
 
     &.field_with_errors {
-      input[type=text], input[type=email], input[type=password] {
+      input[type=text], input[type=email], input[type=password], textarea {
         border-color: $red;
       }
-
     }
   }
 

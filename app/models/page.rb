@@ -9,6 +9,8 @@ class Page
 
   slug :name
 
+  validates :name, :body, presence: true
+
   belongs_to :page_category
   has_and_belongs_to_many :attachments
 

@@ -25,6 +25,8 @@ Digitalsocial::Application.routes.draw do
     resources :attachments
     resources :users, only: [:index]
     resources :admins, only: [:index, :edit, :update]
+    get 'help'
+    get 'toggle_help'
     root to: 'pages#index'
   end
 

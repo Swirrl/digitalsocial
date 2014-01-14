@@ -11,6 +11,8 @@ class BlogPost
 
   scope :published, lambda { where(:publish_at.lte => Date.today) }
 
+  validates :name, :body, presence: true
+
   slug :name
 
   belongs_to :admin

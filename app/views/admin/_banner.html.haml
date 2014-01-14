@@ -6,4 +6,9 @@
         = yield :admin_actions
         = link_to 'Admin area', '/admin'
         \|
+        - if admin_help_enabled?
+          = link_to 'Turn off help', '/admin/toggle_help'
+        - else
+          = link_to 'Turn on help', '/admin/toggle_help'
+        \|
         = link_to 'Sign out', destroy_admin_session_path

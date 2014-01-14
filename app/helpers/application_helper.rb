@@ -158,4 +158,8 @@ module ApplicationHelper
 
     markdown.render(text).html_safe
   end
+
+  def admin_help_enabled?
+    session[:admin_help].present?
+  end
 end

@@ -5,6 +5,8 @@ class Attachment
 
   field :name, type: String
 
+  validates :name, :file, presence: true
+
   has_mongoid_attached_file :file,
     path:           'attachments/:id/:basename.:extension',
     storage:        :s3,
