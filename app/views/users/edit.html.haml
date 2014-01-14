@@ -26,7 +26,13 @@
                 .address
                   %p= org.address_str
 
-                  %p= link_to "Edit location", edit_location_organisation_path(org.guid)
+                  %p
+                    = link_to "Edit location", edit_location_organisation_path(org.guid)
+                    \|
+                    - if org.only_user?(current_user)
+                      = link_to "Delete organisation", unjoin_organisation_path(org.guid), confirm: "Are you sure you wish to delete this organisation?"
+                    - else
+                      = link_to "Unjoin organisation", unjoin_organisation_path(org.guid), confirm: "Are you sure you wish to remove yourself from this organisation?"
 
                 .users
                   - count = org.users.count

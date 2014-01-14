@@ -1,8 +1,33 @@
 = simple_form_for [:admin, blog_post] do |f|
-  = f.input :name
-  = f.input :body, as: :text
-  = f.input :status, as: :select, collection: ["draft", "published"], include_blank: false
+  = f.input :name, label: 'Title'
+  = render layout: 'admin/help' do
+    :markdown
+      The title of the blog post. The URL will automatically be set from the title.
+
+  = f.input :body, as: :text, input_html: { cols: 80 }
+  = render layout: 'admin/help' do
+    :markdown
+      The content of the blog post. The content accepts <a href="http://packetlife.net/media/library/16/Markdown.pdf" target="_blank">Markdown</a> *(opens new window)* to format the page.
+
   = f.input :publish_at, label: "Publish date", as: :date, order: [:day, :month, :year]
+  = render layout: 'admin/help' do
+    :markdown
+      The date of the post. Posts with publish dates in the future will not appear on the blog.
+
   = f.association :admin, as: :select, label: "Author", collection: Admin.all, include_blank: false
+  = render layout: 'admin/help' do
+    :markdown
+      The author of the post. The author must be a DSI admin user. <a href="/admin/admins/new" target="_blank">Add new admin</a> *(opens new window)*.
+
+  = f.input :tags_list, as: :string, label: 'Tags'
+  = render layout: 'admin/help' do
+    :markdown
+      Add tags to the blog post. Spaces are allowed in a tag. Press TAB to complete a tag.
+
+  = content_tag :p, id: 'blog-suggested_tags', class: 'suggested-tags' do
+    Suggestions (click to add):
+    = BlogPost.all.collect(&:tags).flatten.compact.uniq.map { |tag| "<a href='#'>#{tag}</a>" }.join(", ").html_safe
+
+  = render 'tags_js', tag_field_id: "blog_post_tags_list", suggested_tags_selector: "p#blog-suggested_tags a", tag_source_url: '#'
   
-  = f.submit (blog_post.new_record? ? "Create blog post" : "Update blog post")
+  = f.submit (blog_post.new_record? ? "Create blog post" : "Update blog post"), class: 'button'

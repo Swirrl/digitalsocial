@@ -1,12 +1,18 @@
 Digitalsocial::Application.routes.draw do
   root to: 'site#index'
-  get '/blog' => 'site#blog'
   get '/events' => 'site#events'
   get '/terms' => 'site#terms'
   get '/privacy' => 'site#privacy'
   get '/about' => 'site#about'
-
   get '/fale' => 'site#fale'
+  get '/pages/:page_category_id' => 'pages#index', as: :page_category
+  get '/pages/:page_category_id/:id' => 'pages#show', as: :page
+
+  resources :blog_posts, only: [:index, :show], path: 'blog' do
+    collection do
+      get 'tag/:tag' => 'blog_posts#tag'
+    end
+  end
 
   devise_for :users
 
@@ -16,7 +22,11 @@ Digitalsocial::Application.routes.draw do
     resources :pages
     resources :blog_posts
     resources :events
-    resources :admins, only: [:index, :edit, :update]
+    resources :attachments
+    resources :users, only: [:index]
+    resources :admins
+    get 'help'
+    get 'toggle_help'
     root to: 'pages#index'
   end
 
@@ -41,6 +51,8 @@ Digitalsocial::Application.routes.draw do
       #these are one-click. Prob should be a PUT/POST but we want to do it from JS.
       get 'create_existing_org_invite'
       get 'request_to_join'
+
+      get 'unjoin'
     end
     collection do
       get 'tags'
@@ -91,7 +103,7 @@ Digitalsocial::Application.routes.draw do
     end
   end
 
-  resources :organisations, only: [:edit, :update, :index, :show] do
+  resources :organisations, only: [:edit, :update, :index, :show, :destroy] do
     member do
       get 'invite_users'
       put 'create_user_invites'
@@ -99,6 +111,7 @@ Digitalsocial::Application.routes.draw do
       get 'edit_location'
       post 'update_location'
       get 'map_show'
+      get 'unjoin'
     end
     collection do
       get 'map_index'

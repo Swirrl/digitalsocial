@@ -27,6 +27,8 @@
     = csrf_meta_tags
     = render "typekit"
   %body
+    - if admin_signed_in?
+      = render "admin/banner"
 
     /[if lte IE 8]
       #out-of-spec

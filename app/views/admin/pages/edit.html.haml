@@ -1,4 +1,4 @@
+%h1 Admin &raquo; Edit page
+
 .edit
-  = simple_form_for [:admin, @page] do |f|
-    = f.input :body, as: :text
-    = f.submit "Update page"
+  = render 'form', page: @page

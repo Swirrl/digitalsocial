@@ -22,6 +22,9 @@ class Organisation
   validate :organisation_name_is_unique
 
   before_save :strip_whitespace
+  before_destroy :destroy_solely_associated_projects
+  before_destroy :destroy_project_memberships
+  before_destroy :destroy_organisation_memberships
 
   attr_accessor :invited_users, :invites_to_send
 
@@ -298,6 +301,31 @@ class Organisation
 
   def missing_site?
     !primary_site
+  end
+
+  def destroy_solely_associated_projects
+    project_resources.each do |project|
+      project.destroy if project.only_organisation?(self)
+    end
+  end
+
+  def destroy_project_memberships
+    organisation_predicate = ProjectMembership.fields[:organisation].predicate.to_s
+    ProjectMembership.where("?uri <#{organisation_predicate}> <#{self.uri}>").resources.each do |pm|
+      pm.destroy
+    end
+  end
+
+  def destroy_organisation_memberships
+    OrganisationMembership.where(organisation_uri: self.uri.to_s).destroy_all
+  end
+
+  def only_user?(user)
+    users.count == 1 && users.first == user
+  end
+
+  def unjoin(user)
+    user.organisation_memberships.where(organisation_uri: self.uri.to_s).destroy_all
   end
 
   private

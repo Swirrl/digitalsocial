@@ -1,0 +1,34 @@
+- disqus = local_assigns[:disqus] || false
+
+.blog-post.clearfix
+
+  .title
+    %p
+      = link_to "Blog", '/blog'
+      &raquo;
+    %h1= blog_post.name
+    %h2= blog_post.publish_at.strftime("#{blog_post.publish_at.day.ordinalize} %B %Y")
+    
+  .blog-content
+    :markdown
+      #{blog_post.body}
+
+    - if blog_post.tags.to_a.any?
+      %p.blog-tags
+        Posted in
+        = blog_post.tags.to_a.collect { |tag| link_to tag, "/blog/tag/#{tag}" }.join(", ").html_safe
+
+    - if disqus
+      = render "application/disqus", title: blog_post.name
+
+  - if blog_post.admin.present?
+    .blog-meta
+      - if blog_post.admin.photo.present?
+        = image_tag blog_post.admin.photo.url(:small), alt: blog_post.admin.name
+      %p.author= blog_post.admin.name
+
+      - if blog_post.admin.job_title.present?
+        %p.author-role= blog_post.admin.job_title
+      
+      - if blog_post.admin.organisation_name.present?
+        %p.author-company= link_to blog_post.admin.organisation_name, blog_post.admin.organisation_url

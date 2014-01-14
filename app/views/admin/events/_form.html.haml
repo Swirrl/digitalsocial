@@ -1,7 +1,14 @@
 = simple_form_for [:admin, event] do |f|
   = f.input :name
   = f.input :url, label: "URL (including http://)"
+  
+  = f.input :dates_confirmed, as: :select, label: "Dates confirmed?", include_blank: false
+
   = f.input :start_date, as: :date, order: [:day, :month, :year]
   = f.input :end_date, as: :date, order: [:day, :month, :year]
-  
-  = f.submit (event.new_record? ? "Create event" : "Update event")
+
+  = render layout: 'admin/help' do
+    :markdown
+      If the event is only one day, set the start and end dates to be the same. If the dates are not yet confirmed, set the start and end dates as 1st of the estimated month(s).
+
+  = f.submit (event.new_record? ? "Create event" : "Update event"), class: 'button'

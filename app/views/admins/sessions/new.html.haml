@@ -3,11 +3,11 @@
   %div
     = f.label :email
     %br/
-    = f.email_field :email, :autofocus => true
+    = f.email_field :email, :autofocus => true, :required => true
   %div
     = f.label :password
     %br/
-    = f.password_field :password
+    = f.password_field :password, :required => true
   - if devise_mapping.rememberable?
     %div
       = f.check_box :remember_me

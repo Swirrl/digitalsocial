@@ -45,6 +45,10 @@ class User
     organisation_memberships.collect(&:organisation_resource)
   end
 
+  def any_organisations?
+    organisation_memberships.count > 0
+  end
+
   def send_request_digest(organisation)
     RequestMailer.request_digest(self, organisation).deliver
   end
@@ -111,5 +115,13 @@ class User
 
   def self.random_password
     rand(36**16).to_s(36) # Temporary random password
+  end
+
+  def self.to_csv
+    CSV.generate do |csv|
+      all.each do |user|
+        csv << [user.first_name, user.email]
+      end
+    end
   end
 end
