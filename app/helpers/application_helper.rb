@@ -160,6 +160,6 @@ module ApplicationHelper
   end
 
   def admin_help_enabled?
-    session[:admin_help].present?
+    session[:admin_hide_help].nil?
   end
 end
