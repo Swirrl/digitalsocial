@@ -1,28 +1,34 @@
 %h1 Admin &raquo; Help
 
 %ul.admin-help-links
-  %li= link_to "How do I add a new blog post?", "#ah1"
-  %li= link_to "How do I add a new page?", "#ah2"
+  %li= link_to "How do I format the content of a blog post or page?", "#ah-format-content"
+  %li= link_to "How do I add an image to a blog post or page?", "#ah-add-image"
+  %li= link_to "How do I attach a resource to a page?", "#ah-attach-resource"
+  %li= link_to "How do I remove an organisation from the system?", "#ah-remove-organisation"
 
-.admin-help-section#ah1
-  %h2 How do I add a new blog post?
-  %p
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+.admin-help-section#ah-format-content
+  %h2 How do I format the content of a blog post or page?
+  :markdown
+    The CMS uses <a href='http://packetlife.net/media/library/16/Markdown.pdf' target='_blank'>Markdown</a> to allow content to be formatted.<br/>
+    e.g. `[This is a link](http://digitalsocial.eu)`
 
-.admin-help-section#ah2
-  %h2 How do I add a new page?
-  %p
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat.
+.admin-help-section#ah-add-image
+  %h2 How do I add an image to a blog post or page?
+  :markdown
+    1. Upload the image as an attachment on the <a href='/admin/attachments/new' target='_blank'>new attachment page</a>.
+    2. Copy the URL of the image from the <a href='/admin/attachments' target='_blank'>attachments page</a>.
+    3. In the body of the blog post or page, include the image using <a href='http://packetlife.net/media/library/16/Markdown.pdf' target='_blank'>Markdown</a>.<br/>
+       e.g. `![Alt text](http://example.com/path/to/img.jpg)`
 
-  %p
-    Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+.admin-help-section#ah-attach-resource
+  %h2 How do I attach a resource to a page?
+  :markdown
+    1. Upload the resource on the <a href='/admin/attachments/new' target='_blank'>new attachment page</a>.
+    2. Go to the <a href='/admin/pages' target='_blank'>pages area</a> and either edit an existing page or add a new page on the <a href='/admin/attachments/new' target='_blank'>new attachment page</a>.
+    3. At the bottom of the form check the box of the desired attachment, and submit the form.
+
+.admin-help-section#ah-remove-organisation
+  %h2 How do I remove an organisation from the system?  
+  :markdown
+    1. Navigate to the profile page of the organisation you wish to remove.
+    2. Click the `'Remove organisation'` link in the admin bar at the top of the page. *N.B. all orphaned activities will also be removed*.
