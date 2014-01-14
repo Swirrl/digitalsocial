@@ -182,13 +182,6 @@ If you have any questions please email [contact@digitalsocial.eu](mailto:contact
 eos
     })
 
-    Page.create({
-      name: "Events",
-      path: "events",
-      body: <<eos
-Some upcoming events of interest in the field of Digital Social Innovation.
-eos
-    })
   end
 
 
