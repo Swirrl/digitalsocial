@@ -49,6 +49,10 @@ class User
     organisation_memberships.count > 0
   end
 
+  def organisation_list(seperator=', ')
+    organisation_resources.collect(&:name).uniq.join(seperator)
+  end
+
   def send_request_digest(organisation)
     RequestMailer.request_digest(self, organisation).deliver
   end
@@ -120,7 +124,7 @@ class User
   def self.to_csv
     CSV.generate do |csv|
       all.each do |user|
-        csv << [user.first_name, user.email]
+        csv << [user.first_name, user.email, user.organisation_list('|')]
       end
     end
   end

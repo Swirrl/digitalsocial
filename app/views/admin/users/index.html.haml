@@ -6,9 +6,12 @@
   %tr
     %th Name
     %th Email
+    %th Organisation(s)
 
   - @users.each do |user|
     %tr
       %td= user.first_name
       %td= user.email
+      %td.text
+        = user.organisation_resources.collect { |o| link_to o.name, o }.uniq.join(', ').html_safe
       
