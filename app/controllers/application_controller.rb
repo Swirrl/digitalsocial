@@ -5,10 +5,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_organisation
 
-  #rescue_from Exception, :with => :handle_uncaught_error
-  #rescue_from Tripod::Errors::ResourceNotFound, :with => :handle_resource_not_found
-  #rescue_from Mongoid::Errors::DocumentNotFound, :with => :handle_resource_not_found
-  #rescue_from Tripod::Errors::Timeout, :with => :handle_timeout
+  rescue_from Exception, :with => :handle_uncaught_error
+  rescue_from Tripod::Errors::ResourceNotFound, :with => :handle_resource_not_found
+  rescue_from Mongoid::Errors::DocumentNotFound, :with => :handle_resource_not_found
+  rescue_from Tripod::Errors::Timeout, :with => :handle_timeout
 
   protected
 
