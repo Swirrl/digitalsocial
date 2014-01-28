@@ -64,31 +64,32 @@ class OrganisationsController < ApplicationController
   def index
 
     if params[:q].present? # used for auto complete suggestions.
-      @organisations = Organisation.search_by_name(params[:q]).to_a
-      if params[:p].present?
-        @project = Project.find( Project.slug_to_uri(params[:p]) )
-        current_organisation_uris = @project.organisation_resources.map { |o| o.uri.to_s }
-      else
-        current_organisation_uris = current_user.organisation_resources.map { |o| o.uri.to_s }
-      end
+      @organisations = Organisation.search_by_name(params[:q])
+      @project = Project.find(Project.slug_to_uri(params[:p])) if params[:p].present?
     else
-      page = params[:page].present? ? params[:page].to_i : 1
-      limit = Kaminari.config.default_per_page
-      offset = (page - 1) * limit
-
-      data = Organisation.order_by_name.limit(limit).offset(offset).resources.to_a
-      total_count = Organisation.count
-
-      @organisations = Kaminari.paginate_array(data, total_count: total_count).page(page).per(limit)
+      @organisations = Organisation.order_by_name
     end
-
+  
     respond_to do |format|
-      format.json do render json: {
-          organisations: @organisations,
+      format.json do
+        render json: {
+          organisations: @organisations.resources,
           current_organisation_uris: current_organisation_uris # list of orgs for this user
         }
       end
-      format.html
+      format.html do
+        page = params[:page].present? ? params[:page].to_i : 1
+        limit = Kaminari.config.default_per_page
+        offset = (page - 1) * limit
+
+        if params[:q].present?
+          data = Organisation.search_by_name(params[:q]).limit(limit).offset(offset).resources.to_a
+        else
+          data = Organisation.order_by_name.limit(limit).offset(offset).resources.to_a
+        end
+        total_count = @organisations.count
+        @organisations = Kaminari.paginate_array(data, total_count: total_count).page(page).per(limit)
+      end
     end
   end
 
@@ -369,6 +370,14 @@ class OrganisationsController < ApplicationController
 
   def ensure_user_is_organisation_owner
     redirect_to :projects unless current_organisation_membership.owner?
+  end
+
+  def current_organisation_uris
+    if @project.present?
+      @project.organisation_resources.map { |o| o.uri.to_s }
+    elsif current_user
+      current_user.organisation_resources.map { |o| o.uri.to_s }
+    end
   end
 
 end
