@@ -1,6 +1,10 @@
 .index
   .title
     %h1 Organisations
+
+    .search
+      = form_tag do
+        .input= text_field_tag :q, params[:q], placeholder: 'Search for organisation by name...'
   .clearfix
 
   %ul.organisations

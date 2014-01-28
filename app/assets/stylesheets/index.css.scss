@@ -2,6 +2,28 @@
 
   .title {
     @include columns(16);
+
+    h1 {
+      @include columns(9);
+      margin: 32px 0;
+    }
+
+    .search {
+      @include columns(6);
+      @include offset(1);
+      //float: right;
+      margin: 32px 0;
+      //padding: 32px 0;
+
+      .input {
+        text-align: right;
+        margin: 0;
+        input {
+          display: inline-block;
+          width: 100%;
+        }
+      }
+    }
   }
 
   ul {
