@@ -30,7 +30,7 @@
 
         - if current_organisation.respondable_user_requests.any?
           %h3 Organisation Join Requests
-          %p These are organisations inviting you to help manage their DSI profile.
+          %p These are requests by other people wanting to join your organisation.
           - current_organisation.respondable_user_requests.each do |respondable|
             = render "dashboard/pending/respondables/user_request", respondable: respondable
 
