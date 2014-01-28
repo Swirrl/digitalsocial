@@ -85,6 +85,9 @@ $(function(){
             $suggestion.find('.subheader').text('Address not supplied.');
           }
 
+          var buttonHref = $suggestion.find('.action a').attr('href');
+          $suggestion.find('.action a').attr('href', buttonHref.replace(':organisation_id', org.guid));
+
           $suggestion.find('.image img').attr('src', org.image_url);
 
           if($.inArray( org.uri, current_organisation_uris ) > -1 ){
@@ -93,22 +96,23 @@ $(function(){
           }
 
           var anchor = $suggestion.find('.action a');
-          anchor.attr('href', '#');
-          
-          $suggestion.click(function(ev) {
-            that.clearSuggestions();
-            $('.remove-if-org').remove();
-            $('.change-email-help-on-org-select').html("Add your contact's name and email address if you know it, to help " + org.name + " process your invitation.");
 
-            anchor.text('Cancel Invite').click(function(ev) {
-              window.location = window.location;
+          if (anchor.attr('href') == '#') {
+            $suggestion.click(function(ev) {
+              that.clearSuggestions();
+              $('.remove-if-org').remove();
+              $('.change-email-help-on-org-select').html("Add your contact's name and email address if you know it, to help " + org.name + " process your invitation.");
+
+              anchor.text('Cancel Invite').click(function(ev) {
+                window.location = window.location;
+                ev.preventDefault();
+              });
+              
+              $('#invited-organisation-id').val(org.guid);
+              $('.suggestions').append($suggestion);
               ev.preventDefault();
             });
-            
-            $('#invited-organisation-id').val(org.guid);
-            $('.suggestions').append($suggestion);
-            ev.preventDefault();
-          });
+          }
           
           $('.suggestions').append($suggestion);
         });
