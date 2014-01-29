@@ -33,29 +33,34 @@ class ProjectsController < ApplicationController
   end
 
   def index
+
     if params[:q].present? # used for auto complete suggestions.
-      @projects = Project.search_by_name(params[:q]).to_a
-      current_project_uris = current_organisation.project_resource_uris
+      @projects = Project.search_by_name(params[:q])
     else
-      page = params[:page].present? ? params[:page].to_i : 1
-      limit = Kaminari.config.default_per_page
-      offset = (page - 1) * limit
-
-      data = Project.order_by_name.limit(limit).offset(offset).resources.to_a
-      total_count = Project.count
-
-      @projects = Kaminari.paginate_array(data, total_count: total_count).page(page).per(limit)
+      @projects = Project.order_by_name
     end
-
+  
     respond_to do |format|
-      format.json do render json: {
-          projects: @projects,
+      format.json do
+        render json: {
+          projects: @projects.resources,
           current_project_uris: current_project_uris
         }
       end
-      format.html
-    end
+      format.html do
+        page = params[:page].present? ? params[:page].to_i : 1
+        limit = Kaminari.config.default_per_page
+        offset = (page - 1) * limit
 
+        if params[:q].present?
+          data = Project.search_by_name(params[:q]).limit(limit).offset(offset).resources.to_a
+        else
+          data = Project.order_by_name.limit(limit).offset(offset).resources.to_a
+        end
+        total_count = @projects.count
+        @projects = Kaminari.paginate_array(data, total_count: total_count).page(page).per(limit)
+      end
+    end
   end
 
   def show
@@ -197,6 +202,12 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def current_project_uris
+    if current_organisation
+      current_organisation.project_resource_uris
+    end
+  end
 
   def render_invited_ok
     message = "Organisation invited. Members of the organisation you invited will be notified."

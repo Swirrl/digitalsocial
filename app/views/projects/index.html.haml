@@ -1,19 +1,28 @@
 .index
   .title
     %h1 Activities
-  .clearfix
 
-  %ul.activities
-    - @projects.each do |p|
-      %li.clearfix
-        .image
-          = image_tag p.image_url
+    .search
+      = form_tag nil, method: :get do
+        .input= text_field_tag :q, params[:q], placeholder: 'Search for activity by name...', autocomplete: :off
 
-        .details
-          .header= link_to p.name, p
-          .subheader= p.description
+  - if @projects.any?
+    %ul.activities
+      - @projects.each do |p|
+        %li.clearfix
+          .image
+            = image_tag p.image_url
 
-  = paginate @projects
+          .details
+            .header= link_to p.name, p
+            .subheader= p.description
+
+    = paginate @projects
+
+  - elsif params[:q].present?
+    .no-results
+      No activities were found for the search term
+      "#{params[:q]}".
 
   .cta
     - if current_user && current_organisation
@@ -23,7 +32,9 @@
       - else
         #{current_organisation.name} is a member of #{pluralize(current_organisation.projects.count, 'activity')}
         = link_to "Add/Join another activity", [:new, :project], class: 'button button-black'
-    - else
+    - elsif @projects.any?
       %span Are you a partner on any of these activities?
+      = link_to "Add/Join an activity", [:new, :project], class: 'button button-black'
+    - else
       = link_to "Add/Join an activity", [:new, :project], class: 'button button-black'
         
