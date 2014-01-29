@@ -206,7 +206,7 @@ class Project
 
   def self.search_by_name(search)
     name_predicate = self.fields[:name].predicate.to_s
-    self.order_by_name.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"\"\"#{search}\"\"\", \"i\")").resources
+    self.order_by_name.where("?uri <#{name_predicate}> ?name").where("FILTER regex(?name, \"\"\"#{search}\"\"\", \"i\")")
   end
 
   def activity_type_label_other=(other)

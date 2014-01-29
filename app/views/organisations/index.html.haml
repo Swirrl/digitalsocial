@@ -1,23 +1,28 @@
 .index
-  .title
+  .title.clearfix
     %h1 Organisations
 
     .search
-      = form_tag do
-        .input= text_field_tag :q, params[:q], placeholder: 'Search for organisation by name...'
+      = form_tag nil, method: :get do
+        .input= text_field_tag :q, params[:q], placeholder: 'Search for organisation by name...', autocomplete: :off
   .clearfix
 
-  %ul.organisations
-    - @organisations.each do |o|
-      %li.clearfix
-        .image
-          = image_tag o.image_url
+  - if @organisations.any?
+    %ul.organisations
+      - @organisations.each do |o|
+        %li.clearfix
+          .image
+            = image_tag o.image_url
 
-        .details
-          .header= link_to o.name, o
-          .subheader= o.address_str
+          .details
+            .header= link_to o.name, o
+            .subheader= o.address_str
+    = paginate @organisations
 
-  = paginate @organisations
+  - elsif params[:q].present?
+    .no-results
+      No organisations were found for the search term
+      "#{params[:q]}".
 
   .cta
     - if current_user && current_organisation
@@ -26,7 +31,9 @@
       - else
         You are a member of #{current_user.organisation_memberships.count} organisations
       = link_to "Add another organisation", [:organisations, :build, :new_organisation], class: 'button button-black'
-    - else
+    - elsif @organisations.any?
       %span Are you are a member of an organisation?
+      = link_to "Add your organisation", [:organisations, :build, :new_user], class: 'button button-black'
+    - else
       = link_to "Add your organisation", [:organisations, :build, :new_user], class: 'button button-black'
       

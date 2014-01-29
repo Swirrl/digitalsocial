@@ -1,6 +1,7 @@
 .index {
 
   .title {
+    @include row();
     @include columns(16);
 
     h1 {
@@ -11,16 +12,15 @@
     .search {
       @include columns(6);
       @include offset(1);
-      //float: right;
       margin: 32px 0;
-      //padding: 32px 0;
 
       .input {
-        text-align: right;
         margin: 0;
+        width: 100%;
         input {
           display: inline-block;
           width: 100%;
+          //padding-left: 32px;
         }
       }
     }
@@ -137,5 +137,13 @@
         padding: 6px 12px;
       }
     }
+  }
+
+  .no-results {
+    @include columns(16);
+    color: #999;
+    margin: 18px 10px 60px;
+    font-size: 24px;
+    font-style: italic;
   }
 }
