@@ -4,7 +4,7 @@
 
     .search
       = form_tag nil, method: :get do
-        .input= text_field_tag :q, params[:q], placeholder: 'Search for activity by name...', autocomplete: :off
+        .input= text_field_tag :q, params[:q], placeholder: 'Search by activity name...', autocomplete: :off
 
   - if @projects.any?
     %ul.activities
@@ -21,8 +21,7 @@
 
   - elsif params[:q].present?
     .no-results
-      No activities were found for the search term
-      "#{params[:q]}".
+      No activities were found for the search term "#{params[:q]}".
 
   .cta
     - if current_user && current_organisation
