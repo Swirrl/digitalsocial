@@ -20,7 +20,13 @@
         input {
           display: inline-block;
           width: 100%;
-          //padding-left: 32px;
+          background-image: url(image-path("icons/search.png"));
+          background-repeat: no-repeat;
+          background-position: right center;
+
+          &:focus {
+            background-image: url(image-path("icons/search-focus.png"));
+          }
         }
       }
     }

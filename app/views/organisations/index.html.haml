@@ -1,11 +1,10 @@
 .index
-  .title.clearfix
+  .title
     %h1 Organisations
 
     .search
       = form_tag nil, method: :get do
-        .input= text_field_tag :q, params[:q], placeholder: 'Search for organisation by name...', autocomplete: :off
-  .clearfix
+        .input= text_field_tag :q, params[:q], placeholder: 'Search by organisation name...', autocomplete: :off
 
   - if @organisations.any?
     %ul.organisations
@@ -17,12 +16,12 @@
           .details
             .header= link_to o.name, o
             .subheader= o.address_str
+            
     = paginate @organisations
 
   - elsif params[:q].present?
     .no-results
-      No organisations were found for the search term
-      "#{params[:q]}".
+      No organisations were found for the search term "#{params[:q]}".
 
   .cta
     - if current_user && current_organisation
