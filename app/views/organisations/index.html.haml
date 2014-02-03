@@ -31,8 +31,8 @@
         You are a member of #{current_user.organisation_memberships.count} organisations
       = link_to "Add another organisation", [:organisations, :build, :new_organisation], class: 'button button-black'
     - elsif @organisations.any?
-      %span Are you are a member of an organisation?
-      = link_to "Add your organisation", [:organisations, :build, :new_user], class: 'button button-black'
+      %span Are you are a member of any of these organisations?
+      = link_to "Add/Join an organisation", [:organisations, :build, :new_user], class: 'button button-black'
     - else
-      = link_to "Add your organisation", [:organisations, :build, :new_user], class: 'button button-black'
+      = link_to "Add/Join your organisation", [:organisations, :build, :new_user], class: 'button button-black'
       
