@@ -64,11 +64,17 @@
       = link_to "Reset filter", "/"
 
     .logo
-      %a{ href: '/' }= image_tag "logo/dsi-logo.png"
-      .links
-        = link_to "About", "/about"
-        = link_to "Blog", "/blog"
-        = link_to "Events", "/events"
+      %a{ href: '/' }= image_tag "logo/dsi-logo-small.png"
+      
+      %ul.header-links
+        %li= link_to "About", "/about"
+
+        - PageCategory.all.each do |pc|
+          %li
+            = link_to pc.name, pc
+
+        %li= link_to "Blog", "/blog"
+        %li= link_to "Events", "/events"
 
     .info
 

@@ -2,6 +2,10 @@
   #content
     %h1= @page_category.name
 
+    :markdown
+      #{@page_category.intro}
+
+    %br/
     - @pages.each do |page|
       .page-intro
         %h2= link_to page.name, page_path(page.page_category, page)
