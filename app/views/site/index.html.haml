@@ -68,13 +68,9 @@
       
       %ul.header-links
         %li= link_to "About", "/about"
-
-        - PageCategory.all.each do |pc|
-          %li
-            = link_to pc.name, pc
-
         %li= link_to "Blog", "/blog"
         %li= link_to "Events", "/events"
+        %li= link_to "Case studies", "/case-studies"
 
     .info
 
