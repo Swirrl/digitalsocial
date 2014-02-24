@@ -1,0 +1,8 @@
+= simple_form_for [:admin, page_category] do |f|
+
+  = f.input :intro, as: :text, input_html: { cols: 80 }, label: "Intro"
+  = render layout: 'admin/help' do
+    :markdown
+      The intro of the category page. The content accepts <a href="http://packetlife.net/media/library/16/Markdown.pdf" target="_blank">Markdown</a> *(opens new window)* to format the page.
+
+  = f.submit (page_category.new_record? ? "Create category" : "Update category"), class: 'button'

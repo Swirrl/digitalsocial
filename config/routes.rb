@@ -20,6 +20,7 @@ Digitalsocial::Application.routes.draw do
 
   namespace :admin do
     resources :pages
+    resources :page_categories, only: [:index, :edit, :update]
     resources :blog_posts
     resources :events
     resources :attachments

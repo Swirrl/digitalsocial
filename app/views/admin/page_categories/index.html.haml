@@ -1,0 +1,15 @@
+%h1 Admin &raquo; Categories
+
+%table.index.pages
+  %tr
+    %th Category
+    %th Intro
+    %th
+
+  - @page_categories.each do |page_category|
+    %tr
+      %td.text= page_category.name.titleize
+      %td= page_category.intro.truncate(30)
+
+      %td.actions
+        = link_to "Edit", [:edit, :admin, page_category]
