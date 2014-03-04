@@ -34,6 +34,8 @@ class Admin
   has_many :blog_posts
   has_mongoid_attached_file :photo, styles: { small: '96x96#' }
 
+  validates :email, :name, presence: true
+
   def to_s
     name
   end

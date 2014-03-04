@@ -89,7 +89,8 @@ form {
   .input {
     margin-bottom: 48px;
 
-    input[type=text], input[type=email], input[type=password], textarea {
+    input[type=text], input[type=email], input[type=password],
+    input[type=url], textarea {
       padding: 12px;
       font-size: 100%;
       font-family: $chaparral;
@@ -138,10 +139,9 @@ form {
     }
 
     &.field_with_errors {
-      input[type=text], input[type=email], input[type=password] {
+      input[type=text], input[type=email], input[type=password], textarea {
         border-color: $red;
       }
-
     }
   }
 

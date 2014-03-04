@@ -1,13 +1,4 @@
-.edit
-  = simple_form_for [:admin, @admin] do |f|
-    = f.input :email
-    = f.input :name
-    = f.input :job_title
-    = f.input :organisation_name
-    = f.input :organisation_url, label: 'Organisation URL (including http://)'
-    - if @admin.photo.present?
-      = image_tag @admin.photo.url(:small)
-    = f.input :photo, as: :file, label: 'Set new password'
-    = f.input :password
+%h1 Admin &raquo; Edit admin
 
-    = f.submit 'Update account'
+.edit
+  = render 'form', admin: @admin

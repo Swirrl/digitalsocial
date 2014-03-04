@@ -1,0 +1,29 @@
+= simple_form_for [:admin, page] do |f|
+  - unless page.core?
+    = f.input :name, label: 'Title'
+    = render layout: 'admin/help' do
+      :markdown
+        The title of the page. The URL of the page will be automatically set from the title.
+    
+    = f.input :page_category_id, as: :select, collection: PageCategory.all, include_blank: false
+    = render layout: 'admin/help' do
+      :markdown
+        The category of the page. The category will also be included in the page URL e.g. */case-studies/this-is-a-great-case-study*
+    
+    = f.input :show_comments, as: :select, include_blank: false
+    = render layout: 'admin/help' do
+      :markdown
+        Select 'Yes' to show Disqus comments on this page.
+
+  = f.input :body, as: :text, input_html: { cols: 80 }, label: "Content"
+  = render layout: 'admin/help' do
+    :markdown
+      The content of the page. The content accepts <a href="http://packetlife.net/media/library/16/Markdown.pdf" target="_blank">Markdown</a> *(opens new window)* to format the page.
+
+  - unless page.core?
+    = f.association :attachments, as: :check_boxes, collection: Attachment.all
+    = render layout: 'admin/help' do
+      :markdown
+        Select all the resources you wish to attach at the bottom of the page. <a href="/admin/attachments/new" target="_blank">Add new attachment</a> *(opens new window)*.
+
+  = f.submit (page.new_record? ? "Create page" : "Update page"), class: 'button'

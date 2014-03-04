@@ -1,3 +1,6 @@
+$cluster-color: #777;
+$faded-cluster-color: #ccc;
+
 .leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
 	-webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-in;
 	-moz-transition: -moz-transform 0.2s ease-out, opacity 0.2s ease-in;
@@ -7,7 +10,7 @@
 
 .leaflet-div-icon {
   //background: #0078A8;
-  background: #999;
+  background: $cluster-color;
   border-radius: 8px;
   border: 0;
 
@@ -50,12 +53,12 @@
   border-radius: 15px;
 
   div {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
   }
 
   span {
-    line-height: 26px;
+    line-height: 28px;
   }
 }
 
@@ -64,12 +67,12 @@
   border-radius: 18px;
   
   div {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
   }
 
   span {
-    line-height: 32px;
+    line-height: 40px;
   }
 }
 
@@ -88,7 +91,7 @@
 }
 
 .marker-cluster {
-  background: #999;
+  background: $cluster-color;
 }
 
 .marker-cluster, .leaflet-div-icon {
@@ -99,21 +102,39 @@
     background: #F39200;
   }
 
-  -webkit-transition: background 0.1s ease-in-out;
-  -moz-transition: background 0.1s ease-in-out;
-  -o-transition: background 0.1s ease-in-out;
-  transition: background 0.1s ease-in-out;
+  &.faded {
+    background: #aaa;
+    opacity: 0.5;
+    cursor: default;
+    z-index: -1 !important;
+    display: none;
+
+    &:hover {
+      background: #aaa;
+    }
+  }
+
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+
+.cluster-level-0 .leaflet-div-icon.faded {
+  display: block;
+}
+
+.leaflet-cluster-anim .marker-cluster {
+  color: transparent;
 }
 
 .marker-cluster div {
-
-
   text-align: center;
   
   font-family: "chaparral-pro", sans-serif;
   font-style: italic;
 }
 
-.marker-cluster span {
-  
+.leaflet-overlay-pane {
+
 }

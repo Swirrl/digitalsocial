@@ -1,0 +1,10 @@
+Hi <%= @user.first_name %>,
+
+This is a reminder to add an activity to your DigitalSocialInnovation account for <%= @organisation.name %>.
+
+To add or join an activity click the link below:
+
+<%= new_project_url(org_id: @organisation.guid) %>
+
+<%= render 'footer' %>
+<%= render 'unsubscribe' %>

@@ -1,0 +1,25 @@
+- disqus = local_assigns[:disqus] || false
+- attachments = local_assigns[:attachments] || false
+
+.page
+  .title
+    %p
+      = link_to page.page_category.name, page_category_path(page.page_category)
+      &raquo;
+
+    %h1= page.name
+
+  :markdown
+    #{page.body}
+
+  - if attachments && page.attachments.any?
+    %h4 Resources
+    %ul.attachments
+      - page.attachments.each do |attachment|
+        %li
+          = attachment.name
+          \-
+          = link_to attachment.file_file_name, attachment.file.url
+
+  - if disqus
+    = render "application/disqus", title: page.name

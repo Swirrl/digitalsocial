@@ -6,3 +6,4 @@
 /public/assets
 *.patch
 .sass-cache/
+.ruby-version

@@ -1,0 +1,12 @@
+#page
+  #content
+    %h1= @page_category.name
+
+    - @pages.each do |page|
+      .page-intro
+        %h2= link_to page.name, page_path(page.page_category, page)
+        %p
+          = strip_tags(markdown(page.body)).truncate(280).html_safe
+          %br/
+          = link_to "Read more &raquo;".html_safe, page_path(page.page_category, page)
+        

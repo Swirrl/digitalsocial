@@ -1,0 +1,5 @@
+= simple_form_for [:admin, attachment] do |f|
+  = f.input :name
+  = f.input :file
+
+  = f.submit (attachment.new_record? ? "Create attachment" : "Update attachment"), class: 'button'

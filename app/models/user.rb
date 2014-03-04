@@ -45,6 +45,14 @@ class User
     organisation_memberships.collect(&:organisation_resource)
   end
 
+  def any_organisations?
+    organisation_memberships.count > 0
+  end
+
+  def organisation_list(seperator=', ')
+    organisation_resources.collect(&:name).uniq.join(seperator)
+  end
+
   def send_request_digest(organisation)
     RequestMailer.request_digest(self, organisation).deliver
   end
@@ -72,6 +80,14 @@ class User
   def self.send_unconfirmed_user_reminders
     User.where(receive_notifications: true).where(sign_in_count: 0).all.each do |user|
       RequestMailer.unconfirmed_user_reminder(user).deliver
+    end
+  end
+
+  def self.send_projectless_user_reminders
+    User.where(receive_notifications: true).all.each do |user|
+      user.organisation_resources.each do |organisation|
+        RequestMailer.projectless_user_reminder(user, organisation).deliver unless organisation.any_projects?
+      end
     end
   end
 
@@ -103,5 +119,13 @@ class User
 
   def self.random_password
     rand(36**16).to_s(36) # Temporary random password
+  end
+
+  def self.to_csv
+    CSV.generate do |csv|
+      all.each do |user|
+        csv << [user.first_name, user.email, user.organisation_list('|')]
+      end
+    end
   end
 end

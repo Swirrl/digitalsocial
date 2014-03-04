@@ -62,4 +62,12 @@ class RequestMailer < ActionMailer::Base
     mail to: @user.email, subject: "A reminder about your invitation to DigitalSocialInnovation"
   end
 
+  def projectless_user_reminder(user, organisation)
+    return false unless (@user = user).receive_notifications?
+    
+    @organisation = organisation
+
+    mail to: @user.email, subject: "A reminder about your DigitalSocialInnovation account"
+  end
+
 end

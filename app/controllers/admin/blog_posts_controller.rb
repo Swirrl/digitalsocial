@@ -1,7 +1,7 @@
 class Admin::BlogPostsController < AdminController
 
   def index
-    @blog_posts = BlogPost.asc(:start_date).all
+    @blog_posts = BlogPost.order_by(publish_at: :desc).all
   end
 
   def new

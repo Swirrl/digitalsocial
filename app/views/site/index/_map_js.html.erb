@@ -1,7 +1,6 @@
 <script>
   $(function() {
 
-    var config,
     DSIMap = {
 
       map: null,
@@ -10,61 +9,120 @@
       visibleOrganisations: {},
       currentMaxLineCount: 0,
       networkViewMarker: null,
+      
+      defaultCenter: [49, 12],
+      defaultZoom: 5,
+      minLineWeight: 1,
+      maxLineWeight: 5,
+      minLineOpacity: 0.1,
+      maxLineOpacity: 0.4,
+      maxClusterRadius: 80,
+      disableClusteringAtZoom: 20,
+      layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
+      layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
+      maxClusterChildCount: 40,
 
-      config: {
-        defaultCenter: [49,12],
-        defaultZoom: 5,
-        minLineWeight: 2.5, // Min no longer used
-        maxLineWeight: 2.5,
-        minLineOpacity: 0.125, // Min no longer used
-        maxLineOpacity: 0.125,
-        layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_HOME_MAP_ID %>"),
-        layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>")
-      },
+      // Adjustable settings
+      currentFilters: <%= params[:filters].to_json.html_safe %>,
+      
+      paramsClusterLevel: <%= params[:cluster].to_json.html_safe %>,
+      paramsZoom: <%= params[:zoom].to_json.html_safe %>,
+      paramsCenter: [<%= params[:center] %>],
+      paramsPopup: <%= params[:popup].to_json.html_safe %>,
+      paramsNetwork: <%= params[:network].to_json.html_safe %>,
+
+      preNetworkZoom: null,
+      preNetworkCenter: null,
+
+      clusterLevel: (this.paramsClusterLevel || $('input#cluster-level').val()),
+
+      clusterConfig: [{
+          // Level 0
+          disableClusteringAtZoom: 1, // 1 = no clustering
+          maxLineWeight: 1.5,
+          maxLineOpacity: 0.2
+        }, {
+          // Level 1
+          disableClusteringAtZoom: 20,
+          maxLineWeight: 5,
+          maxLineOpacity: 0.4,
+          maxClusterRadius: 20
+        }, {
+          // Level 2
+          disableClusteringAtZoom: 20,
+          maxLineWeight: 5,
+          maxLineOpacity: 0.4,
+          maxClusterRadius: 30
+        }, {
+          // Level 3
+          disableClusteringAtZoom: 20,
+          maxLineWeight: 5,
+          maxLineOpacity: 0.4,
+          maxClusterRadius: 50
+        }, {
+          // Level 4
+          disableClusteringAtZoom: 20,
+          maxLineWeight: 5,
+          maxLineOpacity: 0.4,
+          maxClusterRadius: 80
+        }
+      ],
 
       init: function() {
-        config = this.config;
-
         this.initMap();
         this.bindMapEvents();
+
         this.initClusters();
+        this.initFilter();
+
+        if (this.currentFilters) {
+          this.fetchFilterOrganisations();
+        }
 
         this.fetchOrganisations();
+        this.paramsActions();
       },
 
       initMap: function() {
+        var center = (DSIMap.paramsCenter.length) ? DSIMap.paramsCenter : DSIMap.defaultCenter;
+        var zoom = DSIMap.paramsZoom || DSIMap.defaultZoom;
+
         map = L.map('home-map', {
-          scrollWheelZoom: true,
-          minZoom: config.defaultZoom
+          scrollWheelZoom: true
         })
-        .setView(config.defaultCenter, config.defaultZoom)
-        .addLayer(config.layerWithoutLabels);
+        .setView(center, zoom)
+        .addLayer(DSIMap.layerWithoutLabels);
+
+        map._container.className = "leaflet-container leaflet-fade-anim cluster-level-" + DSIMap.clusterLevel;
       },
 
       initClusters: function() {
+        DSIMap.clusterLevel = $('.filter #cluster-level').val();
+        $.extend(DSIMap, DSIMap.clusterConfig[DSIMap.clusterLevel]);
+
         clusters = new L.MarkerClusterGroup({
           showCoverageOnHover: false,
           removeOutsideVisibleBounds: false,
           zoomToBoundsOnClick: false,
-          maxClusterRadius: 24,
-          disableClusteringAtZoom: 1,
+          maxClusterRadius: DSIMap.maxClusterRadius,
+          disableClusteringAtZoom: DSIMap.disableClusteringAtZoom,
           iconCreateFunction: function(cluster) {
             var childCount = cluster.getChildCount();
 
             var c = ' marker-cluster-';
             var iconSize;
-            if (childCount < 5) {
+            if (childCount < DSIMap.maxClusterChildCount / 10) {
               c += 'x-small';
               iconSize = 16;
-            } else if (childCount < 10) {
+            } else if (childCount < DSIMap.maxClusterChildCount / 5) {
               c += 'small';
               iconSize = 20;
-            } else if (childCount < 20) {
+            } else if (childCount < DSIMap.maxClusterChildCount / 2.5) {
               c += 'medium';
-              iconSize = 24;
-            } else if (childCount < 40) {
+              iconSize = 26;
+            } else if (childCount < DSIMap.maxClusterChildCount) {
               c += 'large';
-              iconSize = 28;
+              iconSize = 36;
             } else {
               c += 'x-large';
               iconSize = 48;
@@ -82,9 +140,62 @@
 
       },
 
+      initFilter: function() {
+        this.bindFilterEvents();
+      },
+
+      bindFilterEvents: function() {
+        $('.filter a.title').click(function(e){
+          $(this).parents('.filter-section').toggleClass('expanded');
+          e.preventDefault();
+        });
+
+        $('.filter .option input').change(function(e){
+          $('.filter .filter-button').removeAttr('disabled');
+        });
+
+        $('.filter .filter-section a.reset').click(function(e){
+          $(this).parents('.filter-section').find('.option input').attr('checked', false);
+          $('.filter form').submit();
+
+          e.preventDefault();
+        });
+
+        $('.filter .filter-share-section a.show-url').click(function(e){
+          DSIMap.updateShareUrlInput();
+
+          $('.filter .filter-share-section input').fadeIn(function(){
+            $(this).select();
+          });
+          e.preventDefault();
+        });
+
+        $("#slider" ).slider({
+          value: DSIMap.clusterLevel,
+          min: 0,
+          max: 4,
+          step: 1,
+          slide: function(event, ui) {
+            DSIMap.clusterLevel = ui.value;
+            $('.filter #cluster-level').val(DSIMap.clusterLevel);
+
+            map._container.className = "leaflet-container leaflet-fade-anim cluster-level-" + DSIMap.clusterLevel;
+            
+            clusters.clearLayers();
+            DSIMap.clearLines();
+
+            DSIMap.initClusters();
+            DSIMap.addOrganisationPins();
+            DSIMap.resizeClusters();
+            DSIMap.addPartnerLines();
+          }
+        });
+      },
+
       bindClusterEvents: function() {
         clusters.on('animationend', function(e){
           DSIMap.addVisibleLines();
+          DSIMap.resizeClusters();
         });
 
         clusters.on('clustermouseover', function (a) {
@@ -97,7 +208,8 @@
 
         clusters.on('clusterclick', function (a) {
           a.layer.bindPopup('', {
-            closeButton: false
+            closeButton: false,
+            autoPan: false
           }).openPopup();
         });
       },
@@ -145,6 +257,12 @@
           DSIMap.showMobilePanels();
           return false;
         });
+
+        $('.show-filter a').click(function(e) {
+          e.preventDefault();
+          DSIMap.slideOutPanels();
+          return false;
+        });
       },
 
       bindPopupOpen: function(e) {
@@ -160,58 +278,67 @@
       bindZoomEnd: function(e) {
         map.on('zoomend', function(e){
           if (e.target._zoom > 6) {
-            map.removeLayer(config.layerWithoutLabels);
-            map.addLayer(config.layerWithLabels);
+            map.removeLayer(DSIMap.layerWithoutLabels);
+            map.addLayer(DSIMap.layerWithLabels);
           } else {
-            map.removeLayer(config.layerWithLabels);
-            map.addLayer(config.layerWithoutLabels);
+            map.removeLayer(DSIMap.layerWithLabels);
+            map.addLayer(DSIMap.layerWithoutLabels);
           }
         });
       },
 
       bindShowOrgNetworkClick: function(e) {
         $(document.body).on('click', 'a.show-org-network', function(e) {
-
-          clusters.clearLayers();
-          DSIMap.clearLines();
-
           var guid = e.target.hash.substring(1);
-          var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
-          DSIMap.visibleOrganisations = {};
-
-          if (DSIMap.networkViewMarker) {
-            DSIMap.highlightMarker(visibleMarker);
-          }
-
-          DSIMap.networkViewMarker = DSIMap.allOrganisations[guid].marker;
-
-          var partnerLatLngs = [];
-
-          $.each(DSIMap.allOrganisations[guid].partners, function(i, partnerGuid) {
-            DSIMap.visibleOrganisations[partnerGuid] = DSIMap.allOrganisations[partnerGuid];
-            partnerLatLngs.push(DSIMap.allOrganisations[partnerGuid].marker._latlng);
-          });
-
-          $('.active-organisation .name').text(DSIMap.allOrganisations[guid].name);
-          $('.active-organisation').css({ top: 0 });
-
-          DSIMap.visibleOrganisations[guid] = DSIMap.allOrganisations[guid];
-          DSIMap.addOrganisationPins();
-          DSIMap.addPartnerLines();
-
-          var networkLatLngs = partnerLatLngs;
-          networkLatLngs.push(markerLatLng);
-          var bounds = new L.LatLngBounds(networkLatLngs);
-          map.fitBounds(bounds);
-
-          var visibleMarker = clusters.getVisibleParent(DSIMap.networkViewMarker);
-
-          DSIMap.highlightMarkerLines(visibleMarker);
-          DSIMap.highlightMarker(visibleMarker);
+          DSIMap.showOrgNetwork(guid);
 
           e.preventDefault();
           return false;
         });
+      },
+
+      showOrgNetwork: function(guid) {
+        clusters.clearLayers();
+        DSIMap.clearLines();
+
+        DSIMap.preNetworkZoom = map.getZoom();
+        DSIMap.preNetworkCenter = map.getCenter();
+        
+        var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
+        DSIMap.visibleOrganisations = {};
+
+        if (DSIMap.networkViewMarker) {
+          DSIMap.highlightMarker(visibleMarker);
+        }
+
+        DSIMap.networkViewMarker = DSIMap.allOrganisations[guid].marker;
+
+        var partnerLatLngs = [];
+
+        $.each(DSIMap.allOrganisations[guid].partners, function(i, partnerGuid) {
+          DSIMap.visibleOrganisations[partnerGuid] = DSIMap.allOrganisations[partnerGuid];
+          partnerLatLngs.push(DSIMap.allOrganisations[partnerGuid].marker._latlng);
+        });
+
+        $('.active-organisation .name').text(DSIMap.allOrganisations[guid].name);
+        $('.active-organisation').css({ top: 0 });
+
+        DSIMap.visibleOrganisations[guid] = DSIMap.allOrganisations[guid];
+        DSIMap.addOrganisationPins();
+        DSIMap.addPartnerLines();
+
+        var networkLatLngs = partnerLatLngs;
+        networkLatLngs.push(markerLatLng);
+        var bounds = new L.LatLngBounds(networkLatLngs);
+        map.fitBounds(bounds);
+
+        var visibleMarker = clusters.getVisibleParent(DSIMap.networkViewMarker);
+
+        DSIMap.highlightMarkerLines(visibleMarker);
+        DSIMap.highlightMarker(visibleMarker);
+
+        DSIMap.slideOutPanels();
+        $('.filter').hide();
       },
 
       bindOrgZoomClick: function(e) {
@@ -238,27 +365,8 @@
 
       bindResetMapClick: function() {
         $('a.reset-map').click(function(e){
-          DSIMap.networkViewMarker.setIcon(new L.DivIcon({
-            iconSize: new L.Point(10, 10)
-          }));
-          DSIMap.networkViewMarker = null;
-          DSIMap.visibleOrganisations = DSIMap.allOrganisations;
-
-          map.setZoom(DSIMap.config.defaultZoom);
-
-          clusters.clearLayers();
-          DSIMap.clearLines();
-
-          DSIMap.addOrganisationPins();
-          DSIMap.addPartnerLines();
-
-          var top = $('.active-organisation').height() + 30;
-          $('.active-organisation').css({ top: '-'+top+'px' });
-
-          e.preventDefault();
-          return false;
+          $(this).attr('href', DSIMap.getShareUrl());
         });
-
       },
 
       bindZoomClusterClick: function() {
@@ -273,12 +381,31 @@
         $.ajax({
           type: 'GET',
           url: '/organisations/map_index',
+          data: {
+            filters: DSIMap.currentFilters
+          },
           success: function(data){
             DSIMap.setAllOrganisations(data.organisations);
             DSIMap.visibleOrganisations = DSIMap.allOrganisations;
             DSIMap.addOrganisationPins();
+            DSIMap.resizeClusters();
 
             DSIMap.fetchPartners();
+
+            if (DSIMap.paramsPopup) {
+              DSIMap.allOrganisations[DSIMap.paramsPopup].marker.openPopup();
+            }
+          },
+          dataType: 'json'
+        });
+      },
+
+      fetchFilterOrganisations: function(e) {
+        $.ajax({
+          type: 'GET',
+          url: '/organisations/map_index',
+          success: function(data){
+            DSIMap.addFilterOrganisationPins(data.organisations);
           },
           dataType: 'json'
         });
@@ -304,6 +431,46 @@
         }
       },
 
+      resizeClusters: function() {
+        DSIMap.maxClusterChildCount = 0;
+        $.each(clusters._featureGroup._layers, function(i, e){
+          if (e._childCount && e._childCount > DSIMap.maxClusterChildCount) {
+            DSIMap.maxClusterChildCount = e._childCount;
+          }
+        });
+
+        $.each(clusters._featureGroup._layers, function(i, e){
+          var childCount = e._childCount;
+          if (childCount){
+            var c = ' marker-cluster-';
+            var iconSize;
+            if (childCount < DSIMap.maxClusterChildCount / 10) {
+              c += 'x-small';
+              iconSize = 16;
+            } else if (childCount < DSIMap.maxClusterChildCount / 5) {
+              c += 'small';
+              iconSize = 20;
+            } else if (childCount < DSIMap.maxClusterChildCount / 2.5) {
+              c += 'medium';
+              iconSize = 26;
+            } else if (childCount < DSIMap.maxClusterChildCount) {
+              c += 'large';
+              iconSize = 36;
+            } else {
+              c += 'x-large';
+              iconSize = 48;
+            }
+
+            e.setIcon(new L.DivIcon({
+              html: '<div><span>' + childCount + '</span></div>',
+              className: 'marker-cluster' + c,
+              iconSize: new L.Point(iconSize, iconSize)
+            }));
+          }
+        });
+
+      },
+
       addOrganisationPins: function() {
         map.removeLayer(clusters);
         clusters.clearLayers();
@@ -317,11 +484,6 @@
 
       buildOrganisationPin: function(organisation) {
         var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
-          // icon: new L.Icon({
-          //   iconSize: new L.Point(14, 20),
-          //   iconUrl: "assets/home/pin.png"
-          // })
-
           icon: new L.DivIcon({
             iconSize: new L.Point(10, 10)
           })
@@ -341,6 +503,18 @@
         marker._guid = organisation.guid;
 
         return marker;
+      },
+
+      addFilterOrganisationPins: function(organisations) {
+        $.each(organisations, function(i, organisation){
+          var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
+            icon: new L.DivIcon({
+              iconSize: new L.Point(10, 10),
+              className: 'leaflet-div-icon faded'
+            })
+          });
+          marker.addTo(map);
+        });
       },
 
       fetchPinPopupContent: function(e) {
@@ -384,7 +558,7 @@
           content += '</ul>';
         }
 
-        if (DSIMap.allOrganisations[organisation.guid].partners.length) {
+        if (DSIMap.allOrganisations[organisation.guid].partners.length && !DSIMap.networkViewMarker) {
           content += '<div class="divider"></div>';
           content += '<div class="actions"><a href="#'+organisation.guid+'" class="show-org-network">Show this organisation\'s network</a></div>';
         }
@@ -436,7 +610,6 @@
         content += '<div class="divider"></div>';
         content += '<div class="actions"><a href="#" data-cluster-id="'+popup._source._leaflet_id+'" class="zoom-cluster">Zoom in</a></div>';
 
-
         popup.setContent(content);
       },
 
@@ -449,20 +622,24 @@
       },
 
       slideOutPanels: function() {
-        $('.logo').css({ top: "-128px" });
-        $('.info').css({ right: "-898px" });
+        $('.info').css({ left: "-898px" });
+        $('.show-filter').css({ top: "-60px" });
+
         setTimeout(function(){
           $('.info').hide();
           $('.small-info').fadeIn();
+          $('.filter').css({ top: "0" });
         }, 500);
       },
 
       slideInPanels: function() {
         $('.info').show();
         $('.small-info').fadeOut();
+        $('.filter').css({ top: "-936px" });
+
         setTimeout(function(){
-          $('.info').css({ right: "0" });
-          $('.logo').css({ top: "0" });
+          $('.info').css({ left: "0" });
+          $('.show-filter').css({ top: "0" });
         }, 250);
       },
 
@@ -477,6 +654,8 @@
       },
 
       clearLines: function() {
+        DSIMap.currentMaxLineCount = 0;
+
         for (i in map._layers) {
           if (map._layers[i]._path != undefined) {
             try {
@@ -493,10 +672,17 @@
         $.ajax({
           type: 'GET',
           url: '/organisations/map_partners',
+          data: {
+            filters: DSIMap.currentFilters
+          },
           //url: '/organisations/map_partners_static',
           success: function(data){
             DSIMap.setAllOrganisationPartners(data.organisations);
             DSIMap.addPartnerLines(DSIMap.allOrganisations);
+
+            if (DSIMap.paramsNetwork) {
+              DSIMap.showOrgNetwork(DSIMap.paramsNetwork);
+            }
           },
           dataType: 'json'
         });
@@ -523,7 +709,7 @@
       drawLine: function(markerA, markerB, count) {
 
         var line = new L.Polyline([markerA._latlng, markerB._latlng], {
-          color: '#999999',
+          color: '#777',
           weight: DSIMap.lineWeightForCount(count),
           opacity: DSIMap.lineOpacityForCount(count),
           smoothFactor: 1,
@@ -534,17 +720,23 @@
       },
 
       lineWeightForCount: function(count) {
-        var ratio = (count / DSIMap.currentMaxLineCount);
-        var difference = config.maxLineWeight - config.minLineWeight;
+        var max = DSIMap.currentMaxLineCount;
+        if (max <= 1 && DSIMap.clusterLevel != 0) max = 2;
 
-        return config.minLineWeight + (ratio * difference);
+        var ratio = (count / max);
+        var difference = DSIMap.maxLineWeight - DSIMap.minLineWeight;
+
+        return DSIMap.minLineWeight + (ratio * difference);
       },
 
       lineOpacityForCount: function(count) {
-        var ratio = (count / DSIMap.currentMaxLineCount);
-        var difference = config.maxLineOpacity - config.minLineOpacity;
+        var max = DSIMap.currentMaxLineCount;
+        if (max <= 1 && DSIMap.clusterLevel != 0) max = 2;
 
-        return config.minLineOpacity + (ratio * difference);
+        var ratio = (count / max);
+        var difference = DSIMap.maxLineOpacity - DSIMap.minLineOpacity;
+
+        return DSIMap.minLineOpacity + (ratio * difference);
       },
 
       buildPartnerLines: function() {
@@ -559,6 +751,8 @@
 
               visibleMarkerA = clusters.getVisibleParent(org.marker);
               visibleMarkerB = clusters.getVisibleParent(DSIMap.allOrganisations[partnerGuid].marker);
+
+              if (visibleMarkerA._latlng == visibleMarkerB._latlng) return true;
 
               var visibleMarkers = [visibleMarkerA._latlng, visibleMarkerB._latlng];
 
@@ -607,8 +801,55 @@
         if (!marker._lines) return false;
 
         $.each(marker._lines, function(i, line) {
-          line.setStyle({ color: '#999999' });
+          line.setStyle({ color: '#777' });
         });
+      },
+
+      paramsActions: function() {
+        if (DSIMap.currentFilters || DSIMap.paramsClusterLevel) {
+          if (DSIMap.isMobile()) {
+            $('.mobile-filter').show();
+          } else {
+            $('.show-filter a').click();
+          }
+        }
+      },
+
+      getShareUrl: function() {
+        var params = [];
+
+        var zoom = DSIMap.preNetworkZoom || map.getZoom();
+        params.push('zoom=' + zoom);
+
+        var center = DSIMap.preNetworkCenter || map.getCenter();
+        params.push('center=' + center.lat + ',' + center.lng);
+        
+        params.push('cluster=' + DSIMap.clusterLevel);
+
+        if ($('.leaflet-popup:visible').length) {
+          var guid = $('.leaflet-popup:visible').find('h3 a').attr('href').split('/')[2];
+          params.push('popup=' + guid);
+        } else if (DSIMap.networkViewMarker) {
+          params.push('popup=' + DSIMap.networkViewMarker._guid);
+        }
+
+        if (DSIMap.currentFilters) {
+          $.each(DSIMap.currentFilters, function(category, values){
+            $.each(values, function(i, value){
+              var key = encodeURIComponent('filters['+category+'][]');
+              var val = encodeURIComponent(value);
+              params.push(key+'='+val);
+            });
+          });
+        }
+
+        var url = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+        url += '?' + params.join('&');
+        return url;
+      },
+
+      updateShareUrlInput: function() {
+        $('.filter-share-section input').val(DSIMap.getShareUrl());
       }
     }
 

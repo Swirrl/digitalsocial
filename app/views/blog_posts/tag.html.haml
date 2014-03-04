@@ -1,0 +1,23 @@
+#page
+  #content
+    %h1
+      = @tag.humanize
+
+    - @blog_posts.each do |blog_post|
+      .page-intro
+        %h2= link_to blog_post.name, blog_post
+        %p.subheader
+          - if blog_post.admin.present?
+            by
+            %strong= blog_post.admin.name
+            on
+          %strong= blog_post.publish_at.strftime("#{blog_post.publish_at.day.ordinalize} %B %Y")
+
+          - if blog_post.tags.to_a.any?
+            in
+            = blog_post.tags.to_a.collect { |tag| link_to tag, "/blog/tag/#{tag}" }.join(", ").html_safe
+
+        %p
+          = strip_tags(markdown(blog_post.body)).truncate(280).html_safe
+          = link_to "Read more &raquo;".html_safe, blog_post
+        
