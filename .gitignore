@@ -7,3 +7,9 @@
 *.patch
 .sass-cache/
 .ruby-version
+
+# Ignore production configurations
+config/s3.yml
+config/mongoid.yml
+config/environments/production.rb
+config/environments/development.rb
