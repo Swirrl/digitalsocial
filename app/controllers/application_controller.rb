@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def check_maintenance_mode
-    if Pathname.new(Digitalsocial::MAINTENANCE_FILE_PATH).exist?
+    if Pathname.new(Digitalsocial::MAINTENANCE_FILE_PATH).exist? && (request.remote_ip != '82.68.242.78') # not swirrl office
       respond_to do |format|
         format.html { render(:template => "errors/maintenance", :status => 503) and return false }
         format.any { render(:text => 'Maintenance Mode', :status => 503, :content_type => 'text/plain') and return false }
