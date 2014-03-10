@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :check_maintenance_mode
+
   layout :layout_by_resource
 
   helper_method :current_organisation
@@ -11,6 +13,16 @@ class ApplicationController < ActionController::Base
   rescue_from Tripod::Errors::Timeout, :with => :handle_timeout
 
   protected
+
+  def check_maintenance_mode
+    if Pathname.new(Digitalsocial::MAINTENANCE_FILE_PATH).exist?
+      respond_to do |format|
+        format.html { render(:template => "errors/maintenance", :status => 503) and return false }
+        format.any { render(:text => 'Maintenance Mode', :status => 503, :content_type => 'text/plain') and return false }
+      end
+    end
+  end
+
 
   def show_partners
     @show_partners = true
