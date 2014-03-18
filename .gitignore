@@ -14,3 +14,4 @@ config/mongoid.yml
 config/environments/production.rb
 config/environments/development.rb
 config/initializers/secret_token_production.rb
+/config/environments/staging.rb

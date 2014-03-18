@@ -80,16 +80,16 @@ Digitalsocial::Application.configure do
     :port                 => 587,
     :enable_starttls_auto => true,
     :user_name            => 'hello@swirrl.com',
-    :password             => '_tF-Qf4kVBQbdFnNaYAEag',
+    :password             => 'put your password here',
     :domain               => 'digitalsocial.eu',
     :authentication       => 'plain'
   }
 
-  Digitalsocial::DATA_ENDPOINT = 'http://sparql3.publishmydata.com/dsi/data'
+  Digitalsocial::DATA_ENDPOINT = 'http://46.4.78.148/dsi/data'
 
   Tripod.configure do |config|
-    config.update_endpoint = 'http://sparql3.publishmydata.com/dsi/update'
-    config.query_endpoint = 'http://sparql3.publishmydata.com/dsi/sparql'
+    config.update_endpoint = 'http://46.4.78.148/dsi/update'
+    config.query_endpoint = 'http://46.4.78.148/dsi/sparql'
     config.timeout_seconds = 30
     config.cache_store = Tripod::CacheStores::MemcachedCacheStore.new('localhost:11214')
   end

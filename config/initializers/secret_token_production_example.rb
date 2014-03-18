@@ -21,4 +21,6 @@
 # The capistrano setup task willl then copy this to the server in the
 # shared/ directory within the app.
 
-Digitalsocial::Application.config.secret_token = 'replace this value'
+if __FILE__ =~ /.*secret_token\.rb$/
+  Digitalsocial::Application.config.secret_token = 'replace this value'
+end

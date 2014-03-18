@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'bundler/capistrano' # enable bundler stuff!
 
-set :stages, %w(app holding)
+set :stages, %w(app staging holding)
 set :default_stage, "app"
 require 'capistrano/ext/multistage'
 
@@ -31,7 +31,52 @@ set :use_sudo, false
 
 set :deploy_via, :remote_cache
 
+after 'deploy:setup', 'deploy:make_shared_config_dir'
+after 'deploy:setup', 'deploy:transfer_production_config'
+before 'deploy:assets:precompile', 'deploy:remove_example_secret_token_rb'
+before 'deploy:assets:precompile', 'deploy:symlink_shared_config'
+
 namespace :deploy do
+
+  task :make_shared_config_dir do
+    run "mkdir #{shared_path}/configs"
+  end
+
+  desc 'Copy the production config files to the shared folder - so they can be symlinked in later'
+  task :transfer_production_config do
+    top.upload(File.join('config', 'mongoid.yml'),
+               File.join(shared_path, 'configs', 'mongoid.yml'))
+
+    top.upload(File.join('config','s3.yml'),
+               File.join(shared_path, 'configs', 's3.yml'))
+
+    top.upload(File.join('config', 'initializers', 'secret_token_production.rb'),
+               File.join(shared_path, 'configs', 'secret_token.rb'))
+
+    top.upload(File.join('config', 'environments', 'production.rb'),
+               File.join(shared_path, 'configs', 'production.rb'))
+  end
+
+  task :symlink_shared_config do
+    run("ln -s " + File.join(shared_path,  'configs', 'mongoid.yml') + " " +
+                   File.join(release_path, 'config', 'mongoid.yml'))
+
+    run("ln -s " + File.join(shared_path,  'configs', 's3.yml') + " " +
+                   File.join(release_path, 'config', 's3.yml'))
+
+    secret_token_rb = File.join(release_path, 'config', 'initializers', 'secret_token.rb')
+    run("rm " + secret_token_rb)
+    run("ln -s " + File.join(shared_path,  'configs', 'secret_token.rb') + " " +
+                   secret_token_rb)
+
+
+    run("ln -s " + File.join(shared_path,  'configs', 'production.rb') + " " +
+                   File.join(release_path, 'config', 'environments', 'production.rb'))
+  end
+
+  task :remove_example_secret_token_rb do
+    run("rm " + File.join(release_path, 'config', 'initializers', 'secret_token_production_example.rb'))
+  end
 
   desc <<-DESC
     overriding deploy:cold task to not migrate...
