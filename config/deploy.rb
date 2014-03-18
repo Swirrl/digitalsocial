@@ -53,6 +53,9 @@ namespace :deploy do
     top.upload(File.join('config', 'initializers', 'secret_token_production.rb'),
                File.join(shared_path, 'configs', 'secret_token.rb'))
 
+    top.upload(File.join('config', 'initializers', 'raven_production.rb'),
+               File.join(shared_path, 'configs', 'raven.rb'))
+
     top.upload(File.join('config', 'environments', 'production.rb'),
                File.join(shared_path, 'configs', 'production.rb'))
   end
@@ -69,6 +72,10 @@ namespace :deploy do
     run("ln -s " + File.join(shared_path,  'configs', 'secret_token.rb') + " " +
                    secret_token_rb)
 
+    raven_rb = File.join(release_path, 'config', 'initializers', 'raven_production.rb')
+    run("rm " + raven_rb)
+    run("ln -s " + File.join(shared_path,  'configs', 'raven.rb') + " " +
+                   raven_rb)
 
     run("ln -s " + File.join(shared_path,  'configs', 'production.rb') + " " +
                    File.join(release_path, 'config', 'environments', 'production.rb'))

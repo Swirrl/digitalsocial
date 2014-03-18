@@ -15,3 +15,4 @@ config/environments/production.rb
 config/environments/development.rb
 config/initializers/secret_token_production.rb
 /config/environments/staging.rb
+/config/initializers/raven_production.rb
