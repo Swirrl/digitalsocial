@@ -67,15 +67,17 @@ namespace :deploy do
     run("ln -s " + File.join(shared_path,  'configs', 's3.yml') + " " +
                    File.join(release_path, 'config', 's3.yml'))
 
-    secret_token_rb = File.join(release_path, 'config', 'initializers', 'secret_token.rb')
+    initializers = File.join(release_path, 'config', 'initializers')
+
+    secret_token_rb = File.join(initializers, 'secret_token.rb')
     run("rm " + secret_token_rb)
     run("ln -s " + File.join(shared_path,  'configs', 'secret_token.rb') + " " +
                    secret_token_rb)
 
-    raven_rb = File.join(release_path, 'config', 'initializers', 'raven_production.rb')
-    run("rm " + raven_rb)
+    run("rm " + File.join(initializers, 'raven_production_example.rb'))
     run("ln -s " + File.join(shared_path,  'configs', 'raven.rb') + " " +
-                   raven_rb)
+                   File.join(initializers, 'raven.rb'))
+
 
     run("ln -s " + File.join(shared_path,  'configs', 'production.rb') + " " +
                    File.join(release_path, 'config', 'environments', 'production.rb'))
