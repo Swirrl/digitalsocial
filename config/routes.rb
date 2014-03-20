@@ -8,6 +8,8 @@ Digitalsocial::Application.routes.draw do
   get '/pages/:page_category_id' => 'pages#index', as: :page_category
   get '/pages/:page_category_id/:id' => 'pages#show', as: :page
 
+  get '/:type/tree_view/:id' => 'tree_view#show', as: :tree_view_data
+
   resources :blog_posts, only: [:index, :show], path: 'blog' do
     collection do
       get 'tag/:tag' => 'blog_posts#tag'
