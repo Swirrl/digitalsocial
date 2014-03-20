@@ -1,3 +1,42 @@
-// Place all the styles related to the TreeView controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#tree-vis {
+	margin: 10px;
+
+	width: 100%;
+	height: 300px;
+	position: relative;
+
+	img.spinner {
+		display: block;
+		margin: auto;
+		position: absolute;
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		width: 32px;
+		height: 32px;
+	}
+
+	&.loaded {
+		img.spinner {
+			display: none;
+		}
+	}
+
+	svg {
+		/* background: lemonchiffon; */
+	}
+
+	p,h1,h2,h3,h4 {
+		font-family: Arial, Helvetica, sans-serif;
+		font-style: normal;
+		font-size: 1em;
+		font-weight: normal;
+		position: absolute;
+	}
+
+	h1.root {
+		left: 480px;
+		top: 240px;
+	}
+}

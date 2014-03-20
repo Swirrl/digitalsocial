@@ -3,11 +3,19 @@
   \|
 
 .show
+  .show-row
+    #tree-vis.organisation
+      %svg
+        %img.spinner{src: '/assets/spinner.gif'}
+      %h1.root= @organisation.name
+
+  .show-row
+    %img{src: "/assets/tree-vis.png", width: "100%"}
+
   .title
     %h1= @organisation.name
 
   .show-row
-
     .left-column.details
 
       %p.label Address
@@ -95,3 +103,5 @@
         = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-black', confirm: 'Are you sure you wish to send a request to join this organisation?'
       - else
         = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-black'
+
+= render 'shared/tree_view_js'
