@@ -24,8 +24,15 @@ Like wise when deploying to production you will need to ensure some
 configuration files are copied up to the server.  The capistrano setup
 task will do this, but you will need to ensure that at setup time the
 files are available locally.  Some example files are provided for
-these production services, e.g. `s3.example.yml` which is used for
-backups.
+these production services, these are:
+
+1. `config/s3.example.yml` which is used for image uploads.
+2. `config/development_example.rb` standard rails development environment.
+3. `config/production_example.rb` standard rails production environment.
+4. `config/test_example.rb` standard rails test environment.
+5. `config/mongoid.yml.example` example mongoid config.
+6. `config/raven_production_example.rb` config initializer for mandril SMTP.
+7. `config/secret_token_production_example.rb` config initializer to secure cookies with a salt.
 
 Production
 ----------
