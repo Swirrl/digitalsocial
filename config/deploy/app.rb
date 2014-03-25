@@ -1,2 +1,2 @@
-set :application, "digitalsocial-app"
-set :branch, "alpha"
+set :application, "digitalsocial-openapp"
+set :branch, "master"

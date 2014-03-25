@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   def show_partners
     @show_partners = true
   end

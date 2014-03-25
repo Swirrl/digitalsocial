@@ -80,7 +80,7 @@ Digitalsocial::Application.configure do
     :port                 => 587,
     :enable_starttls_auto => true,
     :user_name            => 'hello@swirrl.com',
-    :password             => '_tF-Qf4kVBQbdFnNaYAEag',
+    :password             => 'put your password here',
     :domain               => 'digitalsocial.eu',
     :authentication       => 'plain'
   }

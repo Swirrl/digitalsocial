@@ -42,14 +42,12 @@ Digitalsocial::Application.configure do
   config.action_mailer.smtp_settings = { host: "localhost", port: 1025 }
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
-  config.middleware.use Rack::LiveReload
 
-  Digitalsocial::DATA_ENDPOINT = 'http://127.0.0.1:3030/digitalsocial_dev/data'
+  Digitalsocial::DATA_ENDPOINT = 'http://127.0.0.1:3030/digitalsocial_reporting/data'
 
   Tripod.configure do |config|
-    config.update_endpoint = 'http://127.0.0.1:3030/digitalsocial_dev/update'
-    config.query_endpoint = 'http://127.0.0.1:3030/digitalsocial_dev/sparql'
-    #config.query_endpoint = 'http://data.digitalsocial.eu/sparql'
+    config.update_endpoint = 'http://127.0.0.1:3030/digitalsocial_reporting/update'
+    config.query_endpoint = 'http://127.0.0.1:3030/digitalsocial_reporting/sparql'
     config.timeout_seconds = 30
     # e.g memcached -m 1024 -p 11214 -I 5M -u memcache -l 127.0.0.1
     config.cache_store  = Tripod::CacheStores::MemcachedCacheStore.new('localhost:11211')

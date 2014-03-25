@@ -44,13 +44,13 @@ Digitalsocial::Application.configure do
 
   Paperclip.logger = Logger.new(nil)
 
-  Digitalsocial::DATA_ENDPOINT = 'http://127.0.0.1:3030/dsitest/data'
+  Digitalsocial::DATA_ENDPOINT = 'http://127.0.0.1:3030/digitalsocial_test/data'
 
   Tripod.configure do |config|
-    config.update_endpoint = 'http://127.0.0.1:3030/dsitest/update'
-    config.query_endpoint = 'http://127.0.0.1:3030/dsitest/sparql'
+    config.update_endpoint = 'http://127.0.0.1:3030/digitalsocial_test/update'
+    config.query_endpoint = 'http://127.0.0.1:3030/digitalsocial_test/sparql'
     config.timeout_seconds = 30
-    config.cache_store  = Tripod::CacheStores::MemcachedCacheStore.new('localhost:11214')
+    config.cache_store  = Tripod::CacheStores::MemcachedCacheStore.new('localhost:11211')
   end
 
   # Allow capybara sessions to initialise rack sessions
