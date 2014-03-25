@@ -1,2 +1,2 @@
 set :application, "digitalsocial-staging"
-set :branch, "opensourcecode"
+set :branch, "master"
