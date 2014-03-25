@@ -34,11 +34,21 @@ class TreeData
             :name => @node.name,
             :more_details => @node.more_details
            }
-
+    hash = maybe_add_organisation_type(hash)
     maybe_add_activity_type(hash)
   end
 
   private
+
+  def maybe_add_organisation_type hash
+    if @node.class == Organisation
+      if @node.organisation_type.present?
+        hash['organisation_type'] = @node.organisation_type.to_s
+        hash['organisation_type_label'] = Concepts::OrganisationType.find(@node.organisation_type).label
+      end
+    end
+    hash
+  end
 
   def maybe_add_activity_type hash
     if @node.class == Project
