@@ -1,0 +1,23 @@
+- action_url_template ||= local_assigns[:action_url_template]
+
+.suggestions
+  %p.remove-if-org= help.html_safe
+
+  .suggestion-template.clearfix
+    .image
+      = image_tag 'http://placehold.it/70x70'
+
+    .details
+      .header
+      .subheader
+
+    .messages
+
+    .action
+      -# If a template is supplied use it to provide a direct URL to
+      -# creating the request, otherwise rely on the javascript doing
+      -# the right thing.
+      - if action_url_template.present?
+        = link_to button_text, action_url_template, class: 'button'
+      - else
+        = link_to button_text, '#', class: 'button'

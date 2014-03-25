@@ -1,0 +1,140 @@
+$cluster-color: #777;
+$faded-cluster-color: #ccc;
+
+.leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
+	-webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-in;
+	-moz-transition: -moz-transform 0.2s ease-out, opacity 0.2s ease-in;
+	-o-transition: -o-transform 0.2s ease-out, opacity 0.2s ease-in;
+	transition: transform 0.2s ease-out, opacity 0.2s ease-in;
+}
+
+.leaflet-div-icon {
+  //background: #0078A8;
+  background: $cluster-color;
+  border-radius: 8px;
+  border: 0;
+
+  div {
+    width: 16px;
+    height: 16px;
+  } 
+}
+
+.marker-cluster-x-small {
+  font-size: 10px;
+  border-radius: 10px;
+
+  div {
+    width: 16px;
+    height: 16px;
+  }
+
+  span {
+    line-height: 20px;
+  }
+}
+
+.marker-cluster-small {
+  font-size: 12px;
+  border-radius: 12px;
+
+  div {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    line-height: 22px;
+  }
+}
+
+.marker-cluster-medium {
+  font-size: 15px;
+  border-radius: 15px;
+
+  div {
+    width: 26px;
+    height: 26px;
+  }
+
+  span {
+    line-height: 28px;
+  }
+}
+
+.marker-cluster-large {
+  font-size: 18px;
+  border-radius: 18px;
+  
+  div {
+    width: 36px;
+    height: 36px;
+  }
+
+  span {
+    line-height: 40px;
+  }
+}
+
+.marker-cluster-x-large {
+  font-size: 24px;
+  border-radius: 24px;
+  
+  div {
+    width: 48px;
+    height: 48px;
+  }
+
+  span {
+    line-height: 50px;
+  }
+}
+
+.marker-cluster {
+  background: $cluster-color;
+}
+
+.marker-cluster, .leaflet-div-icon {
+  background-clip: padding-box;
+  color: #fff;
+
+  &:hover, &.hover {
+    background: #F39200;
+  }
+
+  &.faded {
+    background: #aaa;
+    opacity: 0.5;
+    cursor: default;
+    z-index: -1 !important;
+    display: none;
+
+    &:hover {
+      background: #aaa;
+    }
+  }
+
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+
+.cluster-level-0 .leaflet-div-icon.faded {
+  display: block;
+}
+
+.leaflet-cluster-anim .marker-cluster {
+  color: transparent;
+}
+
+.marker-cluster div {
+  text-align: center;
+  
+  font-family: "chaparral-pro", sans-serif;
+  font-style: italic;
+}
+
+.leaflet-overlay-pane {
+
+}

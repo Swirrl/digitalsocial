@@ -1,0 +1,85 @@
+.dashboard.account
+
+  - if current_organisation
+    .title
+      %h1 #{current_organisation.name}'s Dashboard
+    = render "dashboard/tabs", active: "Account"
+
+  .user-organisations
+
+    %h2 Your organisations
+
+    - if current_organisation || current_user.pending_join_org_requests.any?
+
+      %ul.dashboard-list.organisations
+        - current_user.organisation_resources.each do |org|
+          %li.clearfix
+
+            .image= image_tag org.image_url
+
+            .details
+              .header
+                = org.name
+                - if org.uri == current_organisation.uri
+                  (current)
+              .row.clearfix
+                .address
+                  %p= org.address_str
+
+                  %p
+                    = link_to "Edit location", edit_location_organisation_path(org.guid)
+                    \|
+                    - if org.only_user?(current_user)
+                      = link_to "Delete organisation", unjoin_organisation_path(org.guid), confirm: "Are you sure you wish to delete this organisation?"
+                    - else
+                      = link_to "Unjoin organisation", unjoin_organisation_path(org.guid), confirm: "Are you sure you wish to remove yourself from this organisation?"
+
+                .users
+                  - count = org.users.count
+
+                  %p.count
+                    - count.times do
+                      %i.icon-user
+
+                  %p
+                    = link_to "Invite users", [:invite_users, current_organisation]
+                    - if count == 1
+                      %span.text (currently just you)
+                    - else
+                      %span.text (currently #{count})
+            .action
+              - if org.uri != current_organisation.uri
+                = link_to "Switch", edit_user_path(:org_id => org.guid), class: 'button button-black'
+              = link_to "Edit", edit_organisation_path(org.guid), class: 'button'
+
+
+        - current_user.pending_join_org_requests.each do |r|
+          %li.clearfix
+            .image= image_tag r.organisation_resource.image_url
+
+            .details
+              .header
+                #{r.organisation_resource.name} (awaiting acceptance)
+
+              .row.clearfix
+                .address
+                  %p= r.organisation_resource.address_str
+
+      .add-or-join
+        = link_to "+ Add/join another organisation", [:organisations, :build, :new_organisation], class: 'button button-black'
+
+    - else
+      .empty You are not a member of any organisations yet.
+      .add-or-join
+        = link_to "+ Add/join an organisation", [:organisations, :build, :new_organisation], class: 'button button-black'
+
+    .user-account#ua
+      %h2 Your account details
+
+      = simple_form_for @user, url: user_path do |f|
+        = f.input :first_name, required: true, label: 'Name'
+        = f.input :email, required: true
+        = f.input :password, label: 'Change password'
+        = f.input :receive_notifications, as: :boolean, label: "I want to be notified by email when I receive activity requests or invites."
+
+        = f.button :submit, 'Update account', class: 'button-black'

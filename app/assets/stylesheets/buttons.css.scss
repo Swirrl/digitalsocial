@@ -1,0 +1,52 @@
+.button {
+  background: $orange;
+  color: #fff;
+  padding: 18px 30px;
+  border: 0;
+  outline: 0;
+  font-size: 24px;
+  font-family: $chaparral;
+  cursor: pointer;
+  font-style: italic;
+  //border-bottom: 5px solid $orange-shadow;
+  font-weight: 600;
+  display: inline-block;
+  @include border-radius(3px);
+  @include transition(all, 0.15s);
+
+  &:hover {
+    background: $orange-hover;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &.button-black {
+    background: $black;
+    color: white;
+
+    &:hover {
+      background: $black;
+      color: $orange;
+    }
+  }
+
+  &.button-front-page {
+    background: $orange-shadow;
+    color: white;
+
+    &:hover {
+      background: $orange;
+      color: white;
+    }
+  }
+
+  &.button-red {
+    background: $red;
+
+    &:hover {
+      background: $red-hover;
+    }
+  }
+
+
+}

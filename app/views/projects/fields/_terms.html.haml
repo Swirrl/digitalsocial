@@ -1,0 +1,6 @@
+.field-with-notes{id: 'activity_terms_note'}
+  .field
+    = f.input :terms, required: true, as: :boolean, :label => "Yes, this activity meets the above criteria." 
+  .notes
+    :markdown
+      Activities not in the EU or not meeting the above criteria may be removed.

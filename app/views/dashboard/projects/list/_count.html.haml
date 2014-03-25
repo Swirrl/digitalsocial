@@ -1,0 +1,12 @@
+- count = project.organisations.count
+
+.count
+  - count.times do
+    %i.icon-location
+
+- if count == 1
+  = link_to "Invite an organisation", invite_project_path(project)
+  %span.text (currently just you)
+- else
+  = link_to "Invite another organisation", invite_project_path(project)
+  %span.text (currently #{count})

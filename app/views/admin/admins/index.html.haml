@@ -1,0 +1,18 @@
+%h1 Admin &raquo; Admins
+
+%table.index.pages
+  %tr
+    %th Name
+    %th Email
+    %th
+
+  - @admins.each do |admin|
+    %tr
+      %td= admin.name
+      %td= admin.email
+      %td.actions
+        = link_to "Edit", [:edit, :admin, admin]
+        - unless current_admin == admin
+          = link_to "Delete", [:admin, admin], method: :delete, confirm: "Are you sure you wish to delete this admin user?"
+
+= link_to "New admin", [:new, :admin, :admin], class: 'button'

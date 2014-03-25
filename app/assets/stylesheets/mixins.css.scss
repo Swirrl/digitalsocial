@@ -16,3 +16,38 @@
   -khtml-border-radius: $radius;
   border-radius: $radius;
 }
+
+@mixin button-box-shadow($color) {
+  box-shadow: -1px 0px 1px $color, 0px 1px 1px $color,
+    -2px 1px 1px $color, -1px 2px 1px $color,
+    -3px 2px 1px $color, -2px 3px 1px $color,
+    -4px 3px 1px $color, -3px 4px 1px $color,
+    -5px 4px 1px $color, -4px 5px 1px $color,
+    -6px 5px 1px $color;
+  -moz-box-shadow: -1px 0px 1px $color, 0px 1px 1px $color,
+    -2px 1px 1px $color, -1px 2px 1px $color,
+    -3px 2px 1px $color, -2px 3px 1px $color,
+    -4px 3px 1px $color, -3px 4px 1px $color,
+    -5px 4px 1px $color, -4px 5px 1px $color,
+    -6px 5px 1px $color;
+  -webkit-box-shadow: -1px 0px 1px $color, 0px 1px 1px $color,
+    -2px 1px 1px $color, -1px 2px 1px $color,
+    -3px 2px 1px $color, -2px 3px 1px $color,
+    -4px 3px 1px $color, -3px 4px 1px $color,
+    -5px 4px 1px $color, -4px 5px 1px $color,
+    -6px 5px 1px $color;
+
+  &:active {
+    &:active {
+      box-shadow: -1px 0px 1px $color, 0px 1px 1px $color,
+        -2px 1px 1px $color, -1px 2px 1px $color,
+        -3px 2px 1px $color;
+      
+      -webkit-transform: translate(-3px, 3px);
+      -moz-transform: translate(-3px, 3px);
+      -ms-transform: translate(-3px, 3px);
+      -o-transform: translate(-3px, 3px);
+      transform: translate(-3px, 3px);
+    }
+  }
+}

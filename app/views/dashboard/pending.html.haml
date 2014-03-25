@@ -1,0 +1,42 @@
+.dashboard.pending
+  - if current_organisation
+    .title
+      %h1 #{current_organisation.name}'s Dashboard
+    = render "dashboard/tabs", active: "Pending"
+
+    - if current_organisation.has_respondables? || !current_organisation.primary_site
+      %ul.respondables.dashboard-list
+        - if !current_organisation.primary_site
+          %h3 Profile
+          = render "dashboard/pending/respondables/address"
+
+        - if current_organisation.pending_suggested_invites.any?
+          %h3 Suggested Team Members
+          %p You might want to invite these colleagues and team members to help manage your profile.
+          - current_organisation.pending_suggested_invites.each do |project_invite|
+            = render "dashboard/pending/respondables/suggested_team_members", project_invite: project_invite
+
+        - if current_organisation.pending_project_invites.any?
+          %h3 Activity Invites
+          %p These are invitations from other people to join activities they're a part of.
+          - current_organisation.pending_project_invites.each do |project_invite|
+            = render "dashboard/pending/respondables/project_invite", project_invite: project_invite
+
+        - if current_organisation.pending_project_requests_by_others.any?
+          %h3 Activity Join Requests
+          %p These are requests by other people to join activities you're a part of.
+          - current_organisation.pending_project_requests_by_others.each do |respondable|
+            = render "dashboard/pending/respondables/project_request", respondable: respondable
+
+        - if current_organisation.respondable_user_requests.any?
+          %h3 Organisation Join Requests
+          %p These are requests by other people wanting to join your organisation.
+          - current_organisation.respondable_user_requests.each do |respondable|
+            = render "dashboard/pending/respondables/user_request", respondable: respondable
+
+    - else
+      .empty
+        %p You have no pending invites or requests to respond to.
+
+        - if params[:source] == 'email'
+          %p (Another member of your team/activity may have already responded).

@@ -1,0 +1,17 @@
+#user
+  .title
+    %h1 Log In
+
+  = simple_form_for resource, :as => resource_name, :url => session_path(resource_name) do |f|
+
+    = f.input :email, required: true
+    = f.input :password, required: true
+    = f.input :remember_me, :as => :boolean if devise_mapping.rememberable?
+
+    = f.button :submit, 'Log In', class: 'button-black'
+
+  %hr
+  %p
+    = render "devise/shared/links"
+  %p
+  To create an account, #{link_to "add yourself to the map", [:organisations, :build, :new_user]}.

@@ -1,0 +1,89 @@
+<script>
+  $(function() {
+
+    var defaultZoom = 13;
+
+    var map = L.mapbox.map('show-map', "<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>", {
+      scrollWheelZoom: false
+    });
+
+    var minLat, maxLat, minLng, maxLng;
+
+    <% @project.organisation_resources.each do |org| %>
+      <% if org.primary_site_resource.present? %>
+
+        var lat = <%= org.primary_site_resource.lat %>;
+        var lng = <%= org.primary_site_resource.lng %>;
+
+        if (!minLat) minLat = lat;
+        else if (lat < minLat) minLat = lat;
+
+        if (!maxLat) maxLat = lat;
+        else if (lat > maxLat) maxLat = lat;
+
+        if (!minLng) minLng = lng;
+        else if (lng < minLng) minLng = lng;
+        
+        if (!maxLng) maxLng = lng;
+        else if (lng > maxLng) maxLng = lng;
+
+        var marker = L.marker(new L.LatLng(lat, lng), {
+          icon: new L.Icon({
+            iconSize: new L.Point(14, 20),
+            iconUrl: "/assets/home/pin-hover.png"
+          })
+        })
+        .bindPopup('', {
+          closeButton: false
+        });
+        marker._guid = "<%= org.guid %>";
+
+        marker.addTo(map);
+
+      <% end %>
+    <% end %>
+
+    var southWest = new L.LatLng(minLat, minLng);
+    var northEast = new L.LatLng(maxLat, maxLng);
+    var bounds    = new L.LatLngBounds(southWest, northEast);
+
+    map.fitBounds(bounds);
+
+    map.on('popupopen', function(e) {
+      fetchPinPopupContent(e);
+    });
+
+    function fetchPinPopupContent(e) {
+      var guid = e.popup._source._guid;
+
+      $.ajax({
+        type: 'GET',
+        url: '/organisations/'+guid+'/map_show',
+        beforeSend: function(){
+          e.popup.setContent('<div class="spinner"></div>');
+        },
+        success: function(data){
+          setPinPopupContent(data.organisation, e.popup);
+        },
+        error: function() {
+          e.popup.setContent('<div class="popup-error">Oops - something went wrong.</div>');
+        },
+        dataType: 'json'
+      });
+
+    }
+
+    function setPinPopupContent(organisation, popup) {
+      var content = '';
+      content += '<h3><a href="/organisations/'+organisation.guid+'">'+organisation.name+'</a></h3>';
+
+      if (organisation.address) {
+        content += '<p class="address">'+organisation.address+'</p>';
+      }
+
+      popup.setContent(content);
+    }
+
+  });
+
+</script>

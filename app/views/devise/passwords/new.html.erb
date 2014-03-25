@@ -1,0 +1,14 @@
+<div id="user">
+  <h1>Forgot your password?</h1>
+
+  <%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+
+    <div class="form-inputs">
+      <%= f.input :email, :required => true, :autofocus => true %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit, "Send me reset password instructions", class: 'button-green' %>
+    </div>
+  <% end %>
+</div>

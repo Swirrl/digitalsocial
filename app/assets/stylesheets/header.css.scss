@@ -1,34 +1,65 @@
 #header {
-  padding: 60px 0;
+  padding-top: 32px;
+  margin-bottom: 32px;
+  position: relative;
+
+  @include media-all-mobile {
+    padding-top:24px;
+    padding-bottom: 12px
+  }
+
   width: 100%;
 
   a {
-    color: $black;
+    color: $orange;
   }
 
-  .logo {
-    float: left;
-    width: 240px;
-    
-    h1 {
-      font-size: 36px;
-      margin: 0;
+
+  .logo-wrapper {
+    @include columns(16);
+    position: relative;
+
+    .logo {
+      float: left;
+      width: 279px;
+      height: 79px;
+      background: url(image-path("logo/dsi-logo.png")) no-repeat;
+      display: block;
+      margin-left: -100px;
+      
+      @include media-tablet-and-mobile {
+        margin-left: 0;
+      }
     }
   }
 
   .menu {
-    float: right;
-    line-height: 72px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    @include media-all-mobile {
+      position:relative;
+      float:right;
+      margin-top: 18px;
+
+      a.open-data {
+        display: none;
+      }
+    }
+
 
     a {
-      padding: 12px 18px;
-      margin-left: 36px;
-      font-weight: bold;
-      
+      margin-left: 24px;
+      @include transition(all, 0);
+      font-style: italic;
+
       &:hover {
-        color: $dblue;
+        text-decoration: none;
+        border-bottom: 3px solid $orange;
       }
-      
     }
+
+
   }
 }

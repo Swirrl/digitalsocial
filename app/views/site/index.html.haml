@@ -1,51 +1,188 @@
-#home
-  #banner
-    .text
-      %h1 We need your help
-      %br
-      %h2 Understanding Digital Social Innovation across Europe
+!!!
+%html
+  %head
+    %title= [@title, "Digital Social Innovation"].compact.join(" | ")
 
-  #content.lcol
+    = stylesheet_link_tag  "application"
 
-    :markdown
+    %link{rel:"stylesheet", href:"//cdn.leafletjs.com/leaflet-0.6.4/leaflet.css"}
+    %link{rel:"stylesheet", href:"//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.css"}
 
-      The internet is playing an ever increasing role in how we work, play, and
-      relate to each other.
+    /[if lte IE 8]
+      %link{rel: "stylesheet", href:"//cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css"}
 
-      As a natural result of this many of the most exciting new innovations
-      that address social issues are being developed online.  We call this
-      exciting new field *Digital Social Innovation* and it includes
-      a diverse set of activities and actors.
+    =# jquery ui style for tagit.
+    %link{rel:"stylesheet", href:"//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css"}
 
-      However, while the field of digital social innovation practice is
-      growing rapidly, there is little knowledge around what best practice
-      looks like, where it is happening, who the digital social innovators
-      are and what strategic approaches can best support its growth.
+    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
+    %script{src: "//code.jquery.com/ui/1.10.3/jquery-ui.js"}
 
-      The EU Commission recognises this issue and has commissioned a
-      study to explore and assess the emerging landscape. This will be
-      carried out by an EU wide partnership of *Nesta* (UK), *Esade Business
-      School* (Spain), *Waag Society* (NL), *Institut de Recherche et d'Innovation*
-      (Fr), *FutureEverything* (UK) and *Swirrl* (UK).
+    %script{src: "//cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"}
+    %script{src: "//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.js"}
 
-      **Are you on the Digital Social Innovation Map?**
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-      We will soon be creating a short online survey.
-      If you are active in this area we'll be asking you to help us by filling it in.
+    = javascript_include_tag "application"
+    = javascript_include_tag "leaflet.markercluster-src"
 
-      We are really interested in understanding who the digital social
-      innovators are, where you are and how you are connected to each
-      other. To understand this we are developing an EU wide map of
-      organisations, listing what kind of activities they are involved in,
-      how they are supporting it and how they are connected to others.
+    = stylesheet_link_tag "MarkerCluster"
 
-      We will create a resource that helps digital social innovators
-      connect while also developing an understanding for the EU and national
-      governments on the state of Digital Social Innovation in different
-      parts of EU.
+    = csrf_meta_tags
+    = render "typekit"
+  %body.home
+    /[if lte IE 8]
+      #out-of-spec
+        Sorry - your browser is not supported. Some elements may not function or display as intended. Please upgrade to at least IE9, or a recent version of Chrome/Safari/Firefox.
 
-      If you are keen to find out more, drop us [a tweet](https://twitter.com/digi_si),
-      send us [an email](mailto:contact@digitalsocial.eu) or come
-      to one of the [DSI events](/events) we are planning on attending.
+    #home-map
 
-= render "sidebar"
+    .mobile-info
+      .text
+        %a.hide-info-mobile{href:'#'}
+          %icon.icon-circled-down
+          Hide this panel
+        %h2 Digital Social Innovation
+        :markdown
+           We're setting up a network of organisations that use the Internet for social good. It just takes a few minutes to get started.
+          [Read More](/about).
+        .cta.clearfix
+          .put-on-map
+            = link_to "Put your organisation on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
+          .log-in
+            Already signed up? #{link_to "Log in", "/users/sign_in"}.
+        .credits
+          &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
+
+    .mobile-small-info{style:'display:none'}
+      .text
+        %a.show-info-mobile{href:'#'}
+          %icon.icon-circled-up
+          Show more info
+
+    .mobile-filter
+      Visible organisations are filtered.
+      = link_to "Reset filter", "/"
+
+    .logo
+      %a{ href: '/' }= image_tag "logo/dsi-logo.png"
+      .links
+        = link_to "About", "/about"
+        = link_to "Blog", "/blog"
+        = link_to "Events", "/events"
+
+    .info
+
+      .text
+        :markdown
+          We're setting up a network of organisations that use the Internet for social good.
+
+        %ul
+          %li Be part of a growing community of Digital Social Innovation
+          %li Inform better policy across the EU
+          %li Showcase your work and network to potential funders and investors
+
+        :markdown
+          It just takes a few minutes to get started. [Read More](/about).
+
+        .cta.clearfix
+          .put-on-map
+            = link_to "Put your organisation on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
+          .log-in
+            Already signed up? #{link_to "Log in", "/users/sign_in"}.
+
+        .info-foot
+          .credits
+            &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
+          .hide{style:'float:right'}
+            %a.hide-info{href:'#', style:'font-style:italic; font-size:14px'}
+              Hide this panel
+              %icon.icon-circled-left
+
+    .small-info
+      %p.show-more
+        %a{href:'#'}
+          %icon.icon-circled-right
+          Show more info
+
+      = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
+
+    .filter
+      = form_tag '/', method: :get do
+        .filter-section{ class: params[:filters].nil? || (params[:filters][:technology_focus].to_a.any?) ? 'expanded' : nil }
+
+          = filter_section_header(:technology_focus).html_safe
+          .expandable
+            .options
+              - Concepts::TechnologyFocus.all.resources.each do |tf|
+                = filter_option(tf, 'technology_focus').html_safe
+            
+        .filter-section{ class: params[:filters].present? && params[:filters][:organisation_type].to_a.any? ? 'expanded' : nil }
+          = filter_section_header(:organisation_type).html_safe
+          .expandable
+            .options
+              - Concepts::OrganisationType.all.resources.each do |ot|
+                = filter_option(ot, 'organisation_type').html_safe
+
+            %p.browse= link_to 'View all organisations &raquo;'.html_safe, '/organisations'
+            
+        .filter-section{ class: params[:filters].present? && params[:filters][:activity_type].to_a.any? ? 'expanded' : nil }
+          = filter_section_header(:activity_type).html_safe
+          .expandable
+            .options
+              - Concepts::ActivityType.top_level_concepts.each do |at|
+                = filter_option(at, 'activity_type')
+
+            %p.browse= link_to 'View all activities &raquo;'.html_safe, '/projects'
+
+        .filter-section{ class: params[:filters].present? && params[:filters][:areas_of_society].to_a.any? ? 'expanded' : nil }
+          = filter_section_header(:areas_of_society, label: 'Domain').html_safe
+          .expandable
+            .options
+              - Concepts::AreaOfSociety.top_level_concepts.each do |aos|
+                = filter_option(aos, 'areas_of_society')
+              
+        .filter-section{ class: params[:filters].present? && params[:filters][:country].to_a.any? ? 'expanded' : nil }
+          = filter_section_header(:country).html_safe
+          .expandable
+            .options
+              - Digitalsocial::EU_COUNTRIES.each do |c|
+                = filter_option(c, 'country', label_method: 'to_s', value_method: 'to_s')
+
+        .filter-section.cluster-section.expanded
+          = filter_section_header(:clustering).html_safe
+          .expandable
+            .options
+              #slider
+
+              %p
+                %span.left None
+                %span.right Max
+
+            = hidden_field_tag :cluster, params[:cluster].to_i, id: 'cluster-level'
+
+        .filter-section.filter-button-section
+          = submit_tag "Update map", class: 'button filter-button', disabled: 'disabled'
+
+      .filter-section.filter-share-section
+        %p
+          
+          %a.show-url{ href: '#'}
+            %span.icon-link
+            Show link for current map
+
+        = text_field_tag :url, url_for(:only_path => false)
+
+    .show-filter
+      %a{ href: '#' } Filter organisations
+
+    .active-organisation
+      %p Currently viewing network of
+      %p.name Swirrl
+
+      %p= link_to "Reset map", "#", class: 'reset-map'
+
+
+    = render "site/index/map_js"
+    = render "analytics"
+
+

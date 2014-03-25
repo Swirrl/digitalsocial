@@ -1,32 +1,110 @@
 #home {
-  #banner {
-    background: url(image-path("home-map.png")) no-repeat;
+
+  #map {
+    @include columns(16);
   }
 
+  .banner {
+    position: absolute;
+    top: 400px;
+    left: 320px;
+    font-size: 20px;
+    background: rgba(100,100,100,0.8);
+    color: white;
+    padding: 24px;
+  }
+
+  .about {
+    @include columns(16);
+  }
+}
+
+#about, #terms, #privacy, #page {
+
   #content {
-    p:first-child {
-      font-weight: bold;
+    @include columns(10);
+  }
+
+  .page {
+    + .page {
+      margin-top: 90px;
+    }
+
+    .title {
+      p {
+        font-size: 36px;
+        margin-bottom: -18px;
+        font-weight: 300;
+        margin-top: 36px;
+        line-height: 1;
+        font-style: italic;
+        color: #ccc;
+      }
+    }
+
+    h4 {
+      font-weight: normal;
+      font-style: italic;
       font-size: 24px;
+      margin: 60px 0 18px;
+    }
+
+    .attachments li {
+      padding-left: 16px;
+      text-indent: -16px;
+      margin-bottom: 16px;
+      line-height: 1.2;
     }
   }
+
+  .page-intro {
+    margin-bottom: 72px;
+
+    h2 {
+      margin-bottom: 0px;
+    }
+
+    p {
+      &.subheader {
+        color: #bbb;
+        margin: 6px 0 18px;
+        line-height: 1.3;
+        padding-left: 12px;
+        text-indent: -12px;
+
+        strong {
+          font-weight: normal;
+          color: #888;
+        }
+      }
+    }
+
+  }
+
 }
 
 #events {
 
   #content {
-    
+
+    @include columns(16);
+
     ul.timeline {
       list-style-type: none;
       padding: 0 0 4px;
-      background: url(image-path("dot.png")) repeat-y 288px 0px;
+      background: url(image-path("dot2.png")) repeat-y 288px 0px;
       margin: 0 60px;
+
+      @include media-all-mobile {
+         background: url(image-path("dot2.png")) repeat-y 0px 0px;
+      }
 
       li.year {
         margin-bottom: 32px;
         margin-left: 264px;
 
         span {
-          background: $dblue;
+          background: $orange;
           color: #fff;
           @include border-radius(50%);
           display: inline-block;
@@ -40,18 +118,26 @@
       li.month {
         width: 308px;
         //padding-left: 112px;
-        background: url(image-path("dot.png")) repeat-x 0 0;
+        background: url(image-path("dot2.png")) repeat-x 0 0;
         margin-bottom: 32px;
         padding-top: 8px;
         height: 8px;
 
         span {
           background: #fff;
-          padding: 0 0 0 6px; 
+          padding: 0 0 0 6px;
           font-size: 36px;
-          font-weight: bold;
-          color: $lblue;
-          text-transform: uppercase;
+          color: #f9c980;
+        }
+      }
+
+      @include media-all-mobile {
+
+        li.year {
+          margin-left: -24px;
+        }
+        li.month {
+          display:none;
         }
       }
 
@@ -59,17 +145,20 @@
       li.event {
         margin-left: 288px;
         padding-left: 82px;
-        background: url(image-path("dot.png")) repeat-x 0 0;
+        background: url(image-path("dot2.png")) repeat-x 0 0;
         line-height: 16px;
         margin-bottom: 56px;
 
+        @include media-all-mobile {
+          margin-left:0;
+        }
+
         .event-content {
           background: #fff;
-          padding: 0 0 0 6px; 
+          padding: 0 0 0 6px;
 
           p.name {
             color: $black;
-            font-weight: bold;
           }
 
           p {
@@ -91,43 +180,114 @@
 }
 
 #blog {
+
   padding: 0 180px 0 0;
 
   .blog-post {
-    h1, h2 {
-      padding-left: 240px;
+
+    + .blog-post {
+      margin-top: 60px;
     }
 
-    .blog-meta {
-      width: 210px;
-      margin-right: 30px;
-      float: left;
+    .title {
+        @include columns(16);
+        h1 { 
+            @include columns(9);
+            margin-left: 0;
 
-      img {
-        margin: 6px 0 4px;
-      }
+            @include media-all-mobile {
+                margin-bottom: 32px;
+            }
+        }
+        
+        h2 {
+            @include offset(10);
+            margin-top: 40px;
+            padding-left: 570px;
+            color: $orange;
+            @include media-all-mobile {
+                margin-bottom: 32px;
+            }
+        }
 
-      > p {
-        margin-bottom: 0;
-        line-height: 28px;
-      }
+        @include media-all-mobile {
+            margin-top: 32px;
+        }
 
-      .author {
-        font-weight: bold;
-      }
-
-      .author-role {
-        color: #ccc;
-        font-style: italic;
-      }
+        p {
+          font-size: 36px;
+          margin-bottom: -18px;
+          font-weight: 300;
+          margin-top: 36px;
+          line-height: 1;
+          font-style: italic;
+          color: #ccc;
+        }
     }
 
     .blog-content {
-      float: left;
-      width: 540px;
+        @include columns(9);
+
+        img {
+          max-width:100% !important;
+          height:auto;
+          display:block;
+        }
+
+        blockquote {
+          font-style: italic;
+          padding-left: 24px;
+          margin-right: 48px;
+        }
+    }
+
+    .blog-meta {
+        @include offset(10);
+        
+        margin-left: -20px;
+        img {
+            margin: 6px 0 4px;
+            @include border-radius(50%);
+        }
+        
+        > p {
+            margin-bottom: 0;
+            line-height: 28px;
+        }
+            
+        .author {
+            font-weight: bold;
+        }
+        
+        .author-role {
+            color: #ccc;
+            font-style: italic;
+        }
+    }
+
+    .blog-tags {
+      color: #ccc;
     }
 
   }
 
-  
+}
+
+#disqus_thread {
+  margin-top: 90px;
+}
+
+#terms {
+  h3 {
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  p + h3 {
+    margin-top: 60px;
+  }
+
+  li {
+    margin-bottom: 18px;
+  }
 }

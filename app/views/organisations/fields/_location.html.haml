@@ -1,0 +1,157 @@
+.field-with-notes
+  .fields
+    = f.input :street_address, as: :string, input_html: { class: 'geo' }
+    = f.input :locality, as: :string, input_html: { class: 'geo' }, label: 'Locality (e.g. town or city)'
+    = f.input :region, as: :string, input_html: { class: 'geo' }, label: 'Region (e.g. county or province)'
+    = f.input :country, input_html: { class: 'geo' }, priority: Digitalsocial::EU_COUNTRIES
+    = f.input :postal_code, as: :string
+  .notes
+    :markdown
+      Please tell us where your organisation is based. If in doubt please use the head office address. We'll automatically try and find you on the map based on the address you enter.
+
+
+:ruby
+  messages_class = @organisation.errors.include?(:lat) || @organisation.errors.include?(:lng) ? 'error' : 'normal'
+
+= content_tag :div, id: 'map-messages-wrapper', class: messages_class do
+  #map-messages
+    Click to place a pin at the location of your organisation's main office.
+
+#map
+
+#lat-lng
+  = f.input :lat
+  = f.input :lng
+
+:javascript
+  $(function() {
+
+    var defaultCenter = [45,15];
+    var defaultZoom = 4;
+    var selectedZoom = 16;
+
+    var lat = #{@organisation.lat.present? ? @organisation.lat : 'null'};
+    var lng = #{@organisation.lng.present? ? @organisation.lng : 'null'};
+
+    // hide the lat long fields
+    $("#lat-lng").hide();
+
+    var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_SHOW_MAP_ID}', {scrollWheelZoom: false})
+      .setView(defaultCenter,defaultZoom);
+
+    var marker = null;
+
+    // if we've got a lat lng, drop a pin
+    if(lat && lng) {
+      dropPin(lat, lng);
+      map.setZoom(selectedZoom);
+      map.panTo(new L.LatLng(lat, lng));
+    }
+
+    map.on('click', onMapClick);
+
+    // handle forms changing
+
+    function formFieldChanged() {
+      var streetAddress = $('#organisation_presenter_street_address').val();
+      var locality = $('#organisation_presenter_locality').val();
+      var country = $('#organisation_presenter_country').val();
+
+      // if we've got a street address, locality and country, then do the geo coding...
+      if(streetAddress.length > 0 &&
+          (locality.length > 0) &&
+          country.length > 0 ) {
+        geoCode(streetAddress, locality, country);
+      }
+    }
+
+    $("input.geo, select.geo").on('change', formFieldChanged);
+
+    function addSectionToGeoQuery(geoQuery, section) {
+      if (section.length > 0) {
+        if (geoQuery.length > 0) {geoQuery += ', '; }
+        geoQuery += section;
+      }
+      return geoQuery;
+    }
+
+    function geoCode(streetAddress, locality, country, postalCode) {
+
+      var url = 'http://nominatim.openstreetmap.org/search';
+
+      geoQuery = '';
+      geoQuery = addSectionToGeoQuery(geoQuery, streetAddress);
+      geoQuery = addSectionToGeoQuery(geoQuery, locality);
+      geoQuery = addSectionToGeoQuery(geoQuery, country);
+
+      url += '?q=' + encodeURIComponent(geoQuery);
+      url += '&email=#{Digitalsocial::NOMINATIM_EMAIL}';
+      url += '&format=json';
+      url += '&limit=1';
+
+      setGeoCodingWorking();
+
+      $.ajax({
+        dataType: 'jsonp',
+        jsonp: 'json_callback',
+        url: url,
+        success: function(data, textStatus, jqXHR) {
+          if (data && data.length > 0) {
+            var result = data[0];
+            dropPin(result.lat, result.lon);
+            map.setZoom(selectedZoom);
+            map.panTo(new L.LatLng(result.lat, result.lon));
+            $("#map-messages").html("We've placed a pin based on the address you entered above. Please check the location and move the pin if necessary.");
+          } else {
+            clearLatLong();
+          }
+        },
+        error: function() {
+          clearLatLong();
+        }
+      });
+    }
+
+    function dropPin(lat, lng) {
+      if (marker) {
+        marker.setLatLng( new L.LatLng(lat, lng) )
+        marker.update();
+      } else {
+        marker = L.marker( new L.LatLng(lat, lng), {
+          draggable: true,
+          icon: L.mapbox.marker.icon({'marker-color': 'F39200'}),
+        });
+        // wire up events to move
+        marker.on('move', function(e) {
+          updateLatLngFields(e.target.getLatLng().lat, e.target.getLatLng().lng);
+        });
+        // set the initial lat long fields
+        updateLatLngFields(lat,lng);
+        marker.addTo(map);
+      }
+    }
+
+    function clearLatLong() {
+      if (marker) { map.removeLayer(marker); marker = null; }
+      $("#map-messages").html("We couldn't find a location for the address you entered. Please click on the map to place a pin.");
+      $("input#organisation_presenter_lat").val('');
+      $("input#organisation_presenter_lng").val('');
+      map.setView(defaultCenter,defaultZoom);
+    }
+
+    function setGeoCodingWorking() {
+      $("#map-messages").html('working...');
+    }
+
+    function updateLatLngFields(lat, lng) {
+      $("input#organisation_presenter_lat").val(lat);
+      $("input#organisation_presenter_lng").val(lng);
+    }
+
+    function onMapClick(e) {
+      dropPin( e.latlng.lat, e.latlng.lng );
+    }
+
+
+  });
+

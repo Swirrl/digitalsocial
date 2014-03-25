@@ -1,64 +1,114 @@
+html, body {
+  height: 100%;
+}
+
+input[type="submit"] {
+  -webkit-appearance:none !important;
+}
+
+#out-of-spec {
+  background: red;
+  color :white;
+  padding: 10px;
+}
+
 body {
-  font-family: $lato;
+  font-family: $chaparral;
   font-size: 18px;
   color: $black;
+  background: #fff; // url(image-path("backgrounds/bg.png")) repeat-y center top;
+  padding-bottom: 60px;
+}
+
+.row {
+  @include row; // the grid mixin.
+}
+
+.flash {
+  padding: 18px 36px;
+  margin: 36px 0;
+  color:white;
+  line-height: 1.5;
+  text-align: center;
+  font-size: 20px;
+  font-style: italic;
+
+  &.alert {
+    background: #ffffe0;
+    color: #7f7f75;
+  }
+
+  &.notice {
+    background: #ffffe0;
+    color: #7f7f75;
+  }
 }
 
 a {
   text-decoration: none;
-  color: $dblue;
+  color: $link-burnt-orange;
   @include transition(all, 0.1s);
 
   &:hover {
-    color: $dblue-hover;
+    color: $link-blue-hover;
+    text-decoration: underline;
   }
 }
 
 p {
-  margin-bottom: 30px;
+  margin-bottom: 1.5em;
   line-height: 1.5;
 }
 
-ul {
-  padding-left: 48px;
-  margin-bottom: 30px;
+
+ol, ul {
+  list-style-position: inside;
+  padding-left: 0px;
+  margin-bottom: 1.5em;
 
   li {
     line-height: 1.5;
-    margin-bottom: 12px;
   }
 }
 
 h1 {
   font-size: 48px;
-  margin-bottom: 48px;
+  color: $orange;
+  font-style: italic;
+  margin-bottom: 32px;
+  margin-top: 32px;
+  font-weight: 300;
 }
 
 h2 {
   font-size: 36px;
   margin-bottom: 36px;
+  font-weight: 300;
+}
+
+h3 {
+  font-size: 30px;
+  margin-bottom: 30px;
 }
 
 h1 + h2 {
   margin-top: -36px;
-  color: #ccc;
   font-size: 30px;
   margin-bottom: 48px;
 }
 
 ::selection {
-  background: $dblue;
+  background: $orange;
   color: #fff;
 }
 
 ::-moz-selection {
-  background: $dblue;
+  background: $orange;
   color: #fff;
 }
 
 .container {
-  width: 960px;
-  margin: 0 auto;
+  @include container;
 }
 
 .clearfix {
@@ -83,4 +133,38 @@ h1 + h2 {
 .rcol {
   float: right;
   width: 300px;
+}
+
+#main {
+  margin-bottom: 90px;
+  margin-left: 0;
+}
+
+.hr {
+  display: block;
+  background-color: $orange;
+  margin-left: 10px;
+  @include media-all-mobile { 
+      margin-left: 0px;
+  }
+}
+
+.hr1 {
+  height: 3px;
+}
+
+.hr2 {
+  height: 4px;
+}
+
+.hr3 {
+  height: 6px;
+}
+
+.hr4 {
+  height: 8px;
+}
+
+.leaflet-control-attribution {
+  display: none;
 }

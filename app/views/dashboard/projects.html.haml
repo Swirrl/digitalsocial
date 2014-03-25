@@ -1,0 +1,13 @@
+.dashboard.projects
+
+  - if current_organisation
+    .title
+      %h1 #{current_organisation.name}'s Dashboard
+    = render "dashboard/tabs", active: "Activities"
+
+    .title
+      %h2
+        %strong #{current_organisation.name}'s
+        Activities
+
+    = render "dashboard/projects/list"

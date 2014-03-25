@@ -1,0 +1,16 @@
+#user {
+  @include columns(16);
+  form {
+    input[type=email],
+    input[type=password]{
+      max-width: 90%;
+    }
+    @include media-all-mobile {
+      input[type=submit] {
+        width:100%;
+        font-size:16px;
+        padding:12px;
+      }
+    }
+  }
+}

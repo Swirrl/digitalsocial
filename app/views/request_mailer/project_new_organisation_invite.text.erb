@@ -1,0 +1,27 @@
+Hi <%= @user.first_name %>,
+
+You have been invited to join an activity on digitalsocial.eu
+
+Someone at <%= @invitor_organisation.name %> has indicated that you worked on <%= @project.name %> together.
+
+<% unless @project.description.blank? %>
+They described this project as:
+
+<%= @project.description %>
+<% end %>
+
+You can find out more about what they've said about this activity online at:
+
+<%= project_url(@project) %>
+
+<% unless @invite.personalised_message.blank? %>
+They provided the following message to jog your memory about this project:
+
+"<%= @invite.personalised_message %>"
+<% end %>
+
+If you'd like to join them in this activity together click the link below to complete the sign up and accept this invitation.
+
+<%= edit_password_url(@user, :reset_password_token => @user.reset_password_token, :neworg => 1) %>
+
+<%= render 'footer' %>

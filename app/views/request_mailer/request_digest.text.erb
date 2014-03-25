@@ -1,0 +1,34 @@
+Hello <%= @user.first_name %>,
+
+This is a summary of your pending items on digitalsocial.eu
+
+<% if @organisation.pending_project_invites.any? %>
+<%= @organisation.name %> has pending invites to the following activities:
+
+<% @organisation.pending_project_invites.each do |inv| %>
+* <%= inv.project_resource.name %>
+<% end %>
+<% end %>
+
+<% if @organisation.pending_project_requests_by_others.any? %>
+The following organisations have requested to join <%= @organisation.name %>'s activities:
+
+<% @organisation.pending_project_requests_by_others.each do |req| %>
+* <%= req.requestor_organisation_resource.name %> (<%= req.project_resource.name %>)
+<% end %>
+<% end %>
+
+<% if @organisation.respondable_user_requests.any? %>
+The following users have requested to join your organisation:
+
+<% @organisation.respondable_user_requests.each do |request| %>
+* <%= request.user.first_name %> (<%= request.user.email %>)
+<% end %>
+<% end %>
+
+To respond to these items, please log in to the digitalsocial.eu dashboard for <%= @organisation.name %> (link below).
+
+<%= dashboard_url(org_id: @organisation.guid, source: 'email') %>
+
+<%= render 'footer' %>
+<%= render 'unsubscribe' %>

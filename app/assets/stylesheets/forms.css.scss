@@ -1,0 +1,189 @@
+form {
+
+  .field-with-notes {
+    @include row;
+    margin-bottom:0;
+
+    .field, .fields {
+
+      @include columns(8);
+
+      clear:left;
+      @include clearfix;
+
+      div.input {
+        textarea,
+        input[type="text"],
+        input[type="email"],
+        input[type="password"]  {
+          width: 90%;
+        }
+      }
+    }
+
+
+    .notes {
+
+      span.highlight {
+        background: $highlight;
+      }
+
+      @include columns(7);
+      @include offset(1);
+
+      p:last-child {
+        margin-bottom:0; // dont margin the last p.
+      }
+
+      font-size: 16px;
+      padding-top:20px;
+      @include media-all-mobile {
+        font-size:14px;
+        color: #777;
+
+        // as it's underneath
+        padding-top:0;
+        margin-top:-30px;
+        margin-bottom:40px;
+      }
+      color: #777;
+      font-style: italic;
+    }
+  }
+
+  #activity_terms_note {
+    .notes {
+       padding-top: 0px;
+    }
+
+    label.checkbox {
+      padding-left: 0px;
+    }
+  }
+
+  label {
+    display: block;
+    font-style: italic;
+
+    abbr[title] {
+      color: $orange;
+      border-bottom: 0;
+    }
+
+    &.radio_buttons, &.check_boxes, &.dates {
+      margin-bottom: 18px;
+    }
+
+    &.radio, &.checkbox {
+      padding-left: 24px;
+      margin-bottom: 12px;
+      font-style: normal;
+
+      input {
+        margin: 0 8px 0 0;
+        vertical-align: top;
+      }
+    }
+  }
+
+  .input {
+    margin-bottom: 48px;
+
+    input[type=text], input[type=email], input[type=password],
+    input[type=url], textarea {
+      padding: 12px;
+      font-size: 100%;
+      font-family: $chaparral;
+      border: 0;
+      background: $very-light-grey;
+      border: 2px solid transparent;
+      outline: none;
+      @include transition(all, 0.15s);
+      display: block;
+      margin-bottom: 0;
+      border-top: 2px solid #d5d5d5;
+
+      &:focus {
+        border: 2px solid $orange;
+        background: rgba(243, 146, 0, 0.1);
+
+        &::-webkit-input-placeholder { /* WebKit browsers */
+          color: #fad399;
+        }
+        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color: #fad399;
+        }
+        &::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color: #fad399;
+        }
+        &:-ms-input-placeholder { /* Internet Explorer 10+ */
+          color: #fad399;
+        }
+      }
+
+    }
+
+    textarea.autosize {
+      @include transition(height, 0);
+      padding-bottom: 48px;
+    }
+
+    &.other {
+      display: none;
+      margin-top: -24px;
+      padding-left: 24px;
+    }
+
+    span.error {
+      margin-bottom: 0;
+    }
+
+    &.field_with_errors {
+      input[type=text], input[type=email], input[type=password], textarea {
+        border-color: $red;
+      }
+    }
+  }
+
+  span.error {
+    display: inline-block;
+    background-color: $red;
+    color: #fff;
+    padding: 6px 12px;
+    margin-left: 2px;
+    font-size: 16px;
+    margin-bottom: 36px;
+  }
+
+  .error-messages {
+    @include columns(16);
+    border: 2px solid $red;
+    margin-bottom: 48px;
+    padding: 18px;
+    background: #ecb9bd;
+    color: $red;
+    font-style: italic;
+    text-align: center;
+    @include clearfix;
+  }
+
+}
+
+p.suggested-tags {
+  margin-top:-30px;
+  font-size:16px;
+  margin-bottom: 48px;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: #aaa;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #aaa;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #aaa;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #aaa;
+}

@@ -1,0 +1,22 @@
+%li.respondable.clearfix{ class: project_invite.class.to_s.underscore }
+  .image
+    = image_tag asteroid_image_path
+
+  .text
+    .header
+      = link_to project_invite.invitor_organisation_resource.name, project_invite.invitor_organisation_resource
+      has indicated that
+      = maybe_display_user_name_and_email(project_invite, current_user)
+      works for your organisation and was involved with them in the 
+      = link_to project_invite.project_resource.name, project_invite.project_resource
+      activity.  Would you like to invite them to help manage your organisations profile?  
+      Inviting them will grant them
+      %em full access 
+      over your organisations profile.
+
+    .subheader
+
+  .action
+    = link_to "Invite", [:invite_via_suggestion, project_invite], method: :put, class: 'button button-black'
+    = link_to "Ignore", [:reject_suggestion, project_invite], method: :put, class: 'button'
+

@@ -1,0 +1,12 @@
+= simple_form_for project do |f|
+  = f.input :label
+  = f.input :webpage_label
+  = f.input :activity_type_label
+
+  = f.input :start_date
+  = f.input :end_date
+
+  - if project.new_record?
+    = f.input :creator_role, as: :select, collection: project_membership_nature_options
+
+  = f.button :submit, "Submit"

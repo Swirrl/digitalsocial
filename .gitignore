@@ -1,3 +1,18 @@
 /.bundle
 /log
 /tmp
+/public/system
+.DS_Store
+/public/assets
+*.patch
+.sass-cache/
+.ruby-version
+
+# Ignore production configurations
+config/s3.yml
+config/mongoid.yml
+config/environments/production.rb
+config/environments/development.rb
+config/initializers/secret_token_production.rb
+/config/environments/staging.rb
+/config/initializers/raven_production.rb

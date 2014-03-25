@@ -10,6 +10,10 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
+// Note: getting jquery and UI from CDN for now
+//
 //= require jquery_ujs
-//= require_tree .
+//= require jquery.autosize
+//= require tag-it
+//= require jquery.uaMatch
+//= require_tree "./app"

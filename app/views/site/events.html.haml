@@ -1,167 +1,26 @@
-.title
-  %h1 Events
-
 #events
-
   #content
-    %p
-      Some upcoming events of interest in the field of Digital Social Innovation.
-      %br
-      %br
-
-    %ul.timeline
-      %li.year
-        %span 2013
-
-      %li.month
-        %span July
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://socialsafari.org" } Social Innovation Safari, Amsterdam
-          %p.date July 9-19
-          
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://www.shareconference.net/en" } The Share Foundation
-          %p.date July 18-22
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "https://ohm2013.org/site" } Observe Hack Make (OHM)
-          %p.date July 29 - August 4
-
-      %li.month
-        %span August
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://lowlands.nl/en/program/" } Lowlands, Biddinghuizen
-          %p.date August 16-18
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://pharmakon.fr/wordpress" } IRI summer school 'Pharmakon'
-          %p.date  August 19-22
-
-      %li.month
-        %span September
-
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://www.w3.org/2012/12/global-publisher/" } W3C Workshop: Publishing and the Open Web Platform. Paris
-          %p.date September 16-17
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://okfestival.org" } Open Knowledge Fest 2013, Geneva
-          %p.date September 16-18
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://www.digitalenlightenment.org/" } Digital Enlightment Forum, Brussels
-          %p.date September 18-20
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://makerfaire.com" } Maker Faire, Global, New York
-          %p.date September 21-22
-
-
-
-      %li.month
-        %span November
-
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://ec.europa.eu/digital-agenda/en/ict-2013" } Digital Agenda Assembly 2013, Lithuania
-          %p.date November 6-8
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://www.eu-ems.com/summary.asp?event_id=120&page_id=949" } EU Internet Week, Brussels
-          %p.date November 12-16
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://www.smartcityexpo.com/en/home" } Smart City Expo, Barcelona 
-          %p.date November 19-21
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://www.idfa.nl/industry/festival/doclab.aspx" } IDFA DocLab, Amsterdam
-          %p.date November 20 - December 1
-
-      %li.month
-        %span December
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://hackerspaces.org/wiki/Wikipedia_Workshop_at_Open_Labs" } Wikipedia and OpenLabs, Tirana, Albania 
-          %p.date December 1 
-
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://events.ccc.de/congress/2012/wiki/Main_Page" } CCC Congress, Hamburg
-          %p.date December (dates TBC)
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://www.iri.centrepompidou.fr/seminaire/new-industrial-world-forum/?lang=en_us" } The New Industrial World Forum, Centre Pompidou, IRI
-          %p.date December 16-17
-
-      %li.year
-        %span 2014
-
-
-
-      %li.month
-        %span March
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://sxsw.com" } South By South West, Austin
-          %p.date March 7-11 2014
-
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://futureeverything.org/summit/summit-highlights" } FutureEverything Festival
-          %p.date March 2014 (dates TBC)
-
-
-      %li.month
-        %span April
-
-      %li.event
-        .event-content
-          %p.name
-            %a{ href: "http://www.2014.wwwconference.org/" } World Wide Web Conference
-          %p.date April 2014 (dates TBC)
+    .title
+      %h1 Events
+    %p Some upcoming events of interest in the field of Digital Social Innovation.
       
+    %br
+    %br
 
+    - displayed_years = []
+    %ul.timeline
+      - Event.order_by(:start_date => :asc).group_by { |m| m.start_date.beginning_of_month }.each do |month, events|
+        - unless displayed_years.include?(month.year)
+          %li.year
+            %span= month.year
+          - displayed_years.push(month.year)
 
+        %li.month
+          %span= month.strftime("%B")
 
-
-
+        - events.each do |event|
+          %li.event
+            .event-content
+              %p.name
+                %a{ href: event.url }= event.name
+              %p.date= event.date_string

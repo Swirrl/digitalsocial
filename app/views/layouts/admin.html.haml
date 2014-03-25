@@ -1,0 +1,25 @@
+!!!
+%html
+  %head
+    %title= [@title, "Digital Social Innovation"].compact.join(" | ")
+    = stylesheet_link_tag    "application"
+
+    %link{rel:"stylesheet", href:"//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css"}
+
+    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
+    %script{src: "//code.jquery.com/ui/1.10.3/jquery-ui.js"}
+    = javascript_include_tag "application"
+    
+    = csrf_meta_tags
+    = render "typekit"
+
+  %body.admin
+    - if admin_signed_in?
+      = render "admin/banner"
+    
+    .container
+      = render "header"
+
+      #main.clearfix
+        .admin-main= yield
+        

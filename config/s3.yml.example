@@ -1,0 +1,14 @@
+development:
+  bucket: digitalsocialinnovation-dev
+  access_key_id: ACCESS_KEY_ID_HERE
+  secret_access_key: SECRET_KEY_GOES_HERE
+
+test:
+  bucket: digitalsocialinnovation-dev
+  access_key_id: ACCESS_KEY_ID_HERE
+  secret_access_key: SECRET_KEY_GOES_HERE
+
+production:
+  bucket: digitalsocialinnovation
+  access_key_id: ACCESS_KEY_ID_HERE
+  secret_access_key: SECRET_KEY_GOES_HERE

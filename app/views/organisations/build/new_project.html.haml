@@ -1,0 +1,27 @@
+.wizard
+  = render "breadcrumbs", active_index: 3
+
+  .wizard-intro
+    :markdown
+      ### Add Your Activities
+
+      Your organisation is on the map! You can now add in current activities and who you work with on them.
+
+      This could cover a wide range of things, from supporting a network of developers, to carrying out original research, providing funding and support for Digital Social Innovation.
+
+      An activity could be of any size - it may be the only thing that your organisation does, or it may be one of a number of activities that you deliver with a number of partners.
+
+      Please remember we are only interested in activities that are based in the EU and which cover all of the following features:
+
+      * Focus on grass-roots or "bottom-up" communities of users
+      * Use online/digital tools or methods in a disruptive way
+      * Make a positive social impact
+      * Create a "network effect" through collaboration online
+  
+  = simple_form_for @project, url: [:organisations, :build, :create_project] do |f|
+    = render 'error_messages', object: f.object
+    = render "projects/fields/terms", f: f
+    = render "projects/fields/basic", f: f
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-black'

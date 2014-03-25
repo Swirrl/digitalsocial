@@ -1,0 +1,21 @@
+%li
+  .name= link_to project.name, project
+
+  .row.clearfix
+    .progress
+      = render "dashboard/projects/list/progress_bar", project: project
+
+      - if project.progress_percent < 100
+        = link_to "Complete details", edit_project_path(project.guid)
+      - else
+        = link_to "Edit details", edit_project_path(project.guid)
+
+      \|
+
+      - if project.only_organisation?(current_organisation)
+        = link_to "Delete activity", unjoin_project_path(project.guid), confirm: "Are you sure you wish to delete this activity?"
+      - else
+        = link_to "Unjoin activity", unjoin_project_path(project.guid), confirm: "Are you sure you wish to remove your organisation from this activity?"
+
+    .organisations
+      = render "dashboard/projects/list/count", project: project

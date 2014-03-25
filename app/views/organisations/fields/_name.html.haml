@@ -1,0 +1,14 @@
+.field-with-notes
+  .fields
+    - if f.object.persisted?
+      = f.input :name, label: 'Name of your organisation', input_html: { autocomplete: :off }
+
+    - else
+      = f.input :name, label: 'Name of your organisation', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }, placeholder: 'Start typing to see suggestions'
+
+  .notes
+    :markdown
+      Start typing the name of your organisation, and we'll suggest exsing organisations in the DSI network.
+      <span class='highlight'>If your organisation appears as a suggestion please request to join it</span>.
+
+= render 'suggestions', button_text: 'Request to join', action_url_template: '/organisations/:organisation_id/request_to_join', help: "The following organisations matched that name. If your organisation already exists click <strong>Request to join</strong> to send a request to the organisation's members."

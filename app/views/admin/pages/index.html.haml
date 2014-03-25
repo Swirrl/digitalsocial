@@ -1,0 +1,23 @@
+%h1 Admin &raquo; Pages
+
+%table.index.pages
+  %tr
+    %th Page
+    %th URL path
+    %th Content
+    %th
+
+  - @pages.each do |page|
+    %tr
+      %td.text= page.name.titleize
+      %td
+        - if page.page_category.present?
+          = link_to page_path(page.page_category, page), page_path(page.page_category, page)
+        - else
+          = link_to "/#{page.slug}", "/#{page.slug}"
+      %td.text= page.body.truncate(80)
+      %td.actions
+        = link_to "Edit", [:edit, :admin, page]
+        = link_to "Delete", [:admin, page], method: :delete, confirm: "Are you sure you wish to delete this page?"
+
+= link_to "New page", [:new, :admin, :page], class: 'button'

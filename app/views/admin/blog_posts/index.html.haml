@@ -1,0 +1,22 @@
+%h1 Admin &raquo; Blog posts
+
+%table.index.blog-posts
+  %tr
+    %th.name Blog post title
+    %th URL
+    %th.center Publish date
+    %th.center Author
+    %th
+
+  - @blog_posts.all.each do |blog_post|
+    %tr
+      %td.text= blog_post.name
+      %td.text= link_to blog_post_path(blog_post), blog_post_path(blog_post)
+      %td.center= blog_post.publish_at.strftime("%-d %B %Y")
+      %td.center= blog_post.admin.present? ? blog_post.admin.name : '-'
+          
+      %td.actions
+        = link_to "Edit", [:edit, :admin, blog_post]
+        = link_to "Delete", [:admin, blog_post], method: :delete, confirm: "Are you sure you wish to delete this blog post?"
+
+= link_to "New blog post", [:new, :admin, :blog_post], class: 'button'

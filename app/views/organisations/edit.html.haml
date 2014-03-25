@@ -1,0 +1,17 @@
+.dashboard
+  .title
+    %h1 #{current_organisation.name}'s Dashboard
+  = render "dashboard/tabs", active: "Details"
+
+  .title
+    %h2
+      %strong #{current_organisation.name}'s
+      details
+
+  = simple_form_for @organisation do |f|
+    = render 'error_messages', object: f.object
+    = render 'organisations/fields/name', f: f
+    = render 'organisations/fields/advanced', f: f
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Update details', class: 'button-black'

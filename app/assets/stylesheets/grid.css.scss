@@ -1,0 +1,180 @@
+/*
+* Skeleton-SASS V1.0
+* Copyright 2012 by Michael Lazer-Walker
+* https://github.com/lazerwalker/Skeleton-Sass
+*
+* Based off of Skeleton v1.1:
+* https://github.com/dhgamache/Skeleton
+*
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+*/
+
+/* #Variable Definitions
+================================================== */
+    $base-width: 960px;
+    $tablet-width: 768px;
+    $mobile-portrait-width: 300px;
+    $mobile-landscape-width: 420px;
+
+    $num-columns: 16;
+    $margin: 10px;
+
+    // media query sizes ( added by Ric )
+    $desktop-media-min-width: 960px;
+
+    $tablet-media-max-width: $desktop-media-min-width - 1px;
+    $tablet-media-min-width: 768px;
+
+    $mobile-media-max-width: $tablet-media-min-width - 1px;
+
+    $mobile-media-landscape-max-width: $mobile-media-max-width;
+    $mobile-media-landscape-min-width: 480px;
+
+    $mobile-media-portrait-max-width: $mobile-media-landscape-min-width - 1px;
+
+
+
+/* Media queries (by Ric)
+============================================== */
+@mixin media-desktop {
+  @media only screen and (min-width: $desktop-media-min-width) { @content; }
+}
+
+@mixin media-smaller-than-desktop {
+  @media only screen and (max-width: $tablet-media-max-width) { @content; }
+}
+
+@mixin media-tablet-to-desktop {
+  @media only screen and (min-width: $tablet-media-min-width) and (max-width: $tablet-media-max-width) { @content; }
+}
+
+@mixin media-tablet-and-mobile {
+  @media only screen and (max-width: $tablet-media-max-width) { @content; }
+}
+
+@mixin media-all-mobile {
+  @media only screen and (max-width: $mobile-media-max-width) { @content; }
+}
+
+@mixin media-mobile-landscape-to-tablet-portrait {
+  @media only screen and (min-width: $mobile-media-landscape-min-width) and (max-width: $mobile-media-landscape-max-width) { @content; }
+}
+
+@mixin media-larger-than-mobile {
+    @media only screen and (min-width: $mobile-media-max-width) { @content; }
+}
+
+
+/* Grid
+================================================== */
+    @function skeleton-third-width($num: 1, $width: $base-width) {
+        @return $num * ($width / 3) - (2 * $margin); }
+
+    @function skeleton-column-width($num: 1, $width: $base-width) {
+        @return ($num * ($width / $num-columns)) - (2 * $margin); }
+
+    @mixin container {
+        position: relative;
+        margin: 0 auto;
+        padding: 0;
+        width: $base-width;
+
+        &:after {
+            content: "\0020";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden; }
+
+
+        @include media-tablet-to-desktop {
+            width: $tablet-width; }
+
+        @include media-all-mobile {
+            width: $mobile-portrait-width; }
+
+        @include media-mobile-landscape-to-tablet-portrait {
+            width: $mobile-landscape-width; }
+
+    }
+
+    @mixin column {
+        float: left;
+        display: inline;
+        margin-left: $margin;
+        margin-right: $margin;
+
+        @include media-all-mobile { margin: 0; }
+    }
+
+    @mixin row {
+        @include clearfix;
+        margin-bottom: 2 * $margin; }
+
+    @mixin alpha { margin-left: 0; }
+    @mixin omega { margin-right: 0; }
+
+    @mixin columns($num: 1) {
+        @include column;
+        width: skeleton-column-width($num, $base-width);
+
+        @include media-tablet-to-desktop {
+            width: skeleton-column-width($num, $tablet-width); }
+
+        @include media-all-mobile {
+            width: $mobile-portrait-width; }
+
+        @include media-mobile-landscape-to-tablet-portrait {
+            width: $mobile-landscape-width; }
+    }
+
+    @mixin third($num: 1) {
+        @include column;
+        width: skeleton-third-width($num, $base-width);
+
+        @include media-tablet-to-desktop {
+            width: skeleton-third-width($num, $tablet-width); }
+
+        @include media-all-mobile {
+            width: $mobile-portrait-width; }
+
+        @include media-mobile-landscape-to-tablet-portrait {
+            width: $mobile-landscape-width; }
+    }
+
+    @mixin offset($num: 1) {
+        $offset: 2 * $margin;
+        padding-left: skeleton-column-width($num, $base-width) + $offset;
+
+        @include media-tablet-to-desktop {
+            padding-left: skeleton-column-width($num, $tablet-width) + $offset; }
+
+        @include media-all-mobile {
+            padding-left: 0; }
+    }
+
+
+/* #Clearing
+================================================== */
+/* Include clearfix on parent to clear nested columns,
+or wrap each row of columns in a @include row */
+@mixin clearfix {
+    zoom: 1;
+    &:after { clear: both; }
+    &:before, &:after {
+        content: '\0020';
+        display: block;
+        overflow: hidden;
+        visibility: hidden;
+        width: 0;
+        height: 0; } }
+
+/* You can also use a @include clear to clear columns */
+@mixin clear {
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0; }

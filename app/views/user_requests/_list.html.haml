@@ -1,0 +1,15 @@
+- if current_organisation.respondable_user_requests.any?
+  %h3 Suggested users
+
+  %table
+    - current_organisation.respondable_user_requests.each do |request|
+      %tbody
+        %tr
+          %td= request.user_first_name
+          %td= request.user_email
+          %td
+            = simple_form_for [:accept, request] do |f|
+              = f.button :submit, "Invite"
+
+            = simple_form_for [:reject, request] do |f|
+              = f.button :submit, "Ignore"

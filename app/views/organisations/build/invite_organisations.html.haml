@@ -1,0 +1,28 @@
+.wizard
+  = render "organisations/build/breadcrumbs", active_index: 5
+
+  .wizard-intro
+    :markdown
+
+      ### Add a partner organisation for #{@project.name}
+
+      This step gives you an opportunity to invite another organistaion that was involved in #{@project.name}. This will start to create a network map based on your connections and will help #{@project.name} become more visible to funders and partners across the EU.
+
+      If more than one other organisation was involved, you can add them later.
+  .clearfix
+
+  .skip-wizard.clearfix
+    %span Inviting organisations to your activities can be done later.
+
+    = link_to "Skip for now &raquo;".html_safe, [:organisations, :build, :finish], class: 'button'
+
+
+  = simple_form_for @project_invite, url: [:create_organisation_invite, @project] do |f|
+    
+    = render 'error_messages', object: f.object
+    = render 'invite_organisation', f: f
+    
+    = hidden_field_tag :in_signup, true
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Next step &raquo;'.html_safe, class: 'button-black'

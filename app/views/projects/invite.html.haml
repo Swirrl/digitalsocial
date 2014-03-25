@@ -1,0 +1,17 @@
+.dashboard
+  
+  .title
+    %h1 #{current_organisation.name}'s Dashboard
+  = render "dashboard/tabs", active: "Activities"
+
+  %h2
+    Add a partner organisation for
+    %strong #{@project.name}
+
+
+  = simple_form_for @project_invite, url: [:create_organisation_invite, @project] do |f|
+
+    = render "invite_organisation", f: f 
+
+    .wizard-button-wrapper
+      = f.button :submit, 'Invite organisation', class: 'button-black'

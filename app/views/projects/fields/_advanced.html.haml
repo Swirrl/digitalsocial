@@ -1,0 +1,87 @@
+.field-with-notes
+
+  .field
+    = f.input :webpage_label, label: 'Website URL'
+
+  .notes
+    :markdown
+      The address of the website associated with this activity.
+
+.field-with-notes
+  .field
+    .input
+      = f.label :start_date_label, "Activity start date", class: 'dates'
+      = f.select :start_date_label, grouped_options_for_select(project_start_date_options, f.object.start_date_label), include_blank: "Select a start date"
+    .input
+      = f.label :end_date_label, "Activity end date", class: 'dates'
+      = f.select :end_date_label, grouped_options_for_select(project_end_date_options, f.object.end_date_label), include_blank: "Select an end date"
+  .notes
+    %p How long has this particular activity got left to run? This can include the wrap up or evaluation period beyond the main delivery of the activity. It can include future activities that are certain to go ahead.  We are only looking for approximate dates.
+
+.field-with-notes
+
+  .field
+    = f.input :areas_of_society_list, label: "Areas of Society Impacted", required: true
+    = render 'suggested_tags', tag_class: Concepts::AreaOfSociety, p_id: 'areas-of-society-suggested-tags'
+    = render 'tags_js', tag_field_id: "project_areas_of_society_list", suggested_tags_selector: "p#areas-of-society-suggested-tags a", tag_source_url: tags_projects_url(tag_class: "AreaOfSociety")
+  .notes
+    :markdown
+      Please click the suggestions under the box to add the areas of society that #{notes_project_name(@project)} addresses. You can also add your own by typing into the box (please use a comma between each new entry).
+
+.field-with-notes
+  .field
+    = f.input :technology_focus_array, as: :check_boxes, collection: Concepts::TechnologyFocus.all.resources, label: 'Technology Focus', required: true, :label_method => :get_view_label
+  .notes
+    :markdown
+      We are interested in understanding how #{notes_project_name(@project)} fits with broad technology trends. Please select the option that best describes #{notes_project_name(@project)}.
+
+.field-with-notes
+  .field
+    = f.input :technology_method_list, label: "Technology Method", required: true
+    = render 'suggested_tags', tag_class: Concepts::TechnologyMethod, p_id: 'technology-method-suggested_tags'
+    = render 'tags_js', tag_field_id: "project_technology_method_list", suggested_tags_selector: "p#technology-method-suggested_tags a", tag_source_url: tags_projects_url(tag_class: "TechnologyMethod")
+  .notes
+    :markdown
+      What type of digital technology is involved in #{notes_project_name(@project)}? Please choose from the suggestions under the box to add them, or add your own by typing into the box (add a comma between each new entry).
+
+
+-# reach
+.field-with-notes
+  .field
+    = f.input :reach_value_literal, label: (@project && @project.activity_type_resource) ? @project.activity_type_resource.get_reach_question_text : "Reach", required: false
+
+    - network_metric_style = "display:none" unless @project.activity_type_slug == "network"
+
+    .network-metric-field{style: network_metric_style}
+      = f.input :network_metric, required: false, label: 'Please indicate whether the number supplied above refers to organisations or individuals', as: :radio_buttons, collection: ["organisations", "individuals"], default: "organizations"
+
+  .notes
+    :markdown
+      We would like to understand the approximate reach of your activities. This question is aimed at understanding approximate 'size' of your activity. We realise that 'reach' is not the same as impact, influence or engagement and will make this clear when we display this information.
+
+.field-with-notes
+  .field
+    = f.input :social_impact, as: :text, input_html: { rows: 6 }, label: 'Social Impact', required: true
+  .notes
+    %p Please give a short description of the type of social impact that you are seeking to achieve through your activity, and any evidence you have of achieving this.
+
+:javascript
+  // this wont fire on teh wizard as the activity type is on a different page.
+  $(".project_activity_type_label input[type='radio']").on("change", function(e) {
+    var val = $(this).val();
+
+    url = "/reach_question_text?activity_type_label=" + encodeURIComponent(val);
+    $.ajax({
+      url: url,
+      success: function(data) {
+        $(".project_reach_value_literal label").text(data);
+        if (!$('form.new_project').length) alert('As you have updated the activity type, please update your answer to the "reach" question below.');
+        $("#project_reach_value_literal").val(""); // blank out the reach value.
+        if(val.toLowerCase() == "network") {
+          $(".network-metric-field").show();
+        } else {
+          $(".network-metric-field").hide();
+        }
+      }
+    });
+  });
