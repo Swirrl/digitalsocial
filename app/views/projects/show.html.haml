@@ -1,8 +1,10 @@
 .show
+  .show-row
+    #tree-vis.project
+      %img.spinner{src: '/assets/spinner.gif'}
+
   .title
     %h1= @project.name
-
-
   .show-row
 
     .left-column.details
@@ -96,4 +98,4 @@
       - else
         = link_to "Join this activity", request_to_join_project_path(@project), class: 'button button-black'
 
-
+= render 'shared/tree_view_js'
