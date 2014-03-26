@@ -7,15 +7,17 @@
         mainPadding = 50,
         smallCircle   = 4,
         mediumCircle  = 8,
-        largeCircle   = 10,
-        orgSizes = {'0-5': smallCircle,
-                    '6-10': smallCircle,
-                    '11-25': mediumCircle,
-                    '26-50': mediumCircle,
-                    '51-100': mediumCircle,
-                    '101-500': largeCircle,
-                    '501-1000': largeCircle,
-                    'over-1000': largeCircle};
+        largeCircle   = 10;
+
+        // // Commented out incase NESTA decide to use this as a sizing metric.
+        // orgSizes = {'0-5': smallCircle,
+        //             '6-10': smallCircle,
+        //             '11-25': mediumCircle,
+        //             '26-50': mediumCircle,
+        //             '51-100': mediumCircle,
+        //             '101-500': largeCircle,
+        //             '501-1000': largeCircle,
+        //             'over-1000': largeCircle}
 
     var activityWidth = 32,
         activityHeight = 12;
@@ -33,17 +35,20 @@
       }
     };
 
-    var isOrganisation = function(node) {
-      return node.node_data.resource_type == 'organisation';
-    };
-
     var isActivity = function(node) {
       return node.node_data.resource_type == 'project';
     };
 
     var circleRadius = function(node) {
-      var key = node.node_data.more_details['No of Staff'];
-      return orgSizes[key] || smallCircle;
+      var num = node.node_data.more_details['No of Activities'];
+
+      if(num <= 2) {
+        return smallCircle;
+      } else if(num <= 7) {
+        return mediumCircle;
+      } // else
+
+      return largeCircle;
     };
 
     cluster.separation(function(a, b) {
