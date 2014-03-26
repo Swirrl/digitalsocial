@@ -27,6 +27,25 @@
 
     var cluster = d3.layout.cluster().size([width, height - mainPadding]);
 
+    // Deduplicate by key
+    var uniqueBy = function(findKey, ary) {
+      var seen = {};
+      return ary.filter(function(elem) {
+        var k = findKey(elem);
+        return (seen[k] === 1) ? 0 : seen[k] = 1;
+      });
+    };
+
+    var uniqueById = function(ary) {
+      return uniqueBy(function(node) {
+        return node.node_data.uri_slug;
+      }, ary);
+    };
+
+    var isOrganisation = function(node) {
+      return node.node_data.resource_type == 'organisation';
+    };
+
     var nodeWidth = function(node) {
       if(isOrganisation(node)) {
         return circleRadius(node) * 2;
@@ -127,6 +146,67 @@
         rootNode.x = (width / 2); // + (nodeWidth(rootNode) / 2);
     };
 
+    var displayTooltip = function(node) {
+      alert(node.node_data.name);
+    };
+
+    var reparentLinks = function(links, nodes) {
+      var lookupNode = buildLookup(nodes);
+
+      links.forEach(function(link) {
+        link.source = lookupNode[link.source.node_data.uri_slug];
+        link.target = lookupNode[link.target.node_data.uri_slug];
+      });
+
+      return links;
+    };
+
+    // maps node_uri => node_obj
+    var buildLookup = function(nodes) {
+      var lookupNode = {};
+      nodes.forEach(function(node) {
+        lookupNode[node.node_data.uri_slug] = node;
+      });
+
+      return lookupNode;
+    };
+
+    /* d3's dendrograms don't by default support multiple parents, if
+     * a node is shared by multiple parents d3 duplicates it.
+     *
+     * This function implements the following hack/algorithm:
+     *
+     * 1) Call d3 and get it to generate a set of nodes.
+     * 2) Remove all the duplicate nodes d3 creates (there are no duplicates in
+     * the source data).
+     * 3) Get d3 to generate links (these will associate source/target)
+     * 4) Reparent the links to the shared nodes, rather than the duplicate
+     *    nodes assumed by d3's algorithm.
+     * 5) reposition all the rows.
+     * 6) Normalise the depths to ensure that nodes with no children on the
+     *    middle row are not rendered at the top.
+     *
+     * As we're entirely hacking around d3 here, we might be better
+     * just implementing this bit ourselves.  All d3 is really doing
+     * here is flattening the tree for us.
+     */
+    var makeMultiParentTree = function(root) {
+      var nodes = cluster.nodes(root);
+      nodes = uniqueById(nodes);
+
+      var links = cluster.links(nodes);
+      links = reparentLinks(links, nodes);
+
+      var topRow = nodes.filter(isAtDepth(2));
+      topRow.sort(byOrganisationType);
+      positionRow(topRow);
+      positionRow(nodes.filter(isAtDepth(1)));
+      positionBottomRow(nodes.filter(isAtDepth(0)));
+      nodes.forEach(normaliseDepth);
+
+      return {nodes: nodes, links: links};
+    };
+
     this.init = function() {
       console.log("Initialised Tree View");
 
@@ -137,17 +217,9 @@
         setLoaded();
         console.log(root);
 
-        var nodes = cluster.nodes(root),
-            links = cluster.links(nodes);
-
-        nodes.forEach(normaliseDepth);
-
-        var topRow = nodes.filter(isAtDepth(2));
-        topRow.sort(byOrganisationType);
-
-        positionRow(topRow);
-        positionRow(nodes.filter(isAtDepth(1)));
-        positionBottomRow(nodes.filter(isAtDepth(0)));
+        var _tree = makeMultiParentTree(root),
+            nodes = _tree.nodes,
+            links = _tree.links;
 
         var svg = mainElement.append("svg")
               .attr("width", width)
@@ -165,7 +237,10 @@
               .data(nodes)
               .enter().append("g")
               .classed('node', true)
-              .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+              .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+              .on("click", function(node) {
+                displayTooltip(node);
+              });
 
         // temporary tooltips
         node.append('title').text(function(d) { return d.node_data.name; });
