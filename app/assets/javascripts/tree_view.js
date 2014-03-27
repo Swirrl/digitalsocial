@@ -2,9 +2,8 @@
 
   var TreeVis = function(id) {
     var rootRadius = 4,
-        width = 960,
         height = 300, // TODO make these dynamic
-        mainPadding = 50,
+        mainPadding = 60,
         smallCircle   = 4,
         mediumCircle  = 8,
         largeCircle   = 10;
@@ -19,13 +18,52 @@
         //             '501-1000': largeCircle,
         //             'over-1000': largeCircle}
 
-    var activityWidth = 32,
+    var activityWidth = 32, // TODO make dynamic based on number of activities to render & available width.
         activityHeight = 12;
 
     var mainElement = d3.select(id),
         that = this;
 
-    var cluster = d3.layout.cluster().size([width, height - mainPadding]);
+    var loadedData = null; // The main state / tree data to be loaded.
+
+    var cluster = d3.layout.cluster();
+
+    var getWidth = function() {
+      console.log(mainElement.node().offsetWidth);
+      return mainElement.node().offsetWidth - mainPadding;
+    };
+
+    var calcSize = function() {
+      var totalWidth = mainElement.node().offsetWidth;
+      return "rotate(180 " + (totalWidth / 2) + " " + (height / 2) + ") translate(" + (mainPadding / 2) + "," + (mainPadding / 2) + ")";
+    };
+
+    var createSvg = function() {
+      var svg = mainElement.append("svg");
+
+      var g = svg.attr("height", height)
+            .append("g")
+            .attr("transform", calcSize);
+
+      return svg;
+    };
+
+    var svg = createSvg();
+
+    var currentSize = getWidth(),
+        lastSize = null;
+
+    var windowResized = function() {
+      currentSize = mainElement.node().offsetWidth;
+      if(lastSize != currentSize) { // if the size of our box has changed then render/rescale
+        lastSize = currentSize;
+        svg.remove();
+        svg = createSvg();
+        render();
+      }
+    };
+
+    window.onresize = windowResized;
 
     // Deduplicate by key
     var uniqueBy = function(findKey, ary) {
@@ -70,6 +108,14 @@
       return largeCircle;
     };
 
+    var colourCircles = function(node) {
+      var d = node.node_data;
+      if(isOrganisation(node)) {
+        return colourOrg(d.organisation_type);
+      }
+      return null;
+    };
+
     cluster.separation(function(a, b) {
       return a.parent == b.parent ? 1 : 1;
     });
@@ -85,9 +131,6 @@
 
     var diagonal = d3.svg.diagonal()
           .projection(function(d) { return [d.x, d.y]; });
-
-    var rowScale = d3.scale.linear()
-          .rangeRound([0, width - mainPadding]);
 
     var colourOrg = d3.scale.ordinal()
           .domain([
@@ -130,9 +173,12 @@
     var positionRow = function(row) {
       if(row.length == 1) {
         var node = row[0];
-        node.x = (width / 2);
+        node.x = (getWidth() / 2) ;
         return;
       }
+
+      var rowScale = d3.scale.linear()
+          .rangeRound([0, getWidth()]);
 
       var scaler = rowScale.domain([0, row.length - 1]);
 
@@ -143,11 +189,11 @@
 
     var positionBottomRow = function(bottomRow) {
         var rootNode = bottomRow[0];
-        rootNode.x = (width / 2); // + (nodeWidth(rootNode) / 2);
+        rootNode.x = (getWidth() / 2) ; // FIX THIS CRAZINESS
     };
 
     var displayTooltip = function(node) {
-      alert(node.node_data.name);
+      //alert(node.node_data.name);
     };
 
     var reparentLinks = function(links, nodes) {
@@ -207,6 +253,60 @@
       return {nodes: nodes, links: links};
     };
 
+    var render = function() {
+      var tree = makeMultiParentTree(loadedData);
+
+      cluster.size([getWidth(), height - mainPadding]);
+      var nodes = tree.nodes,
+          links = tree.links;
+
+      var g = svg.select('g');
+
+      var link = g.selectAll(".link")
+            .data(links);
+
+      link.enter().append("path")
+        .attr("class", "link")
+        .attr("d", diagonal);
+
+      var node = g.selectAll(".node")
+            .data(nodes);
+
+      node.enter().append("g")
+        .classed('node', true)
+        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+        .on("click", function(n) {
+          window.open(n.node_data.uri_slug, '_self');
+          displayTooltip(n);
+        });
+
+      // temporary tooltips
+      node.append('title').text(function(d) { return d.node_data.name; });
+
+      node.append(function(nodeDatum) {
+        var el;
+        if(isOrganisation(nodeDatum)) {
+          el = document.createElementNS(d3.ns.prefix.svg, 'circle');
+          d3.select(el)
+            .attr('r', circleRadius(nodeDatum));
+        } else {
+          el = document.createElementNS(d3.ns.prefix.svg, 'rect');
+          var halfWidth = -(nodeWidth(nodeDatum) / 2),
+              halfHeight = -(activityHeight / 2);
+
+          d3.select(el)
+            .attr('width', nodeWidth(nodeDatum))
+            .attr('height', activityHeight)
+            .attr('transform', 'translate(' + halfWidth + ', ' + halfHeight + ')');
+        }
+        return el;
+      });
+
+      node.selectAll('circle')
+        .style('fill', colourCircles)
+        .style('stroke', colourCircles);
+    };
+
     this.init = function() {
       console.log("Initialised Tree View");
 
@@ -215,67 +315,8 @@
 
       d3.json(dataUrl, function(error, root) {
         setLoaded();
-        console.log(root);
-
-        var _tree = makeMultiParentTree(root),
-            nodes = _tree.nodes,
-            links = _tree.links;
-
-        var svg = mainElement.append("svg")
-              .attr("width", width)
-              .attr("height", height)
-              .append("g")
-              .attr("transform", "rotate(180 480 150) translate(" + (mainPadding / 2) + "," + (mainPadding / 2) + ")");
-
-        var link = svg.selectAll(".link")
-              .data(links)
-              .enter().append("path")
-              .attr("class", "link")
-              .attr("d", diagonal);
-
-        var node = svg.selectAll(".node")
-              .data(nodes)
-              .enter().append("g")
-              .classed('node', true)
-              .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-              .on("click", function(node) {
-                displayTooltip(node);
-              });
-
-        // temporary tooltips
-        node.append('title').text(function(d) { return d.node_data.name; });
-
-        node.append(function(nodeDatum) {
-          var el;
-          if(isOrganisation(nodeDatum)) {
-            el = document.createElementNS(d3.ns.prefix.svg, 'circle');
-            d3.select(el)
-              .attr('r', circleRadius(nodeDatum));
-          } else {
-            el = document.createElementNS(d3.ns.prefix.svg, 'rect');
-            var halfWidth = -(nodeWidth(nodeDatum) / 2),
-                halfHeight = -(activityHeight / 2);
-
-            d3.select(el)
-              .attr('width', nodeWidth(nodeDatum))
-              .attr('height', activityHeight)
-              .attr('transform', 'translate(' + halfWidth + ', ' + halfHeight + ')');
-          }
-          return el;
-        });
-
-        var colourCircles = function(node) {
-            var d = node.node_data;
-            if(isOrganisation(node)) {
-              return colourOrg(d.organisation_type);
-            }
-          return null;
-        };
-
-        node.selectAll('circle')
-          .style('fill', colourCircles)
-          .style('stroke', colourCircles);
-
+        loadedData = root;
+        render();
       });
     };
 
@@ -286,14 +327,10 @@
     this.hasActivityAtRoot = function() {
       return !this.hasOrganisationAtRoot();
     };
-
   };
-
 
   var treeVis = new TreeVis("#tree-vis");
   treeVis.init();
 
-  treeVis.hasOrganisationAtRoot();
-
-  window.treeVis = treeVis;
+//  window.treeVis = treeVis;
 })($,d3, window);
