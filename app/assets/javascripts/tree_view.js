@@ -7,7 +7,6 @@
     ////////////////////////////////////////////////////////////////////////////
 
     var getWidth = function() {
-      console.log(mainElement.node().offsetWidth);
       return mainElement.node().offsetWidth - mainPadding;
     };
 
@@ -60,6 +59,14 @@
         return circleRadius(node) * 2;
       } else {
         return activityWidth;
+      }
+    };
+
+    var nodeHeight = function(node) {
+      if(isOrganisation(node)) {
+        return circleRadius(node) * 2;
+      } else {
+        return activityHeight;
       }
     };
 
@@ -144,8 +151,51 @@
         rootNode.x = (getWidth() / 2) ;
     };
 
-    var displayTooltip = function(node) {
-      //alert(node.node_data.name);
+    var findOrCreatePopup = function() {
+      var popup = mainElement.select('.popup');
+      if(popup.empty()) {
+        popup = mainElement
+          .append('div')
+          .classed('popup', true);
+        popup.append('h1');
+      }
+      return popup;
+    };
+
+    var clearPopup = function(ev) {
+      if(popup) {
+        popup.remove();
+      }
+    };
+
+    var displayPopup = function(node) {
+      d3.event.stopPropagation();
+      var svgEl = svg.node();
+
+
+      var x = d3.mouse(svgEl)[0],
+          y = d3.mouse(svgEl)[1];
+
+      var arrowHeight = 10;
+
+      popup = findOrCreatePopup();
+
+      if(x <= (mainElement.node().offsetWidth / 2)) {
+        popup.classed({'left': true, 'right' :false});
+        var arrowOffset = 24;
+        x = x - arrowOffset;
+      } else {
+        popup.classed({'right': true, 'left' :false});
+        var arrowOffset = 198;
+        x = x - arrowOffset;
+      }
+      y = y + arrowHeight;
+
+      var xpx = String(x) + 'px',
+          ypx = String(y) + 'px';
+
+      popup.style({'top': ypx, 'left': xpx });
+      popup.select('h1').text(node.node_data.name);
     };
 
     var reparentLinks = function(links, nodes) {
@@ -229,8 +279,8 @@
         .classed('node', true)
         .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
         .on("click", function(n) {
-          window.open(n.node_data.uri_slug, '_self');
-          displayTooltip(n);
+          displayPopup(n, d3.event);
+          //window.open(n.node_data.uri_slug, '_self');
         });
 
       // temporary tooltips
@@ -276,6 +326,8 @@
         loadedData = root;
         render();
       });
+
+      d3.select(document).on('click', clearPopup);
     };
 
     this.hasOrganisationAtRoot = function() {
@@ -346,7 +398,9 @@
 
 
     var mainElement = d3.select(id),
-        that = this;
+        that = this,
+        popup;
+
 
     var loadedData = null; // The main state / tree data to be loaded.
 

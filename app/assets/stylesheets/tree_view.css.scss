@@ -37,21 +37,20 @@
 			}
 
 	svg {
-		.node circle {
-			/* stroke: steelblue; */
-			fill: #fff;
-			stroke: #c3c3c3;
-			stroke-width: 1.5px;
-		}
-
 		.node {
 			font: 10px sans-serif;
-		}
-
-		.node rect {
-			fill: #fff;
-			stroke: #c3c3c3;
-			stroke-width: 1.5px;
+			cursor: pointer;
+			rect {
+				fill: #fff;
+				stroke: #c3c3c3;
+				stroke-width: 1.5px;
+			}
+			circle {
+				/* stroke: steelblue; */
+				fill: #fff;
+				stroke: #c3c3c3;
+				stroke-width: 1.5px;
+			}
 		}
 
 		.link {
@@ -59,5 +58,55 @@
 			stroke: #ccc;
 			stroke-width: 1.5px;
 		}
+	}
+
+	.popup {
+		font-size: 0.7em;
+		padding: 10px;
+		width: 200px;
+		min-height: 100px;
+		position: absolute;
+		background: #E6E7E7;
+		/* border: 2px solid #aaa; */
+
+		h1 {
+			font-size: 1em;
+			color: #aaa;
+			font-weight: bold;
+			margin: 0;
+			margin-bottom: 10px;
+		}
+	}
+
+	.popup:after, .popup:before {
+		bottom: 100%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+
+	.popup.left:after {
+		left: 10%;
+	}
+
+	.popup.right:after {
+		 left: 90%;
+	}
+
+	.popup:after {
+		border-color: rgba(230, 231, 231, 0);
+		border-bottom-color: #E6E7E7;
+		border-width: 10px;
+		margin-left: -10px;
+	}
+
+	.popup:before {
+		border-color: rgba(170, 170, 170, 0);
+		/* border-bottom-color: #aaa; */
+		border-width: 13px;
+		margin-left: -13px;
 	}
 }
