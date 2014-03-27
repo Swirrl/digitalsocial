@@ -1,32 +1,10 @@
 (function($, d3, window) {
 
   var TreeVis = function(id) {
-    var rootRadius = 4,
-        height = 300, // TODO make these dynamic
-        mainPadding = 60,
-        smallCircle   = 4,
-        mediumCircle  = 8,
-        largeCircle   = 10;
 
-        // // Commented out incase NESTA decide to use this as a sizing metric.
-        // orgSizes = {'0-5': smallCircle,
-        //             '6-10': smallCircle,
-        //             '11-25': mediumCircle,
-        //             '26-50': mediumCircle,
-        //             '51-100': mediumCircle,
-        //             '101-500': largeCircle,
-        //             '501-1000': largeCircle,
-        //             'over-1000': largeCircle}
-
-    var activityWidth = 32, // TODO make dynamic based on number of activities to render & available width.
-        activityHeight = 12;
-
-    var mainElement = d3.select(id),
-        that = this;
-
-    var loadedData = null; // The main state / tree data to be loaded.
-
-    var cluster = d3.layout.cluster();
+    ////////////////////////////////////////////////////////////////////////////
+    // PRIVATE HELPERS
+    ////////////////////////////////////////////////////////////////////////////
 
     var getWidth = function() {
       console.log(mainElement.node().offsetWidth);
@@ -48,11 +26,6 @@
       return svg;
     };
 
-    var svg = createSvg();
-
-    var currentSize = getWidth(),
-        lastSize = null;
-
     var windowResized = function() {
       currentSize = mainElement.node().offsetWidth;
       if(lastSize != currentSize) { // if the size of our box has changed then render/rescale
@@ -62,8 +35,6 @@
         render();
       }
     };
-
-    window.onresize = windowResized;
 
     // Deduplicate by key
     var uniqueBy = function(findKey, ary) {
@@ -116,9 +87,10 @@
       return null;
     };
 
-    cluster.separation(function(a, b) {
-      return a.parent == b.parent ? 1 : 1;
-    });
+    var colourLines = function(line) {
+      var node = line.source.node_data.resource_type == 'project' ? line.source.node_data : line.target.node_data;
+      return colourActivity(node.activity_type.uri);
+    };
 
     var byOrganisationType = function(a, b) {
       var aType = a.node_data.organisation_type_label || 'Other',
@@ -126,26 +98,6 @@
 
       return d3.ascending(aType, bType);
     };
-
-    cluster.sort(byOrganisationType);
-
-    var diagonal = d3.svg.diagonal()
-          .projection(function(d) { return [d.x, d.y]; });
-
-    var colourOrg = d3.scale.ordinal()
-          .domain([
-            undefined,
-            'http://data.digitalsocial.eu/def/concept/organization-type/academia-and-research',
-            'http://data.digitalsocial.eu/def/concept/organization-type/business',
-            'http://data.digitalsocial.eu/def/concept/organization-type/government-and-public-sector',
-            'http://data.digitalsocial.eu/def/concept/organization-type/grass-roots-organization-or-community-network',
-            'http://data.digitalsocial.eu/def/concept/organization-type/social-enterprise-charity-or-foundation'])
-          .range(['#AAAAAA',
-                  '#165698',
-                  '#CC5593',
-                  '#B41A2E',
-                  '#38994F',
-                  '#F9912D']);
 
     var isAtDepth = function(n) { return function(node) { return node.depth == n; }; };
 
@@ -189,7 +141,7 @@
 
     var positionBottomRow = function(bottomRow) {
         var rootNode = bottomRow[0];
-        rootNode.x = (getWidth() / 2) ; // FIX THIS CRAZINESS
+        rootNode.x = (getWidth() / 2) ;
     };
 
     var displayTooltip = function(node) {
@@ -267,7 +219,8 @@
 
       link.enter().append("path")
         .attr("class", "link")
-        .attr("d", diagonal);
+        .attr("d", diagonal)
+        .style('stroke', colourLines);
 
       var node = g.selectAll(".node")
             .data(nodes);
@@ -302,10 +255,15 @@
         return el;
       });
 
-      node.selectAll('circle')
-        .style('fill', colourCircles)
-        .style('stroke', colourCircles);
+      // node.selectAll('circle')
+      //   .style('fill', colourCircles)
+      //   .style('stroke', colourCircles);
+
     };
+
+    ////////////////////////////////////////////////////////////////////////////
+    // PUBLIC METHODS
+    ////////////////////////////////////////////////////////////////////////////
 
     this.init = function() {
       console.log("Initialised Tree View");
@@ -327,10 +285,91 @@
     this.hasActivityAtRoot = function() {
       return !this.hasOrganisationAtRoot();
     };
+
+    ////////////////////////////////////////////////////////////////////////////
+    // OBJECT STATE
+    ////////////////////////////////////////////////////////////////////////////
+
+    var rootRadius = 4,
+        height = 300, // TODO make these dynamic
+        mainPadding = 60,
+        smallCircle   = 4,
+        mediumCircle  = 8,
+        largeCircle   = 10;
+
+        // // Commented out incase NESTA decide to use this as a sizing metric.
+        // orgSizes = {'0-5': smallCircle,
+        //             '6-10': smallCircle,
+        //             '11-25': mediumCircle,
+        //             '26-50': mediumCircle,
+        //             '51-100': mediumCircle,
+        //             '101-500': largeCircle,
+        //             '501-1000': largeCircle,
+        //             'over-1000': largeCircle}
+
+    var activityWidth = 32, // TODO make dynamic based on number of activities to render & available width.
+        activityHeight = 12;
+
+    var colourOrg = d3.scale.ordinal()
+          .domain([
+            undefined,
+            'http://data.digitalsocial.eu/def/concept/organization-type/academia-and-research',
+            'http://data.digitalsocial.eu/def/concept/organization-type/business',
+            'http://data.digitalsocial.eu/def/concept/organization-type/government-and-public-sector',
+            'http://data.digitalsocial.eu/def/concept/organization-type/grass-roots-organization-or-community-network',
+            'http://data.digitalsocial.eu/def/concept/organization-type/social-enterprise-charity-or-foundation'])
+          .range(['#AAAAAA',
+                  '#165698',
+                  '#CC5593',
+                  '#B41A2E',
+                  '#38994F',
+                  '#F9912D']);
+
+    var colourActivity = d3.scale.ordinal()
+          .domain([
+            'http://data.digitalsocial.eu/def/concept/activity-type/research-project',
+            'http://data.digitalsocial.eu/def/concept/activity-type/event',
+            'http://data.digitalsocial.eu/def/concept/activity-type/network',
+            'http://data.digitalsocial.eu/def/concept/activity-type/incubators-and-accelerators',
+            'http://data.digitalsocial.eu/def/concept/activity-type/maker-and-hacker-spaces',
+            'http://data.digitalsocial.eu/def/concept/activity-type/education-and-training',
+            'http://data.digitalsocial.eu/def/concept/activity-type/delivering-a-web-service',
+            'http://data.digitalsocial.eu/def/concept/activity-type/investment-and-funding',
+            'http://data.digitalsocial.eu/def/concept/activity-type/advocating-and-campaigning',
+            'http://data.digitalsocial.eu/def/concept/activity-type/advisory-or-expert-body',
+            'http://data.digitalsocial.eu/def/concept/activity-type/other'
+          ])
+          .range(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#b15928"]);
+    //.range(colorbrewer.Paired[11]);
+    //.range(colorbrewer.Set3[11]);
+    //.range(colorbrewer.PuOr[11]);
+
+
+    var mainElement = d3.select(id),
+        that = this;
+
+    var loadedData = null; // The main state / tree data to be loaded.
+
+    var cluster = d3.layout.cluster();
+
+    cluster.separation(function(a, b) {
+      return a.parent == b.parent ? 1 : 1;
+    });
+
+    cluster.sort(byOrganisationType);
+
+    var diagonal = d3.svg.diagonal()
+          .projection(function(d) { return [d.x, d.y]; });
+
+    var svg = createSvg();
+
+    var currentSize = getWidth(),
+        lastSize = null;
+
+    window.onresize = windowResized;
   };
 
   var treeVis = new TreeVis("#tree-vis");
   treeVis.init();
 
-//  window.treeVis = treeVis;
 })($,d3, window);
