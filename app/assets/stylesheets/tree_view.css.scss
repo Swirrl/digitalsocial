@@ -62,6 +62,8 @@
 		background: $popup-background;
 		border-top: 3px solid $orange;
 
+		z-index: 2000; /* We need a high z-index to render it over mapbox */
+
 		h1,h2,h3 {
 			font-size: 20px;
 			font-weight: normal;
