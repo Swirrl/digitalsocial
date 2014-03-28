@@ -55,26 +55,6 @@
       return node.node_data.resource_type == 'organisation';
     };
 
-    var nodeWidth = function(node) {
-      if(isOrganisation(node)) {
-        return circleRadius(node) * 2;
-      } else {
-        return activityWidth;
-      }
-    };
-
-    var nodeHeight = function(node) {
-      if(isOrganisation(node)) {
-        return circleRadius(node) * 2;
-      } else {
-        return activityHeight;
-      }
-    };
-
-    var isActivity = function(node) {
-      return node.node_data.resource_type == 'project';
-    };
-
     var circleRadius = function(node) {
       var num = node.node_data.more_details['No of Activities'];
 
@@ -85,6 +65,53 @@
       } // else
 
       return largeCircle;
+    };
+
+    var nodeWidth = function(node) {
+      if(isOrganisation(node)) {
+        return circleRadius(node) * 2;
+      } else {
+        return activityWidth;
+      }
+    };
+
+    var scaledNodeWidth = function(node) {
+      return (node.scaleFactor || 1.0) * nodeWidth(node);
+    };
+
+    // calculate a row width at a given scale factor
+    var totalRowWidth = function(row) {
+      var sum = 0;
+      for(var i=0; i < row.length; i++) {
+        sum += nodeWidth(row[i]);
+      }
+      return sum;
+    };
+
+    var calcScaleForRow = function(row, scale) {
+      var rowWidth = totalRowWidth(row, scale);
+
+      var space = 2,
+          spaceBetweenSize = ((row.length - 1) * space);
+
+      while(rowWidth >= (getWidth() - spaceBetweenSize)) {
+        scale -= scale * 0.25;
+        rowWidth = totalRowWidth(row) * scale;
+      }
+
+      return scale;
+    };
+
+    var nodeHeight = function(node) {
+      if(isOrganisation(node)) {
+        return (circleRadius(node) * 2);
+      } else {
+        return activityHeight;
+      }
+    };
+
+    var isActivity = function(node) {
+      return node.node_data.resource_type == 'project';
     };
 
     var colourCircles = function(node) {
@@ -137,13 +164,14 @@
         return;
       }
 
-      var rowScale = d3.scale.linear()
-          .rangeRound([0, getWidth()]);
+      var scaler = d3.scale.linear()
+            .rangeRound([0, getWidth()])
+            .domain([0, row.length - 1]);
 
-      var scaler = rowScale.domain([0, row.length - 1]);
 
       row.forEach(function(node, i) {
         node.x = scaler(i);
+        node.scaleFactor = calcScaleForRow(row, 1.0);
       });
     };
 
@@ -333,14 +361,14 @@
         if(isOrganisation(nodeDatum)) {
           el = document.createElementNS(d3.ns.prefix.svg, 'circle');
           d3.select(el)
-            .attr('r', circleRadius(nodeDatum));
+            .attr('r', scaledNodeWidth(nodeDatum) / 2);
         } else {
           el = document.createElementNS(d3.ns.prefix.svg, 'rect');
-          var halfWidth = -(nodeWidth(nodeDatum) / 2),
+          var halfWidth = -(scaledNodeWidth(nodeDatum) / 2),
               halfHeight = -(activityHeight / 2);
 
           d3.select(el)
-            .attr('width', nodeWidth(nodeDatum))
+            .attr('width', scaledNodeWidth(nodeDatum))
             .attr('height', activityHeight)
             .attr('transform', 'translate(' + halfWidth + ', ' + halfHeight + ')');
         }
@@ -442,7 +470,6 @@
     var mainElement = d3.select(id),
         that = this,
         popup;
-
 
     var loadedData = null; // The main state / tree data to be loaded.
 
