@@ -26,13 +26,6 @@
 		}
 	}
 
-/*	p,h1,h2,h3,h4 {
-		font-family: Arial, Helvetica, sans-serif;
-		font-style: normal;
-		font-size: 1em;
-		font-weight: normal;
-	} */
-
 	h1.root {
 		left: 480px;
 		top: 240px;
@@ -62,16 +55,11 @@
 		}
 	}
 
-
 	.popup {
 		font-size: 0.7em;
-		padding: 10px;
 		width: 200px;
 		position: absolute;
 		background: $popup-background;
-		border-left: 1px solid $light-grey;
-		border-right: 1px solid $light-grey;
-		border-bottom: 1px solid $light-grey;
 		border-top: 3px solid $orange;
 
 		h1,h2,h3 {
@@ -139,5 +127,14 @@
 		border-bottom-color: $orange;
 		border-width: 15px;
 		margin-left: -15px;
+	}
+
+	.inner-popup {
+		width: 178px;
+		border-top: 0;
+		border-left: 1px solid $light-grey;
+		border-right: 1px solid $light-grey;
+		border-bottom: 1px solid $light-grey;
+		padding: 10px;
 	}
 }

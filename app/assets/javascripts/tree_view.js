@@ -158,8 +158,10 @@
         popup = mainElement
           .append('div')
           .classed('popup', true);
-        popup.append('h3').classed({'type': true});
-        popup.append('h1').append('a').classed('name', true);
+
+        var innerPopup = popup.append('div').classed('inner-popup', true);
+        innerPopup.append('h3').classed({'type': true});
+        innerPopup.append('h1').append('a').classed('name', true);
       }
       return popup;
     };
@@ -193,7 +195,6 @@
       d3.event.stopPropagation();
       var svgEl = svg.node();
 
-
       var x = d3.mouse(svgEl)[0],
           y = d3.mouse(svgEl)[1];
 
@@ -204,17 +205,18 @@
 
       if(x <= (mainElement.node().offsetWidth / 2)) {
         popup.classed({'left': true, 'right' :false});
-        var arrowOffset = 24;
+        var arrowOffset = 21; // an eyeballed value I'm afraid
         x = x - arrowOffset;
       } else {
         popup.classed({'right': true, 'left' :false});
-        var arrowOffset = 198;
+        var arrowOffset = 181; // an eyeballed value I'm afraid
         x = x - arrowOffset;
       }
       y = y + arrowHeight;
 
       var xpx = String(x) + 'px',
           ypx = String(y) + 'px';
+
 
       popup.style({'top': ypx, 'left': xpx });
       popup.select('h3.type').text(function(n) { return isActivity(node) ? 'Activity' : node.node_data.resource_type; });
@@ -223,9 +225,10 @@
       var more_details = node.node_data.more_details;
       var keys = d3.keys(more_details).sort();
 
+      var innerPopup = popup.select('.inner-popup');
       keys.forEach(function(category) {
-        popup.append('h3').classed('category', true).text(category);
-        var ul = popup.append('ul');
+        innerPopup.append('h3').classed('category', true).text(category);
+        var ul = innerPopup.append('ul');
         var val = more_details[category];
         if(isActivity(node)) {
           val.forEach(function(value) {
@@ -235,7 +238,6 @@
           ul.append('li').classed('item', true).text(val);
         }
       });
-
     };
 
     var reparentLinks = function(links, nodes) {
