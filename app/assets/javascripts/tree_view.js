@@ -29,6 +29,7 @@
       currentSize = mainElement.node().offsetWidth;
       if(lastSize != currentSize) { // if the size of our box has changed then render/rescale
         lastSize = currentSize;
+        clearPopup();
         svg.remove();
         svg = createSvg();
         render();
@@ -157,7 +158,8 @@
         popup = mainElement
           .append('div')
           .classed('popup', true);
-        popup.append('h1');
+        popup.append('h3').classed({'type': true});
+        popup.append('h1').append('a').classed('name', true);
       }
       return popup;
     };
@@ -166,6 +168,25 @@
       if(popup) {
         popup.remove();
       }
+    };
+
+    var toTitleCase = function(inputStr) {
+      var i, str, lowers, uppers;
+      str = inputStr.replace(/([^\W_]+[^\s-]*) */g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      });
+
+      // Certain minor words should be left lowercase unless
+      // they are the first or last words in the string
+      lowers = ['A', 'An', 'The', 'And', 'But', 'Or', 'For', 'Nor', 'As', 'At',
+                'By', 'For', 'From', 'In', 'Into', 'Near', 'Of', 'On', 'Onto', 'To', 'With'];
+      for (i = 0; i < lowers.length; i++)
+        str = str.replace(new RegExp('\\s' + lowers[i] + '\\s', 'g'),
+                          function(txt) {
+                            return txt.toLowerCase();
+                          });
+
+      return str;
     };
 
     var displayPopup = function(node) {
@@ -178,6 +199,7 @@
 
       var arrowHeight = 10;
 
+      clearPopup();
       popup = findOrCreatePopup();
 
       if(x <= (mainElement.node().offsetWidth / 2)) {
@@ -195,7 +217,25 @@
           ypx = String(y) + 'px';
 
       popup.style({'top': ypx, 'left': xpx });
-      popup.select('h1').text(node.node_data.name);
+      popup.select('h3.type').text(function(n) { return isActivity(node) ? 'Activity' : node.node_data.resource_type; });
+      popup.select('a.name').text(node.node_data.name).attr('href', node.node_data.uri_slug);
+
+      var more_details = node.node_data.more_details;
+      var keys = d3.keys(more_details).sort();
+
+      keys.forEach(function(category) {
+        popup.append('h3').classed('category', true).text(category);
+        var ul = popup.append('ul');
+        var val = more_details[category];
+        if(isActivity(node)) {
+          val.forEach(function(value) {
+            ul.append('li').classed('item', true).text(toTitleCase(value));
+          });
+        } else {
+          ul.append('li').classed('item', true).text(val);
+        }
+      });
+
     };
 
     var reparentLinks = function(links, nodes) {
