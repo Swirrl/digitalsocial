@@ -12,6 +12,7 @@
 
       defaultCenter: [49, 12],
       defaultZoom: 5,
+      markerSize: 10,
       minLineWeight: 2,
       maxLineWeight: 5,
       minLineOpacity: 0.3,
@@ -485,7 +486,7 @@
       buildOrganisationPin: function(organisation) {
         var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
           icon: new L.DivIcon({
-            iconSize: new L.Point(6, 6)
+            iconSize: new L.Point(this.markerSize, this.markerSize)
           })
         })
         .bindPopup('', {
@@ -509,7 +510,7 @@
         $.each(organisations, function(i, organisation){
           var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
             icon: new L.DivIcon({
-              iconSize: new L.Point(6, 6),
+              iconSize: new L.Point(this.markerSize, this.markerSize),
               className: 'leaflet-div-icon faded'
             })
           });
