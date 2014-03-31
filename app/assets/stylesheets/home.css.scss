@@ -19,7 +19,7 @@
 
     }
 
-    .links {
+   .links {
       margin-top: 12px;
       margin-bottom: 5px;
       //text-align: center;
@@ -43,6 +43,10 @@
       }
     }
   }
+
+   .show-filter a:hover, .show-filter a:link {
+     color: $orange-hover;
+   }
 
   .mobile-info {
     display:none;
@@ -450,7 +454,7 @@
       .expand-triangle {
         border-width: 6px 0 6px 9px;
         border-color: transparent transparent transparent #ccc;
-        margin-left: 3px;        
+        margin-left: 3px;
       }
 
       .collapse-triangle {
@@ -475,7 +479,7 @@
         &:disabled, &[disabled=disabled] {
           background: #ccc
         }
-          
+
       }
     }
 
@@ -489,7 +493,7 @@
         line-height: 16px;
         text-align: center;
 
-        [class^="icon-"], [class*=" icon-"] {          
+        [class^="icon-"], [class*=" icon-"] {
           font-style: normal;
           margin: 0;
         }
@@ -519,7 +523,7 @@
     @include media-all-mobile {
       display:none;
     }
-    
+
     position: absolute;
     right: 48px;
     top: 0px;
@@ -558,7 +562,7 @@
     border-top: 4px solid $orange;
     width: 300px;
     min-height: 60px;
-    
+
 
     .leaflet-popup-content {
       font-family: $chaparral;
@@ -653,7 +657,7 @@
           font-style: italic;
           font-size: 14px;
         }
-        
+
         margin-bottom: -6px;
       }
     }
@@ -667,4 +671,3 @@
     }
   }
 }
-
