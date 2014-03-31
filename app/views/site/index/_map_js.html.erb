@@ -12,11 +12,11 @@
 
       defaultCenter: [49, 12],
       defaultZoom: 5,
-      markerSize: 10,
-      minLineWeight: 2,
-      maxLineWeight: 5,
-      minLineOpacity: 0.3,
-      maxLineOpacity: 0.9,
+      markerSize: 8,
+      minLineWeight: 1,
+      maxLineWeight: 2,
+      minLineOpacity: 0.1,
+      maxLineOpacity: 0.2,
       maxClusterRadius: 80,
       disableClusteringAtZoom: 20,
       // layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
@@ -420,6 +420,7 @@
         $.each(organisations, function(i, organisation) {
           DSIMap.allOrganisations[organisation.guid] = {};
           DSIMap.allOrganisations[organisation.guid].name = organisation.name;
+          DSIMap.allOrganisations[organisation.guid].type = organisation.type;
           DSIMap.allOrganisations[organisation.guid].marker = DSIMap.buildOrganisationPin(organisation);
           DSIMap.allOrganisations[organisation.guid].partners = [];
         });
@@ -488,9 +489,12 @@
       },
 
       buildOrganisationPin: function(organisation) {
+        var orgType = organisation.type ? $(organisation.type.split('/')).last()[0] : 'org-type';
+
         var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
           icon: new L.DivIcon({
-            iconSize: new L.Point(this.markerSize, this.markerSize)
+              iconSize: new L.Point(this.markerSize, this.markerSize),
+              className: 'leaflet-div-icon ' + orgType
           })
         })
         .bindPopup('', {
@@ -704,31 +708,16 @@
 
         var lines = this.buildPartnerLines(organisations);
 
-        $.each(lines, function(i, line){
-            var newLine = DSIMap.drawLine(line.markerA, line.markerB, line.count, line.activity);
+        $.each(lines, function(i, line) {
+          var newLine = DSIMap.drawLine(line.markerA, line.markerB, line.count);
           DSIMap.addLineToMarker(line.markerA, newLine);
           DSIMap.addLineToMarker(line.markerB, newLine);
         });
       },
 
-     drawLine: function(markerA, markerB, count, activityUri) {
-
-         var lineColours = {
-             'http://data.digitalsocial.eu/def/concept/activity-type/research-project': "#a6cee3",
-             'http://data.digitalsocial.eu/def/concept/activity-type/event': "#1f78b4",
-             'http://data.digitalsocial.eu/def/concept/activity-type/network': "#b2df8a",
-             'http://data.digitalsocial.eu/def/concept/activity-type/incubators-and-acelerators': "#33a02c",
-             'http://data.digitalsocial.eu/def/concept/activity-type/maker-and-hacker-spaces': "#fb9a99",
-             'http://data.digitalsocial.eu/def/concept/activity-type/education-and-training': "#e31a1c",
-             'http://data.digitalsocial.eu/def/concept/activity-type/delivering-a-web-service': "#fdbf6f",
-             'http://data.digitalsocial.eu/def/concept/activity-type/investment-and-funding': "#ff7f00",
-             'http://data.digitalsocial.eu/def/concept/activity-type/advocating-and-campaigning': "#cab2d6",
-             'http://data.digitalsocial.eu/def/concept/activity-type/advisory-or-expert-body': "#6a3d9a",
-             'http://data.digitalsocial.eu/def/concept/activity-type/other': "#b15928"
-         };
-
+     drawLine: function(markerA, markerB, count) {
         var line = new L.Polyline([markerA._latlng, markerB._latlng], {
-          color: lineColours[activityUri],
+          color: '#777',
           weight: DSIMap.lineWeightForCount(count),
           opacity: DSIMap.lineOpacityForCount(count),
           smoothFactor: 1,
@@ -764,9 +753,7 @@
         $.each(DSIMap.visibleOrganisations, function(orgGuid, org){
 
           // Loop through each of the org's partners
-          $.each(org.partners, function(i, partner){
-            var partnerGuid = partner.org,
-                activityUri = partner.activity;
+          $.each(org.partners, function(i, partnerGuid){
 
             if (DSIMap.visibleOrganisations[partnerGuid]) {
 
@@ -787,7 +774,6 @@
                 lines[visibleMarkers].count = 1;
                 lines[visibleMarkers].markerA = visibleMarkerA;
                 lines[visibleMarkers].markerB = visibleMarkerB;
-                lines[visibleMarkers].activity = activityUri;
               }
 
               if (lines[visibleMarkers].count > DSIMap.currentMaxLineCount) {

@@ -339,8 +339,9 @@
 
       link.enter().append("path")
         .attr("class", "link")
-        .attr("d", diagonal)
-        .style('stroke', colourLines);
+        .attr("d", diagonal);
+
+      //link.style('stroke', colourLines);
 
       var node = g.selectAll(".node")
             .data(nodes);
@@ -375,9 +376,9 @@
         return el;
       });
 
-      // node.selectAll('circle')
-      //   .style('fill', colourCircles)
-      //   .style('stroke', colourCircles);
+      node.selectAll('circle')
+        .style('fill', colourCircles)
+        .style('stroke', colourCircles);
 
     };
 
@@ -440,12 +441,7 @@
             'http://data.digitalsocial.eu/def/concept/organization-type/government-and-public-sector',
             'http://data.digitalsocial.eu/def/concept/organization-type/grass-roots-organization-or-community-network',
             'http://data.digitalsocial.eu/def/concept/organization-type/social-enterprise-charity-or-foundation'])
-          .range(['#AAAAAA',
-                  '#165698',
-                  '#CC5593',
-                  '#B41A2E',
-                  '#38994F',
-                  '#F9912D']);
+    .range(colorbrewer.Dark2[6]);
 
     var colourActivity = d3.scale.ordinal()
           .domain([
