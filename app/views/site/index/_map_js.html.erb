@@ -9,22 +9,22 @@
       visibleOrganisations: {},
       currentMaxLineCount: 0,
       networkViewMarker: null,
-      
+
       defaultCenter: [49, 12],
       defaultZoom: 5,
-      minLineWeight: 1,
+      minLineWeight: 2,
       maxLineWeight: 5,
-      minLineOpacity: 0.1,
-      maxLineOpacity: 0.4,
+      minLineOpacity: 0.3,
+      maxLineOpacity: 0.9,
       maxClusterRadius: 80,
       disableClusteringAtZoom: 20,
-      layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
-      layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_3 %>"),
+      layerWithoutLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_6 %>"),
+      layerWithLabels: L.mapbox.tileLayer("<%= Digitalsocial::MAPBOX_TEST_6 %>"),
       maxClusterChildCount: 40,
 
       // Adjustable settings
       currentFilters: <%= params[:filters].to_json.html_safe %>,
-      
+
       paramsClusterLevel: <%= params[:cluster].to_json.html_safe %>,
       paramsZoom: <%= params[:zoom].to_json.html_safe %>,
       paramsCenter: [<%= params[:center] %>],
@@ -180,7 +180,7 @@
             $('.filter #cluster-level').val(DSIMap.clusterLevel);
 
             map._container.className = "leaflet-container leaflet-fade-anim cluster-level-" + DSIMap.clusterLevel;
-            
+
             clusters.clearLayers();
             DSIMap.clearLines();
 
@@ -303,7 +303,7 @@
 
         DSIMap.preNetworkZoom = map.getZoom();
         DSIMap.preNetworkCenter = map.getCenter();
-        
+
         var markerLatLng = DSIMap.allOrganisations[guid].marker._latlng;
         DSIMap.visibleOrganisations = {};
 
@@ -349,7 +349,7 @@
           clusters.zoomToShowLayer(marker, function(){
             marker.openPopup();
           });
-          
+
           e.preventDefault();
           return false;
         });
@@ -485,7 +485,7 @@
       buildOrganisationPin: function(organisation) {
         var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
           icon: new L.DivIcon({
-            iconSize: new L.Point(10, 10)
+            iconSize: new L.Point(6, 6)
           })
         })
         .bindPopup('', {
@@ -509,7 +509,7 @@
         $.each(organisations, function(i, organisation){
           var marker = L.marker(new L.LatLng(organisation.lat, organisation.lng), {
             icon: new L.DivIcon({
-              iconSize: new L.Point(10, 10),
+              iconSize: new L.Point(6, 6),
               className: 'leaflet-div-icon faded'
             })
           });
@@ -700,16 +700,30 @@
         var lines = this.buildPartnerLines(organisations);
 
         $.each(lines, function(i, line){
-          var newLine = DSIMap.drawLine(line.markerA, line.markerB, line.count);
+            var newLine = DSIMap.drawLine(line.markerA, line.markerB, line.count, line.activity);
           DSIMap.addLineToMarker(line.markerA, newLine);
           DSIMap.addLineToMarker(line.markerB, newLine);
         });
       },
 
-      drawLine: function(markerA, markerB, count) {
+     drawLine: function(markerA, markerB, count, activityUri) {
+
+         var lineColours = {
+             'http://data.digitalsocial.eu/def/concept/activity-type/research-project': "#a6cee3",
+             'http://data.digitalsocial.eu/def/concept/activity-type/event': "#1f78b4",
+             'http://data.digitalsocial.eu/def/concept/activity-type/network': "#b2df8a",
+             'http://data.digitalsocial.eu/def/concept/activity-type/incubators-and-acelerators': "#33a02c",
+             'http://data.digitalsocial.eu/def/concept/activity-type/maker-and-hacker-spaces': "#fb9a99",
+             'http://data.digitalsocial.eu/def/concept/activity-type/education-and-training': "#e31a1c",
+             'http://data.digitalsocial.eu/def/concept/activity-type/delivering-a-web-service': "#fdbf6f",
+             'http://data.digitalsocial.eu/def/concept/activity-type/investment-and-funding': "#ff7f00",
+             'http://data.digitalsocial.eu/def/concept/activity-type/advocating-and-campaigning': "#cab2d6",
+             'http://data.digitalsocial.eu/def/concept/activity-type/advisory-or-expert-body': "#6a3d9a",
+             'http://data.digitalsocial.eu/def/concept/activity-type/other': "#b15928"
+         };
 
         var line = new L.Polyline([markerA._latlng, markerB._latlng], {
-          color: '#777',
+          color: lineColours[activityUri],
           weight: DSIMap.lineWeightForCount(count),
           opacity: DSIMap.lineOpacityForCount(count),
           smoothFactor: 1,
@@ -745,7 +759,9 @@
         $.each(DSIMap.visibleOrganisations, function(orgGuid, org){
 
           // Loop through each of the org's partners
-          $.each(org.partners, function(i, partnerGuid){
+          $.each(org.partners, function(i, partner){
+            var partnerGuid = partner.org,
+                activityUri = partner.activity;
 
             if (DSIMap.visibleOrganisations[partnerGuid]) {
 
@@ -766,6 +782,7 @@
                 lines[visibleMarkers].count = 1;
                 lines[visibleMarkers].markerA = visibleMarkerA;
                 lines[visibleMarkers].markerB = visibleMarkerB;
+                lines[visibleMarkers].activity = activityUri;
               }
 
               if (lines[visibleMarkers].count > DSIMap.currentMaxLineCount) {
@@ -823,7 +840,7 @@
 
         var center = DSIMap.preNetworkCenter || map.getCenter();
         params.push('center=' + center.lat + ',' + center.lng);
-        
+
         params.push('cluster=' + DSIMap.clusterLevel);
 
         if ($('.leaflet-popup:visible').length) {
