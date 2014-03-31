@@ -1,9 +1,12 @@
 .show
   .show-row
+
+    .title
+      %h1= @project.name
+
+  .show-row
     #tree-vis.project
       %img.spinner{src: '/assets/spinner.gif'}
-  .title
-    %h1= @project.name
   .show-row
 
     .left-column.details

@@ -1,5 +1,10 @@
 .show {
 
+h1 {
+  margin-bottom: 0px;
+}
+
+
   margin-left: 0px;
 
   .title {
@@ -9,7 +14,7 @@
   .show-row {
     @include row;
 
-    .hr { 
+    .hr {
       margin-left: 0px;
     }
 
@@ -23,7 +28,7 @@
     .right-column {
       @include columns(7);
       @include offset(1);
-      .hr { 
+      .hr {
         margin-right: -10px;
       }
     }

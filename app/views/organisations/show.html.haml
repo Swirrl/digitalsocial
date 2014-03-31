@@ -4,11 +4,13 @@
 
 .show
   .show-row
+
+    .title
+      %h1= @organisation.name
+  .show-row
+
     #tree-vis.organisation
       %img.spinner{src: '/assets/spinner.gif'}
-
-  .title
-    %h1= @organisation.name
 
   .show-row
     .left-column.details
