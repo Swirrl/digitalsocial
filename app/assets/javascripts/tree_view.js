@@ -18,7 +18,8 @@
     var createSvg = function() {
       var svg = mainElement.append("svg");
 
-      var g = svg.attr("height", height)
+      var g = svg.attr("height", "100%")
+            .attr("width", "100%")
             .append("g")
             .attr("transform", calcSize);
 
