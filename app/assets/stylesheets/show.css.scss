@@ -18,6 +18,11 @@ h1 {
       margin-left: 0px;
     }
 
+    .addthis_toolbox {
+      margin-left: 16px;
+      margin-top: 4px;
+    }
+
     .left-column {
       @include columns(8);
 

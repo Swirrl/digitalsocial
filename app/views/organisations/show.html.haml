@@ -4,11 +4,13 @@
 
 .show
   .show-row
-
     .title
       %h1= @organisation.name
-  .show-row
 
+  .show-row
+    = render 'shared/share_links'
+
+  .show-row
     #tree-vis.organisation
       %img.spinner{src: '/assets/spinner.gif'}
 
@@ -101,4 +103,5 @@
       - else
         = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-black'
 
+= javascript_include_tag '//s7.addthis.com/js/300/addthis_widget.js'
 = render 'shared/tree_view_js'
