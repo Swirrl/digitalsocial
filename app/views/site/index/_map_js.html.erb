@@ -390,15 +390,19 @@
             DSIMap.visibleOrganisations = DSIMap.allOrganisations;
             DSIMap.addOrganisationPins();
             DSIMap.resizeClusters();
-
             DSIMap.fetchPartners();
 
+            DSIMap.setOrganisationCount(data.organisations.length);
             if (DSIMap.paramsPopup) {
               DSIMap.allOrganisations[DSIMap.paramsPopup].marker.openPopup();
             }
           },
           dataType: 'json'
         });
+      },
+
+      setOrganisationCount: function(count) {
+        $('.filter .org-count-label .org-count-value').text(count);
       },
 
       fetchFilterOrganisations: function(e) {

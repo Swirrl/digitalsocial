@@ -115,7 +115,7 @@
             .options
               - Concepts::TechnologyFocus.all.resources.each do |tf|
                 = filter_option(tf, 'technology_focus').html_safe
-            
+
         .filter-section{ class: params[:filters].present? && params[:filters][:organisation_type].to_a.any? ? 'expanded' : nil }
           = filter_section_header(:organisation_type).html_safe
           .expandable
@@ -124,7 +124,7 @@
                 = filter_option(ot, 'organisation_type').html_safe
 
             %p.browse= link_to 'View all organisations &raquo;'.html_safe, '/organisations'
-            
+
         .filter-section{ class: params[:filters].present? && params[:filters][:activity_type].to_a.any? ? 'expanded' : nil }
           = filter_section_header(:activity_type).html_safe
           .expandable
@@ -140,7 +140,7 @@
             .options
               - Concepts::AreaOfSociety.top_level_concepts.each do |aos|
                 = filter_option(aos, 'areas_of_society')
-              
+
         .filter-section{ class: params[:filters].present? && params[:filters][:country].to_a.any? ? 'expanded' : nil }
           = filter_section_header(:country).html_safe
           .expandable
@@ -165,12 +165,17 @@
 
       .filter-section.filter-share-section
         %p
-          
+
           %a.show-url{ href: '#'}
             %span.icon-link
             Show link for current map
 
         = text_field_tag :url, url_for(:only_path => false)
+
+      .org-count-label
+        Displaying
+        %span.org-count-value
+        organisations
 
     .show-filter
       %a{ href: '#' } Filter organisations
@@ -184,5 +189,3 @@
 
     = render "site/index/map_js"
     = render "analytics"
-
-

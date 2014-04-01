@@ -301,7 +301,6 @@
     right: 50px;
     top: -936px;
     background: rgba(255, 255, 255, 0.75);
-    border-bottom: 6px solid $orange;
     z-index: 999;
     width: 242px;
     @include transition(all, 0.5s);
@@ -466,6 +465,18 @@
       }
     }
 
+
+    .org-count-label {
+      background: $orange;
+      font-size: 14px;
+      font-weight: normal;
+      font-style: italic;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      color: #fff;
+      text-align: center;
+    }
+
     .filter-button-section {
       text-align: center;
       padding: 12px 0;
@@ -485,7 +496,7 @@
 
     .filter-share-section {
       padding-top: 0;
-
+      border-bottom: 0;
       p {
         margin: 0;
         color: #999;
@@ -528,7 +539,7 @@
     right: 48px;
     top: 0px;
     background: rgba(255, 255, 255, 0.75);
-    border-bottom: 6px solid $orange;
+
     padding: 12px;
     z-index: 999;
     width: 168px;
@@ -661,7 +672,6 @@
         margin-bottom: -6px;
       }
     }
-
 
   }
 
