@@ -2,11 +2,12 @@
   height: 100%;
   padding-bottom: 0;
 
-    .leaflet-control-zoom {
-      top: 70px;
-    }
+  .leaflet-control-zoom {
+    top: 70px;
+  }
 
   .nav-bar {
+
     @include media-all-mobile {
       display:none;
     }
@@ -94,7 +95,6 @@
           list-style-type: none;
           width: 100%;
 
-
           li {
             border: 0;
             border-bottom: 2px solid rgba(0, 0, 0, 0.05);
@@ -148,6 +148,13 @@
   .mobile-info {
     display:none;
 
+    width: 100%;
+    z-index:9999;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.75);
+    border-top: 3px solid $orange;
+    bottom:0;
+
     @include media-all-mobile {
       display:block;
     }
@@ -161,13 +168,6 @@
       text-align:right;
       margin-bottom:5px;
     }
-
-    width: 100%;
-    z-index:9999;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.75);
-    border-top: 3px solid $orange;
-    bottom:0;
 
     h2 {
       color: $orange;
@@ -184,6 +184,7 @@
         margin-bottom:10px;
       }
     }
+
     .put-on-map {
       float:none;
       a {
@@ -191,6 +192,7 @@
         padding: 15px 20px;
       }
     }
+
     .log-in {
       margin-left:0;
       margin-top:10px;
@@ -257,6 +259,17 @@
 
   .info {
 
+    z-index:9999;
+    position: absolute;
+    //left: 216px;
+    left: 0px;
+    bottom: 0px;
+    font-size: 16px;
+
+    background: rgba(255, 255, 255, 0.75);
+    border-top: 9px solid $orange;
+    @include transition(all, 0.5s);
+
     @include media-all-mobile {
       display:none !important;
     }
@@ -272,17 +285,6 @@
     @include media-smaller-than-desktop {
       width: 100%;
     }
-
-    z-index:9999;
-    position: absolute;
-    //left: 216px;
-    left: 0px;
-    bottom: 0px;
-    font-size: 16px;
-
-    background: rgba(255, 255, 255, 0.75);
-    border-top: 9px solid $orange;
-    @include transition(all, 0.5s);
 
     .credits {
       margin-top: 24px;
@@ -393,7 +395,7 @@
     }
   }
 
-.main-panel {
+  .main-panel {
     position: absolute;
     right: 0px;
     top: 59px;
@@ -619,19 +621,19 @@
           width: 206px;
         }
       }
-  }
+    }
 
-  .org-count-label {
-    background: $orange;
-    font-size: 14px;
-    font-weight: normal;
-    font-style: italic;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    color: #fff;
-    text-align: center;
+    .org-count-label {
+      background: $orange;
+      font-size: 14px;
+      font-weight: normal;
+      font-style: italic;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      color: #fff;
+      text-align: center;
+    }
   }
-}
 
   .controls {
     position: absolute;
