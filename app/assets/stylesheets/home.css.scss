@@ -2,14 +2,20 @@
   height: 100%;
   padding-bottom: 0;
 
-  .logo {
+    .leaflet-control-zoom {
+      top: 70px;
+    }
+
+  .nav-bar {
     @include media-all-mobile {
       display:none;
     }
+
     z-index:9999;
     position: absolute;
     top: 0px;
-    left: 72px;
+
+    width: 100%;
     padding: 0;
     background: rgba(255, 255, 255, 0.75);
     @include transition(top, 0.25s);
@@ -387,14 +393,15 @@
     }
   }
 
-  .filter {
+.main-panel {
     position: absolute;
-    right: 50px;
-    top: -936px;
-    width: 242px;
+    right: 0px;
+    top: 59px;
+    width: 50%;
+    max-width: 600px;
     z-index: 999;
 
-    .filter-inner {
+    .main-panel-inner {
       background: rgba(255, 255, 255, 0.75);
       @include transition(all, 0.5s);
 

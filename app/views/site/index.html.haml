@@ -63,9 +63,9 @@
       Visible organisations are filtered.
       = link_to "Reset filter", "/"
 
-    .logo
+    .nav-bar
       %a{ href: '/' }= image_tag "logo/dsi-logo-small.png"
-      
+
       %ul.header-links
         %li= link_to "About", "/about"
 
@@ -112,8 +112,8 @@
 
       = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
 
-    .filter
-      .filter-inner
+    .main-panel
+      .main-panel-inner
         = form_tag '/', method: :get do
           .filter-section{ class: params[:filters].nil? || (params[:filters][:technology_focus].to_a.any?) ? 'expanded' : nil }
 
