@@ -29,10 +29,15 @@ module Digitalsocial
     "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "United Kingdom"
   ]
 
+
+
   MAPBOX_TEST_1 = 'swirrl.gh3197b8'
   MAPBOX_TEST_2 = 'swirrl.gh2ohh7p'
   MAPBOX_TEST_3 = 'swirrl.gh31khc2'
   MAPBOX_TEST_4 = 'swirrl.gh328348'
+  MAPBOX_TEST_5 = 'swirrl.hlmpiefl'
+
+  MAPBOX_TEST_6 = 'swirrl.he1k8p98'
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -86,4 +91,5 @@ module Digitalsocial
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
+  MAINTENANCE_FILE_PATH = File.join(Rails.root, 'tmp', 'maintenance.txt')
 end

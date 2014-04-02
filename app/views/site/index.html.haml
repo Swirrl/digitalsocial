@@ -113,70 +113,76 @@
       = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
 
     .filter
-      = form_tag '/', method: :get do
-        .filter-section{ class: params[:filters].nil? || (params[:filters][:technology_focus].to_a.any?) ? 'expanded' : nil }
+      .filter-inner
+        = form_tag '/', method: :get do
+          .filter-section{ class: params[:filters].nil? || (params[:filters][:technology_focus].to_a.any?) ? 'expanded' : nil }
 
-          = filter_section_header(:technology_focus).html_safe
-          .expandable
-            .options
-              - Concepts::TechnologyFocus.all.resources.each do |tf|
-                = filter_option(tf, 'technology_focus').html_safe
-            
-        .filter-section{ class: params[:filters].present? && params[:filters][:organisation_type].to_a.any? ? 'expanded' : nil }
-          = filter_section_header(:organisation_type).html_safe
-          .expandable
-            .options
-              - Concepts::OrganisationType.all.resources.each do |ot|
-                = filter_option(ot, 'organisation_type').html_safe
+            = filter_section_header(:technology_focus).html_safe
+            .expandable
+              .options
+                - Concepts::TechnologyFocus.all.resources.each do |tf|
+                  = filter_option(tf, 'technology_focus').html_safe
 
-            %p.browse= link_to 'View all organisations &raquo;'.html_safe, '/organisations'
-            
-        .filter-section{ class: params[:filters].present? && params[:filters][:activity_type].to_a.any? ? 'expanded' : nil }
-          = filter_section_header(:activity_type).html_safe
-          .expandable
-            .options
-              - Concepts::ActivityType.top_level_concepts.each do |at|
-                = filter_option(at, 'activity_type')
+          .filter-section{ class: params[:filters].present? && params[:filters][:organisation_type].to_a.any? ? 'expanded' : nil }
+            = filter_section_header(:organisation_type).html_safe
+            .expandable
+              .options
+                - Concepts::OrganisationType.all.resources.each do |ot|
+                  = filter_option(ot, 'organisation_type').html_safe
 
-            %p.browse= link_to 'View all activities &raquo;'.html_safe, '/projects'
+              %p.browse= link_to 'View all organisations &raquo;'.html_safe, '/organisations'
 
-        .filter-section{ class: params[:filters].present? && params[:filters][:areas_of_society].to_a.any? ? 'expanded' : nil }
-          = filter_section_header(:areas_of_society, label: 'Domain').html_safe
-          .expandable
-            .options
-              - Concepts::AreaOfSociety.top_level_concepts.each do |aos|
-                = filter_option(aos, 'areas_of_society')
-              
-        .filter-section{ class: params[:filters].present? && params[:filters][:country].to_a.any? ? 'expanded' : nil }
-          = filter_section_header(:country).html_safe
-          .expandable
-            .options
-              - Digitalsocial::EU_COUNTRIES.each do |c|
-                = filter_option(c, 'country', label_method: 'to_s', value_method: 'to_s')
+          .filter-section{ class: params[:filters].present? && params[:filters][:activity_type].to_a.any? ? 'expanded' : nil }
+            = filter_section_header(:activity_type).html_safe
+            .expandable
+              .options
+                - Concepts::ActivityType.top_level_concepts.each do |at|
+                  = filter_option(at, 'activity_type')
 
-        .filter-section.cluster-section.expanded
-          = filter_section_header(:clustering).html_safe
-          .expandable
-            .options
-              #slider
+              %p.browse= link_to 'View all activities &raquo;'.html_safe, '/projects'
 
-              %p
-                %span.left None
-                %span.right Max
+          .filter-section{ class: params[:filters].present? && params[:filters][:areas_of_society].to_a.any? ? 'expanded' : nil }
+            = filter_section_header(:areas_of_society, label: 'Domain').html_safe
+            .expandable
+              .options
+                - Concepts::AreaOfSociety.top_level_concepts.each do |aos|
+                  = filter_option(aos, 'areas_of_society')
 
-            = hidden_field_tag :cluster, params[:cluster].to_i, id: 'cluster-level'
+          .filter-section{ class: params[:filters].present? && params[:filters][:country].to_a.any? ? 'expanded' : nil }
+            = filter_section_header(:country).html_safe
+            .expandable
+              .options
+                - Digitalsocial::EU_COUNTRIES.each do |c|
+                  = filter_option(c, 'country', label_method: 'to_s', value_method: 'to_s')
 
-        .filter-section.filter-button-section
-          = submit_tag "Update map", class: 'button filter-button', disabled: 'disabled'
+          .filter-section.cluster-section.expanded
+            = filter_section_header(:clustering).html_safe
+            .expandable
+              .options
+                #slider
 
-      .filter-section.filter-share-section
-        %p
-          
-          %a.show-url{ href: '#'}
-            %span.icon-link
-            Show link for current map
+                %p
+                  %span.left None
+                  %span.right Max
 
-        = text_field_tag :url, url_for(:only_path => false)
+              = hidden_field_tag :cluster, params[:cluster].to_i, id: 'cluster-level'
+
+          .filter-section.filter-button-section
+            = submit_tag "Update map", class: 'button filter-button', disabled: 'disabled'
+
+        .filter-section.filter-share-section
+          %p
+
+            %a.show-url{ href: '#'}
+              %span.icon-link
+              Show link for current map
+
+          = text_field_tag :url, url_for(:only_path => false)
+
+      .org-count-label
+        Displaying
+        %span.org-count-value
+        organisations
 
     .show-filter
       %a{ href: '#' } Filter organisations
@@ -190,5 +196,3 @@
 
     = render "site/index/map_js"
     = render "analytics"
-
-

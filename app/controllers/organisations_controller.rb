@@ -135,7 +135,7 @@ class OrganisationsController < ApplicationController
     end
 
     query = "
-      SELECT DISTINCT ?org ?lat ?lng ?name WHERE {       
+      SELECT DISTINCT ?org ?lat ?lng ?name WHERE {
         GRAPH <#{Digitalsocial::DATA_GRAPH}> {
           ?org a <http://www.w3.org/ns/org#Organization> .
           ?org <http://www.w3.org/ns/org#hasPrimarySite> ?site .
@@ -150,7 +150,7 @@ class OrganisationsController < ApplicationController
     Rails.logger.debug query
     organisations = Tripod::SparqlClient::Query.select(query)
 
-    Rails.logger.debug "http://data.digitalsocial.eu/sparql.csv?query=#{CGI.escape(query)}"      
+    Rails.logger.debug "http://data.digitalsocial.eu/sparql.csv?query=#{CGI.escape(query)}"
 
     respond_to do |format|
       format.json do
@@ -228,18 +228,30 @@ class OrganisationsController < ApplicationController
     end
 
     query = "
-      SELECT DISTINCT ?org ?org2 {
+      SELECT DISTINCT ?org ?org2 ?activityType {
         ?mem a <http://data.digitalsocial.eu/def/ontology/ActivityMembership> .
         ?mem2 a <http://data.digitalsocial.eu/def/ontology/ActivityMembership> .
-        
+
         ?mem <http://data.digitalsocial.eu/def/ontology/activity> ?proj .
         ?mem <http://data.digitalsocial.eu/def/ontology/organization> ?org .
 
         ?mem2 <http://data.digitalsocial.eu/def/ontology/activity> ?proj .
         ?mem2 <http://data.digitalsocial.eu/def/ontology/organization> ?org2 .
 
+        OPTIONAL {
+          ?proj <http://data.digitalsocial.eu/def/ontology/activityType> ?tooNarrow .
+          ?tooNarrow <http://www.w3.org/2004/02/skos/core#broader> ?activityType .
+        }
+
+        OPTIONAL {
+          ?proj <http://data.digitalsocial.eu/def/ontology/activityType> ?activityType .
+          FILTER NOT EXISTS { ?activityType <http://www.w3.org/2004/02/skos/core#broader> ?broader . }
+        }
+
         ?org2 <http://www.w3.org/ns/org#hasPrimarySite> ?site2 .
         ?org <http://www.w3.org/ns/org#hasPrimarySite> ?site .
+
+        FILTER(?org != ?org2)
 
         #{ extra_clauses }
         #{ filters }
@@ -255,12 +267,9 @@ class OrganisationsController < ApplicationController
       org_guid = result['org']['value'].split("/").last
       org2_guid = result['org2']['value'].split("/").last
 
-      partner_guids[org_guid] ||= []
-
-      if org_guid != org2_guid && !partner_guids[org_guid].include?(org2_guid)
-        partner_guids[org_guid].push(org2_guid)
-      end
-    end  
+      partner_guids[org_guid] ||= Set.new
+      partner_guids[org_guid] << {org: org2_guid, activity: result['activityType']['value']}
+    end
 
     respond_to do |format|
       format.json do
@@ -297,7 +306,7 @@ class OrganisationsController < ApplicationController
       }
       ORDER BY ASC(lcase(str(?label)))"
     )
-    
+
     respond_to do |format|
       format.json do
         render json: { organisations: @organisations.as_json(map_cluster: true) }

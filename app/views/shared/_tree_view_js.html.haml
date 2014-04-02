@@ -1,0 +1,4 @@
+- content_for :scripts do
+  %script{src: '/assets/d3.min.js', charset: "utf-8"}
+  %script{src: '/assets/colorbrewer.js', charset: "utf-8"}
+  = javascript_include_tag 'tree_view.js'

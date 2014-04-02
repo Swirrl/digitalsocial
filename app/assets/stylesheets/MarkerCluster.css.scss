@@ -1,5 +1,6 @@
-$cluster-color: #777;
+$cluster-color: #efefef;
 $faded-cluster-color: #ccc;
+$cluster-border-color: #ccc;
 
 .leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
 	-webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-in;
@@ -12,12 +13,12 @@ $faded-cluster-color: #ccc;
   //background: #0078A8;
   background: $cluster-color;
   border-radius: 8px;
-  border: 0;
+  border: 2px solid $cluster-border-color;
 
   div {
     width: 16px;
     height: 16px;
-  } 
+  }
 }
 
 .marker-cluster-x-small {
@@ -65,7 +66,7 @@ $faded-cluster-color: #ccc;
 .marker-cluster-large {
   font-size: 18px;
   border-radius: 18px;
-  
+
   div {
     width: 36px;
     height: 36px;
@@ -79,7 +80,7 @@ $faded-cluster-color: #ccc;
 .marker-cluster-x-large {
   font-size: 24px;
   border-radius: 24px;
-  
+
   div {
     width: 48px;
     height: 48px;
@@ -130,7 +131,7 @@ $faded-cluster-color: #ccc;
 
 .marker-cluster div {
   text-align: center;
-  
+
   font-family: "chaparral-pro", sans-serif;
   font-style: italic;
 }

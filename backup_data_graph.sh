@@ -3,16 +3,16 @@
 DATESTR=$(date +"%Y%m%d%H%M%S")
 LOCAL_BACKUP_DIR=/home/rails/db_backups/dsi
 
-function fetch_ntriples() { 
+function fetch_ntriples() {
     FILE_NAME="$LOCAL_BACKUP_DIR/$1"
     GRAPH_URI=$2
 
-    SOURCE_URI=http://sparql3.publishmydata.com/dsi/data?graph=$GRAPH_URI
+    SOURCE_URI=http://46.4.78.148/dsi/data?graph=$GRAPH_URI
 
     curl -s -H "Accept:text/plain" -f -o $FILE_NAME $SOURCE_URI
     CURL_STATUS=$?
-    
-    if [ $CURL_STATUS -ne 0 ]; then 
+
+    if [ $CURL_STATUS -ne 0 ]; then
         echo "Failed to fetch URL with curl: $SOURCE_URI"
         echo "Backup Failed to Complete."
         exit 1
@@ -36,14 +36,14 @@ function upload_to_s3() {
 }
 
 # For backup purposes
-function set_modified_date() { 
+function set_modified_date() {
     query=`printf 'WITH <http://data.digitalsocial.eu/graph/organizations-and-activities/metadata>
 DELETE {?ds <http://purl.org/dc/terms/modified> ?mod}
 INSERT {?ds <http://purl.org/dc/terms/modified> "%s"^^<http://www.w3.org/2001/XMLSchema#dateTime>}
 WHERE { GRAPH <http://data.digitalsocial.eu/graph/organizations-and-activities/metadata> { ?ds a <http://publishmydata.com/def/dataset#Dataset> .
 OPTIONAL {?ds <http://purl.org/dc/terms/modified> ?mod} } }' $DATESTR`
 
-    curl -s -f -d "request=$query" http://sparql3.publishmydata.com/dsi/update > /dev/null
+    curl -s -f -d "request=$query" http://46.4.78.148/dsi/update > /dev/null
     CURL_STATUS=$?
 
     if [ $CURL_STATUS -ne 0 ]; then

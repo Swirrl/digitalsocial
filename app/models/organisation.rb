@@ -100,7 +100,7 @@ class Organisation
   def pending_suggested_invites
     ProjectInvite.where(invited_organisation_uri: self.uri, handled_suggested_invite: false)
   end
-  
+
   # projects I've requested to join
   def pending_project_requests_by_self
     ProjectRequest.where(requestor_organisation_uri: self.uri, open: true)
@@ -160,7 +160,7 @@ class Organisation
   def image_url
     # TODO allow logo upload
     if logo_resource.present?
-      logo_resource.file.url(:thumb) 
+      logo_resource.file.url(:thumb)
     else
       "/assets/asteroids/#{rand(5)+1}_70x70.png"
     end
@@ -168,7 +168,7 @@ class Organisation
 
   def self.organisations_for_map
     Tripod::SparqlClient::Query.select("
-      SELECT ?org ?lat ?lng ?name WHERE {       
+      SELECT ?org ?lat ?lng ?name WHERE {
         GRAPH <#{Digitalsocial::DATA_GRAPH}> {
           ?org a <http://www.w3.org/ns/org#Organization> .
           ?org <http://www.w3.org/ns/org#hasPrimarySite> ?site .
@@ -267,13 +267,13 @@ class Organisation
   end
 
   def self.order_by_name
-    name_predicate = self.fields[:name].predicate.to_s 
+    name_predicate = self.fields[:name].predicate.to_s
     where("?uri <#{name_predicate}> ?name").order("lcase(str(?name))")
   end
 
   def pending_count
     return @pending_count if @pending_count
-    
+
     @pending_count = 0
     @pending_count += 1 if !primary_site
     @pending_count += respondables.count
@@ -326,6 +326,26 @@ class Organisation
 
   def unjoin(user)
     user.organisation_memberships.where(organisation_uri: self.uri.to_s).destroy_all
+  end
+
+  def child_nodes
+    self.project_resources
+  end
+
+  def more_details
+    hash = {
+            'No of Activities' => self.project_resources.count
+           }
+    hash['No of Staff'] = self.fte_range_resource.label if self.fte_range.present?
+    hash
+  end
+
+  def uri_slug
+    Organisation.uri_to_slug self.uri
+  end
+
+  def fte_range_resource
+    self.fte_range.present? ? Concepts::FTERange.find(self.fte_range) : nil
   end
 
   private

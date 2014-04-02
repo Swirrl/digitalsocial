@@ -1,0 +1,143 @@
+
+#tree-vis {
+	$popup-background: #fff;
+	height: 300px;
+
+	margin: 10px;
+	margin-top: 0px;
+	width: 100%;
+	height: 300px;
+	position: relative;
+
+	img.spinner {
+		display: block;
+		margin: auto;
+		position: absolute;
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		width: 32px;
+		height: 32px;
+	}
+
+	&.loaded {
+		img.spinner {
+			display: none;
+		}
+	}
+
+	h1.root {
+		left: 480px;
+		top: 240px;
+			}
+
+	svg {
+		.node {
+			font: 10px sans-serif;
+			cursor: pointer;
+			rect {
+				fill: #fff;
+				stroke: #c3c3c3;
+				stroke-width: 1.5px;
+			}
+			circle {
+				/* stroke: steelblue; */
+				fill: #fff;
+				stroke: #c3c3c3;
+				stroke-width: 1.5px;
+			}
+		}
+
+		.link {
+			fill: none;
+			stroke: #ccc;
+			stroke-width: 1.5px;
+		}
+	}
+
+	.popup {
+		font-size: 0.7em;
+		width: 200px;
+		position: absolute;
+		background: $popup-background;
+		border-top: 3px solid $orange;
+
+		z-index: 2000; /* We need a high z-index to render it over mapbox */
+
+		h1,h2,h3 {
+			font-size: 20px;
+			font-weight: normal;
+			font-style: italic;
+			color: $orange;
+			margin: 0;
+			margin-top: 0.7em;
+		}
+
+		h1 {
+			padding-left: 5px;
+			font-size: 20px;
+			margin-top: 0.4em;
+		}
+
+
+		h3.type {
+			text-transform: capitalize;
+		}
+
+		a:visited, a:link {
+			font-weight: 200;
+			background-color: $popup-background;
+			color: #417FC1;
+		}
+
+		ul {
+			font-size: 14px;
+			list-style-type: none;
+			padding-left: 5px;
+			margin-top: 0.3em;
+			margin-bottom: 0.7em;
+		}
+	}
+
+	.popup:after, .popup:before {
+		bottom: 100%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+
+	.popup.left:after, .popup.left:before {
+		left: 10%;
+	}
+
+	.popup.right:after, .popup.right:before {
+		 left: 90%;
+	}
+
+	.popup:after {
+		border-color: rgba(230, 231, 231, 0);
+		border-bottom-color: $orange;
+		border-width: 10px;
+		margin-left: -10px;
+	}
+
+	.popup:before {
+		border-color: rgba(170, 170, 170, 0);
+		border-bottom-color: $orange;
+		border-width: 15px;
+		margin-left: -15px;
+	}
+
+	.inner-popup {
+		width: 178px;
+		border-top: 0;
+		border-left: 1px solid $light-grey;
+		border-right: 1px solid $light-grey;
+		border-bottom: 1px solid $light-grey;
+		padding: 10px;
+	}
+}

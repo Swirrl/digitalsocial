@@ -3,11 +3,18 @@
   \|
 
 .show
-  .title
-    %h1= @organisation.name
+  .show-row
+    .title
+      %h1= @organisation.name
 
   .show-row
+    = render 'shared/share_links'
 
+  .show-row
+    #tree-vis.organisation
+      %img.spinner{src: '/assets/spinner.gif'}
+
+  .show-row
     .left-column.details
 
       %p.label Address
@@ -95,3 +102,6 @@
         = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-black', confirm: 'Are you sure you wish to send a request to join this organisation?'
       - else
         = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-black'
+
+= javascript_include_tag '//s7.addthis.com/js/300/addthis_widget.js'
+= render 'shared/tree_view_js'

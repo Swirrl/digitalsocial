@@ -43,7 +43,7 @@
 
       > li {
         float: left;
-        
+
         border-bottom: 6px solid $orange;
         //padding-top: 16px;
         position: relative;
@@ -96,7 +96,7 @@
             &:last-child {
               border-bottom: 0;
             }
-            
+
             a {
               padding: 6px 6px;
               font-size: 16px;
@@ -110,7 +110,7 @@
 
     }
 
-    .links {
+   .links {
       margin-top: 12px;
       margin-bottom: 5px;
       //text-align: center;
@@ -134,6 +134,10 @@
       }
     }
   }
+
+   .show-filter a:hover, .show-filter a:link {
+     color: $orange-hover;
+   }
 
   .mobile-info {
     display:none;
@@ -387,230 +391,246 @@
     position: absolute;
     right: 50px;
     top: -936px;
-    background: rgba(255, 255, 255, 0.75);
-    border-bottom: 6px solid $orange;
-    z-index: 999;
     width: 242px;
-    @include transition(all, 0.5s);
+    z-index: 999;
 
-    @include media-all-mobile {
-      display:none;
-    }
+    .filter-inner {
+      background: rgba(255, 255, 255, 0.75);
+      @include transition(all, 0.5s);
 
-    .filter-section {
-      padding: 12px;
-      border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+      border-left: 1px solid rgba(150,150,150, 0.5);
+      border-right: 1px solid rgba(150,150,150, 0.5);
 
-      a {
-        font-size: 16px;
-        font-weight: normal;
-        font-style: italic;
-        margin: 0;
-        display: inline-block;
-        color: $black;
+      @include media-all-mobile {
+        display:none;
       }
 
-      a.reset {
-        font-size: 14px;
-        float: right;
-        color: $orange;
-        line-height: 18px;
-      }
-
-      p.browse {
-        margin-top: 6px;
-        margin-bottom: 0;
-        line-height: 1;
-        text-align: right;
+      .filter-section {
+        padding: 12px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
 
         a {
-          color: $orange;
-          font-size: 14px;
-        }
-      }
-
-      &.expanded {
-        .expand-triangle {
-          display: none;
-        }
-        .collapse-triangle {
+          font-size: 16px;
+          font-weight: normal;
+          font-style: italic;
+          margin: 0;
           display: inline-block;
+          color: $black;
+        }
+
+        a.reset {
+          font-size: 14px;
+          float: right;
+          color: $orange;
+          line-height: 18px;
+        }
+
+        p.browse {
+          margin-top: 6px;
+          margin-bottom: 0;
+          line-height: 1;
+          text-align: right;
+
+          a {
+            color: $orange;
+            font-size: 14px;
+          }
+        }
+
+        &.expanded {
+          .expand-triangle {
+            display: none;
+          }
+          .collapse-triangle {
+            display: inline-block;
+          }
+
+          .expandable {
+            display: block;
+          }
+
+          .options {
+            display: block;
+            padding: 6px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            height: 78px;
+
+            .option {
+              line-height: 24px;
+              white-space: nowrap;
+
+              label {
+                display: inline-block;
+                font-size: 14px;
+                font-style: normal;
+              }
+
+              input {
+                margin: 0;
+                margin-bottom: 2px;
+              }
+
+              input, label {
+                vertical-align: middle;
+              }
+            }
+          }
+        }
+
+        &.cluster-section {
+          .options {
+            background: transparent;
+            height: auto;
+            overflow-x: auto;
+          }
+
+          #slider {
+            @include border-radius(0);
+            border: 0;
+            height: 6px;
+            background: #ccc;
+            width: 192px;
+            margin-left: 9px;
+            margin-bottom: 6px;
+
+            a {
+              @include border-radius(3px);
+              border: 0;
+              outline: 0;
+              cursor: pointer;
+              background: $orange;
+              height: 18px;
+              width: 18px;
+              top: -6px;
+              margin-left: -9px;
+              margin-bottom: -6px;
+
+              &.ui-state-hover {
+                background: $orange-hover;
+              }
+
+              &.ui-state-active {
+                background: $orange-shadow;
+              }
+            }
+          }
+
+          p {
+            font-size: 12px;
+            color: #999;
+            margin-left: -6px;
+            margin-right: -6px;
+            cursor: default;
+
+            span.left { float: left; }
+            span.right { float: right; }
+          }
+        }
+
+        .options {
+          background: rgba(0, 0, 0, 0.05);
+          height: 90px;
+          margin-top: 6px;
         }
 
         .expandable {
-          display: block;
+          display: none;
         }
 
-        .options {
-          display: block;
-          padding: 6px;
-          overflow-y: auto;
-          overflow-x: hidden;
-          height: 78px;
+        .expand-triangle, .collapse-triangle {
+          display: inline-block;
+          width: 0px;
+          height: 0px;
+          border-style: solid;
+          margin-right: 3px;
+        }
 
-          .option {
-            line-height: 24px;
-            white-space: nowrap;
+        .expand-triangle {
+          border-width: 6px 0 6px 9px;
+          border-color: transparent transparent transparent #ccc;
+          margin-left: 3px;
+        }
 
-            label {
-              display: inline-block;
-              font-size: 14px;
-              font-style: normal;
-            }
-
-            input {
-              margin: 0;
-              margin-bottom: 2px;
-            }
-
-            input, label {
-              vertical-align: middle;
-            }
-          }
+        .collapse-triangle {
+          border-width: 9px 6px 0 6px;
+          border-color: #ccc transparent transparent transparent;
+          margin-top: 2px;
+          margin-right: 6px;
+          display: none;
         }
       }
 
-      &.cluster-section {
-        .options {
-          background: transparent;
-          height: auto;
-          overflow-x: auto;
-        }
+      .filter-button-section {
+        text-align: center;
+        padding: 12px 0;
+        border-bottom: 0;
 
-        #slider {
-          @include border-radius(0);
-          border: 0;
-          height: 6px;
-          background: #ccc;
-          width: 192px;
-          margin-left: 9px;
-          margin-bottom: 6px;
+        .button {
+          color: #fff;
+          font-size: 18px;
+          padding: 12px 24px;
+
+          &:disabled, &[disabled=disabled] {
+            background: #ccc
+          }
+
+        }
+      }
+
+      .filter-share-section {
+        padding-top: 0;
+        border-bottom: 0;
+        p {
+          margin: 0;
+          color: #999;
+          font-size: 16px;
+          line-height: 16px;
+          text-align: center;
+
+          [class^="icon-"], [class*=" icon-"] {
+            font-style: normal;
+            margin: 0;
+          }
 
           a {
-            @include border-radius(3px);
-            border: 0;
-            outline: 0;
-            cursor: pointer;
-            background: $orange;
-            height: 18px;
-            width: 18px;
-            top: -6px;
-            margin-left: -9px;
-            margin-bottom: -6px;
+            color: #888;
 
-            &.ui-state-hover {
-              background: $orange-hover;
-            }
-
-            &.ui-state-active {
-              background: $orange-shadow;
+            &:hover {
+              text-decoration: none;
+              color: $orange;
             }
           }
         }
 
-        p {
-          font-size: 12px;
-          color: #999;
-          margin-left: -6px;
-          margin-right: -6px;
-          cursor: default;
-
-          span.left { float: left; }
-          span.right { float: right; }
+        input {
+          display: none;
+          padding: 3px;
+          font-size: 14px;
+          font-family: $chaparral;
+          margin: 6px 0 0;
+          width: 206px;
         }
       }
-
-      .options {
-        background: rgba(0, 0, 0, 0.05);
-        height: 90px;
-        margin-top: 6px;
-      }
-
-      .expandable {
-        display: none;
-      }
-
-      .expand-triangle, .collapse-triangle {
-        display: inline-block;
-        width: 0px;
-        height: 0px;
-        border-style: solid;
-        margin-right: 3px;
-      }
-
-      .expand-triangle {
-        border-width: 6px 0 6px 9px;
-        border-color: transparent transparent transparent #ccc;
-        margin-left: 3px;        
-      }
-
-      .collapse-triangle {
-        border-width: 9px 6px 0 6px;
-        border-color: #ccc transparent transparent transparent;
-        margin-top: 2px;
-        margin-right: 6px;
-        display: none;
-      }
-    }
-
-    .filter-button-section {
-      text-align: center;
-      padding: 12px 0;
-      border-bottom: 0;
-
-      .button {
-        color: #fff;
-        font-size: 18px;
-        padding: 12px 24px;
-
-        &:disabled, &[disabled=disabled] {
-          background: #ccc
-        }
-          
-      }
-    }
-
-    .filter-share-section {
-      padding-top: 0;
-
-      p {
-        margin: 0;
-        color: #999;
-        font-size: 16px;
-        line-height: 16px;
-        text-align: center;
-
-        [class^="icon-"], [class*=" icon-"] {          
-          font-style: normal;
-          margin: 0;
-        }
-
-        a {
-          color: #888;
-
-          &:hover {
-            text-decoration: none;
-            color: $orange;
-          }
-        }
-      }
-
-      input {
-        display: none;
-        padding: 3px;
-        font-size: 14px;
-        font-family: $chaparral;
-        margin: 6px 0 0;
-        width: 206px;
-      }
-    }
   }
+
+  .org-count-label {
+    background: $orange;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: italic;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    color: #fff;
+    text-align: center;
+  }
+}
 
   .show-filter {
     @include media-all-mobile {
       display:none;
     }
-    
+
     position: absolute;
     right: 48px;
     top: 0px;
@@ -649,7 +669,7 @@
     border-top: 4px solid $orange;
     width: 300px;
     min-height: 60px;
-    
+
 
     .leaflet-popup-content {
       font-family: $chaparral;
@@ -744,11 +764,10 @@
           font-style: italic;
           font-size: 14px;
         }
-        
+
         margin-bottom: -6px;
       }
     }
-
 
   }
 
@@ -758,4 +777,3 @@
     }
   }
 }
-

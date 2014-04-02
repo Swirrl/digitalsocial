@@ -26,7 +26,7 @@ class Project
 
   validates :name, :activity_type, presence: true
   validates :areas_of_society_list, :technology_focus_array, :technology_method_list, :social_impact, presence: true, :unless => :first_page?
-  
+
   validate :ensure_scoped_organisation_has_membership
 
   validate :validate_reach_data_type
@@ -44,6 +44,7 @@ class Project
   end
 
   def self.uri_to_slug(uri)
+    uri = uri.to_s
     uri.split("/").last
   end
 
@@ -402,12 +403,35 @@ class Project
     end
   end
 
+  def child_nodes
+    self.organisation_resources
+  end
+
+  def areas_of_society_resources
+    self.areas_of_society.map { |s| Concepts::AreaOfSociety.find(s) }
+  end
+
+  def technology_focus_resources
+    self.technology_focus.map { |t| Concepts::TechnologyFocus.find(t) }
+  end
+
+  def more_details
+    {
+     'Areas of Society' => self.areas_of_society_resources.map(&:label).sort,
+     'Technology Focus' => self.technology_focus_resources.map(&:label).sort
+    }
+  end
+
+  def uri_slug
+    Project.uri_to_slug self.uri
+  end
+
   private
 
   def first_page?
     @first_page
   end
-  
+
   def project_name_is_unique
     name_predicate = Project.fields[:name].predicate.to_s
     if Project.where("?uri <#{name_predicate}> \"\"\"#{name}\"\"\"").where("FILTER(?uri != <#{self.uri}>)").count > 0
