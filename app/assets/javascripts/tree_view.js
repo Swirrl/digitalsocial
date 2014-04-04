@@ -128,8 +128,8 @@
     };
 
     var byOrganisationType = function(a, b) {
-      var aType = a.node_data.organisation_type_label || 'Other',
-          bType = b.node_data.organisation_type_label || 'Other';
+      var aType = a.node_data.organisation_type_label || 'Unknown',
+          bType = b.node_data.organisation_type_label || 'Unknown';
 
       return d3.descending(aType, bType);
     };
