@@ -131,7 +131,7 @@
       var aType = a.node_data.organisation_type_label || 'Other',
           bType = b.node_data.organisation_type_label || 'Other';
 
-      return d3.ascending(aType, bType);
+      return d3.descending(aType, bType);
     };
 
     var isAtDepth = function(n) { return function(node) { return node.depth == n; }; };
@@ -435,13 +435,13 @@
 
     var colourOrg = d3.scale.ordinal()
           .domain([
-            undefined,
             'http://data.digitalsocial.eu/def/concept/organization-type/academia-and-research',
             'http://data.digitalsocial.eu/def/concept/organization-type/business',
             'http://data.digitalsocial.eu/def/concept/organization-type/government-and-public-sector',
             'http://data.digitalsocial.eu/def/concept/organization-type/grass-roots-organization-or-community-network',
-            'http://data.digitalsocial.eu/def/concept/organization-type/social-enterprise-charity-or-foundation'])
-    .range(colorbrewer.Dark2[6]);
+            'http://data.digitalsocial.eu/def/concept/organization-type/social-enterprise-charity-or-foundation',
+            undefined])
+    .range(["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02"]);
 
     var colourActivity = d3.scale.ordinal()
           .domain([
