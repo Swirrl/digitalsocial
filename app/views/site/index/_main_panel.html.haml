@@ -1,0 +1,16 @@
+.main-panel
+  .main-panel-inner
+    #welcome_panel.panel{class: welcome_selected_class }
+      = render 'site/index/welcome_panel'
+    #filter_panel.filter.panel{class: filter_selected_class }
+      = render 'site/index/filter_panel'
+    .info-foot
+      .credits
+        &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
+
+        %a.hide-panel{href:'#'}
+          .icon
+            .icon-circled-left
+            Hide this panel
+
+  %a.toggle-bar{href:'#'}

@@ -1,0 +1,55 @@
+.home .main-panel .info {
+  .text {
+    margin:0px 18px 0px 24px;
+  }
+
+  .credits {
+    margin-top:24px;
+    padding-bottom:12px;
+    font-size:14px;
+    color:#aaa;
+    a {
+      font-weight:600;
+      font-style:italic;
+      color:#aaa;
+    }
+
+  }
+
+  h1 {
+    margin-bottom:24px;
+    font-size:36px;
+  }
+
+  a.button {
+    margin-top:12px;
+  }
+
+  ul {
+    margin-bottom:12px
+  }
+
+  p {
+    margin-bottom:12px;
+    &:first-child {
+      font-weight:600;
+      font-style:italic;
+      font-size:20px;
+    }
+
+  }
+
+  .put-on-map {
+    float:left
+  }
+
+  .log-in {
+    float:left;
+    margin-top:24px;
+    margin-left:24px;
+    font-size:18px;
+    font-weight:600;
+    font-style: italic;
+  }
+
+}

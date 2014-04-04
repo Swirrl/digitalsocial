@@ -106,7 +106,7 @@ module ApplicationHelper
 
   def maybe_display_user_name_and_email(respondable, current_user)
     maybe_user_name = (respondable.invited_email.blank? || respondable.invited_email == current_user.email) ? 'you' : respondable.invited_user_name
-    
+
     maybe_email = if respondable.invited_email.present?
                     ' (' + respondable.invited_email + ') '
                   else
@@ -125,7 +125,7 @@ module ApplicationHelper
 
   def filter_section_header(criteria, opts={})
     label   = opts[:label] || criteria.to_s.humanize
-    
+
     content = "<a href='#' class='title'><div class='expand-triangle'></div> <div class='collapse-triangle'></div>"
     if params[:filters].present? && params[:filters][criteria].present? && params[:filters][criteria].any?
       content += "<strong>#{label} (#{params[:filters][criteria].length})</strong></a>"
@@ -161,5 +161,16 @@ module ApplicationHelper
 
   def admin_help_enabled?
     session[:admin_hide_help].nil?
+  end
+
+
+  # home panel helper
+  def welcome_selected_class
+    @selected_panel == 'welcome_panel' ? 'selected' : ''
+  end
+
+  # home panel helper
+  def filter_selected_class
+    @selected_panel == 'filter_panel' ? 'selected' : ''
   end
 end

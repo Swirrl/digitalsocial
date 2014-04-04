@@ -1,0 +1,83 @@
+.home {
+  .main-panel {
+    z-index:9999;
+    font-size: 16px;
+    max-width: 600px;
+    width: 50%;
+    top: 59px;
+    right: 0px;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.75);
+
+    @include media-all-mobile {
+      display:none !important;
+    }
+
+    .main-panel-inner {
+      @include transition(all, 0.5s);
+
+      border-left: 1px solid rgba(150,150,150, 0.5);
+      border-right: 1px solid rgba(150,150,150, 0.5);
+    }
+
+    .panel:not(.selected) {
+      display: none;
+    }
+
+    a.toggle-bar {
+      display: block;
+      background: $orange;
+      font-size: 14px;
+      font-weight: normal;
+      font-style: italic;
+      padding-top: 8px;
+      padding-bottom: 0px;
+      color: #fff;
+      text-align: center;
+      height: 22px;
+      cursor: pointer;
+    }
+
+    .info-foot {
+      font-size: 14px;
+      margin-left: 12px;
+      margin-top: 12px;
+      padding-bottom: 12px;
+
+      a.hide-panel {
+        float: right;
+        text-align :right;
+        font-style: italic;
+        margin-right: 12px;
+      }
+    }
+  }
+
+
+
+}
+
+.home {
+  .mobile-small-info {
+    display: none;
+    width: 100%;
+    z-index:9999;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.75);
+    border-top: 3px solid $orange;
+    bottom:0;
+
+    @include media-larger-than-mobile {
+      display: none !important;
+    }
+
+    .text {
+      margin: 9px 18px;
+
+     a.show-info-mobile {
+        display:block;
+        text-align:right;
+      }
+    }
+  }
+}

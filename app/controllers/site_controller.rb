@@ -5,6 +5,7 @@ class SiteController < ApplicationController
   before_filter :show_partners, except: [:index]
 
   def index
+    @selected_panel = params[:selected_panel] || 'welcome_panel'
     render layout: false
   end
 
@@ -26,5 +27,6 @@ class SiteController < ApplicationController
   def set_title
     @title = params[:action].titleize
   end
+
 
 end

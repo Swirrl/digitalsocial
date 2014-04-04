@@ -76,34 +76,6 @@
         %li= link_to "Blog", "/blog"
         %li= link_to "Events", "/events"
 
-    .info
-
-      .text
-        :markdown
-          We're setting up a network of organisations that use the Internet for social good.
-
-        %ul
-          %li Be part of a growing community of Digital Social Innovation
-          %li Inform better policy across the EU
-          %li Showcase your work and network to potential funders and investors
-
-        :markdown
-          It just takes a few minutes to get started. [Read More](/about).
-
-        .cta.clearfix
-          .put-on-map
-            = link_to "Put your organisation on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
-          .log-in
-            Already signed up? #{link_to "Log in", "/users/sign_in"}.
-
-        .info-foot
-          .credits
-            &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
-          .hide{style:'float:right'}
-            %a.hide-info{href:'#', style:'font-style:italic; font-size:14px'}
-              Hide this panel
-              %icon.icon-circled-left
-
     .small-info
       %p.show-more
         %a{href:'#'}
@@ -112,87 +84,14 @@
 
       = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
 
-    .main-panel
-      .main-panel-inner
-        = form_tag '/', method: :get do
-          .filter-section{ class: params[:filters].nil? || (params[:filters][:technology_focus].to_a.any?) ? 'expanded' : nil }
+    = render 'site/index/main_panel'
 
-            = filter_section_header(:technology_focus).html_safe
-            .expandable
-              .options
-                - Concepts::TechnologyFocus.all.resources.each do |tf|
-                  = filter_option(tf, 'technology_focus').html_safe
+  .active-organisation
+    %p Currently viewing network of
+    %p.name Swirrl
 
-          .filter-section{ class: params[:filters].present? && params[:filters][:organisation_type].to_a.any? ? 'expanded' : nil }
-            = filter_section_header(:organisation_type).html_safe
-            .expandable
-              .options
-                - Concepts::OrganisationType.all.resources.each do |ot|
-                  = filter_option(ot, 'organisation_type').html_safe
-
-              %p.browse= link_to 'View all organisations &raquo;'.html_safe, '/organisations'
-
-          .filter-section{ class: params[:filters].present? && params[:filters][:activity_type].to_a.any? ? 'expanded' : nil }
-            = filter_section_header(:activity_type).html_safe
-            .expandable
-              .options
-                - Concepts::ActivityType.top_level_concepts.each do |at|
-                  = filter_option(at, 'activity_type')
-
-              %p.browse= link_to 'View all activities &raquo;'.html_safe, '/projects'
-
-          .filter-section{ class: params[:filters].present? && params[:filters][:areas_of_society].to_a.any? ? 'expanded' : nil }
-            = filter_section_header(:areas_of_society, label: 'Domain').html_safe
-            .expandable
-              .options
-                - Concepts::AreaOfSociety.top_level_concepts.each do |aos|
-                  = filter_option(aos, 'areas_of_society')
-
-          .filter-section{ class: params[:filters].present? && params[:filters][:country].to_a.any? ? 'expanded' : nil }
-            = filter_section_header(:country).html_safe
-            .expandable
-              .options
-                - Digitalsocial::EU_COUNTRIES.each do |c|
-                  = filter_option(c, 'country', label_method: 'to_s', value_method: 'to_s')
-
-          .filter-section.cluster-section.expanded
-            = filter_section_header(:clustering).html_safe
-            .expandable
-              .options
-                #slider
-
-                %p
-                  %span.left None
-                  %span.right Max
-
-              = hidden_field_tag :cluster, params[:cluster].to_i, id: 'cluster-level'
-
-          .filter-section.filter-button-section
-            = submit_tag "Update map", class: 'button filter-button', disabled: 'disabled'
-
-        .filter-section.filter-share-section
-          %p
-
-            %a.show-url{ href: '#'}
-              %span.icon-link
-              Show link for current map
-
-          = text_field_tag :url, url_for(:only_path => false)
-
-      .org-count-label
-        Displaying
-        %span.org-count-value
-        organisations
-
-    .show-filter
-      %a{ href: '#' } Filter organisations
-
-    .active-organisation
-      %p Currently viewing network of
-      %p.name Swirrl
-
-      %p= link_to "Reset map", "#", class: 'reset-map'
+    %p= link_to "Reset map", "#", class: 'reset-map'
 
 
-    = render "site/index/map_js"
-    = render "analytics"
+  = render "site/index/map_js"
+  = render "analytics"
