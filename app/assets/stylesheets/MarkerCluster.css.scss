@@ -1,13 +1,12 @@
-//$cluster-color: #777;
-$cluster-color: white;
+$cluster-color: #777;
 $faded-cluster-color: #ccc;
 $cluster-border-color: #ccc;
 
 .leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
-	-webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-in;
-	-moz-transition: -moz-transform 0.2s ease-out, opacity 0.2s ease-in;
-	-o-transition: -o-transform 0.2s ease-out, opacity 0.2s ease-in;
-	transition: transform 0.2s ease-out, opacity 0.2s ease-in;
+  -webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-in;
+  -moz-transition: -moz-transform 0.2s ease-out, opacity 0.2s ease-in;
+  -o-transition: -o-transform 0.2s ease-out, opacity 0.2s ease-in;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-in;
 }
 
 .leaflet-div-icon {
@@ -16,7 +15,7 @@ $cluster-border-color: #ccc;
   border-radius: 8px;
   border: 0;
   //border: 2px solid $cluster-border-color;
-;
+
   div {
     width: 16px;
     height: 16px;
@@ -138,7 +137,7 @@ $cluster-border-color: #ccc;
   font-style: italic;
 }
 
-.leaflet-marker-icon {
+.cluster-level-0 .leaflet-marker-icon {
   &.academia-and-research {
     background-color: #1b9e77;
   }
