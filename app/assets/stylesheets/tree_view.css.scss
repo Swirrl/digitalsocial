@@ -164,10 +164,20 @@
 		padding-bottom: 12px;
 		margin-top: 0px;
 
-		&.show-row h3 {
-			font-size: 100%;
+		h3, h4 {
 			font-family: "chaparral-pro", sans-serif;
 			font-weight: normal;
+			margin-bottom: 3px;
+		}
+
+		h4 {
+			color: #999;
+			font-style: italic;
+			font-size: 16px;
+		}
+
+		&.show-row h3 {
+			font-size: 100%;
 			text-align: center;
 			margin: 0 auto;
 			margin-bottom: 24px;
@@ -177,7 +187,7 @@
 			margin-bottom:0 !important;
 		}
 
-		ul li {
+		li {
 			font-size: 14px;
 			white-space: nowrap;
 			overflow: hidden;
@@ -192,7 +202,22 @@
 			font-size: 80px;
 			vertical-align: middle;
 			line-height: 28px;
-			margin-right: 5px;
+			margin-right: 10px;
+		}
+
+		li.activity:before {
+			content: "\0000a0";
+			border: 2px solid $light-grey;
+			width:28px;
+			line-height: 14px;
+			display: inline-block;
+			margin-right: 8px;
+		}
+
+		li.activity {
+			font-size: 14px;
+			text-align: top;
+			display: inline;
 		}
 
 		li.academia-and-research:before {
