@@ -140,59 +140,41 @@
 	}
 }
 
-.show-row .legend {
-	background: #777;
-	.key {
-		display: block;
-		height: 20px;
-		position:relative;
-		margin-bottom: 20px;
-
-		.key-colour {
-			border-radius: 10px;
-			height: 20px;
-			width: 20px;
-			display: inline-block;
-			position:relative;
-			top: 4px;
-
-			&.academia-and-research {
-				background: #1b9e77;
-			}
-
-			&.business {
-				background: #d95f02;
-			}
-
-			&.government-and-public-sector {
-				background: #7570b3;
-			}
-
-			&.grass-roots-organization-or-community-network {
-				background: #e7298a;
-			}
-
-			&.social-enterprise-charity-or-foundation {
-				background: #66a61e;
-			}
-
-			&.undefined {
-				background: #e6ab02;
-			}
-		}
-
-		.description {
-			text-overflow:ellipsis;
-			white-space:nowrap;
-			overflow:hidden;
-			max-width:inherit;
-			border:1px solid red;
-		}
+.tree figcaption{
+	.left-column, ul{
+		margin-bottom:0 !important;
 	}
-
-	.left-column {
-		@include media-all-mobile {
-			margin-bottom: 0;
-		}
+	li{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		list-style: none;
+		font-size: 18px;
+	}
+	li:before {
+		content: "•";
+		font-size: 90px;
+		vertical-align: middle;
+		line-height: 18px;
+		margin-right: 5px;
+	}
+	li.academia-and-research:before {
+		color: #1b9e77;
+	}
+	li.business:before {
+		color: #d95f02;
+	}
+	li.government-and-public-sector:before {
+		color: #7570b3;
+	}
+	li.grass-roots-organisation-or-community-network:before,
+	li.grass-roots-organization-or-community-network:before {
+		color: #e7298a;
+	}
+	li.social-enterprise-charity-or-foundation:before {
+		color: #66a61e;
+	}
+	li.undefined:before {
+		color: #e6ab02;
 	}
 }
