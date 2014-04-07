@@ -4,10 +4,8 @@
 
 .show
   .show-row
-
     .title
       %h1= @organisation.name
-  .show-row
 
   .show-row
     %figure.tree#tree-vis.organisation
@@ -26,7 +24,7 @@
             %li.social-enterprise-charity-or-foundation Social Enterprise, Charity or Foundation
             %li.undefined Unknown
 
-  .show-row
+  .show-row.push-down-margin
     .left-column.details
 
       %p.label Address
@@ -56,7 +54,6 @@
       .right-column.map
         #show-map
         = render "organisations/show/map_js"
-
 
   .show-row
     .left-column.primary-list
@@ -102,7 +99,6 @@
                       #{pluralize(v[:count], "activity")}
 
   .show-row.cta
-
 
     - if current_user && @organisation.users.include?(current_user)
 

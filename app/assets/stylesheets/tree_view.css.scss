@@ -155,17 +155,22 @@
 
 	.show-row .right-column {
 		padding-left: 0px;
+		padding-bottom: 0px;
+		margin-bottom: 24px;
 	}
 
 	figcaption {
+		border-bottom: 4px solid $orange;
+		padding-bottom: 12px;
+		margin-top: 0px;
 
-		h3 {
+		&.show-row h3 {
 			font-size: 100%;
 			font-family: "chaparral-pro", sans-serif;
 			font-weight: normal;
 			text-align: center;
 			margin: 0 auto;
-			margin-bottom: 12px;
+			margin-bottom: 24px;
 		}
 
 		.left-column, ul {
@@ -214,4 +219,10 @@
 			color: #e6ab02;
 		}
 	}
+
+}
+
+/* Hack */
+.show-row.push-down-margin {
+	margin-top: 56px;
 }
