@@ -140,13 +140,13 @@
 	}
 }
 
-.legend {
+.show-row .legend {
 	background: #777;
 	.key {
 		display: block;
-		margin-bottom: 10px;
 		height: 20px;
 		position:relative;
+		margin-bottom: 20px;
 
 		.key-colour {
 			border-radius: 10px;
@@ -182,7 +182,17 @@
 		}
 
 		.description {
-			display: inline-block;
+			text-overflow:ellipsis;
+			white-space:nowrap;
+			overflow:hidden;
+			max-width:inherit;
+			border:1px solid red;
+		}
+	}
+
+	.left-column {
+		@include media-all-mobile {
+			margin-bottom: 0;
 		}
 	}
 }
