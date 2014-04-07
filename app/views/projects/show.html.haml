@@ -5,9 +5,21 @@
       %h1= @project.name
 
   .show-row
-    #tree-vis.project
-      %img.spinner{src: '/assets/spinner.gif'}
-  .show-row
+    %figure.tree
+      #tree-vis.project
+        %img.spinner{src: '/assets/spinner.gif'}
+
+      %figcaption.show-row
+        .left-column
+          %ul
+            %li.academia-and-research Academia and Research
+            %li.business Business
+            %li.government-and-public-sector Government and Public Sector
+        .right-column
+          %ul
+            %li.grass-roots-organisation-or-community-network Grass Roots Organisation or Community Network
+            %li.social-enterprise-charity-or-foundation Social Enterprise, Charity or Foundation
+            %li.undefined Unknown
 
     .left-column.details
 
