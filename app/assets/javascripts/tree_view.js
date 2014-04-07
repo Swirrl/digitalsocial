@@ -19,6 +19,7 @@
       var svg = mainElement.insert("svg", 'figcaption');
 
       var g = svg.attr("height", height)
+            .attr('width', '100%')
             .append("g")
             .attr("transform", calcSize);
 
