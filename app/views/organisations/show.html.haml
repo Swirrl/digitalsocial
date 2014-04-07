@@ -10,19 +10,8 @@
   .show-row
     %figure.tree#tree-vis.organisation
       %img.spinner{src: '/assets/spinner.gif'}
+      = render 'shared/tree_legend', :root_name => @organisation.name
 
-      %figcaption.show-row.hide
-        %h3= @organisation.name
-        .left-column
-          %ul
-            %li.academia-and-research Academia and Research
-            %li.business Business
-            %li.government-and-public-sector Government and Public Sector
-        .right-column
-          %ul
-            %li.grass-roots-organisation-or-community-network Grass Roots Organisation or Community Network
-            %li.social-enterprise-charity-or-foundation Social Enterprise, Charity or Foundation
-            %li.undefined Unknown
 
   .show-row.push-down-margin
     .left-column.details
