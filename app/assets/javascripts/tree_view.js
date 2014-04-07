@@ -471,10 +471,6 @@
             'http://data.digitalsocial.eu/def/concept/activity-type/other'
           ])
           .range(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#b15928"]);
-    //.range(colorbrewer.Paired[11]);
-    //.range(colorbrewer.Set3[11]);
-    //.range(colorbrewer.PuOr[11]);
-
 
     var mainElement = d3.select(id),
         that = this,
