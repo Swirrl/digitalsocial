@@ -1,9 +1,7 @@
 #tree-vis {
 	$popup-background: #fff;
-
-
 	margin: 10px;
-	width: 100%;
+
 	height: 300px;
 	position: relative;
 
@@ -17,6 +15,16 @@
 		right: 0px;
 		width: 32px;
 		height: 32px;
+	}
+
+	h2.no-nodes {
+		font-size: 24px;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 120px;
+		text-align: center;
+		pointer-events: none;
 	}
 
 	&.loaded {
@@ -140,41 +148,69 @@
 	}
 }
 
-.tree figcaption{
-	.left-column, ul{
-		margin-bottom:0 !important;
+.tree {
+	.hide {
+		display: none;
 	}
-	li{
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		list-style: none;
-		font-size: 18px;
+
+	.show-row .right-column {
+		padding-left: 0px;
 	}
-	li:before {
-		content: "•";
-		font-size: 90px;
-		vertical-align: middle;
-		line-height: 18px;
-		margin-right: 5px;
-	}
-	li.academia-and-research:before {
-		color: #1b9e77;
-	}
-	li.business:before {
-		color: #d95f02;
-	}
-	li.government-and-public-sector:before {
-		color: #7570b3;
-	}
-	li.grass-roots-organisation-or-community-network:before,
-	li.grass-roots-organization-or-community-network:before {
-		color: #e7298a;
-	}
-	li.social-enterprise-charity-or-foundation:before {
-		color: #66a61e;
-	}
-	li.undefined:before {
-		color: #e6ab02;
+
+	figcaption {
+
+		h3 {
+			font-size: 100%;
+			font-family: "chaparral-pro", sans-serif;
+			font-weight: normal;
+			text-align: center;
+			margin: 0 auto;
+			margin-bottom: 12px;
+		}
+
+		.left-column, ul {
+			margin-bottom:0 !important;
+		}
+
+		li {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			list-style: none;
+			font-size: 18px;
+		}
+
+		li:before {
+			content: "•";
+			font-size: 90px;
+			vertical-align: middle;
+			line-height: 18px;
+			margin-right: 5px;
+		}
+
+		li.academia-and-research:before {
+			color: #1b9e77;
+		}
+
+		li.business:before {
+			color: #d95f02;
+		}
+
+		li.government-and-public-sector:before {
+			color: #7570b3;
+		}
+
+		li.grass-roots-organisation-or-community-network:before,
+		li.grass-roots-organization-or-community-network:before {
+			color: #e7298a;
+		}
+
+		li.social-enterprise-charity-or-foundation:before {
+			color: #66a61e;
+		}
+
+		li.undefined:before {
+			color: #e6ab02;
+		}
 	}
 }

@@ -9,11 +9,12 @@
       %h1= @organisation.name
   .show-row
 
-    %figure.tree
-      #tree-vis.organisation
-        %img.spinner{src: '/assets/spinner.gif'}
+  .show-row
+    %figure.tree#tree-vis.organisation
+      %img.spinner{src: '/assets/spinner.gif'}
 
-      %figcaption.show-row
+      %figcaption.show-row.hide
+        %h3= @organisation.name
         .left-column
           %ul
             %li.academia-and-research Academia and Research

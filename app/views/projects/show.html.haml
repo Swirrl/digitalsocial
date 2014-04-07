@@ -5,11 +5,11 @@
       %h1= @project.name
 
   .show-row
-    %figure.tree
-      #tree-vis.project
-        %img.spinner{src: '/assets/spinner.gif'}
+    %figure.tree#tree-vis.project
+      %img.spinner{src: '/assets/spinner.gif'}
 
-      %figcaption.show-row
+      %figcaption.show-row.hide
+        %h3= @project.name
         .left-column
           %ul
             %li.academia-and-research Academia and Research

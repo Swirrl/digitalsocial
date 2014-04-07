@@ -7,16 +7,16 @@
     ////////////////////////////////////////////////////////////////////////////
 
     var getWidth = function() {
-      return mainElement.node().offsetWidth - mainPadding;
+      return mainElement.node().offsetWidth - mainHPadding;
     };
 
     var calcSize = function() {
       var totalWidth = mainElement.node().offsetWidth;
-      return "rotate(180 " + (totalWidth / 2) + " " + (height / 2) + ") translate(" + (mainPadding / 2) + "," + (mainPadding / 2) + ")";
+      return "rotate(180 " + (totalWidth / 2) + " " + (height / 2) + ") translate(" + (mainHPadding / 2) + "," + (mainVPadding / 2) + ")";
     };
 
     var createSvg = function() {
-      var svg = mainElement.append("svg");
+      var svg = mainElement.insert("svg", 'figcaption');
 
       var g = svg.attr("height", height)
             .append("g")
@@ -328,9 +328,17 @@
     var render = function() {
       var tree = makeMultiParentTree(loadedData);
 
-      cluster.size([getWidth(), height - mainPadding]);
+      cluster.size([getWidth(), height - mainVPadding]);
       var nodes = tree.nodes,
           links = tree.links;
+
+      if(nodes.length === 1 && isOrganisation(nodes[0])) {
+        var text = 'This organisation currently has no activities';
+        mainElement.append('h2').classed('no-nodes', true).text(text);
+        svg.classed('hide', true);
+      } else {
+        mainElement.select('figcaption').classed('hide', false);
+      }
 
       var g = svg.select('g');
 
@@ -389,7 +397,10 @@
     this.init = function() {
       console.log("Initialised Tree View");
 
-      var klass = mainElement.attr('class'); //organisation or project
+      var classes = mainElement.attr('class'); //organisation or project
+
+      var klass = classes.match(/organisation/) ? 'organisation' : 'project';
+
       var dataUrl = '/' + klass + '/tree_view/' + getResourceId() + '.json';
 
       d3.json(dataUrl, function(error, root) {
@@ -415,7 +426,8 @@
 
     var rootRadius = 4,
         height = 300, // TODO make these dynamic
-        mainPadding = 60,
+        mainHPadding = 60, // horizontal
+        mainVPadding = 30, // vertical
         smallCircle   = 4,
         mediumCircle  = 8,
         largeCircle   = 10;
