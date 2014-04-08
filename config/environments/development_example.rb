@@ -44,11 +44,11 @@ Digitalsocial::Application.configure do
 
   config.middleware.use Rack::LiveReload
 
-  Digitalsocial::DATA_ENDPOINT = 'http://127.0.0.1:3030/digitalsocial_dev/data'
+  Digitalsocial::DATA_ENDPOINT = 'http://192.168.0.11:3030/digitalsocial_dev/data'
 
   Tripod.configure do |config|
-    config.update_endpoint = 'http://127.0.0.1:3030/digitalsocial_dev/update'
-    config.query_endpoint = 'http://127.0.0.1:3030/digitalsocial_dev/sparql'
+    config.update_endpoint = 'http://192.168.0.11:3030/digitalsocial_dev/update'
+    config.query_endpoint = 'http://192.168.0.11:3030/digitalsocial_dev/sparql'
     #config.query_endpoint = 'http://data.digitalsocial.eu/sparql'
 
     config.timeout_seconds = 30

@@ -135,13 +135,19 @@ class OrganisationsController < ApplicationController
     end
 
     query = "
-      SELECT DISTINCT ?org ?lat ?lng ?name WHERE {
+      SELECT DISTINCT ?org ?orgType ?lat ?lng ?name WHERE {
         GRAPH <#{Digitalsocial::DATA_GRAPH}> {
-          ?org a <http://www.w3.org/ns/org#Organization> .
-          ?org <http://www.w3.org/ns/org#hasPrimarySite> ?site .
-          ?org <http://www.w3.org/2000/01/rdf-schema#label> ?name .
-          ?site <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat .
-          ?site <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?lng .
+          ?org a <http://www.w3.org/ns/org#Organization> ;
+               <http://www.w3.org/ns/org#hasPrimarySite> ?site ;
+               <http://www.w3.org/2000/01/rdf-schema#label> ?name .
+
+          OPTIONAL {
+            ?org <http://data.digitalsocial.eu/def/ontology/organizationType> ?orgType .
+          }
+
+          ?site <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+                <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?lng .
+
           #{ extra_clauses }
           #{ filters }
         }
@@ -156,12 +162,15 @@ class OrganisationsController < ApplicationController
       format.json do
         render json: {
           organisations: organisations.map do |o|
-            {
-              guid: o["org"]["value"].split('/').last,
-              name: o["name"]["value"],
-              lat: o["lat"]["value"],
-              lng: o["lng"]["value"]
-            }
+            org = {
+                   guid: o["org"]["value"].split('/').last,
+                   name: o["name"]["value"],
+                   lat: o["lat"]["value"],
+                   lng: o["lng"]["value"]
+                  }
+
+            org[:type] = o["orgType"]["value"] if o["orgType"]
+            org
           end
         }
       end
@@ -228,7 +237,7 @@ class OrganisationsController < ApplicationController
     end
 
     query = "
-      SELECT DISTINCT ?org ?org2 ?activityType {
+      SELECT DISTINCT ?org ?org2 {
         ?mem a <http://data.digitalsocial.eu/def/ontology/ActivityMembership> .
         ?mem2 a <http://data.digitalsocial.eu/def/ontology/ActivityMembership> .
 
@@ -238,20 +247,8 @@ class OrganisationsController < ApplicationController
         ?mem2 <http://data.digitalsocial.eu/def/ontology/activity> ?proj .
         ?mem2 <http://data.digitalsocial.eu/def/ontology/organization> ?org2 .
 
-        OPTIONAL {
-          ?proj <http://data.digitalsocial.eu/def/ontology/activityType> ?tooNarrow .
-          ?tooNarrow <http://www.w3.org/2004/02/skos/core#broader> ?activityType .
-        }
-
-        OPTIONAL {
-          ?proj <http://data.digitalsocial.eu/def/ontology/activityType> ?activityType .
-          FILTER NOT EXISTS { ?activityType <http://www.w3.org/2004/02/skos/core#broader> ?broader . }
-        }
-
         ?org2 <http://www.w3.org/ns/org#hasPrimarySite> ?site2 .
         ?org <http://www.w3.org/ns/org#hasPrimarySite> ?site .
-
-        FILTER(?org != ?org2)
 
         #{ extra_clauses }
         #{ filters }
@@ -268,7 +265,10 @@ class OrganisationsController < ApplicationController
       org2_guid = result['org2']['value'].split("/").last
 
       partner_guids[org_guid] ||= Set.new
-      partner_guids[org_guid] << {org: org2_guid, activity: result['activityType']['value']}
+
+      if org_guid != org2_guid
+        partner_guids[org_guid] << (org2_guid)
+      end
     end
 
     respond_to do |format|

@@ -7,11 +7,11 @@
   .show-row
     = render 'shared/share_links'
 
-  .show-row
-    #tree-vis.project
+    %figure.tree#tree-vis.project
       %img.spinner{src: '/assets/spinner.gif'}
-  .show-row
+      = render 'shared/tree_legend', root_name: @project.name
 
+  .show-row.push-down-margin
     .left-column.details
 
       %p.label Type of Activity
@@ -59,8 +59,8 @@
       - else
         %p Not supplied
 
-      %p.label Social Impact
-      %p= @project.social_impact || "Not supplied"
+    %p.label Social Impact
+    %p= @project.social_impact || "Not supplied"
 
 
   .show-row.project-map

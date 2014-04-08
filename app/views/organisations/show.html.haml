@@ -11,10 +11,12 @@
     = render 'shared/share_links'
 
   .show-row
-    #tree-vis.organisation
+    %figure.tree#tree-vis.organisation
       %img.spinner{src: '/assets/spinner.gif'}
+      = render 'shared/tree_legend', :root_name => @organisation.name
 
-  .show-row
+
+  .show-row.push-down-margin
     .left-column.details
 
       %p.label Address
@@ -44,7 +46,6 @@
       .right-column.map
         #show-map
         = render "organisations/show/map_js"
-
 
   .show-row
     .left-column.primary-list
@@ -90,7 +91,6 @@
                       #{pluralize(v[:count], "activity")}
 
   .show-row.cta
-
 
     - if current_user && @organisation.users.include?(current_user)
 

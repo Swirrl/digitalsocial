@@ -1,11 +1,15 @@
-
 #tree-vis {
 	$popup-background: #fff;
+//<<<<<<< HEAD
 	height: 300px;
 
 	margin: 10px;
 	margin-top: 0px;
 	width: 100%;
+// =======
+//	margin: 10px;
+//
+//>>>>>>> master
 	height: 300px;
 	position: relative;
 
@@ -19,6 +23,16 @@
 		right: 0px;
 		width: 32px;
 		height: 32px;
+	}
+
+	h2.no-nodes {
+		font-size: 24px;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 120px;
+		text-align: center;
+		pointer-events: none;
 	}
 
 	&.loaded {
@@ -42,7 +56,6 @@
 				stroke-width: 1.5px;
 			}
 			circle {
-				/* stroke: steelblue; */
 				fill: #fff;
 				stroke: #c3c3c3;
 				stroke-width: 1.5px;
@@ -53,6 +66,15 @@
 			fill: none;
 			stroke: #ccc;
 			stroke-width: 1.5px;
+			transition: stroke 0.5s;
+		}
+
+		.selected .link {
+			stroke: $orange;
+		}
+
+		.unselected.deemphasised .link {
+			stroke: #eee;
 		}
 	}
 
@@ -66,17 +88,18 @@
 		z-index: 2000; /* We need a high z-index to render it over mapbox */
 
 		h1,h2,h3 {
-			font-size: 20px;
+			font-size: 16px;
 			font-weight: normal;
 			font-style: italic;
-			color: $orange;
+			color: $mid-grey2;
 			margin: 0;
 			margin-top: 0.7em;
 		}
 
 		h1 {
 			padding-left: 5px;
-			font-size: 20px;
+			font-size: 18px;
+			line-height: 20px;
 			margin-top: 0.4em;
 		}
 
@@ -140,4 +163,109 @@
 		border-bottom: 1px solid $light-grey;
 		padding: 10px;
 	}
+}
+
+.tree {
+	.hide {
+		display: none;
+	}
+
+	.show-row .right-column {
+		padding-left: 0px;
+		padding-bottom: 0px;
+		margin-bottom: 24px;
+	}
+
+	figcaption {
+		border-bottom: 4px solid $orange;
+		padding-bottom: 12px;
+		margin-top: 0px;
+
+		h3, h4 {
+			font-family: "chaparral-pro", sans-serif;
+			font-weight: normal;
+			margin-bottom: 3px;
+		}
+
+		h4 {
+			color: #999;
+			font-style: italic;
+			font-size: 16px;
+		}
+
+		&.show-row h3 {
+			font-size: 100%;
+			text-align: center;
+			margin: 0 auto;
+			margin-bottom: 24px;
+		}
+
+		.left-column, ul {
+			margin-bottom:0 !important;
+		}
+
+		li {
+			font-size: 14px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			list-style: none;
+			line-height: 34px;
+			height: 28px;
+		}
+
+		li:before {
+			content: "•";
+			font-size: 80px;
+			vertical-align: middle;
+			line-height: 28px;
+			margin-right: 10px;
+		}
+
+		li.activity:before {
+			content: "\0000a0";
+			border: 2px solid $light-grey;
+			width:28px;
+			line-height: 14px;
+			display: inline-block;
+			margin-right: 8px;
+		}
+
+		li.activity {
+			font-size: 14px;
+			text-align: top;
+			display: inline;
+		}
+
+		li.academia-and-research:before {
+			color: #1b9e77;
+		}
+
+		li.business:before {
+			color: #d95f02;
+		}
+
+		li.government-and-public-sector:before {
+			color: #7570b3;
+		}
+
+		li.grass-roots-organisation-or-community-network:before,
+		li.grass-roots-organization-or-community-network:before {
+			color: #e7298a;
+		}
+
+		li.social-enterprise-charity-or-foundation:before {
+			color: #66a61e;
+		}
+
+		li.undefined:before {
+			color: #e6ab02;
+		}
+	}
+
+}
+
+/* Hack */
+.show-row.push-down-margin {
+	margin-top: 56px;
 }

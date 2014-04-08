@@ -7,20 +7,31 @@
     ////////////////////////////////////////////////////////////////////////////
 
     var getWidth = function() {
-      return mainElement.node().offsetWidth - mainPadding;
+      return mainElement.node().offsetWidth - mainHPadding;
     };
 
     var calcSize = function() {
       var totalWidth = mainElement.node().offsetWidth;
-      return "rotate(180 " + (totalWidth / 2) + " " + (height / 2) + ") translate(" + (mainPadding / 2) + "," + (mainPadding / 2) + ")";
+      return "rotate(180 " + (totalWidth / 2) + " " + (height / 2) + ") translate(" + (mainHPadding / 2) + "," + (mainVPadding / 2) + ")";
     };
 
     var createSvg = function() {
-      var svg = mainElement.append("svg");
+      var svg = mainElement.insert("svg", 'figcaption');
 
-      var g = svg.attr("height", "100%")
-            .attr("width", "100%")
-            .append("g")
+      svg.attr("height", height)
+        .attr('width', '100%');
+
+
+      var g = svg.append("g")
+            .classed('unselected', true)
+            .attr("transform", calcSize);
+
+      var g2 = svg.append("g")
+            .classed('selected', true)
+            .attr('transform', calcSize);
+
+      var g3 = svg.append("g")
+            .classed('nodes', true)
             .attr("transform", calcSize);
 
       return svg;
@@ -129,10 +140,10 @@
     };
 
     var byOrganisationType = function(a, b) {
-      var aType = a.node_data.organisation_type_label || 'Other',
-          bType = b.node_data.organisation_type_label || 'Other';
+      var aType = a.node_data.organisation_type_label || 'Unknown',
+          bType = b.node_data.organisation_type_label || 'Unknown';
 
-      return d3.ascending(aType, bType);
+      return d3.descending(aType, bType);
     };
 
     var isAtDepth = function(n) { return function(node) { return node.depth == n; }; };
@@ -198,6 +209,7 @@
     var clearPopup = function(ev) {
       if(popup) {
         popup.remove();
+        removeHilightedLines(ev);
       }
     };
 
@@ -269,6 +281,34 @@
       });
     };
 
+    var hilightLines = function(node, links) {
+      svg.select('g.unselected').classed('deemphasised', true);
+      var g2 = svg.select('g.selected');
+      var selectedLinks = g2.selectAll('.link');
+
+      selectedLinks.remove();
+
+      var connectsTo = function(l) {
+        return l.source == node || l.target == node;
+      };
+
+      var connectedLinks = links.filter(connectsTo);
+
+      selectedLinks
+        .data(connectedLinks.data()).enter()
+        .append('path')
+        .classed("link", true)
+        .classed('selected', true)
+        .attr("d", diagonal);
+    };
+
+    var removeHilightedLines = function(e) {
+      svg.select('g.unselected').classed('deemphasised', false);
+      var g2 = svg.select('g.selected');
+      var selectedLinks = g2.selectAll('.link');
+      selectedLinks.remove();
+    };
+
     var reparentLinks = function(links, nodes) {
       var lookupNode = buildLookup(nodes);
 
@@ -329,30 +369,44 @@
     var render = function() {
       var tree = makeMultiParentTree(loadedData);
 
-      cluster.size([getWidth(), height - mainPadding]);
+      cluster.size([getWidth(), height - mainVPadding]);
       var nodes = tree.nodes,
           links = tree.links;
 
-      var g = svg.select('g');
+      if(nodes.length === 1 && isOrganisation(nodes[0])) {
+        var text = 'This organisation currently has no activities';
+        mainElement.append('h2').classed('no-nodes', true).text(text);
+        svg.classed('hide', true);
+      } else {
+        mainElement.select('figcaption').classed('hide', false);
+      }
+
+      var g = svg.select('g.unselected');
 
       var link = g.selectAll(".link")
             .data(links);
 
       link.enter().append("path")
-        .attr("class", "link")
-        .attr("d", diagonal)
-        .style('stroke', colourLines);
+        .classed("link", true)
+        .attr("d", diagonal);
 
-      var node = g.selectAll(".node")
+      //link.style('stroke', colourLines);
+
+      var node = svg.select('g.nodes').selectAll(".node")
             .data(nodes);
 
       node.enter().append("g")
         .classed('node', true)
         .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-        .on("click", function(n) {
+        .on('click', function(n) {
           displayPopup(n, d3.event);
-          //window.open(n.node_data.uri_slug, '_self');
-        });
+          hilightLines(n, link);
+        })
+        .on("mouseover", function(n) {
+          hilightLines(n, link);
+        })
+        .on('mouseout', removeHilightedLines)
+      ;
 
       // temporary tooltips
       node.append('title').text(function(d) { return d.node_data.name; });
@@ -376,9 +430,9 @@
         return el;
       });
 
-      // node.selectAll('circle')
-      //   .style('fill', colourCircles)
-      //   .style('stroke', colourCircles);
+      node.selectAll('circle')
+        .style('fill', colourCircles)
+        .style('stroke', colourCircles);
 
     };
 
@@ -389,7 +443,10 @@
     this.init = function() {
       console.log("Initialised Tree View");
 
-      var klass = mainElement.attr('class'); //organisation or project
+      var classes = mainElement.attr('class'); //organisation or project
+
+      var klass = classes.match(/organisation/) ? 'organisation' : 'project';
+
       var dataUrl = '/' + klass + '/tree_view/' + getResourceId() + '.json';
 
       d3.json(dataUrl, function(error, root) {
@@ -415,7 +472,8 @@
 
     var rootRadius = 4,
         height = 300, // TODO make these dynamic
-        mainPadding = 60,
+        mainHPadding = 60, // horizontal
+        mainVPadding = 30, // vertical
         smallCircle   = 4,
         mediumCircle  = 8,
         largeCircle   = 10;
@@ -435,18 +493,13 @@
 
     var colourOrg = d3.scale.ordinal()
           .domain([
-            undefined,
             'http://data.digitalsocial.eu/def/concept/organization-type/academia-and-research',
             'http://data.digitalsocial.eu/def/concept/organization-type/business',
             'http://data.digitalsocial.eu/def/concept/organization-type/government-and-public-sector',
             'http://data.digitalsocial.eu/def/concept/organization-type/grass-roots-organization-or-community-network',
-            'http://data.digitalsocial.eu/def/concept/organization-type/social-enterprise-charity-or-foundation'])
-          .range(['#AAAAAA',
-                  '#165698',
-                  '#CC5593',
-                  '#B41A2E',
-                  '#38994F',
-                  '#F9912D']);
+            'http://data.digitalsocial.eu/def/concept/organization-type/social-enterprise-charity-or-foundation',
+            undefined])
+    .range(["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02"]);
 
     var colourActivity = d3.scale.ordinal()
           .domain([
@@ -463,10 +516,6 @@
             'http://data.digitalsocial.eu/def/concept/activity-type/other'
           ])
           .range(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#b15928"]);
-    //.range(colorbrewer.Paired[11]);
-    //.range(colorbrewer.Set3[11]);
-    //.range(colorbrewer.PuOr[11]);
-
 
     var mainElement = d3.select(id),
         that = this,
@@ -483,7 +532,9 @@
     cluster.sort(byOrganisationType);
 
     var diagonal = d3.svg.diagonal()
-          .projection(function(d) { return [d.x, d.y]; });
+          .projection(function(d) {
+            return [d.x, d.y];
+          });
 
     var svg = createSvg();
 
