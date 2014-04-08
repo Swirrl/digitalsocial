@@ -13,24 +13,8 @@
       @include columns(6);
       @include offset(1);
       margin: 32px 0;
-
-      .input {
-        margin: 0;
-        width: 100%;
-        input {
-          display: inline-block;
-          width: 100%;
-          background-image: url(image-path("icons/search.png"));
-          background-repeat: no-repeat;
-          background-position: right center;
-
-          &:focus {
-            background-image: url(image-path("icons/search-focus.png"));
-          }
-        }
       }
     }
-  }
 
   ul {
     @include columns(16);
@@ -136,7 +120,7 @@
       margin: 0 9px;
 
       &.page, &.current {
-        margin: 0 3px;       
+        margin: 0 3px;
       }
 
       a, &.current {

@@ -1,0 +1,28 @@
+.search .input {
+  margin: 0;
+  input {
+    display: inline-block;
+    background-image: url(image-path("icons/search.png"));
+    background-repeat: no-repeat;
+    background-position: right center;
+
+    &:focus {
+      background-image: url(image-path("icons/search-focus.png"));
+    }
+  }
+}
+
+.nav-bar .search {
+  .input {
+    margin-left: 100px;
+    input {
+
+    }
+  }
+}
+
+.index .input {
+  input {
+    width: 100%;
+  }
+}

@@ -63,20 +63,7 @@
       Visible organisations are filtered.
       = link_to "Reset filter", "/"
 
-    .nav-bar
-      %a{ href: '/' }= image_tag "logo/dsi-logo-small.png"
-
-      %ul.header-links
-        %li= link_to "About", "/about"
-
-        - PageCategory.all.each do |pc|
-          %li
-            = link_to pc.name, pc
-
-        %li= link_to "Blog", "/blog"
-        %li= link_to "Events", "/events"
-
-      = render 'shared/search_form', placeholder: 'Search by organisation name...', form_destination: '/organisations', input_size: 25
+    = render 'shared/nav_bar'
 
     -# .small-info
     -#   %p.show-more

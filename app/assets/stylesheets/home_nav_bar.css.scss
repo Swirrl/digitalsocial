@@ -1,16 +1,24 @@
 .home .nav-bar {
 
+  z-index:9999;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, 1);
+
+  .input {
+    margin-bottom: 0;
+  }
+
+  .search {
+
+  }
+
   @include media-all-mobile {
     display:none;
   }
 
-  z-index:9999;
-  position: absolute;
-  top: 0px;
-
-  width: 100%;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.75);
   @include transition(top, 0.25s);
 
   > a {
@@ -102,10 +110,6 @@
         }
       }
     }
-  }
-
-  img {
-
   }
 
  .links {

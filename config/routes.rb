@@ -5,6 +5,10 @@ Digitalsocial::Application.routes.draw do
   get '/privacy' => 'site#privacy'
   get '/about' => 'site#about'
   get '/fale' => 'site#fale'
+
+  get '/resources' => 'site#resources', as: :resources
+  get '/community' => 'site#community', as: :community
+
   get '/pages/:page_category_id' => 'pages#index', as: :page_category
   get '/pages/:page_category_id/:id' => 'pages#show', as: :page
 

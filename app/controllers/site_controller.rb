@@ -22,6 +22,12 @@ class SiteController < ApplicationController
     @page = Page.where(path: 'about').first
   end
 
+  def resources
+  end
+
+  def community
+  end
+
   private
 
   def set_title
