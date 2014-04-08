@@ -18,9 +18,20 @@
     var createSvg = function() {
       var svg = mainElement.insert("svg", 'figcaption');
 
-      var g = svg.attr("height", height)
-            .attr('width', '100%')
-            .append("g")
+      svg.attr("height", height)
+        .attr('width', '100%');
+
+
+      var g = svg.append("g")
+            .classed('unselected', true)
+            .attr("transform", calcSize);
+
+      var g2 = svg.append("g")
+            .classed('selected', true)
+            .attr('transform', calcSize);
+
+      var g3 = svg.append("g")
+            .classed('nodes', true)
             .attr("transform", calcSize);
 
       return svg;
@@ -198,6 +209,7 @@
     var clearPopup = function(ev) {
       if(popup) {
         popup.remove();
+        removeHilightedLines(ev);
       }
     };
 
@@ -267,6 +279,34 @@
           ul.append('li').classed('item', true).text(val);
         }
       });
+    };
+
+    var hilightLines = function(node, links) {
+      svg.select('g.unselected').classed('deemphasised', true);
+      var g2 = svg.select('g.selected');
+      var selectedLinks = g2.selectAll('.link');
+
+      selectedLinks.remove();
+
+      var connectsTo = function(l) {
+        return l.source == node || l.target == node;
+      };
+
+      var connectedLinks = links.filter(connectsTo);
+
+      selectedLinks
+        .data(connectedLinks.data()).enter()
+        .append('path')
+        .classed("link", true)
+        .classed('selected', true)
+        .attr("d", diagonal);
+    };
+
+    var removeHilightedLines = function(e) {
+      svg.select('g.unselected').classed('deemphasised', false);
+      var g2 = svg.select('g.selected');
+      var selectedLinks = g2.selectAll('.link');
+      selectedLinks.remove();
     };
 
     var reparentLinks = function(links, nodes) {
@@ -341,27 +381,32 @@
         mainElement.select('figcaption').classed('hide', false);
       }
 
-      var g = svg.select('g');
+      var g = svg.select('g.unselected');
 
       var link = g.selectAll(".link")
             .data(links);
 
       link.enter().append("path")
-        .attr("class", "link")
+        .classed("link", true)
         .attr("d", diagonal);
 
       //link.style('stroke', colourLines);
 
-      var node = g.selectAll(".node")
+      var node = svg.select('g.nodes').selectAll(".node")
             .data(nodes);
 
       node.enter().append("g")
         .classed('node', true)
         .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-        .on("click", function(n) {
+        .on('click', function(n) {
           displayPopup(n, d3.event);
-          //window.open(n.node_data.uri_slug, '_self');
-        });
+          hilightLines(n, link);
+        })
+        .on("mouseover", function(n) {
+          hilightLines(n, link);
+        })
+        .on('mouseout', removeHilightedLines)
+      ;
 
       // temporary tooltips
       node.append('title').text(function(d) { return d.node_data.name; });
@@ -487,7 +532,9 @@
     cluster.sort(byOrganisationType);
 
     var diagonal = d3.svg.diagonal()
-          .projection(function(d) { return [d.x, d.y]; });
+          .projection(function(d) {
+            return [d.x, d.y];
+          });
 
     var svg = createSvg();
 

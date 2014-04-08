@@ -48,7 +48,6 @@
 				stroke-width: 1.5px;
 			}
 			circle {
-				/* stroke: steelblue; */
 				fill: #fff;
 				stroke: #c3c3c3;
 				stroke-width: 1.5px;
@@ -59,6 +58,15 @@
 			fill: none;
 			stroke: #ccc;
 			stroke-width: 1.5px;
+			transition: stroke 0.5s;
+		}
+
+		.selected .link {
+			stroke: $orange;
+		}
+
+		.unselected.deemphasised .link {
+			stroke: #eee;
 		}
 	}
 
@@ -72,17 +80,18 @@
 		z-index: 2000; /* We need a high z-index to render it over mapbox */
 
 		h1,h2,h3 {
-			font-size: 20px;
+			font-size: 16px;
 			font-weight: normal;
 			font-style: italic;
-			color: $orange;
+			color: $mid-grey2;
 			margin: 0;
 			margin-top: 0.7em;
 		}
 
 		h1 {
 			padding-left: 5px;
-			font-size: 20px;
+			font-size: 18px;
+			line-height: 20px;
 			margin-top: 0.4em;
 		}
 
