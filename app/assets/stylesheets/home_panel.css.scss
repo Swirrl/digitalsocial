@@ -38,23 +38,27 @@
       cursor: pointer;
     }
 
-    .info-foot {
-      font-size: 14px;
-      margin-left: 12px;
-      margin-top: 12px;
-      padding-bottom: 12px;
-
-      a.hide-panel {
-        float: right;
-        text-align :right;
-        font-style: italic;
-        margin-right: 12px;
-      }
+    .hide-panel {
+      float: right;
+      text-align :right;
+      font-style: italic;
+      margin-right: 12px;
+      display: inline-block;
     }
+
   }
 
+  .panel-foot {
+    color: $orange;
+    font-size: 14px;
+    margin-left: 12px;
+    margin-top: 12px;
+    padding-bottom: 12px;
+  }
 
-
+  #filter_panel .panel-foot {
+    margin-bottom: 12px;
+  }
 }
 
 .home {
