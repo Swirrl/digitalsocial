@@ -1,0 +1,4 @@
+.search
+  - form_destination ||= nil
+  = form_tag form_destination, method: :get do
+    .input= text_field_tag :q, params[:q], placeholder: placeholder, autocomplete: :off

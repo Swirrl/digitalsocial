@@ -2,9 +2,7 @@
   .title
     %h1 Activities
 
-    .search
-      = form_tag nil, method: :get do
-        .input= text_field_tag :q, params[:q], placeholder: 'Search by activity name...', autocomplete: :off
+    = render 'shared/search_form', placeholder: 'Search by activity name...'
 
   - if @projects.any?
     %ul.activities
@@ -36,4 +34,3 @@
       = link_to "Add/Join an activity", [:new, :project], class: 'button button-black'
     - else
       = link_to "Add/Join an activity", [:new, :project], class: 'button button-black'
-        
