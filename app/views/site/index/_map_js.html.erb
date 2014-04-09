@@ -242,7 +242,7 @@
           });
         }
 
-        $('.show-more a').click(function(e){
+        $('a.show-main-panel').click(function(e){
           DSIMap.slideInPanels();
           e.preventDefault();
           return false;
@@ -436,7 +436,7 @@
       },
 
       setLoaded: function(count) {
-          var bar = $('<span>Displaying<span class="org-count-value"> ' + count + ' </span>organisations </span><span class="edit-link">(edit filters)</span><span class="welcome-link">(return)</span>');
+          var bar = $('<span>Displaying<span class="org-count-value"> ' + count + ' </span>organisations </span><span class="edit-link">(edit filters)</span><span class="welcome-link">(get on the map)</span>');
           $('a.toggle-bar').html(bar).on('click', DSIMap.togglePanel);
           DSIMap.toggleLink();
 
@@ -596,8 +596,6 @@
 
         if (this.isMobile()) {
           this.hideMobilePanels();
-        } else {
-          this.slideOutPanels();
         }
       },
 
@@ -652,8 +650,6 @@
 
         if (this.isMobile()) {
           this.hideMobilePanels();
-        } else {
-          this.slideOutPanels();
         }
       },
 
@@ -681,25 +677,17 @@
       },
 
       slideOutPanels: function() {
-        $('.info').css({ left: "-898px" });
-        $('.main-panel').css({ top: "-60px" });
-
-        setTimeout(function(){
-          $('.info').hide();
-          $('.small-info').fadeIn();
+        $('.main-panel').fadeOut('slow', function() {
+          $('.show-main-panel').addClass('show');
+          $('.show-main-panel.show').fadeIn();
           $('.filter').css({ top: "0" });
-        }, 500);
+        });
       },
 
       slideInPanels: function() {
-        $('.info').show();
-        $('.small-info').fadeOut();
-        $('.filter').css({ top: "-936px" });
-
-        setTimeout(function(){
-          $('.info').css({ left: "0" });
-          $('.show-filter').css({ top: "0" });
-        }, 250);
+        $('.show-main-panel').fadeOut('slow', function() {
+            $('.main-panel').fadeIn('slow');
+        });
       },
 
       showMobilePanels: function() {

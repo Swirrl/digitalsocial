@@ -1,9 +1,11 @@
 .home {
+  $navbar-height: 59px;
+
   .main-panel {
     z-index:9999;
     font-size: 16px;
     width: 430px;
-    top: 59px;
+    top: $navbar-height;
     right: 0px;
     position: absolute;
     background: rgba(255, 255, 255, 0.75);
@@ -64,6 +66,27 @@
 
   #filter_panel .panel-foot {
     margin-bottom: 12px;
+  }
+
+  .show-main-panel {
+    display: none;
+    margin: 0;
+    padding: 0;
+
+    .icon-circled-left {
+      margin: 2px;
+    }
+
+    &.show {
+      font-size: 36px;
+      background: $orange;
+      margin: 0;
+      color: white;
+      display: inline-block;
+      position: absolute;
+      top: $navbar-height + 36px;
+      right: 0px;
+    }
   }
 }
 

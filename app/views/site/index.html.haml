@@ -65,13 +65,10 @@
 
     = render 'shared/nav_bar'
 
-    -# .small-info
-    -#   %p.show-more
-    -#     %a{href:'#'}
-    -#       %icon.icon-circled-right
-    -#       Show more info
+    %a.show-main-panel{href:'#'}
+      %icon.icon-circled-left
 
-      = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
+      -# = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
 
     = render 'site/index/main_panel'
 
@@ -80,7 +77,6 @@
     %p.name Swirrl
 
     %p= link_to "Reset map", "#", class: 'reset-map'
-
 
   = render "site/index/map_js"
   = render "analytics"
