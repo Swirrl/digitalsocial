@@ -408,25 +408,50 @@
         });
       },
 
+      isWelcomePanel: function() {
+          return $('.panel.selected').is('#welcome_panel');
+      },
+
+      isFilterPanel: function() {
+          return !DSIMap.isWelcomePanel();
+      },
+
       togglePanel: function(ev) {
           var newP = $('.panel:not(.selected)'),
               oldP = $('.panel.selected');
 
           oldP.removeClass('selected');
           newP.addClass('selected');
+          DSIMap.toggleLink();
+      },
+
+      toggleLink: function(ev) {
+          if(DSIMap.isWelcomePanel()) {
+              $('a.toggle-bar .welcome-link').removeClass('show');
+              $('a.toggle-bar .edit-link').addClass('show');
+          } else {
+              $('a.toggle-bar .welcome-link').addClass('show');
+              $('a.toggle-bar .edit-link').removeClass('show');
+          }
       },
 
       setLoaded: function(count) {
-          var bar = $('<span>Displaying<span class="org-count-value"></span></span>');
+          var bar = $('<span>Displaying<span class="org-count-value"> ' + count + ' </span>organisations </span><span class="edit-link">(edit filters)</span><span class="welcome-link">(return)</span>');
           $('a.toggle-bar').html(bar).on('click', DSIMap.togglePanel);
+          DSIMap.toggleLink();
+
       },
 
       showPanel: function(id) {
           $(id).addClass('selected');
           if(id=='#filter_panel') {
               $('#welcome_panel').removeClass('selected');
+              $('#a.toggle-bar .edit-link').removeClass('show');
+              $('#a.toggle-bar .welcome-link').addClass('show');
           } else {
               $('#filter_panel').removeClass('selected');
+              $('#a.toggle-bar .welcome-link').removeClass('show');
+              $('#a.toggle-bar .edit-link').addClass('show');
           }
       },
 

@@ -36,6 +36,14 @@
       text-align: center;
       height: 22px;
       cursor: pointer;
+
+      .welcome-link, .edit-link {
+        display: none;
+
+        &.show {
+          display: initial;
+        }
+      }
     }
 
     .hide-panel {
@@ -45,7 +53,6 @@
       margin-right: 12px;
       display: inline-block;
     }
-
   }
 
   .panel-foot {
