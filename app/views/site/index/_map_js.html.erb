@@ -442,7 +442,7 @@
       },
 
       setLoaded: function(count) {
-          var bar = $('<span>Displaying<span class="org-count-value"> ' + count + ' </span>organisations </span><span class="edit-link">(edit filters)</span><span class="welcome-link">(get on the map)</span>');
+          var bar = $('<span title="Switch panel">Displaying<span class="org-count-value"> ' + count + ' </span>organisations </span><span class="edit-link">(edit filters)</span><span class="welcome-link">(get on the map)</span>');
           $('a.toggle-bar').html(bar).on('click', DSIMap.togglePanel);
           DSIMap.toggleLink();
       },
