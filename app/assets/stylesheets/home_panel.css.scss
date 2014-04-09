@@ -22,10 +22,8 @@
     }
 
     .main-panel-inner {
-      //@include transition(all, 0.5s);
-
-      border-left: 1px solid rgba(208,125, 1, 0.5);
-      border-right: 1px solid rgba(208,125, 1, 0.5);
+      //border-left: 2px solid rgba(208,125, 1, 0.8);
+        border-left: 2px solid rgba(243,146, 0, 0.8);
       //border-left: 1px solid rgba(150,150,150, 0.5);
       //border-right: 1px solid rgba(150,150,150, 0.5);
     }
@@ -78,16 +76,13 @@
   }
 
   .show-main-panel {
-    $right-border: 1px;
+    $right-border: 2px;
     font-size: 36px;
-    //background: white;
-    //color: $orange;
-    //opacity: 0.75;
     background: $orange;
     color: white;
-    //border: 1px solid rgba(150,150,150, 0.5);
-    border: 1px solid rgba(208,125, 1, 0.5);
-    border-right: $right-border solid rgba(255,255,255, 0.75);
+    border: 2px solid rgba(243,146, 0, 0.8);
+    //border: 2px solid rgba(208,125, 1, 1);
+    border-right: $right-border solid rgba(255,255,255, 1);
     margin: 0;
     display: inline-block;
     position: absolute;
@@ -101,19 +96,11 @@
       margin: 0;
     }
 
-    .icon-circled-right {
-
-    }
-
     &.minimized {
-      right: 0px;
+      right: -$right-border;
       opacity: 1;
       background: $orange;
       color: white;
-
-      .icon-circled-left {
-        margin: 2px;
-      }
     }
 
     &.show {
