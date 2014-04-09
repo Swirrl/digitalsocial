@@ -222,6 +222,14 @@
         });
       },
 
+      isVisible: function() {
+          return !DSIMap.isMinimized();
+      },
+
+      isMinimized: function() {
+          return $('.main-panel').is('.minimized');
+      },
+
       bindMapEvents: function() {
         this.bindPopupOpen();
         this.bindZoomEnd();
@@ -242,34 +250,34 @@
           });
         }
 
-        $('a.show-main-panel').click(function(e){
-          DSIMap.slideInPanels();
+        $('a.show-main-panel').click(function(e) {
+          console.log('hide clicked');
+          if(DSIMap.isMinimized()) {
+              DSIMap.slideOutPanels();
+          } else {
+              DSIMap.slideInPanels();
+          }
           e.preventDefault();
-          return false;
         });
 
         $('a.hide-panel').click(function(e) {
-          e.preventDefault();
           DSIMap.slideOutPanels();
-          return false;
+          e.preventDefault();
         });
 
         $('a.hide-info-mobile').click(function(e) {
-          e.preventDefault();
           DSIMap.hideMobilePanels();
-          return false;
+          e.preventDefault();
         });
 
         $('a.show-info-mobile').click(function(e) {
-          e.preventDefault();
           DSIMap.showMobilePanels();
-          return false;
+          e.preventDefault();
         });
 
         $('.show-filter a').click(function(e) {
-          e.preventDefault();
           DSIMap.slideOutPanels();
-          return false;
+          e.preventDefault();
         });
       },
 
@@ -301,7 +309,6 @@
           DSIMap.showOrgNetwork(guid);
 
           e.preventDefault();
-          return false;
         });
       },
 
@@ -359,7 +366,6 @@
           });
 
           e.preventDefault();
-          return false;
         });
       },
 
@@ -439,7 +445,6 @@
           var bar = $('<span>Displaying<span class="org-count-value"> ' + count + ' </span>organisations </span><span class="edit-link">(edit filters)</span><span class="welcome-link">(get on the map)</span>');
           $('a.toggle-bar').html(bar).on('click', DSIMap.togglePanel);
           DSIMap.toggleLink();
-
       },
 
       showPanel: function(id) {
@@ -677,17 +682,23 @@
       },
 
       slideOutPanels: function() {
-        $('.main-panel').fadeOut('slow', function() {
-          $('.show-main-panel').addClass('show');
-          $('.show-main-panel.show').fadeIn();
-          $('.filter').css({ top: "0" });
-        });
+          $('.main-panel').removeClass('minimized');
+          $('.show-main-panel').removeClass('minimized');
+
+          setTimeout(function() {
+              console.log('scheduled');
+              $('.show-main-panel icon').removeClass('icon-circled-left');
+              $('.show-main-panel icon').addClass('icon-circled-right');
+          }, 500);
       },
 
       slideInPanels: function() {
-        $('.show-main-panel').fadeOut('slow', function() {
-            $('.main-panel').fadeIn('slow');
-        });
+        $('.show-main-panel').addClass('minimized');
+
+        $('.show-main-panel icon').removeClass('icon-circled-right');
+        $('.show-main-panel icon').addClass('icon-circled-left');
+
+        $('.main-panel').addClass('minimized');
       },
 
       showMobilePanels: function() {

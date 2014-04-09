@@ -1,24 +1,33 @@
 .home {
   $navbar-height: 59px;
+  $main-panel-width: 430px;
 
   .main-panel {
     z-index:9999;
     font-size: 16px;
-    width: 430px;
+    width: $main-panel-width;
     top: $navbar-height;
     right: 0px;
     position: absolute;
     background: rgba(255, 255, 255, 0.75);
+
+    @include transition(right, 0.5s);
+
+    &.minimized {
+      right: -$main-panel-width;
+    }
 
     @include media-all-mobile {
       display:none !important;
     }
 
     .main-panel-inner {
-      @include transition(all, 0.5s);
+      //@include transition(all, 0.5s);
 
-      border-left: 1px solid rgba(150,150,150, 0.5);
-      border-right: 1px solid rgba(150,150,150, 0.5);
+      border-left: 1px solid rgba(208,125, 1, 0.5);
+      border-right: 1px solid rgba(208,125, 1, 0.5);
+      //border-left: 1px solid rgba(150,150,150, 0.5);
+      //border-right: 1px solid rgba(150,150,150, 0.5);
     }
 
     .panel:not(.selected) {
@@ -69,23 +78,45 @@
   }
 
   .show-main-panel {
-    display: none;
+    $right-border: 1px;
+    font-size: 36px;
+    //background: white;
+    //color: $orange;
+    //opacity: 0.75;
+    background: $orange;
+    color: white;
+    //border: 1px solid rgba(150,150,150, 0.5);
+    border: 1px solid rgba(208,125, 1, 0.5);
+    border-right: $right-border solid rgba(255,255,255, 0.75);
     margin: 0;
-    padding: 0;
+    display: inline-block;
+    position: absolute;
+    top: $navbar-height + 36px;
+    right: 430px - $right-border;
+    z-index: 9999;
 
-    .icon-circled-left {
-      margin: 2px;
+    @include transition(right, 0.5s);
+
+    [class^="icon-"], [class*=" icon-"] {
+      margin: 0;
+    }
+
+    .icon-circled-right {
+
+    }
+
+    &.minimized {
+      right: 0px;
+      opacity: 1;
+      background: $orange;
+      color: white;
+
+      .icon-circled-left {
+        margin: 2px;
+      }
     }
 
     &.show {
-      font-size: 36px;
-      background: $orange;
-      margin: 0;
-      color: white;
-      display: inline-block;
-      position: absolute;
-      top: $navbar-height + 36px;
-      right: 0px;
     }
   }
 }
