@@ -90,6 +90,10 @@
     right: $main-panel-width - $right-border;
     z-index: 9999;
 
+    @include media-all-mobile {
+      display:none !important;
+    }
+
     @include transition(right, 0.5s);
 
     [class^="icon-"], [class*=" icon-"] {
