@@ -47,7 +47,7 @@
           [Read More](/about).
         .cta.clearfix
           .put-on-map
-            = link_to "Put your organisation on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
+            = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
           .log-in
             Already signed up? #{link_to "Log in", "/users/sign_in"}.
         .credits
@@ -63,7 +63,9 @@
       Visible organisations are filtered.
       = link_to "Reset filter", "/"
 
-    = render 'shared/nav_bar'
+    %span.home
+      = render 'shared/nav_bar'
+
 
     %a.show-main-panel{href:'#', title: 'Toggle panel visibility'}
       %icon.icon-circled-right

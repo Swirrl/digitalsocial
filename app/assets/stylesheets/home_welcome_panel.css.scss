@@ -1,6 +1,7 @@
 .home .main-panel .info {
   .text {
     margin:0px 18px 0px 24px;
+    padding-top: 12px;
   }
 
   .credits {
@@ -23,6 +24,9 @@
 
   a.button {
     margin-top:12px;
+    margin: 0 auto;
+    display: block;
+    width: 150px;
   }
 
   ul {
@@ -39,14 +43,14 @@
 
   }
 
-  .put-on-map {
-    float:left
+
+  .cta {
+    width: 100%;
   }
 
   .log-in {
     float:left;
     margin-top:24px;
-    margin-left:24px;
     font-size:18px;
     font-weight:600;
     font-style: italic;

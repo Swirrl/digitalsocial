@@ -1,6 +1,6 @@
 .home {
   $navbar-height: 59px;
-  $main-panel-width: 430px;
+  $main-panel-width: 350px;
 
   .main-panel {
     z-index:9999;
@@ -87,7 +87,7 @@
     display: inline-block;
     position: absolute;
     top: $navbar-height + 36px;
-    right: 430px - $right-border;
+    right: $main-panel-width - $right-border;
     z-index: 9999;
 
     @include transition(right, 0.5s);
