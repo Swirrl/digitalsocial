@@ -6,8 +6,16 @@
 
     - PageCategory.all.each do |pc|
       %li= link_to pc.name, pc
-    %li= link_to "Resources", resources_path
-    %li= link_to "Community", community_path
+    -# %li= link_to "Resources", "http://data.digitalsocial.eu/", :class => yield(:resource_menu_highlighted)
+    %li= link_to "Resources", resources_path, :class => yield(:resource_menu_highlighted)
+    %li= link_to "Community", community_path, :class => yield(:community_menu_highlighted)
     %li= link_to "Blog", "/blog"
-  .hr.hr2{style: 'clear: both; float: left;'}
+
   -# = render 'shared/search_form', placeholder: 'Search by organisation name...', form_destination: '/organisations', input_size: 25
+
+  - if content_for?(:sub_menu)
+    .hr.hr2.hr-full{style: 'clear: both; float: left; visibility: hidden;'}
+  - else
+    .hr.hr2.hr-full{style: 'clear: both; float: left;'}
+
+  = yield :sub_menu

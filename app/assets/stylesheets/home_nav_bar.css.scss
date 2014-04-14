@@ -11,7 +11,11 @@
   padding: 0;
   background: rgba(255, 255, 255, 0.85);
 
-  .input {
+  .hilight {
+    color: $orange;
+  }
+
+ .input {
     margin-bottom: 0;
   }
 
@@ -25,7 +29,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    height: 6px;
+    height: 2px;
   }
 
   @include media-all-mobile {
@@ -42,7 +46,7 @@
 
   ul.header-links {
     float: left;
-    margin-bottom: 0;
+    margin-bottom: 5px;
 
     li {
       list-style-type: none;
@@ -63,7 +67,6 @@
     > li {
       float: left;
 
-      //padding-top: 16px;
       position: relative;
 
       &.with-menu:hover {
@@ -85,7 +88,7 @@
 
       a {
         display: block;
-        padding: 32px 12px 3px 3px;
+        padding: 32px 36px 3px 3px;
         font-style: italic;
 
         &:hover [class^="icon-"], [class*=" icon-"] {
@@ -120,6 +123,32 @@
       }
     }
   }
+
+  .subnav {
+    display: block;
+    width: 100%;
+    //border-bottom: 2px solid $orange;
+    padding-bottom: 16px;
+
+    ul.header-links {
+      margin-left: 170px;
+
+      > li {
+        margin-left: 0px;
+
+        a {
+          padding-top: 0;
+          padding-top: 14px;
+        }
+      }
+
+    }
+
+    ul li:first-child {
+      margin-left: 0;
+    }
+  }
+
 
  .links {
     margin-top: 12px;

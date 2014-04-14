@@ -1,0 +1,7 @@
+- content_for :sub_menu do
+  .subnav.clearfix
+    %ul.header-links
+      - navigation[:items].each do |item|
+        %li
+          = submenu_link item[:title], item[:target], item[:hilight]
+  .hr.hr-full

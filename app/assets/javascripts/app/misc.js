@@ -10,7 +10,7 @@ $(function(){
 
       if ($('.hr-full').length) {
         this.hrFull();
-        this.hrFullResize();  
+        this.hrFullResize();
       }
     },
 
@@ -56,7 +56,7 @@ $(function(){
             });
           }
         }
-      })
+      });
     },
 
     autoSizeTextareas: function() {
@@ -64,14 +64,14 @@ $(function(){
     },
 
     hrFull: function() {
-      var width = $(window).width() - $('.hr-full').offset().left;
+      var width = $(window).width() - $('.hr-full').offset().left - 1;
       $('.hr-full').css({ width: width });
     },
 
     hrFullResize: function() {
       $(window).resize(this.hrFull);
     }
-  }
+  };
 
   misc.init();
 });

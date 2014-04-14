@@ -163,7 +163,6 @@ module ApplicationHelper
     session[:admin_hide_help].nil?
   end
 
-
   # home panel helper
   def welcome_selected_class
     @selected_panel == 'welcome_panel' ? 'selected' : ''
@@ -172,5 +171,67 @@ module ApplicationHelper
   # home panel helper
   def filter_selected_class
     @selected_panel == 'filter_panel' ? 'selected' : ''
+  end
+
+  def submenu_link text, url, hilight_when
+    unless (hilight_when.nil?)
+      css_class = hilight_when == @hilight_in_menu ? "hilight" : ""
+    end
+    link_to text, url, class: css_class
+  end
+
+  def parent_menu_link_hilight navigation
+    navigation.hilight ? "hilight" : ""
+  end
+
+  def hilight_in_menu(str)
+    @hilight_in_menu = str.downcase
+  end
+
+  def hilight_parent(str)
+    @hilight_parent_menu_link = str.downcase
+  end
+
+  def community_menu
+    content_for(:community_menu_highlighted, 'hilight')
+    {:hilight => 'community',
+     :items => [{
+                 :title => 'Activities',
+                 :target => projects_path,
+                 :hilight => 'activities'
+                },
+                {
+                 :title => 'Organisations',
+                 :target => organisations_path,
+                 :hilight => 'organisations'
+                }]}
+  end
+
+  def resources_menu
+    content_for(:resource_menu_highlighted, 'hilight')
+    # TODO: fill in these agreed categories when the blog site is up
+    {:hilight => 'resources',
+     :items => [# {
+                #  :title => 'Case Studies',
+                #  :target => '#',
+                #  :hilight => ''
+                # },
+                # {
+                #  :title => 'Research',
+                #  :target => '#',
+                #  :hilight => ''
+                # },
+                {
+                 :title => 'Data',
+                 :target => 'http://data.digitalsocial.eu/',
+                 :hilight => 'data'
+                }
+                # ,{
+                #  :title => 'Related work',
+                #  :target => '#',
+                #  :hilight => ''
+                # }
+               ]
+    }
   end
 end
