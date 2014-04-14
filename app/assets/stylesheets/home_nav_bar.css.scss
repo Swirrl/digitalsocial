@@ -11,6 +11,8 @@
   padding: 0;
   background: rgba(255, 255, 255, 0.85);
 
+//  @include transition(top, 0.25s);
+
   .hilight {
     color: $orange;
   }
@@ -31,12 +33,6 @@
     padding: 0;
     height: 2px;
   }
-
-  @include media-all-mobile {
-    display:none;
-  }
-
-  @include transition(top, 0.25s);
 
   > a {
     padding: 9px 36px 3px 9px;
@@ -66,7 +62,6 @@
 
     > li {
       float: left;
-
       position: relative;
 
       &.with-menu:hover {
@@ -127,9 +122,8 @@
   .subnav {
     display: block;
     width: 100%;
-    //border-bottom: 2px solid $orange;
     padding-bottom: 16px;
-
+    font-size: 14px;
     ul.header-links {
       margin-left: 170px;
 
@@ -149,6 +143,30 @@
     }
   }
 
+  @include media-all-mobile {
+    img {
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+
+    .subnav {
+      ul.header-links {
+        margin-left: 0px;
+      }
+    }
+
+      @include media-tablet-and-mobile {
+        ul.header-links li a {
+          margin-right: 0px;
+          padding-right: 12px;
+          padding-top: 0px;
+        }
+
+        ul.header-links li:last-child a {
+          padding-right: 0px;
+        }
+      }
+  }
 
  .links {
     margin-top: 12px;
