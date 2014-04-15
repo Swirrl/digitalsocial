@@ -11,7 +11,7 @@
     %li= link_to "Community", community_path, :class => yield(:community_menu_highlighted)
     %li= link_to "Blog", "/blog"
 
-  = render 'shared/search_form', placeholder: 'Search for organisations...', form_destination: '/organisations', input_size: 25
+  = render 'shared/search_form', placeholder: 'Search for organisations...', form_destination: '/organisations', input_size: 22
 
   - if content_for?(:sub_menu)
     .hr.hr2.hr-full{style: 'clear: both; float: left; visibility: hidden;'}

@@ -2,16 +2,12 @@
   - if user_signed_in?
     %a.current-user{href:"#"}
       %i.icon-user
-      #{current_user.first_name}
-      - if current_organisation.present?
-        (#{current_organisation.name})
+      Accounts
       %i.icon-triangle-down
       %i.icon-triangle-up{style:"display:none"}
 
-
     .expanded{style:"display:none"}
       %ul
-
         - if current_user.organisation_resources.many?
           %li.label Current Organisation
           - current_user.organisation_resources.each do |org|
