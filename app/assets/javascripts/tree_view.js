@@ -441,8 +441,6 @@
     ////////////////////////////////////////////////////////////////////////////
 
     this.init = function() {
-      console.log("Initialised Tree View");
-
       var classes = mainElement.attr('class'); //organisation or project
 
       var klass = classes.match(/organisation/) ? 'organisation' : 'project';

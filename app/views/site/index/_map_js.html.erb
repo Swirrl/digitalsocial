@@ -251,7 +251,6 @@
         }
 
         $('a.show-main-panel').click(function(e) {
-          console.log('hide clicked');
           if(DSIMap.isMinimized()) {
               DSIMap.slideOutPanels();
           } else {
@@ -686,7 +685,6 @@
           $('.show-main-panel').removeClass('minimized');
 
           setTimeout(function() {
-              console.log('scheduled');
               $('.show-main-panel icon').removeClass('icon-circled-left');
               $('.show-main-panel icon').addClass('icon-circled-right');
           }, 500);
