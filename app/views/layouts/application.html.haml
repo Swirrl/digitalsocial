@@ -37,9 +37,9 @@
 
     .container
       = render "header"
-      = render "flash", flash: flash
 
       #main.clearfix
+        = render "flash", flash: flash
         = yield
 
       - if show_partners
