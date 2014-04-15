@@ -3,10 +3,6 @@
 
   %ul.header-links
     %li= link_to "About", "/about"
-
-    - PageCategory.all.each do |pc|
-      %li= link_to pc.name, pc
-    -# %li= link_to "Resources", "http://data.digitalsocial.eu/", :class => yield(:resource_menu_highlighted)
     %li= link_to "Resources", resources_path, :class => yield(:resource_menu_highlighted)
     %li= link_to "Community", community_path, :class => yield(:community_menu_highlighted)
     %li= link_to "Blog", "/blog"
