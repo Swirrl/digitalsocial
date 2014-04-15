@@ -19,7 +19,6 @@ class SiteController < ApplicationController
   end
 
   def about
-    @page = Page.where(path: 'about').first
   end
 
   def resources

@@ -115,7 +115,8 @@
         font-style: italic;
 
         &:hover [class^="icon-"], [class*=" icon-"] {
-          color: $link-blue-hover;
+          text-decoration: none;
+          border-bottom: 3px solid $orange;
         }
       }
 
@@ -147,8 +148,6 @@
     }
   }
 
-
-
   .subnav {
     display: block;
     width: 100%;
@@ -178,11 +177,6 @@
   }
 
   @include media-all-mobile {
-    img {
-//      margin-top: 16px;
-//     margin-bottom: 16px;
-  }
-
   .subnav {
     ul.header-links {
       margin-left: 0px;
