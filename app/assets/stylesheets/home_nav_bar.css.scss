@@ -1,17 +1,25 @@
-//.home
-
 .home .nav-bar {
   z-index:9999;
   position: absolute;
   top: 0px;
   width: 100%;
+
+ .search {
+   float: right;
+   margin-right: 120px;
+    form .input {
+      input {
+        border-top: 2px solid #eee;;
+        &:focus {
+        }
+      }
+    }
+  }
 }
 
 .nav-bar {
   padding: 0;
   background: rgba(255, 255, 255, 0.85);
-
-//  @include transition(top, 0.25s);
 
   .hilight {
     color: $orange;
@@ -21,8 +29,24 @@
     margin-bottom: 0;
   }
 
-  .search {
+ .search {
+   float: left;
 
+   @include media-tablet-and-mobile {
+     display: none;
+   }
+
+    form .input {
+      margin-left: 0;
+      margin-top: 8px;
+      input {
+        font-size: 16px;
+        padding: 6px;
+        &:focus {
+          border: 2px solid $orange;
+        }
+      }
+    }
   }
 
   .hr {
@@ -43,6 +67,10 @@
   ul.header-links {
     float: left;
     margin-bottom: 5px;
+
+    @include media-all-mobile {
+      margin-top: 12px;
+    }
 
     li {
       list-style-type: none;
@@ -83,7 +111,7 @@
 
       a {
         display: block;
-        padding: 32px 36px 3px 3px;
+        padding: 16px 36px 3px 3px;
         font-style: italic;
 
         &:hover [class^="icon-"], [class*=" icon-"] {
@@ -99,7 +127,7 @@
         display: none;
         position: absolute;
         background: rgba(255, 255, 255, 0.75);
-        margin-top: 6px;
+        margin-top: 4px;
         list-style-type: none;
         width: 100%;
 
@@ -119,6 +147,8 @@
     }
   }
 
+
+
   .subnav {
     display: block;
     width: 100%;
@@ -127,12 +157,16 @@
     ul.header-links {
       margin-left: 170px;
 
+      @include media-all-mobile {
+        margin-top: 0px;
+      }
+
       > li {
         margin-left: 0px;
 
         a {
           padding-top: 0;
-          padding-top: 14px;
+          padding-top: 0;
         }
       }
 
@@ -145,28 +179,28 @@
 
   @include media-all-mobile {
     img {
-      margin-top: 16px;
-      margin-bottom: 16px;
-    }
-
-    .subnav {
-      ul.header-links {
-        margin-left: 0px;
-      }
-    }
-
-      @include media-tablet-and-mobile {
-        ul.header-links li a {
-          margin-right: 0px;
-          padding-right: 12px;
-          padding-top: 0px;
-        }
-
-        ul.header-links li:last-child a {
-          padding-right: 0px;
-        }
-      }
+//      margin-top: 16px;
+//     margin-bottom: 16px;
   }
+
+  .subnav {
+    ul.header-links {
+      margin-left: 0px;
+    }
+  }
+
+    @include media-tablet-and-mobile {
+      ul.header-links li a {
+        margin-right: 0px;
+        padding-right: 12px;
+        padding-top: 0px;
+      }
+
+      ul.header-links li:last-child a {
+        padding-right: 0px;
+      }
+    }
+}
 
  .links {
     margin-top: 12px;
