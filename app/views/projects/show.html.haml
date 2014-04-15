@@ -8,8 +8,6 @@
       %h1= @project.name
 
   .show-row
-    = render 'shared/share_links'
-
     %figure.tree#tree-vis.project
       %img.spinner{src: '/assets/spinner.gif'}
       = render 'shared/tree_legend', root_name: @project.name

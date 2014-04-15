@@ -10,13 +10,9 @@
       %h1= @organisation.name
 
   .show-row
-    = render 'shared/share_links'
-
-  .show-row
     %figure.tree#tree-vis.organisation
       %img.spinner{src: '/assets/spinner.gif'}
       = render 'shared/tree_legend', :root_name => @organisation.name
-
 
   .show-row.push-down-margin
     .left-column.details

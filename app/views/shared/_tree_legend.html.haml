@@ -1,5 +1,6 @@
 %figcaption.show-row.hide
   %h3= root_name
+  %h4.instructions Click an organisation or activity to explore
   %h4 Organisation Types (size indicates number of activities)
   .left-column
     %ul
@@ -18,4 +19,4 @@
       %li.activity
         Activity
   .right-column
-    %h4.instructions Click an organisation or activity to explore.
+    = render 'shared/share_links'

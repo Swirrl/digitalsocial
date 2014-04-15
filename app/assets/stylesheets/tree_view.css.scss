@@ -1,16 +1,10 @@
 #tree-vis {
 	$popup-background: #fff;
-//<<<<<<< HEAD
 	height: 300px;
 
 	margin: 10px;
 	margin-top: 0px;
 	width: 100%;
-// =======
-//	margin: 10px;
-//
-//>>>>>>> master
-	height: 300px;
 	position: relative;
 
 	img.spinner {
@@ -191,6 +185,10 @@
 			color: #999;
 			font-style: italic;
 			font-size: 16px;
+		}
+
+		h4.instructions {
+			margin-bottom: 12px;
 		}
 
 		&.show-row h3 {
