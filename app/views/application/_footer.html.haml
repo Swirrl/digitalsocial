@@ -5,7 +5,9 @@
   .credits
     %div.copyright
       %span
-        &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
+        &copy;
+        = Time.now.year
+        #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
 
     %div.contact
       %span.twitter

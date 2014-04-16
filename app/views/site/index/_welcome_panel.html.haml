@@ -18,4 +18,6 @@
         Already signed up? #{link_to "Log in", "/users/sign_in"}.
   .panel-foot
     %span.credits
-      &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
+      &copy;
+      = Time.now.year
+      #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
