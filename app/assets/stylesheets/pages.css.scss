@@ -181,8 +181,6 @@
 
 #blog {
 
-  padding: 0 180px 0 0;
-
   .blog-post {
 
     + .blog-post {
@@ -191,7 +189,7 @@
 
     .title {
         @include columns(16);
-        h1 { 
+        h1 {
             @include columns(9);
             margin-left: 0;
 
@@ -199,7 +197,7 @@
                 margin-bottom: 32px;
             }
         }
-        
+
         h2 {
             @include offset(10);
             margin-top: 40px;
@@ -243,22 +241,22 @@
 
     .blog-meta {
         @include offset(10);
-        
+
         margin-left: -20px;
         img {
             margin: 6px 0 4px;
             @include border-radius(50%);
         }
-        
+
         > p {
             margin-bottom: 0;
             line-height: 28px;
         }
-            
+
         .author {
             font-weight: bold;
         }
-        
+
         .author-role {
             color: #ccc;
             font-style: italic;
