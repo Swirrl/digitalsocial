@@ -53,12 +53,6 @@
         .credits
           &copy; 2013 #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
 
-    .mobile-small-info{style:'display:none'}
-      .text
-        %a.show-info-mobile{href:'#'}
-          %icon.icon-circled-up
-          Show more info
-
     .mobile-filter
       Visible organisations are filtered.
       = link_to "Reset filter", "/"
@@ -66,11 +60,22 @@
     %span.home
       = render 'shared/nav_bar'
 
-
     %a.show-main-panel{href:'#', title: 'Toggle panel visibility'}
       %icon.icon-circled-right
 
     = render 'site/index/main_panel'
+
+  .frame.legend-panel
+    %a.toggle-bar{href: '#'}
+      Hide legend
+    .legend-inner
+      %ul.legend
+        %li.academia-and-research Academia and Research
+        %li.business Business
+        %li.government-and-public-sector Government and Public Sector
+        %li.grass-roots-organisation-or-community-network Grass Roots Organisation or Community Network
+        %li.social-enterprise-charity-or-foundation Social Enterprise, Charity or Foundation
+        %li.undefined Unknown
 
   .active-organisation
     %p Currently viewing network of

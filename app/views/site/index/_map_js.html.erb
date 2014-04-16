@@ -432,17 +432,17 @@
 
       toggleLink: function(ev) {
           if(DSIMap.isWelcomePanel()) {
-              $('a.toggle-bar .welcome-link').removeClass('show');
-              $('a.toggle-bar .edit-link').addClass('show');
+              $('.main-panel a.toggle-bar .welcome-link').removeClass('show');
+              $('.main-panel a.toggle-bar .edit-link').addClass('show');
           } else {
-              $('a.toggle-bar .welcome-link').addClass('show');
-              $('a.toggle-bar .edit-link').removeClass('show');
+              $('.main-panel a.toggle-bar .welcome-link').addClass('show');
+              $('.main-panel a.toggle-bar .edit-link').removeClass('show');
           }
       },
 
       setLoaded: function(count) {
           var bar = $('<span title="Switch panel">Displaying<span class="org-count-value"> ' + count + ' </span>organisations </span><span class="edit-link">(edit filters)</span><span class="welcome-link">(get on the map)</span>');
-          $('a.toggle-bar').html(bar).on('click', DSIMap.togglePanel);
+          $('.main-panel a.toggle-bar').html(bar).on('click', DSIMap.togglePanel);
           DSIMap.toggleLink();
       },
 
@@ -450,12 +450,12 @@
           $(id).addClass('selected');
           if(id=='#filter_panel') {
               $('#welcome_panel').removeClass('selected');
-              $('#a.toggle-bar .edit-link').removeClass('show');
-              $('#a.toggle-bar .welcome-link').addClass('show');
+              $('a.toggle-bar .edit-link').removeClass('show');
+              $('a.toggle-bar .welcome-link').addClass('show');
           } else {
               $('#filter_panel').removeClass('selected');
-              $('#a.toggle-bar .welcome-link').removeClass('show');
-              $('#a.toggle-bar .edit-link').addClass('show');
+              $('a.toggle-bar .welcome-link').removeClass('show');
+              $('a.toggle-bar .edit-link').addClass('show');
           }
       },
 

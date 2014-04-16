@@ -1,15 +1,33 @@
+.frame {
+  background: rgba(255, 255, 255, 0.75);
+  z-index:9999;
+  position: absolute;
+
+  a.toggle-bar {
+    display: block;
+    background: $orange;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: italic;
+    padding-top: 8px;
+    padding-bottom: 0px;
+    color: #fff;
+    text-align: center;
+    height: 22px;
+    cursor: pointer;
+  }
+
+}
+
 .home {
   $navbar-height: 55px;
   $main-panel-width: 350px;
 
   .main-panel {
-    z-index:9999;
     font-size: 16px;
     width: $main-panel-width;
     top: $navbar-height;
     right: 0px;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.75);
 
     @include transition(right, 0.5s);
 
@@ -22,10 +40,7 @@
     }
 
     .main-panel-inner {
-      //border-left: 2px solid rgba(208,125, 1, 0.8);
-        border-left: 2px solid rgba(243,146, 0, 0.8);
-      //border-left: 1px solid rgba(150,150,150, 0.5);
-      //border-right: 1px solid rgba(150,150,150, 0.5);
+      border-left: 2px solid rgba(243,146, 0, 0.8);
     }
 
     .panel:not(.selected) {
@@ -33,18 +48,6 @@
     }
 
     a.toggle-bar {
-      display: block;
-      background: $orange;
-      font-size: 14px;
-      font-weight: normal;
-      font-style: italic;
-      padding-top: 8px;
-      padding-bottom: 0px;
-      color: #fff;
-      text-align: center;
-      height: 22px;
-      cursor: pointer;
-
       .welcome-link, .edit-link {
         display: none;
 
