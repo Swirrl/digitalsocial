@@ -25,7 +25,10 @@ class Site
   def round_lat_lng
     # this is enough precision.
     self.lat = self.lat.to_f.round(6)
-    self.lng = self.lng.to_f.round(6)
+    lng = self.lng.to_f.round(6)
+
+    # Fix overflowing longitudes
+    self.lng = (lng + 180) % 360 - 180
   end
 
 end
