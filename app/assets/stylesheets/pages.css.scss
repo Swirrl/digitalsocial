@@ -192,7 +192,7 @@
         h1 {
             @include columns(9);
             margin-left: 0;
-
+            margin-top: 0;
             @include media-all-mobile {
                 margin-bottom: 32px;
             }
@@ -208,15 +208,11 @@
             }
         }
 
-        @include media-all-mobile {
-            margin-top: 32px;
-        }
-
         p {
           font-size: 36px;
-          margin-bottom: -18px;
           font-weight: 300;
-          margin-top: 36px;
+          margin-top: 24px;
+          margin-bottom: 24px;
           line-height: 1;
           font-style: italic;
           color: #ccc;
