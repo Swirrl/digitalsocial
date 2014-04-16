@@ -65,9 +65,9 @@
 
     = render 'site/index/main_panel'
 
-  .frame.legend-panel
-    %a.toggle-bar{href: '#'}
-      Hide legend
+  .frame.legend-panel.minimized
+    %a.toggle-bar{href: '#', title: 'Toggle panel visibility'}
+      Show legend
     .legend-inner
       %ul.legend
         %li.academia-and-research Academia and Research

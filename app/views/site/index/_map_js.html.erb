@@ -259,6 +259,17 @@
           e.preventDefault();
         });
 
+        $('.legend-panel a.toggle-bar').click(function(e) {
+            var $legend = $('.legend-panel');
+            if($legend.is('.minimized')) {
+                $legend.find('a.toggle-bar').html('Hide legend');
+                $legend.removeClass('minimized');
+            } else {
+                $legend.find('a.toggle-bar').html('Show legend');
+                $legend.addClass('minimized');
+            }
+        });
+
         $('a.hide-panel').click(function(e) {
           DSIMap.slideOutPanels();
           e.preventDefault();

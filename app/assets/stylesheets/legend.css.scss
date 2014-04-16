@@ -103,6 +103,15 @@ ul.legend {
   border-left: 2px solid $orange;
   border-right: 2px solid $orange;
 
+  @include transition(bottom, 0.5s);
+  @include media-all-mobile {
+    display:none !important;
+  }
+
+  &.minimized {
+    bottom: -180px;
+  }
+
   a.toggle-bar {
     height: 14px;
     padding: 4px;
