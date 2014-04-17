@@ -46,6 +46,7 @@ class OrganisationsController < ApplicationController
 
   def show
     @organisation = Organisation.find( Organisation.slug_to_uri(params[:id]) )
+    @title = @organisation.name
   end
 
   def unjoin
@@ -69,7 +70,7 @@ class OrganisationsController < ApplicationController
     else
       @organisations = Organisation.order_by_name
     end
-  
+
     respond_to do |format|
       format.json do
         render json: {

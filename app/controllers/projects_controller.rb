@@ -2,7 +2,7 @@
 class ProjectsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:index, :show]
-  before_filter :find_project, only: [:invite, :create_organisation_invite, :edit, :update, 
+  before_filter :find_project, only: [:invite, :create_organisation_invite, :edit, :update,
                                       #:create_new_org_invite, :create_existing_org_invite,
                                       :request_to_join, :create_request, :new_invite, :unjoin]
   before_filter :set_project_invite, only: [:create_invite]
@@ -39,7 +39,7 @@ class ProjectsController < ApplicationController
     else
       @projects = Project.order_by_name
     end
-  
+
     respond_to do |format|
       format.json do
         render json: {
@@ -65,6 +65,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find( Project.slug_to_uri(params[:id]) )
+    @title = @project.name
   end
 
   def create
@@ -150,7 +151,7 @@ class ProjectsController < ApplicationController
   end
 
   private
-  
+
   # Actually invite an existing org to a project
   # POST /projects/:id/create_existing_org_invite?organisation_id=blah
   def create_existing_org_invite
@@ -161,7 +162,7 @@ class ProjectsController < ApplicationController
                          :project_uri => @project.uri,
                          :invited_organisation_uri => org_uri,
                          :invited_by_user => current_user
-    
+
     @project_invite = ProjectInvitePresenter.new invite_params
 
     if @project_invite.save
@@ -170,7 +171,7 @@ class ProjectsController < ApplicationController
       render_invited_error
     end
   end
-  
+
   # Actually invite a new org to a project
   # posting a form.
   def create_new_org_invite
@@ -188,7 +189,7 @@ class ProjectsController < ApplicationController
       render_invited_error
     end
   end
-  
+
   def find_project
     @project = Project.find(Project.slug_to_uri(params[:id]))
   end
@@ -231,5 +232,5 @@ class ProjectsController < ApplicationController
       render :invite
     end
   end
-  
+
 end
