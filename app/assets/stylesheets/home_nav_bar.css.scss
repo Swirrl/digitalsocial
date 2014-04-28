@@ -1,17 +1,28 @@
-.home .nav-bar {
-  z-index:9999;
-  position: absolute;
-  top: 0px;
-  width: 100%;
+.home {
+  .nav-bar {
+    z-index:9999;
+    position: absolute;
+    top: 0px;
+    width: 100%;
 
- .search {
-   float: right;
-   margin-right: 144px;
-    form .input {
-      input {
-        border-top: 2px solid #eee;;
-        &:focus {
+    .search {
+      float: right;
+      margin-right: 144px;
+      
+      form .input {
+        input {
+          border-top: 2px solid #eee;
         }
+      }
+    }
+  }
+
+  @include media-tablet-and-mobile {
+    ul.header-links {
+      margin-left: 10px;
+
+      li a {
+        padding-top: 0;
       }
     }
   }
@@ -67,10 +78,6 @@
   ul.header-links {
     float: left;
     margin-bottom: 5px;
-
-    @include media-all-mobile {
-      margin-top: 12px;
-    }
 
     li {
       list-style-type: none;
@@ -184,10 +191,11 @@
   }
 
     @include media-tablet-and-mobile {
+
       ul.header-links li a {
         margin-right: 0px;
         padding-right: 12px;
-        padding-top: 0px;
+        padding-top: 12px;
       }
 
       ul.header-links li:last-child a {
