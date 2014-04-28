@@ -53,7 +53,7 @@
       }
 
       .details {
-        float: left;
+      /*  float: left; */
         line-height: 1.5;
         max-width: 840px;
         margin-left: 82px;
@@ -62,7 +62,7 @@
           font-size: 24px;
           font-style: italic;
 
-          width: 840px;
+        /*  width: 840px; */
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
