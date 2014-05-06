@@ -14,11 +14,15 @@
     =# jquery ui style for tagit.
     %link{rel:"stylesheet", href:"//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css"}
 
-    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
-    %script{src: "//code.jquery.com/ui/1.10.3/jquery-ui.js"}
+    = javascript_include_tag "jquery1.11.1"
+    = javascript_include_tag "jquery-ui-1.10.3"
+    = javascript_include_tag "leaflet-0.6.4"
+    = javascript_include_tag "mapbox-standalone-1.3.1"
 
-    %script{src: "//cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"}
-    %script{src: "//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.js"}
+    /%script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
+    /%script{src: "//code.jquery.com/ui/1.10.3/jquery-ui.js"}
+    /%script{src: "//cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"}
+    /%script{src: "//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.standalone.js"}
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -33,6 +37,8 @@
     /[if lte IE 8]
       #out-of-spec
         Sorry - your browser is not supported. Some elements may not function or display as intended. Please upgrade to at least IE9, or a recent version of Chrome/Safari/Firefox.
+
+    = render 'user_info'
 
     #home-map
 
@@ -57,6 +63,7 @@
       Visible organisations are filtered.
       = link_to "Reset filter", "/"
 
+
     %span.home
       = render 'shared/nav_bar'
 
@@ -67,7 +74,7 @@
 
   .frame.legend-panel.minimized
     %a.toggle-bar{href: '#', title: 'Toggle panel visibility'}
-      Show legend
+      Show key
     .legend-inner
       %ul.legend
         %li.academia-and-research Academia and Research

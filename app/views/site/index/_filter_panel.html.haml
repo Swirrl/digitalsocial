@@ -53,12 +53,14 @@
       = hidden_field_tag :selected_panel, 'filter_panel', id: 'selected-panel'
 
   .filter-section.filter-button-section
-    = submit_tag "Update map", class: 'button filter-button', disabled: 'disabled'
+    = submit_tag "Apply filters", class: 'button filter-button', disabled: 'disabled'
 
 .filter-section.filter-share-section
   %p
     %a.show-url{ href: '#'}
       %span.icon-link
-      Show link for current map
+      Share the current map
 
   = text_field_tag :url, url_for(:only_path => false)
+
+= render 'site/index/toggle_links'

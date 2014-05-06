@@ -9,17 +9,12 @@ class SiteController < ApplicationController
     render layout: false
   end
 
-  def about
-    #raise Tripod::Errors::Timeout.new
-    #foo trigger an error
-  end
-
   def events
-    @page = Page.where(path: 'events').first
+    #@page = Page.where(path: 'events').first
   end
 
   def about
-    @page = Page.where(path: 'about').first
+    @page = Page.where(_slugs: ["about"]).first
   end
 
   def resources

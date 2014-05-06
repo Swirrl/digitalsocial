@@ -12,7 +12,7 @@
 
       defaultCenter: [49, 12],
       defaultZoom: 5,
-      markerSize: 8,
+      markerSize: 6,
       minLineWeight: 1,
       maxLineWeight: 2,
       minLineOpacity: 0.1,
@@ -262,10 +262,10 @@
         $('.legend-panel a.toggle-bar').click(function(e) {
             var $legend = $('.legend-panel');
             if($legend.is('.minimized')) {
-                $legend.find('a.toggle-bar').html('Hide legend');
+                $legend.find('a.toggle-bar').html('Hide key');
                 $legend.removeClass('minimized');
             } else {
-                $legend.find('a.toggle-bar').html('Show legend');
+                $legend.find('a.toggle-bar').html('Show key');
                 $legend.addClass('minimized');
             }
         });
@@ -440,17 +440,20 @@
 
       toggleLink: function(ev) {
           if(DSIMap.isWelcomePanel()) {
-              $('.main-panel a.toggle-bar .welcome-link').removeClass('show');
-              $('.main-panel a.toggle-bar .edit-link').addClass('show');
+              $('.main-panel .welcome-link').removeClass('show');
+              $('.main-panel .edit-link').addClass('show');
           } else {
-              $('.main-panel a.toggle-bar .welcome-link').addClass('show');
-              $('.main-panel a.toggle-bar .edit-link').removeClass('show');
+              $('.main-panel .welcome-link').addClass('show');
+              $('.main-panel .edit-link').removeClass('show');
           }
       },
 
       setLoaded: function(count) {
-          var bar = $('<span title="Switch panel">Displaying<span class="org-count-value"> ' + count + ' </span>organisations </span><span class="edit-link">(edit filters)</span><span class="welcome-link">(get on the map)</span>');
-          $('.main-panel a.toggle-bar').html(bar).on('click', DSIMap.togglePanel);
+          var orgCounts = $('<span>Displaying<span class="org-count-value"> ' + count + ' </span>organisations </span>');
+
+          $('.main-panel a.toggle-links').show().on('click', DSIMap.togglePanel);
+          $('.main-panel span.org-count-bar').html(orgCounts);
+
           DSIMap.toggleLink();
       },
 
@@ -458,12 +461,12 @@
           $(id).addClass('selected');
           if(id=='#filter_panel') {
               $('#welcome_panel').removeClass('selected');
-              $('a.toggle-bar .edit-link').removeClass('show');
-              $('a.toggle-bar .welcome-link').addClass('show');
+              $('.main-panel .edit-link').removeClass('show');
+              $('.main-panel .welcome-link').addClass('show');
           } else {
               $('#filter_panel').removeClass('selected');
-              $('a.toggle-bar .welcome-link').removeClass('show');
-              $('a.toggle-bar .edit-link').addClass('show');
+              $('.main-panel .welcome-link').removeClass('show');
+              $('.main-panel .edit-link').addClass('show');
           }
       },
 

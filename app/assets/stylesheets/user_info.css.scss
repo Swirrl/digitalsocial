@@ -78,3 +78,13 @@
   }
 
 }
+
+.home {
+  #user-info {
+    z-index:99999;
+    right:10px;
+    @include media-all-mobile {
+      display:none;
+    }
+  }
+}

@@ -3,18 +3,21 @@
   z-index:9999;
   position: absolute;
 
-  a.toggle-bar {
+  span.org-count-bar {
     display: block;
     background: $orange;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: normal;
     font-style: italic;
     padding-top: 8px;
     padding-bottom: 0px;
     color: #fff;
     text-align: center;
-    height: 22px;
-    cursor: pointer;
+    height: 28px;
+
+    .org-count-value {
+      font-weight:bold;
+    }
   }
 
 }
@@ -47,7 +50,11 @@
       display: none;
     }
 
-    a.toggle-bar {
+    a.toggle-links {
+      display:block;
+      text-align:center;
+      line-height: 1.5;
+      padding-bottom: 8px;
       .welcome-link, .edit-link {
         display: none;
 
@@ -69,9 +76,9 @@
   .panel-foot {
     color: $orange;
     font-size: 14px;
-    margin-left: 12px;
+    margin-left: 0px;
     margin-top: 12px;
-    padding-bottom: 12px;
+    padding-bottom: 18px;
   }
 
   #filter_panel .panel-foot {

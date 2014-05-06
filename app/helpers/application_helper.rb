@@ -204,7 +204,13 @@ module ApplicationHelper
                  :title => 'Organisations',
                  :target => organisations_path,
                  :hilight => 'organisations'
-                }]}
+                },
+                {
+                 :title => 'Events',
+                 :target => '/events',
+                 :hilight => 'events'
+                }
+                ]}
   end
 
   def resources_menu
@@ -222,10 +228,15 @@ module ApplicationHelper
                 #  :hilight => ''
                 # },
                 {
-                 :title => 'Data',
+                 :title => 'Open Data',
                  :target => 'http://data.digitalsocial.eu/',
                  :hilight => 'data'
-                }
+               },
+               {
+                :title => 'Case Studies',
+                :target => '/pages/case-studies',
+                :hilight => 'case-studies'
+               }
                 # ,{
                 #  :title => 'Related work',
                 #  :target => '#',

@@ -1,23 +1,17 @@
 .info{style: 'width 100%;'}
   .text{style: 'width 100%;'}
     :markdown
-      We're setting up a network of organisations that use the Internet for social good.
-
-    %ul
-      %li Be part of a growing community of Digital Social Innovation
-      %li Inform better policy across the EU
-      %li Showcase your work and network to potential funders and investors
+      We are setting up a network of organisations that use the internet for social good.
 
     :markdown
-      It just takes a few minutes to get started. [Read More](/about).
+      This could range from running a social tech incubator or organising events to delivering a service.
+
+      You can join the network by clicking 'get on the map’ below (it only takes a couple of minutes). [Read more about the project](/about)
 
     .cta.clearfix
       .put-on-map
         = link_to "Get on the map", [:organisations, :build, :new_user], class: 'button button-front-page clear'
-      .log-in
-        Already signed up? #{link_to "Log in", "/users/sign_in"}.
-  .panel-foot
-    %span.credits
-      &copy;
-      = Time.now.year
-      #{link_to 'Digital Social Innovation', '/about'}. Built by #{link_to 'Swirrl', 'http://swirrl.com'}.
+    %br
+    %br
+
+    = render 'site/index/toggle_links'

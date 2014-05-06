@@ -5,7 +5,7 @@
       :markdown
         The title of the page. The URL of the page will be automatically set from the title.
     
-    = f.input :page_category_id, as: :select, collection: PageCategory.all, include_blank: false
+    = f.input :page_category_id, as: :select, collection: PageCategory.all, include_blank: true
     = render layout: 'admin/help' do
       :markdown
         The category of the page. The category will also be included in the page URL e.g. */case-studies/this-is-a-great-case-study*

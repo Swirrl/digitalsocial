@@ -113,8 +113,19 @@ ul.legend {
   }
 
   a.toggle-bar {
-    height: 14px;
+    display: block;
+    background: $orange;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: italic;
     padding: 4px;
+    color: #fff;
+    text-align: center;
+    height: 14px;
+
+    .org-count-value {
+      font-weight:bold;
+    }
   }
 
   ul.legend {
