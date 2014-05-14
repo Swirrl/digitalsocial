@@ -11,7 +11,9 @@
 
       form .input {
         input {
-          border-top: 2px solid #eee;
+          background: transparent;
+          border: 2px solid rgba(0,0,0,0.2);
+          color: #fff;
         }
       }
     }
@@ -30,7 +32,7 @@
 
 .nav-bar {
   padding: 0;
-  background: rgba(255, 255, 255, 0.85);
+  background: $new-dark-blue;
 
   .hilight {
     color: $orange;
@@ -54,7 +56,7 @@
         font-size: 16px;
         padding: 6px;
         &:focus {
-          border: 2px solid $orange;
+          border: 2px solid rgba(0,0,0,0.4);
         }
       }
     }
@@ -120,6 +122,7 @@
         display: block;
         padding: 20px 36px 3px 3px;
         font-style: italic;
+        text-decoration: none;
 
         &:hover [class^="icon-"], [class*=" icon-"] {
           text-decoration: none;

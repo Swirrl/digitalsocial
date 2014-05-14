@@ -46,7 +46,7 @@ form {
         margin-top:-30px;
         margin-bottom:40px;
       }
-      color: #777;
+      color: rgba(255,255,255,0.7);
       font-style: italic;
     }
   }
@@ -104,20 +104,20 @@ form {
       border-top: 2px solid #d5d5d5;
 
       &:focus {
-        border: 2px solid $orange;
-        background: rgba(243, 146, 0, 0.1);
+        border: 2px solid #000;
+        //background: rgba(243, 146, 0, 0.1);
 
         &::-webkit-input-placeholder { /* WebKit browsers */
-          color: #fad399;
+          color: rgba(255,255,255,0.5);
         }
         &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-          color: #fad399;
+          color: rgba(255,255,255,0.5);
         }
         &::-moz-placeholder { /* Mozilla Firefox 19+ */
-          color: #fad399;
+          color: rgba(255,255,255,0.5);
         }
         &:-ms-input-placeholder { /* Internet Explorer 10+ */
-          color: #fad399;
+          color: rgba(255,255,255,0.5);
         }
       }
 
@@ -176,14 +176,14 @@ p.suggested-tags {
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
-  color: #aaa;
+  color: rgba(255,255,255,0.5);
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color: #aaa;
+  color: rgba(255,255,255,0.5);
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color: #aaa;
+  color: rgba(255,255,255,0.5);
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-  color: #aaa;
+  color: rgba(255,255,255,0.5);
 }

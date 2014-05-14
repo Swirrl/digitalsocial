@@ -1,11 +1,5 @@
 nav {
-  a {
-    color: $orange;
-
-    &:hover {
-      color: $orange;
-    }
-  }
+  
 }
 
 #partners {
@@ -151,7 +145,6 @@ nav {
 footer {
   @extend .clearfix;
   padding: 36px 0;
-  color: $orange;
   font-style: italic;
 
   &.clearfix {
@@ -163,7 +156,6 @@ footer {
     margin-left: 10px;
     a {
       font-weight: 600;
-      color: $orange;
     }
   }
 

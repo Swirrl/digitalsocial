@@ -100,8 +100,8 @@ ul.legend {
   left: 12px;
   width: 330px;
 
-  border-left: 2px solid $orange;
-  border-right: 2px solid $orange;
+  border-left: 2px solid $new-green;
+  border-right: 2px solid $new-green;
 
   @include transition(bottom, 0.5s);
   @include media-all-mobile {
@@ -114,14 +114,15 @@ ul.legend {
 
   a.toggle-bar {
     display: block;
-    background: $orange;
+    background: $new-green;
     font-size: 14px;
     font-weight: normal;
     font-style: italic;
     padding: 4px;
-    color: #fff;
+    color: #000;
     text-align: center;
     height: 14px;
+    text-decoration: none;
 
     .org-count-value {
       font-weight:bold;

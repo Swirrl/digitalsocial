@@ -50,7 +50,7 @@ h1 {
 
     p.label {
       margin-bottom: 3px;
-      color: #999;
+      color: rgba(255,255,255,0.5);
       font-style: italic;
       font-size: 16px;
     }
@@ -65,7 +65,7 @@ h1 {
   }
 
   .hr + h2 {
-    color: $orange;
+    color: #fff;
     font-style: italic;
     font-size: 36px;
   }
@@ -77,13 +77,11 @@ h1 {
 
       li {
         padding: 12px;
-        background: #f0f0f0;
+        background: rgba(0,0,0,0.1);
         margin-bottom: 6px;
         font-size: 20px;
-        color: #999;
 
         em {
-          color: #555;
           font-weight: normal;
         }
 
@@ -112,14 +110,14 @@ h1 {
           i {
             width: 20px;
             font-size: 30px;
-            color: $orange;
+            color: #fff;
             margin-right: 0;
             vertical-align: middle;
           }
 
           span.text {
             font-style: italic;
-            color: #999;
+            color: rgba(255,255,255,0.5);
             font-size: 18px;
             margin-left: 9px;
           }
@@ -198,9 +196,9 @@ h1 {
 
   .cta {
     padding: 18px;
-    background: $light-grey; //#ffffe0
+    background: rgba(0,0,0,0.1);
     text-align: center;
-    color: #7f7f75;
+    color: #fff;
     font-size: 20px;
     font-style: italic;
     margin-left: 10px;

@@ -1,11 +1,11 @@
 .frame {
-  background: rgba(255, 255, 255, 0.75);
+  background: $new-dark-blue;
   z-index:9999;
   position: absolute;
 
   span.org-count-bar {
     display: block;
-    background: $orange;
+    //background: $orange;
     font-size: 18px;
     font-weight: normal;
     font-style: italic;
@@ -43,7 +43,7 @@
     }
 
     .main-panel-inner {
-      border-left: 2px solid rgba(243,146, 0, 0.8);
+      //border-left: 2px solid rgba(243,146, 0, 0.8);
     }
 
     .panel:not(.selected) {
@@ -88,9 +88,9 @@
   .show-main-panel {
     $right-border: 2px;
     font-size: 36px;
-    background: $orange;
+    background: $new-dark-blue;
     color: white;
-    border: 2px solid rgba(243,146, 0, 0.8);
+    border: 2px solid $new-dark-blue;
     //border: 2px solid rgba(208,125, 1, 1);
     border-right: $right-border solid rgba(255,255,255, 1);
     margin: 0;
@@ -113,7 +113,7 @@
     &.minimized {
       right: -$right-border;
       opacity: 1;
-      background: $orange;
+      background: $new-dark-blue;
       color: white;
     }
 

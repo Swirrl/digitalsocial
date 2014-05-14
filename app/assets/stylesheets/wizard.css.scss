@@ -102,13 +102,13 @@ ol.breadcrumbs {
   li {
     span {
       color: #fff;
-      background: #bbb;
+      background: #467db6;
 
       &:before {
-        border-left-color: #fff; /* Gaps between crumbs are page background colour */
+        border-left-color: $new-blue; /* Gaps between crumbs are page background colour */
       }
 
-      &:after { border-left-color: #bbb; }
+      &:after { border-left-color: #467db6; }
 
       &:hover {
         //background: #000 !important; /* Default hover */
@@ -121,10 +121,11 @@ ol.breadcrumbs {
 
     &.active {
       span {
-        background: $orange;
-        &:after { border-left-color: $orange; }
+        background: #fff;
+        &:after { border-left-color: #fff; }
         font-style: normal;
         font-weight: normal;
+        color: #000;
       }
     }
 
@@ -142,7 +143,6 @@ ol.breadcrumbs {
   margin-left: 0px;
 
   h3 {
-    color: $orange;
     font-weight: 500;
     font-style: italic;
     font-size: 36px;

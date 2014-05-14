@@ -1,6 +1,6 @@
 .button {
-  background: $orange;
-  color: #fff;
+  background: $new-green;
+  color: #000;
   padding: 18px 30px;
   border: 0;
   outline: 0;
@@ -11,33 +11,13 @@
   //border-bottom: 5px solid $orange-shadow;
   font-weight: 600;
   display: inline-block;
-  @include border-radius(3px);
   @include transition(all, 0.15s);
+  text-decoration: none;
 
-  &:hover {
-    background: $orange-hover;
-    color: #fff;
-    text-decoration: none;
-  }
 
-  &.button-black {
-    background: $black;
-    color: white;
-
-    &:hover {
-      background: $black;
-      color: $orange;
-    }
-  }
 
   &.button-front-page {
-    background: $orange-shadow;
-    color: white;
-
-    &:hover {
-      background: $orange;
-      color: white;
-    }
+    background: $new-green;
   }
 
   &.button-red {

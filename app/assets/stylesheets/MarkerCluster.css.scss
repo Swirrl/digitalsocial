@@ -1,4 +1,4 @@
-$cluster-color: #777;
+$cluster-color: #28537f;
 $faded-cluster-color: #ccc;
 $cluster-border-color: #ccc;
 
@@ -101,7 +101,8 @@ $cluster-border-color: #ccc;
   color: #fff;
 
   &:hover, &.hover {
-    background: #F39200;
+    background: #b9f53b;
+    color: #000;
   }
 
   &.faded {

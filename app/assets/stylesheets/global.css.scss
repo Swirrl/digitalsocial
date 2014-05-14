@@ -15,8 +15,8 @@ input[type="submit"] {
 body {
   font-family: $chaparral;
   font-size: 18px;
-  color: $black;
-  background: #fff; // url(image-path("backgrounds/bg.png")) repeat-y center top;
+  color: #fff;
+  background: $new-blue; // url(image-path("backgrounds/bg.png")) repeat-y center top;
   padding-bottom: 60px;
 }
 
@@ -45,13 +45,11 @@ body {
 }
 
 a {
-  text-decoration: none;
-  color: $link-burnt-orange;
+  color: #fff;
   @include transition(all, 0.1s);
 
   &:hover {
-    color: $link-blue-hover;
-    text-decoration: underline;
+    text-decoration: none;
   }
 }
 
@@ -73,7 +71,7 @@ ol, ul {
 
 h1 {
   font-size: 48px;
-  color: $orange;
+  //color: #fff;
   font-style: italic;
   margin-bottom: 32px;
   margin-top: 32px;
@@ -142,7 +140,7 @@ h1 + h2 {
 
 .hr {
   display: block;
-  background-color: $orange;
+  background-color: rgba(0,0,0,0.2);
   margin-left: 0px;
   @include media-all-mobile {
       margin-left: 0px;

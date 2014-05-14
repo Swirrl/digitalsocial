@@ -15,6 +15,9 @@
     color: $black;
     font-style: italic;
     text-align: center;
+    text-decoration: none;
+    background: $new-green;
+
     @include media-all-mobile {
       margin-bottom: 12px;
     }
