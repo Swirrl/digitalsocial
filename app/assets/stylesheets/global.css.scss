@@ -96,13 +96,13 @@ h1 + h2 {
 }
 
 ::selection {
-  background: $orange;
-  color: #fff;
+  background: $new-green;
+  color: #000;
 }
 
 ::-moz-selection {
-  background: $orange;
-  color: #fff;
+  background: $new-green;
+  color: #000;
 }
 
 .container {
@@ -156,11 +156,11 @@ h1 + h2 {
 }
 
 .hr3 {
-  height: 6px;
+  height: 5px;
 }
 
 .hr4 {
-  height: 8px;
+  height: 6px;
 }
 
 .leaflet-control-attribution {

@@ -1,6 +1,6 @@
 .home {
   .nav-bar {
-    z-index:9999;
+    z-index:10000;
     position: absolute;
     top: 0px;
     width: 100%;
@@ -32,10 +32,10 @@
 
 .nav-bar {
   padding: 0;
-  background: $new-dark-blue;
+  background: $new-blue;
 
   .hilight {
-    color: $orange;
+    color: $new-green;
   }
 
  .input {

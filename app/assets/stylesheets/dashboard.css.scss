@@ -12,7 +12,6 @@
   }
 
   h2 {
-    color: #999;
     font-style: italic;
     font-weight: 500;
     margin-bottom: 48px;
@@ -46,20 +45,16 @@
       @include transition(opacity, 0.1s);
 
       a {
-        color: $orange;
-
-        &:hover {
-          text-decoration: none;
-        }
+        text-decoration: none;
       }
 
       &:hover {
         opacity: 1;
-        border-bottom: 3px solid $orange;
+        border-bottom: 3px solid #fff;
       }
 
       &.active {
-        border-bottom: 3px solid $orange;
+        border-bottom: 3px solid #fff;
         font-weight: 600;
         opacity: 1;
       }
@@ -96,7 +91,6 @@
     margin-bottom: 60px;
 
     h3 {
-      color: $orange;
       font-size: 26px;
       font-weight: 300;
     }
@@ -108,7 +102,7 @@
 
     li {
       padding: 24px;
-      background: #f0f0f0;
+      background: rgba(0, 0, 0, 0.1);
       list-style-type: none;
       margin-bottom: 18px;
       display: block;
@@ -117,15 +111,6 @@
 
     a {
       font-weight: 600;
-      color: $link-burnt-orange;
-
-      &:hover {
-        color: $link-blue-hover;
-      }
-    }
-
-   .button, .button:hover {
-      color: #fff;
     }
 
   }
@@ -170,7 +155,7 @@
 
           .bar {
             @include border-radius(9px);
-            background: #ccc;
+            background: rgba(0,0,0,0.2);
             width: 100%;
             height: 18px;
             position: relative;
@@ -180,19 +165,17 @@
 
           .fill {
             height: 18px;
-            background: $orange;
+            background: #fff;
             width: 40%;
             @include border-radius(9px);
             text-align: right;
             line-height: 1;
 
             span.text {
-              color: white;
+              color: $new-blue;
               margin-right: 6px;
               font-size: 14px;
               line-height: 18px;
-              font-style: italic;
-              opacity: 0.75;
             }
           }
 
@@ -215,7 +198,7 @@
             i {
               width: 21px;
               font-size: 32px;
-              color: $orange;
+              color: #fff;
               margin-right: 0;
               vertical-align: middle;
             }
@@ -224,7 +207,7 @@
 
           span.text {
             font-style: italic;
-            color: #999;
+            color: rgba(255,255,255,0.7);
           }
 
         }
@@ -316,7 +299,7 @@
     }
 
     .sign-in {
-      color: #999;
+      color: rgba(255,255,255,0.7);
     }
 
     .button {
@@ -387,7 +370,7 @@
         }
 
         .address {
-          color: #999;
+          color: rgba(255,255,255,0.7);
           margin-bottom: 6px;
           float: left;
           width: 308px;
@@ -422,7 +405,7 @@
             i {
               width: 30px;
               font-size: 30px;
-              color: $orange;
+              color: #fff;
               margin-right: 0;
               vertical-align: middle;
             }
@@ -431,7 +414,7 @@
 
           span.text {
             font-style: italic;
-            color: #999;
+            color: rgba(255,255,255,0.7);
           }
 
           p + p {
@@ -462,7 +445,7 @@
 
   .empty {
     font-style: italic;
-    color: #999;
+    color: #fff;
     margin-bottom: 36px;
   }
 
@@ -486,8 +469,7 @@
   .user-account {
     @extend .row;
     @include columns(16);
-    background: #f9f9f9;
-
+    background: rgba(0,0,0,0.1);
 
     form {
       margin: 36px;
@@ -500,7 +482,6 @@
 
     h2 {
       margin: 36px 0 0 36px;
-      color: #f7b757;
     }
     margin-top: 36px !important;;
   }

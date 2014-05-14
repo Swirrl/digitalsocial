@@ -100,6 +100,7 @@
               top: -6px;
               margin-left: -9px;
               margin-bottom: -6px;
+              @include border-radius(50%);
             }
           }
 

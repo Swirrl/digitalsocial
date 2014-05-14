@@ -1,7 +1,7 @@
 .tree {
   figcaption {
-    border-bottom: 4px solid $orange;
-    padding-bottom: 12px;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 24px;
     margin-top: 0px;
 
     h3, h4 {
@@ -11,7 +11,7 @@
     }
 
     h4 {
-      color: #999;
+      color: rgba(255,255,255,0.5);
       font-style: italic;
       font-size: 16px;
     }
@@ -54,11 +54,11 @@ ul.legend {
 
   li.activity:before {
     content: "\0000a0";
-    border: 2px solid $light-grey;
     width:28px;
     line-height: 14px;
     display: inline-block;
     margin-right: 8px;
+    background: #fff;
   }
 
   li.activity {
@@ -68,28 +68,27 @@ ul.legend {
   }
 
   li.academia-and-research:before {
-    color: #1b9e77;
+    color: #00ffe6;
   }
 
   li.business:before {
-    color: #d95f02;
+    color: #ff9437;
   }
 
   li.government-and-public-sector:before {
-    color: #7570b3;
+    color: #d4d1fd;
   }
 
-  li.grass-roots-organisation-or-community-network:before,
-  li.grass-roots-organization-or-community-network:before {
-    color: #e7298a;
+  li.grass-roots-organisation-or-community-network:before {
+    color: #ff38fa;
   }
 
   li.social-enterprise-charity-or-foundation:before {
-    color: #66a61e;
+    color: #b2ff56;
   }
 
   li.undefined:before {
-    color: #e6ab02;
+    color: #ffff57;
   }
 }
 

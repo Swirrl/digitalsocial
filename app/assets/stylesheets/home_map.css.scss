@@ -4,13 +4,18 @@
 
   .leaflet-popup-content-wrapper {
     @include border-radius(0);
-    border-top: 4px solid $orange;
+    //border-top: 4px solid $orange;
     width: 300px;
     min-height: 60px;
-
+    background: #356fab;
+    color: #fff;
 
     .leaflet-popup-content {
       font-family: $chaparral;
+
+      a {
+        color: #fff;
+      }
 
       .spinner {
         padding: 24px 0;
@@ -23,7 +28,7 @@
         font-size: 18px;
         padding: 32px 0;
         text-align: center;
-        color: #777;
+        //color: #777;
         font-style: italic;
       }
 
@@ -31,30 +36,28 @@
         margin-bottom: 6px;
 
         a {
-          color: $orange;
+          //color: $orange;
           font-size: 20px;
           font-style: italic;
           font-weight: normal;
-
-          &:hover {
-            text-decoration: underline;
-          }
+          color: #fff;
         }
       }
 
       p.address {
         font-style: italic;
-        color: #777;
+        //color: #777;
         font-size: 14px;
         margin: 0 0 8px;
         line-height: 1;
+        color: rgba(255,255,255,0.5);
       }
 
       p.show-all-orgs {
         margin: 6px 0 0;
 
         a {
-          color: #999;
+          //color: #999;
           font-size: 16px;
         }
       }
@@ -71,11 +74,6 @@
           line-height: 1;
           list-style-type: none;
           margin-bottom: 8px;
-
-          a:hover {
-            text-decoration: underline;
-          }
-
         }
 
         &::-webkit-scrollbar {
@@ -92,13 +90,12 @@
 
       .divider {
         height: 1px;
-        border-top: 1px solid #ddd;
-        margin: 6px -18px 6px;
+        border-top: 1px solid rgba(0,0,0,0.2);
+        margin: 6px -16px 6px;
       }
 
       .actions {
         a {
-          color: $orange;
           font-style: italic;
           font-size: 14px;
         }
@@ -113,5 +110,9 @@
     @include media-all-mobile {
       display:none;
     }
+  }
+
+  .leaflet-popup-tip {
+    background: #356fab;
   }
 }

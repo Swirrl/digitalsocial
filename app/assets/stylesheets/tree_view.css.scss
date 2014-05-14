@@ -46,25 +46,21 @@
 			cursor: pointer;
 			rect {
 				fill: #fff;
-				stroke: #c3c3c3;
-				stroke-width: 1.5px;
 			}
 			circle {
 				fill: #fff;
-				stroke: #c3c3c3;
-				stroke-width: 1.5px;
 			}
 		}
 
 		.link {
 			fill: none;
-			stroke: #ccc;
+			stroke: #cce2f7;
 			stroke-width: 1.5px;
 			transition: stroke 0.5s;
 		}
 
 		.selected .link {
-			stroke: $orange;
+			stroke: $new-green;
 		}
 
 		.unselected.deemphasised .link {
@@ -76,8 +72,7 @@
 		font-size: 0.7em;
 		width: 200px;
 		position: absolute;
-		background: $popup-background;
-		border-top: 3px solid $orange;
+		background: #356fab;
 
 		z-index: 2000; /* We need a high z-index to render it over mapbox */
 
@@ -85,9 +80,11 @@
 			font-size: 16px;
 			font-weight: normal;
 			font-style: italic;
-			color: $mid-grey2;
+			color: rgba(255,255,255,0.5);
 			margin: 0;
 			margin-top: 0.7em;
+
+			a { color: #fff; }
 		}
 
 		h1 {
@@ -104,8 +101,6 @@
 
 		a:visited, a:link {
 			font-weight: 200;
-			background-color: $popup-background;
-			color: #417FC1;
 		}
 
 		ul {
@@ -137,14 +132,14 @@
 
 	.popup:after {
 		border-color: rgba(230, 231, 231, 0);
-		border-bottom-color: $orange;
+		border-bottom-color: #356fab;
 		border-width: 10px;
 		margin-left: -10px;
 	}
 
 	.popup:before {
 		border-color: rgba(170, 170, 170, 0);
-		border-bottom-color: $orange;
+		border-bottom-color: #356fab;
 		border-width: 15px;
 		margin-left: -15px;
 	}
@@ -152,10 +147,7 @@
 	.inner-popup {
 		width: 178px;
 		border-top: 0;
-		border-left: 1px solid $light-grey;
-		border-right: 1px solid $light-grey;
-		border-bottom: 1px solid $light-grey;
-		padding: 10px;
+		padding: 0 10px;
 	}
 }
 

@@ -105,8 +105,9 @@
     position: absolute;
     left: 50px;
     top: -90px;
-    background: rgba(255, 255, 255, 0.75);
-    border-bottom: 3px solid $orange;
+    //background: rgba(255, 255, 255, 0.75);
+    background: #356fab;
+    //border-bottom: 3px solid $orange;
     width: 300px;
     padding: 12px;
     overflow: hidden;
@@ -118,14 +119,14 @@
     }
 
     p {
-      color: #999;
+      color: rgba(255,255,255,0.5);
       font-size: 14px;
       margin-bottom: 0;
       line-height: 1;
       margin-bottom: 3px;
 
       &.name {
-        color: $orange;
+        color: #fff;
         font-size: 24px;
         font-style: italic;
       }

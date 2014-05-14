@@ -91,7 +91,7 @@ h1 {
         }
 
         p.nature {
-          margin-bottom: 12px;
+          margin-bottom: 6px;
         }
 
         p:last-child {
@@ -106,12 +106,13 @@ h1 {
 
         .count {
           line-height: 30px;
+          white-space: nowrap;
 
           i {
             width: 20px;
             font-size: 30px;
             color: #fff;
-            margin-right: 0;
+            margin-right: -3px;
             vertical-align: middle;
           }
 
@@ -133,7 +134,7 @@ h1 {
 
       li {
         padding: 12px;
-        background: #f0f0f0;
+        background: rgba(0,0,0,0.1);
         margin-bottom: 6px;
         font-size: 18px;
         color: #999;
@@ -164,7 +165,7 @@ h1 {
 
         .bar {
           @include border-radius(8px);
-          background: #ccc;
+          background: rgba(0,0,0,0.2);
           width: 100%;
           height: 16px;
           position: relative;
@@ -174,18 +175,17 @@ h1 {
 
         .fill {
           height: 16px;
-          background: $orange;
+          background: #fff;
           width: 40%;
           @include border-radius(8px);
           text-align: right;
           line-height: 1;
 
           span.text {
-            color: white;
+            color: $new-dark-blue;
             margin-right: 6px;
             font-size: 14px;
             line-height: 16px;
-            font-style: italic;
             opacity: 0.75;
           }
 

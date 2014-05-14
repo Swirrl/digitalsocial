@@ -131,8 +131,9 @@ ol.breadcrumbs {
 
     &.complete {
       span {
-        background: #f8bd66;
-        &:after { border-left-color: #f8bd66; }
+        color: #000;
+        background: #abcef1;
+        &:after { border-left-color: #abcef1; }
       }
     }
   }
@@ -171,6 +172,10 @@ ol.breadcrumbs {
   margin-left: 0px;
   margin-bottom: 48px;
   @include clearfix;
+
+  @include media-all-mobile {
+    margin-bottom: 36px;
+  }
 }
 
 .suggestions {
@@ -182,11 +187,11 @@ ol.breadcrumbs {
 
     display: block;
     padding: 12px;
-    background: #fff2e3;
+    background: rgba(0,0,0,0.1);
     position: relative;
 
     &:nth-child(even) {
-      background: #fffaf4;
+      background: rgba(0,0,0,0.2);
     }
 
     .image {
@@ -261,13 +266,12 @@ ol.breadcrumbs {
   clear:both;
   display: block;
   padding: 12px;
-  background: $light-grey; //#ffffe0;
+  background: rgba(0,0,0,0.1);
   margin-bottom: 48px;
 
   span {
     line-height: 44px;
     padding-left: 12px;
-    color: #7f7f75;
     font-style: italic;
   }
 
@@ -313,13 +317,13 @@ form .input.invite-row {
 
 #map-messages-wrapper {
   @include columns(16);
-  background: $very-light-grey;
+  //background: $very-light-grey;
   &.error {
     background: $red;
     color: #fff;
   }
   #map-messages {
-    margin: 6px 12px;
+    margin: 6px 0;
     font-style:italic;
   }
 }

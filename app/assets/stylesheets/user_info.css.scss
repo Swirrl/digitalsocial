@@ -1,7 +1,7 @@
 #user-info {
   position:absolute;
   right: 0;
-  background: $very-light-grey;
+  background: #fff;
   z-index: 10;
   //min-width: 240px;
 
@@ -23,7 +23,7 @@
     }
   }
 
-  a:hover {
+  a {
     text-decoration: none;
   }
 
@@ -37,7 +37,7 @@
 
     ul {
       margin: 0;
-      border-top: 2px solid #ddd;
+      //border-top: 2px solid #ddd;
       padding: 3px 0;
 
 
@@ -52,7 +52,7 @@
           padding: 12px 24px;
 
           &:hover {
-            background: #ddd;
+            background: #eee;
           }
 
         }

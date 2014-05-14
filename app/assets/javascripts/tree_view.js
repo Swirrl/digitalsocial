@@ -497,7 +497,7 @@
             'http://data.digitalsocial.eu/def/concept/organization-type/grass-roots-organization-or-community-network',
             'http://data.digitalsocial.eu/def/concept/organization-type/social-enterprise-charity-or-foundation',
             undefined])
-    .range(["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02"]);
+    .range(["#00ffe6","#ff9437","#d4d1fd","#ff38fa","#b2ff56","#ffff57"]);
 
     var colourActivity = d3.scale.ordinal()
           .domain([

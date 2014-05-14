@@ -145,7 +145,11 @@ nav {
 footer {
   @extend .clearfix;
   padding: 36px 0;
-  font-style: italic;
+  color: rgba(255,255,255,0.8);
+
+  a {
+    color: rgba(255,255,255,0.8);
+  }
 
   &.clearfix {
     display: block;
@@ -155,7 +159,7 @@ footer {
     float: left;
     margin-left: 10px;
     a {
-      font-weight: 600;
+      //font-weight: 600;
     }
   }
 

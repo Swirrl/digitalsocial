@@ -25,7 +25,8 @@ form {
     .notes {
 
       span.highlight {
-        background: $highlight;
+        background: $new-green;
+        color: #000;
       }
 
       @include columns(7);
@@ -39,7 +40,7 @@ form {
       padding-top:20px;
       @include media-all-mobile {
         font-size:14px;
-        color: #777;
+        color: rgba(255,255,255,0.5);
 
         // as it's underneath
         padding-top:0;
@@ -66,7 +67,7 @@ form {
     font-style: italic;
 
     abbr[title] {
-      color: $orange;
+      color: $new-green;
       border-bottom: 0;
     }
 
@@ -90,21 +91,21 @@ form {
     margin-bottom: 48px;
 
     input[type=text], input[type=email], input[type=password],
-    input[type=url], textarea {
+    input[type="url"], textarea {
       padding: 12px;
       font-size: 100%;
       font-family: $chaparral;
       border: 0;
-      background: $very-light-grey;
-      border: 2px solid transparent;
+      background: transparent;
+      border: 2px solid rgba(0, 0, 0, 0.2);
       outline: none;
       @include transition(all, 0.15s);
       display: block;
       margin-bottom: 0;
-      border-top: 2px solid #d5d5d5;
+      color: #fff;
 
       &:focus {
-        border: 2px solid #000;
+        border: 2px solid rgba(0, 0, 0, 0.5);
         //background: rgba(243, 146, 0, 0.1);
 
         &::-webkit-input-placeholder { /* WebKit browsers */
@@ -165,6 +166,10 @@ form {
     font-style: italic;
     text-align: center;
     @include clearfix;
+
+    @include media-all-mobile {
+      margin-bottom: 36px;
+    }
   }
 
 }

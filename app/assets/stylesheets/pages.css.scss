@@ -38,7 +38,7 @@
         margin-top: 36px;
         line-height: 1;
         font-style: italic;
-        color: #ccc;
+        color: rgba(255,255,255,0.7);
       }
     }
 
@@ -74,7 +74,7 @@
 
         strong {
           font-weight: normal;
-          color: #888;
+          color: rgba(255,255,255,0.7);
         }
       }
     }
@@ -202,7 +202,6 @@
             @include offset(10);
             margin-top: 40px;
             padding-left: 570px;
-            color: $orange;
             @include media-all-mobile {
                 margin-bottom: 32px;
             }
@@ -215,7 +214,7 @@
           margin-bottom: 24px;
           line-height: 1;
           font-style: italic;
-          color: #ccc;
+          color: rgba(255,255,255,0.7);
         }
     }
 
