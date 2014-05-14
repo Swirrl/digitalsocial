@@ -59,6 +59,7 @@
         display: none;
 
         &.show {
+          display: block; // IE fallback
           display: initial;
         }
       }
