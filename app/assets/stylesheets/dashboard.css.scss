@@ -74,8 +74,12 @@
           border-bottom:none;
         }
         &.active {
-          background: #f0f0f0;
+          background: rgba(0,0,0,0.1);
+          color: #fff;
           border-bottom: none;
+        }
+        &.right {
+          margin-right: 0;
         }
       }
     }
@@ -131,7 +135,7 @@
         }
 
         span.grey {
-          color: #aaa;
+          color: rgba(255,255,255,0.7);
         }
       }
 

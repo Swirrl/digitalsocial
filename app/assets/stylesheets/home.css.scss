@@ -17,7 +17,7 @@
     width: 100%;
     z-index:9999;
     position: absolute;
-    background: rgba(255, 255, 255, 0.75);
+    background: $new-dark-blue;
     border-top: 3px solid $orange;
     bottom:0;
 
@@ -36,7 +36,6 @@
     }
 
     h2 {
-      color: $orange;
       font-style:italic;
       margin-bottom:10px;
       font-size:24px;
@@ -70,11 +69,11 @@
       margin-top: 12px;
       margin-bottom: -12px;
       font-size: 12px;
-      color: #aaa;
+      color: rgba(255,255,255,0.7);
       a {
         font-weight: 600;
         font-style: italic;
-        color: #aaa;
+        color: rgba(255,255,255,0.7);
       }
     }
   }

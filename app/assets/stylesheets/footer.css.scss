@@ -28,7 +28,7 @@ nav {
     }
 
     &.nesta {
-      background-image: url(image-path("partners/orange/nesta.png"));
+      background-image: url(image-path("partners/white/nesta.png"));
       width: 150px;
       height: 35px;
       left: 60px;
@@ -36,7 +36,7 @@ nav {
     }
 
     &.esade {
-      background-image: url(image-path("partners/orange/esade.png"));
+      background-image: url(image-path("partners/white/esade.png"));
       width: 146px;
       height: 36px;
       left: 371px;
@@ -44,7 +44,7 @@ nav {
     }
 
     &.future-everything {
-      background-image: url(image-path("partners/orange/future-everything.png"));
+      background-image: url(image-path("partners/white/future-everything.png"));
       width: 132px;
       height: 36px;
       left: 676px;
@@ -52,7 +52,7 @@ nav {
     }
 
     &.iri {
-      background-image: url(image-path("partners/orange/iri.png"));
+      background-image: url(image-path("partners/white/iri.png"));
       width: 100px;
       height: 43px;
       left: 80px;
@@ -60,7 +60,7 @@ nav {
     }
 
     &.waag {
-      background-image: url(image-path("partners/orange/waag.png"));
+      background-image: url(image-path("partners/white/waag.png"));
       width: 138px;
       height: 42px;
       left: 385px;
@@ -73,7 +73,7 @@ nav {
     }
 
     &.swirrl {
-      background-image: url(image-path("partners/orange/swirrl.png"));
+      background-image: url(image-path("partners/white/swirrl.png"));
       width: 130px;
       height: 36px;
       left: 676px;
@@ -83,7 +83,7 @@ nav {
     @include media-smaller-than-desktop {
       // 3 rows of 2
       &.nesta {
-        background-image: url(image-path("partners/orange/nesta.png"));
+        background-image: url(image-path("partners/white/nesta.png"));
         width: 150px;
         height: 35px;
         left: 60px;
@@ -91,7 +91,7 @@ nav {
       }
 
       &.esade {
-        background-image: url(image-path("partners/orange/esade.png"));
+        background-image: url(image-path("partners/white/esade.png"));
         width: 146px;
         height: 36px;
         left: 371px;
@@ -99,7 +99,7 @@ nav {
       }
 
       &.future-everything {
-        background-image: url(image-path("partners/orange/future-everything.png"));
+        background-image: url(image-path("partners/white/future-everything.png"));
         width: 132px;
         height: 36px;
         left: 60px;
@@ -107,7 +107,7 @@ nav {
       }
 
       &.iri {
-        background-image: url(image-path("partners/orange/iri.png"));
+        background-image: url(image-path("partners/white/iri.png"));
         width: 100px;
         height: 43px;
         left: 371px;
@@ -115,7 +115,7 @@ nav {
       }
 
       &.waag {
-        background-image: url(image-path("partners/orange/waag.png"));
+        background-image: url(image-path("partners/white/waag.png"));
         width: 118px;
         height: 36px;
         left: 60px;
@@ -123,7 +123,7 @@ nav {
       }
 
       &.swirrl {
-        background-image: url(image-path("partners/orange/swirrl.png"));
+        background-image: url(image-path("partners/white/swirrl.png"));
         width: 130px;
         height: 36px;
         left: 371px;
