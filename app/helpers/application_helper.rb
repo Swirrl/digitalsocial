@@ -233,11 +233,6 @@ module ApplicationHelper
                  :hilight => 'data'
                },
                {
-                 :title => 'Case Studies',
-                 :target => '/pages/case-studies',
-                 :hilight => 'case-studies'
-               },
-               {
                  :title => 'Research',
                  :target => '/pages/research',
                  :hilight => 'research'
