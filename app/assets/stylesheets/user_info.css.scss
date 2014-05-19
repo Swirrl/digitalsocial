@@ -13,7 +13,6 @@
     display:block;
     padding: 12px 24px;
     color: $black;
-    font-style: italic;
     text-align: center;
     text-decoration: none;
     background: $new-green;
@@ -66,14 +65,14 @@
         &.label {
           padding: 9px 24px;
           color: #aaa;
-          font-style: italic;
+          
           font-size: 16px;
         }
 
         &.current a {
           background: $link-burnt-orange;
           color: #fff;
-          font-style: italic;
+          
         }
       }
     }

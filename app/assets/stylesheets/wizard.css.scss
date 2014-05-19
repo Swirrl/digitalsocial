@@ -11,7 +11,7 @@
   height: 46px;
   margin-bottom: 30px;
   font-weight: 300;
-  font-style: italic;
+  
 
   li {
     float: left;
@@ -103,6 +103,7 @@ ol.breadcrumbs {
     span {
       color: #fff;
       background: #467db6;
+      font-size: 16px;
 
       &:before {
         border-left-color: $new-blue; /* Gaps between crumbs are page background colour */
@@ -145,7 +146,7 @@ ol.breadcrumbs {
 
   h3 {
     font-weight: 500;
-    font-style: italic;
+    
     font-size: 36px;
   }
 
@@ -162,7 +163,7 @@ ol.breadcrumbs {
 
     strong {
       font-weight: 600;
-      font-style: italic;
+      
     }
 
     &:last-child {
@@ -232,7 +233,7 @@ ol.breadcrumbs {
       }
 
       .subheader {
-        font-style: italic;
+        
       }
     }
 
@@ -272,7 +273,7 @@ ol.breadcrumbs {
   span {
     line-height: 44px;
     padding-left: 12px;
-    font-style: italic;
+    
   }
 
   .button {
@@ -324,6 +325,5 @@ form .input.invite-row {
   }
   #map-messages {
     margin: 6px 0;
-    font-style:italic;
   }
 }

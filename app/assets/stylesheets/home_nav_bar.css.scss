@@ -121,7 +121,6 @@
       a {
         display: block;
         padding: 20px 36px 3px 3px;
-        font-style: italic;
         text-decoration: none;
 
         &:hover [class^="icon-"], [class*=" icon-"] {
@@ -215,7 +214,6 @@
 
 
     a {
-      font-style: italic;
       margin-right: 12px;
       @include transition(all, 0);
       color: $orange;

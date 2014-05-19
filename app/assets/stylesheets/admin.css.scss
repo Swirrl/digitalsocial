@@ -29,7 +29,7 @@ body.admin {
     }
 
     th {
-      color: #ccc;
+      color: #fff;
       font-weight: normal;
     }
 
@@ -41,7 +41,7 @@ body.admin {
 
     tr:nth-child(even) {
       td {
-        background: #eee;
+        background: rgba(0,0,0,0.1);
       }
     }
 
@@ -83,7 +83,6 @@ body.admin {
 
     h2 {
       margin-bottom: 18px;
-      font-style: italic;
       font-size: 30px;
     }
 
@@ -97,8 +96,8 @@ body.admin {
 #admin-banner {
   width: 100%;
   padding: 15px 0;
-  background: $orange;
-  color: #ffce8f;
+  background: #9fd435;
+  color: #fff;
   text-align: center;
 
   a {

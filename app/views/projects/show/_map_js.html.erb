@@ -28,10 +28,7 @@
         else if (lng > maxLng) maxLng = lng;
 
         var marker = L.marker(new L.LatLng(lat, lng), {
-          icon: new L.Icon({
-            iconSize: new L.Point(14, 20),
-            iconUrl: "/assets/home/pin-hover.png"
-          })
+          icon: L.mapbox.marker.icon({'marker-color': 'a0d535'})
         })
         .bindPopup('', {
           closeButton: false

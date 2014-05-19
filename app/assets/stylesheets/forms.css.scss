@@ -48,7 +48,6 @@ form {
         margin-bottom:40px;
       }
       color: rgba(255,255,255,0.7);
-      font-style: italic;
     }
   }
 
@@ -64,7 +63,6 @@ form {
 
   label {
     display: block;
-    font-style: italic;
 
     abbr[title] {
       color: $new-green;
@@ -163,7 +161,6 @@ form {
     padding: 18px;
     background: #ecb9bd;
     color: $red;
-    font-style: italic;
     text-align: center;
     @include clearfix;
 

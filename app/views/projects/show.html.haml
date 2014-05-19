@@ -81,8 +81,7 @@
           - @project.organisation_resources.each do |o|
             %li
               %p.name= link_to o.name, organisation_path(o), class: 'activity-name'
-              %p.nature
-                %em #{@project.natures_str_for_organisation(o)}
+              %p.nature= @project.natures_str_for_organisation(o)
 
     .right-column.secondary-list
       .hr.hr1
