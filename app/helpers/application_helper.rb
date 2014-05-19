@@ -233,9 +233,34 @@ module ApplicationHelper
                  :hilight => 'data'
                },
                {
-                :title => 'Case Studies',
-                :target => '/pages/case-studies',
-                :hilight => 'case-studies'
+                 :title => 'Case Studies',
+                 :target => '/pages/case-studies',
+                 :hilight => 'case-studies'
+               },
+               {
+                 :title => 'Linked Open Data',
+                 :target => '/pages/linked-open-data',
+                 :hilight => 'linked-open-data'
+               },
+               {
+                 :title => 'Research',
+                 :target => '/pages/research',
+                 :hilight => 'research'
+               },
+               {
+                 :title => 'Presentations',
+                 :target => '/pages/presentations',
+                 :hilight => 'presentations'
+               },
+               {
+                 :title => 'Funding and Support',
+                 :target => '/pages/funding-and-support',
+                 :hilight => 'funding-and-support'
+               },
+               {
+                 :title => 'Resources',
+                 :target => '/pages/resources',
+                 :hilight => 'resources'
                }
                 # ,{
                 #  :title => 'Related work',
