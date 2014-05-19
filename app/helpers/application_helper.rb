@@ -228,7 +228,7 @@ module ApplicationHelper
                 #  :hilight => ''
                 # },
                 {
-                 :title => 'Open Data',
+                 :title => 'Linked Open Data',
                  :target => 'http://data.digitalsocial.eu/',
                  :hilight => 'data'
                },
@@ -236,11 +236,6 @@ module ApplicationHelper
                  :title => 'Case Studies',
                  :target => '/pages/case-studies',
                  :hilight => 'case-studies'
-               },
-               {
-                 :title => 'Linked Open Data',
-                 :target => '/pages/linked-open-data',
-                 :hilight => 'linked-open-data'
                },
                {
                  :title => 'Research',
