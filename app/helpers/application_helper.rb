@@ -246,12 +246,12 @@ module ApplicationHelper
                  :title => 'Funding and Support',
                  :target => '/pages/funding-and-support',
                  :hilight => 'funding-and-support'
-               },
-               {
-                 :title => 'Resources',
-                 :target => '/pages/resources',
-                 :hilight => 'resources'
-               }
+               }#,
+              #  {
+              #    :title => 'Resources',
+              #    :target => '/pages/resources',
+              #    :hilight => 'resources'
+              #  }
                 # ,{
                 #  :title => 'Related work',
                 #  :target => '#',
