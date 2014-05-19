@@ -1,7 +1,7 @@
 #user-info {
   position:absolute;
   right: 0;
-  background: $very-light-grey;
+  background: #fff;
   z-index: 10;
   //min-width: 240px;
 
@@ -13,14 +13,16 @@
     display:block;
     padding: 12px 24px;
     color: $black;
-    font-style: italic;
     text-align: center;
+    text-decoration: none;
+    background: $new-green;
+
     @include media-all-mobile {
       margin-bottom: 12px;
     }
   }
 
-  a:hover {
+  a {
     text-decoration: none;
   }
 
@@ -34,7 +36,7 @@
 
     ul {
       margin: 0;
-      border-top: 2px solid #ddd;
+      //border-top: 2px solid #ddd;
       padding: 3px 0;
 
 
@@ -49,7 +51,7 @@
           padding: 12px 24px;
 
           &:hover {
-            background: #ddd;
+            background: #eee;
           }
 
         }
@@ -63,14 +65,8 @@
         &.label {
           padding: 9px 24px;
           color: #aaa;
-          font-style: italic;
+          
           font-size: 16px;
-        }
-
-        &.current a {
-          background: $link-burnt-orange;
-          color: #fff;
-          font-style: italic;
         }
       }
     }

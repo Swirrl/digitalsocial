@@ -13,12 +13,10 @@
 
   .mobile-info {
     display:none;
-
     width: 100%;
     z-index:9999;
     position: absolute;
-    background: rgba(255, 255, 255, 0.75);
-    border-top: 3px solid $orange;
+    background: $new-dark-blue;
     bottom:0;
 
     @include media-all-mobile {
@@ -36,8 +34,6 @@
     }
 
     h2 {
-      color: $orange;
-      font-style:italic;
       margin-bottom:10px;
       font-size:24px;
     }
@@ -70,11 +66,10 @@
       margin-top: 12px;
       margin-bottom: -12px;
       font-size: 12px;
-      color: #aaa;
+      color: rgba(255,255,255,0.7);
       a {
         font-weight: 600;
-        font-style: italic;
-        color: #aaa;
+        color: rgba(255,255,255,0.7);
       }
     }
   }
@@ -105,8 +100,9 @@
     position: absolute;
     left: 50px;
     top: -90px;
-    background: rgba(255, 255, 255, 0.75);
-    border-bottom: 3px solid $orange;
+    //background: rgba(255, 255, 255, 0.75);
+    background: #356fab;
+    //border-bottom: 3px solid $orange;
     width: 300px;
     padding: 12px;
     overflow: hidden;
@@ -118,16 +114,15 @@
     }
 
     p {
-      color: #999;
+      color: rgba(255,255,255,0.5);
       font-size: 14px;
       margin-bottom: 0;
       line-height: 1;
       margin-bottom: 3px;
 
       &.name {
-        color: $orange;
+        color: #fff;
         font-size: 24px;
-        font-style: italic;
       }
 
       &:last-child {

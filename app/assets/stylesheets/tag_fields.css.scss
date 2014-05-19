@@ -1,17 +1,16 @@
 ul.tagit {
   // make it look like an input!
-  background: $very-light-grey;
+  background: $new-blue;
   padding:12px;
-  border: 2px solid transparent;
+  border: 2px solid rgba(0,0,0,0.2);
   outline: none;
-  border-top: 2px solid #ddd;
   @include transition(all, 0.15s);
   font-size:18px;
   border-radius: 0;
+  color: #fff;
 
   &.focused {
-    border: 2px solid $orange;
-    background: rgba(243, 146, 0, 0.1);
+    border: 2px solid rgba(0,0,0,0.5);
   }
 }
 
@@ -28,7 +27,9 @@ ul.tagit li {
 
   &.tagit-choice {
     background-image: none;
-    background-color: darken($very-light-grey, 5%);
+    background-color: #fff;
+    @include border-radius(0);
+    border: 0;
     span {
       // a chosen tag.
       padding-top:2px;
@@ -36,7 +37,7 @@ ul.tagit li {
       line-height: 18px !important;
       font-size:16px !important;
       font-family: $chaparral;
-      background-color: darken($very-light-grey, 5%);
+      background-color: #fff;
     }
   }
 

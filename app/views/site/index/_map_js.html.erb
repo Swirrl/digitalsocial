@@ -12,7 +12,7 @@
 
       defaultCenter: [49, 12],
       defaultZoom: 5,
-      markerSize: 6,
+      markerSize: 7,
       minLineWeight: 1,
       maxLineWeight: 2,
       minLineOpacity: 0.1,
@@ -772,7 +772,7 @@
 
      drawLine: function(markerA, markerB, count) {
         var line = new L.Polyline([markerA._latlng, markerB._latlng], {
-          color: '#777',
+          color: '#28537f',
           weight: DSIMap.lineWeightForCount(count),
           opacity: DSIMap.lineOpacityForCount(count),
           smoothFactor: 1,
@@ -856,7 +856,7 @@
         if (!marker._lines) return false;
 
         $.each(marker._lines, function(i, line) {
-          line.setStyle({ color: '#F39200' });
+          line.setStyle({ color: '#97c932' });
         });
       },
 
@@ -864,7 +864,7 @@
         if (!marker._lines) return false;
 
         $.each(marker._lines, function(i, line) {
-          line.setStyle({ color: '#777' });
+          line.setStyle({ color: '#28537f' });
         });
       },
 

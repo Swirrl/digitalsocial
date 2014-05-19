@@ -2,14 +2,7 @@
   margin: 0;
   input {
     display: inline-block;
-    background-image: url(image-path("icons/search.png"));
-    background-repeat: no-repeat;
-    background-position: right center;
     width: 190px;
-
-    &:focus {
-      background-image: url(image-path("icons/search-focus.png"));
-    }
   }
 }
 

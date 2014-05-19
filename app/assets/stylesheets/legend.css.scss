@@ -1,18 +1,17 @@
 .tree {
   figcaption {
-    border-bottom: 4px solid $orange;
-    padding-bottom: 12px;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 24px;
     margin-top: 0px;
 
     h3, h4 {
       font-family: "chaparral-pro", sans-serif;
       font-weight: normal;
-      margin-bottom: 3px;
+      margin-bottom: 12px;
     }
 
     h4 {
-      color: #999;
-      font-style: italic;
+      color: rgba(255,255,255,0.5);
       font-size: 16px;
     }
 
@@ -35,13 +34,13 @@
 
 ul.legend {
   li {
-    font-size: 14px;
+    font-size: 18px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     list-style: none;
     line-height: 34px;
-    height: 28px;
+    height: 34px;
   }
 
   li:before {
@@ -49,47 +48,46 @@ ul.legend {
     font-size: 80px;
     vertical-align: middle;
     line-height: 28px;
-    margin-right: 10px;
+    margin-right: 6px;
   }
 
   li.activity:before {
     content: "\0000a0";
-    border: 2px solid $light-grey;
     width:28px;
     line-height: 14px;
     display: inline-block;
     margin-right: 8px;
+    background: #fff;
   }
 
   li.activity {
-    font-size: 14px;
+    font-size: 18px;
     text-align: top;
     display: inline;
   }
 
   li.academia-and-research:before {
-    color: #1b9e77;
+    color: #00ffe6;
   }
 
   li.business:before {
-    color: #d95f02;
+    color: #ff9437;
   }
 
   li.government-and-public-sector:before {
-    color: #7570b3;
+    color: #d4d1fd;
   }
 
-  li.grass-roots-organisation-or-community-network:before,
-  li.grass-roots-organization-or-community-network:before {
-    color: #e7298a;
+  li.grass-roots-organisation-or-community-network:before {
+    color: #ff38fa;
   }
 
   li.social-enterprise-charity-or-foundation:before {
-    color: #66a61e;
+    color: #b2ff56;
   }
 
   li.undefined:before {
-    color: #e6ab02;
+    color: #ffff57;
   }
 }
 
@@ -100,8 +98,8 @@ ul.legend {
   left: 12px;
   width: 330px;
 
-  border-left: 2px solid $orange;
-  border-right: 2px solid $orange;
+  border-left: 2px solid $new-green;
+  border-right: 2px solid $new-green;
 
   @include transition(bottom, 0.5s);
   @include media-all-mobile {
@@ -109,19 +107,20 @@ ul.legend {
   }
 
   &.minimized {
-    bottom: -180px;
+    bottom: -216px;
   }
 
   a.toggle-bar {
     display: block;
-    background: $orange;
+    background: $new-green;
     font-size: 14px;
     font-weight: normal;
-    font-style: italic;
+    
     padding: 4px;
-    color: #fff;
+    color: #000;
     text-align: center;
     height: 14px;
+    text-decoration: none;
 
     .org-count-value {
       font-weight:bold;

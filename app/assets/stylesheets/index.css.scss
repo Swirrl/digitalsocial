@@ -26,10 +26,11 @@
       position: relative;
       height: 64px;
       margin-bottom: 18px;
+      background: rgba(0,0,0,0.1);
 
       + li:before {
         content: " ";
-        border-top: 10px solid #f8f8f8;
+        //border-top: 10px solid #f8f8f8;
         display: block;
         top: -32px;
         height: 0px;
@@ -60,7 +61,7 @@
 
         .header {
           font-size: 24px;
-          font-style: italic;
+          
 
         /*  width: 840px; */
           white-space: nowrap;
@@ -93,11 +94,10 @@
     @include columns(15);
     width: 915px;
     padding: 18px;
-    background: $light-grey;
+    background: rgba(0,0,0,0.1);
     text-align: center;
-    color: #7f7f75;
     font-size: 20px;
-    font-style: italic;
+    
 
     span {
       display: inline-block;
@@ -134,6 +134,6 @@
     color: #999;
     margin: 18px 10px 60px;
     font-size: 24px;
-    font-style: italic;
+    
   }
 }

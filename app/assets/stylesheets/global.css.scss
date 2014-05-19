@@ -15,8 +15,8 @@ input[type="submit"] {
 body {
   font-family: $chaparral;
   font-size: 18px;
-  color: $black;
-  background: #fff; // url(image-path("backgrounds/bg.png")) repeat-y center top;
+  color: #fff;
+  background: $new-blue; // url(image-path("backgrounds/bg.png")) repeat-y center top;
   padding-bottom: 60px;
 }
 
@@ -27,31 +27,19 @@ body {
 .flash {
   padding: 18px 36px;
   margin: 36px 0;
-  color:white;
+  color:#000;
   line-height: 1.5;
   text-align: center;
   font-size: 20px;
-  font-style: italic;
-
-  &.alert {
-    background: #ffffe0;
-    color: #7f7f75;
-  }
-
-  &.notice {
-    background: #ffffe0;
-    color: #7f7f75;
-  }
+  background: #ffff57;
 }
 
 a {
-  text-decoration: none;
-  color: $link-burnt-orange;
+  color: #fff;
   @include transition(all, 0.1s);
 
   &:hover {
-    color: $link-blue-hover;
-    text-decoration: underline;
+    text-decoration: none;
   }
 }
 
@@ -73,8 +61,7 @@ ol, ul {
 
 h1 {
   font-size: 48px;
-  color: $orange;
-  font-style: italic;
+  //color: #fff;
   margin-bottom: 32px;
   margin-top: 32px;
   font-weight: 300;
@@ -98,12 +85,12 @@ h1 + h2 {
 }
 
 ::selection {
-  background: $orange;
+  background: $new-dark-blue;
   color: #fff;
 }
 
 ::-moz-selection {
-  background: $orange;
+  background: $new-dark-blue;
   color: #fff;
 }
 
@@ -142,7 +129,7 @@ h1 + h2 {
 
 .hr {
   display: block;
-  background-color: $orange;
+  background-color: rgba(0,0,0,0.2);
   margin-left: 0px;
   @include media-all-mobile {
       margin-left: 0px;
@@ -158,11 +145,11 @@ h1 + h2 {
 }
 
 .hr3 {
-  height: 6px;
+  height: 5px;
 }
 
 .hr4 {
-  height: 8px;
+  height: 6px;
 }
 
 .leaflet-control-attribution {

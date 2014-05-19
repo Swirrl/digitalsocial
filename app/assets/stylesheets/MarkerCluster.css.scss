@@ -1,4 +1,4 @@
-$cluster-color: #777;
+$cluster-color: #28537f;
 $faded-cluster-color: #ccc;
 $cluster-border-color: #ccc;
 
@@ -101,7 +101,8 @@ $cluster-border-color: #ccc;
   color: #fff;
 
   &:hover, &.hover {
-    background: #F39200;
+    background: #b9f53b;
+    color: #000;
   }
 
   &.faded {
@@ -134,32 +135,38 @@ $cluster-border-color: #ccc;
   text-align: center;
 
   font-family: "chaparral-pro", sans-serif;
-  font-style: italic;
+  
 }
 
 .cluster-level-0 .leaflet-marker-icon {
   &.academia-and-research {
-    background-color: #1b9e77;
+    background-color: #00ffe6;
+    border: 1px solid #029d7a;
   }
 
   &.business {
-    background-color: #d95f02;
+    background-color: #ff9437;
+    border: 1px solid #dc5e2b;
    }
 
   &.government-and-public-sector {
-    background-color: #7570b3;
+    background-color: #d4d1fd;
+    border: 1px solid #7473ad;
   }
 
   &.grass-roots-organization-or-community-network {
-    background-color: #e7298a;
+    background-color: #ff38fa;
+    border: 1px solid #ea3088;
   }
 
   &.social-enterprise-charity-or-foundation {
-    background-color: #66a61e;
+    background-color: #b2ff56;
+    border: 1px solid #64a33d;
   }
 
   &.org-type {
-    background-color: #e6ab02;
+    background-color: #ffff57;
+    border: 1px solid #e8a941;
   }
 }
 
