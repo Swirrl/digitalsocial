@@ -85,13 +85,13 @@ h1 + h2 {
 }
 
 ::selection {
-  background: $new-green;
-  color: #000;
+  background: $new-dark-blue;
+  color: #fff;
 }
 
 ::-moz-selection {
-  background: $new-green;
-  color: #000;
+  background: $new-dark-blue;
+  color: #fff;
 }
 
 .container {

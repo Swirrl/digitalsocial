@@ -7,7 +7,7 @@
     h3, h4 {
       font-family: "chaparral-pro", sans-serif;
       font-weight: normal;
-      margin-bottom: 3px;
+      margin-bottom: 12px;
     }
 
     h4 {
@@ -34,13 +34,13 @@
 
 ul.legend {
   li {
-    font-size: 14px;
+    font-size: 18px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     list-style: none;
     line-height: 34px;
-    height: 28px;
+    height: 34px;
   }
 
   li:before {
@@ -48,7 +48,7 @@ ul.legend {
     font-size: 80px;
     vertical-align: middle;
     line-height: 28px;
-    margin-right: 10px;
+    margin-right: 6px;
   }
 
   li.activity:before {
@@ -61,7 +61,7 @@ ul.legend {
   }
 
   li.activity {
-    font-size: 14px;
+    font-size: 18px;
     text-align: top;
     display: inline;
   }
