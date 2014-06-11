@@ -1,13 +1,13 @@
 Digitalsocial::Application.routes.draw do
   root to: 'site#index'
   get '/events' => 'site#events'
-  get '/terms' => 'site#terms'
-  get '/privacy' => 'site#privacy'
-  get '/about' => 'site#about'
+  get '/terms', to: redirect('http://content.digitalsocial.eu/terms-of-use/')
+  get '/privacy', to: redirect('http://content.digitalsocial.eu/privacy-cookies/')
+  get '/about', to: redirect('http://content.digitalsocial.eu/about/')
   get '/fale' => 'site#fale'
 
-  get '/resources' => 'site#resources', as: :resources
-  get '/community' => 'site#community', as: :community
+  get '/resources', to: redirect('http://content.digitalsocial.eu/resources/') #=> 'site#resources', as: :resources
+  get '/community', to: redirect('http://content.digitalsocial.eu/community/') #=> 'site#community', as: :community
 
   get '/pages/:page_category_id' => 'pages#index', as: :page_category
   get '/pages/:page_category_id/:id' => 'pages#show', as: :page

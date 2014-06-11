@@ -2,10 +2,10 @@
   %a{ href: '/' }= image_tag "logo/dsi-logo-small.png"
 
   %ul.header-links
-    %li= link_to "About", "/about"
-    %li= link_to "Resources", resources_path, :class => yield(:resource_menu_highlighted)
-    %li= link_to "Community", community_path, :class => yield(:community_menu_highlighted)
-    %li= link_to "Blog", "/blog"
+    %li= link_to "About", "http://content.digitalsocial.eu/about/"
+    %li= link_to "Resources", "http://content.digitalsocial.eu/resources/"
+    %li= link_to "Community", "http://content.digitalsocial.eu/community/"
+    %li= link_to "Blog", "http://content.digitalsocial.eu/blog/"
 
   = render 'shared/search_form', placeholder: 'Search for organisations...', form_destination: '/organisations', input_size: 22
 
