@@ -153,7 +153,7 @@
     };
 
     var getResourceId = function() {
-      return $(document.URL.split('/')).last()[0];
+      return $(document.URL.split('/')).last()[0].replace(/#.*/, '');
     };
 
     var setLoaded = function() {
