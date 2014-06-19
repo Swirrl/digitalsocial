@@ -63,6 +63,14 @@
       %p.label Social Impact
       %p= @project.social_impact || "Not supplied"
 
+      %p.label Areas of Digital Social Innovation
+      - if @project.areas_of_digital_social_innovation_list.present?
+        %ul
+          - @project.areas_of_digital_social_innovation_list.split(', ').each do |aodsi|
+            %li= aodsi.titleize
+      - else
+        %p Not supplied
+
 
   .show-row.project-map
 

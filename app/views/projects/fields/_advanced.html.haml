@@ -65,6 +65,14 @@
   .notes
     %p Please give a short description of the type of social impact that you are seeking to achieve through your activity, and any evidence you have of achieving this.
 
+.field-with-notes
+  .field
+    = f.input :areas_of_digital_social_innovation_array, as: :check_boxes, collection: Concepts::AreaOfDigitalSocialInnovation.all.resources, label: 'Areas of Digital Social Innovation'#, required: true, :label_method => :get_view_label
+  .notes
+    :markdown
+      In order to better identify yourself to funding bodies and other organisations in the DSI community please select one or more DSI thematic areas that best describe the core activities of your organisation.
+
+
 :javascript
   // this wont fire on teh wizard as the activity type is on a different page.
   $(".project_activity_type_label input[type='radio']").on("change", function(e) {
