@@ -34,6 +34,21 @@ namespace :import do
     })
   end
 
+  desc 'Import Areas of Digital Social Innovation'
+  task areas_of_digital_social_innovation: :environment do
+    File.open(Rails.root.join('db', 'imports', 'areas_of_digital_social_innovation.txt'), "r") do |f|
+      f.each_line do |line|
+        project_uri, aodsi_uri = line.split(' ')
+        project = Project.find(project_uri)
+        aodsi   = Concepts::AreaOfDigitalSocialInnovation.find(aodsi_uri)
+
+        project.areas_of_digital_social_innovation = project.areas_of_digital_social_innovation.push(aodsi.uri)
+        project.first_page = true # Skip validations for incomplete projects for one-off import
+        project.save
+      end
+    end
+  end
+
   desc 'Import DSI events'
   task events: :environment do
     DatabaseCleaner.strategy = :truncation, { only: ["events"] }

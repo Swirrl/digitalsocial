@@ -18,10 +18,11 @@ class Project
 
   concept_field :activity_type, 'http://data.digitalsocial.eu/def/ontology/activityType', Concepts::ActivityType
   concept_field :areas_of_society, 'http://data.digitalsocial.eu/def/ontology/areaOfSociety', Concepts::AreaOfSociety, multivalued: true
+  concept_field :areas_of_digital_social_innovation, 'http://data.digitalsocial.eu/def/ontology/areaOfDigitalSocialInnovation', Concepts::AreaOfDigitalSocialInnovation, multivalued: true
   concept_field :technology_focus, 'http://data.digitalsocial.eu/def/ontology/technologyFocus', Concepts::TechnologyFocus, multivalued: true
   concept_field :technology_method, 'http://data.digitalsocial.eu/def/ontology/technologyMethod', Concepts::TechnologyMethod, multivalued: true
 
-  attr_accessor :scoped_organisation
+  attr_accessor :scoped_organisation, :first_page
   validates :terms, acceptance: true
 
   validates :name, :activity_type, presence: true
@@ -234,6 +235,14 @@ class Project
 
   def technology_focus_array
     self.technology_focus_list.split(",").collect(&:strip)
+  end
+
+  def areas_of_digital_social_innovation_array=(array)
+    self.areas_of_digital_social_innovation_list = array.reject(&:blank?).join(",")
+  end
+
+  def areas_of_digital_social_innovation_array
+    self.areas_of_digital_social_innovation_list.split(",").collect(&:strip)
   end
 
   def webpage_label=(domain)

@@ -96,6 +96,18 @@ end
   Concepts::AreaOfSociety.from_label(label, top_level:true)
 end
 
+# Areas of Digital Social Innovation
+
+["Open Democracy",
+  "New Ways of Making",
+  "Awareness Networks",
+  "Collaborative Economy",
+  "Open Access",
+  "Funding Acceleration and Incubation"
+].each do |label|
+  Concepts::AreaOfDigitalSocialInnovation.from_label(label, top_level:true)
+end
+
 # Technology Focus
 [
   ["Open Networks",
