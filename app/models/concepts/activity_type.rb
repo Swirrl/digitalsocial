@@ -23,12 +23,12 @@ class Concepts::ActivityType
       "network" => "How many organizations or individuals do you have in your network?",
       "incubators-and-accelerators" => "How many projects were supported by your incubator or accelerator in the last year?",
       "maker-and-hacker-spaces" => "How many active members were supported by your maker or hacker space in the last year?",
-      "education-and-training" => "How many people did your activity provide education or training to in the last year?",
+      "education-and-training" => "How many people did your project provide education or training to in the last year?",
       "delivering-a-web-service" => "How many users are registered for your services?",
       "investment-and-funding" => "How much investment or funding have you distributed in the last year? (in euros)",
       "advocating-and-campaigning" => "How many subscribers took part in your campaigns in the last year?",
       "advisory-or-expert-body" => "How many clients have you advised over the last year?",
-    }[self.slug] || "Please describe the reach of your activity in as quantitative a way as possible."
+    }[self.slug] || "Please describe the reach of your project in as quantitative a way as possible."
   end
 
   def get_reach_label_text

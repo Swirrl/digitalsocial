@@ -444,7 +444,7 @@ class Project
   def project_name_is_unique
     name_predicate = Project.fields[:name].predicate.to_s
     if Project.where("?uri <#{name_predicate}> \"\"\"#{name}\"\"\"").where("FILTER(?uri != <#{self.uri}>)").count > 0
-      errors.add(:name, "Activity already exists")
+      errors.add(:name, "Project already exists")
     end
   end
 

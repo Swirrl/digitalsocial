@@ -5,18 +5,18 @@
 
   .notes
     :markdown
-      The address of the website associated with this activity.
+      The address of the website associated with this project.
 
 .field-with-notes
   .field
     .input
-      = f.label :start_date_label, "Activity start date", class: 'dates'
+      = f.label :start_date_label, "Project start date", class: 'dates'
       = f.select :start_date_label, grouped_options_for_select(project_start_date_options, f.object.start_date_label), include_blank: "Select a start date"
     .input
-      = f.label :end_date_label, "Activity end date", class: 'dates'
+      = f.label :end_date_label, "Project end date", class: 'dates'
       = f.select :end_date_label, grouped_options_for_select(project_end_date_options, f.object.end_date_label), include_blank: "Select an end date"
   .notes
-    %p How long has this particular activity got left to run? This can include the wrap up or evaluation period beyond the main delivery of the activity. It can include future activities that are certain to go ahead.  We are only looking for approximate dates.
+    %p How long has this particular project got left to run? This can include the wrap up or evaluation period beyond the main delivery of the project. It can include future projects that are certain to go ahead.  We are only looking for approximate dates.
 
 .field-with-notes
 
@@ -57,20 +57,20 @@
 
   .notes
     :markdown
-      We would like to understand the approximate reach of your activities. This question is aimed at understanding approximate 'size' of your activity. We realise that 'reach' is not the same as impact, influence or engagement and will make this clear when we display this information.
+      We would like to understand the approximate reach of your projects. This question is aimed at understanding approximate 'size' of your project. We realise that 'reach' is not the same as impact, influence or engagement and will make this clear when we display this information.
 
 .field-with-notes
   .field
     = f.input :social_impact, as: :text, input_html: { rows: 6 }, label: 'Social Impact', required: true
   .notes
-    %p Please give a short description of the type of social impact that you are seeking to achieve through your activity, and any evidence you have of achieving this.
+    %p Please give a short description of the type of social impact that you are seeking to achieve through your project, and any evidence you have of achieving this.
 
 .field-with-notes
   .field
     = f.input :areas_of_digital_social_innovation_array, as: :check_boxes, collection: Concepts::AreaOfDigitalSocialInnovation.all.resources, label: 'Areas of Digital Social Innovation'#, required: true, :label_method => :get_view_label
   .notes
     :markdown
-      In order to better identify yourself to funding bodies and other organisations in the DSI community please select one or more DSI thematic areas that best describe the core activities of your organisation.
+      In order to better identify yourself to funding bodies and other organisations in the DSI community please select one or more DSI thematic areas that best describe the core projects of your organisation.
 
 
 :javascript

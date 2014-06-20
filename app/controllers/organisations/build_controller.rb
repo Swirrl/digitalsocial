@@ -142,7 +142,7 @@ class Organisations::BuildController < ApplicationController
   
   def ensure_current_organisation_is_project_member
     unless current_organisation.is_member_of_project?(@project)
-      redirect_to :dashboard, notice: "Your current organisation is not a member of that activity."
+      redirect_to :dashboard, notice: "Your current organisation is not a member of that project."
     end
   end
 end

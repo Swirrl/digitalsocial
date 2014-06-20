@@ -3,11 +3,11 @@
   - if current_organisation
     .title
       %h1 #{current_organisation.name}'s Dashboard
-    = render "dashboard/tabs", active: "Activities"
+    = render "dashboard/tabs", active: "Projects"
 
     .title
       %h2
         %strong #{current_organisation.name}'s
-        Activities
+        Projects
 
     = render "dashboard/projects/list"

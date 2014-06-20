@@ -2,7 +2,7 @@
 = render 'shared/sub_nav', navigation: community_menu
 
 - content_for :admin_actions do
-  = link_to "Remove this organisation", organisation_path(@organisation), method: :delete, confirm: "Are you sure you wish to remove this organisation?\n\rActivities associated solely with this organisation will also be removed."
+  = link_to "Remove this organisation", organisation_path(@organisation), method: :delete, confirm: "Are you sure you wish to remove this organisation?\n\rProjects associated solely with this organisation will also be removed."
   \|
 
 .show
@@ -86,7 +86,7 @@
                 .bar
                   .fill{ style: "width: #{progress}%;" }
                     %span.text
-                      #{pluralize(v[:count], "activity")}
+                      #{pluralize(v[:count], "project")}
 
   .show-row.cta
 

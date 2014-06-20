@@ -30,7 +30,7 @@ module ApplicationHelper
   end
 
   def build_organisation_steps
-    ["About you", "Org basics", "Org details", "1st activity", "Activity details", "Activity invites", "Finish"]
+    ["About you", "Org basics", "Org details", "1st project", "Project details", "Project invites", "Finish"]
   end
 
   def build_organisation_breadcrumb_class(n, active_index)
@@ -93,7 +93,7 @@ module ApplicationHelper
   end
 
   def notes_project_name(project)
-    project.name.present? ? project.name : 'this activity'
+    project.name.present? ? project.name : 'this project'
   end
 
   # Takes a User and titlecases their username

@@ -2,7 +2,7 @@
 
   .title
     %h1 #{current_organisation.name}'s Dashboard
-  = render "dashboard/tabs", active: "Activities"
+  = render "dashboard/tabs", active: "Projects"
 
   .title
     %h2
@@ -16,4 +16,4 @@
     = render "projects/fields/advanced", f: f
 
     .wizard-button-wrapper
-      = f.button :submit, 'Update activity'.html_safe, class: 'button-black'
+      = f.button :submit, 'Update project'.html_safe, class: 'button-black'

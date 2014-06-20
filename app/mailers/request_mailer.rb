@@ -44,7 +44,7 @@ class RequestMailer < ActionMailer::Base
     @project = @project_request.project_resource
     @organisation = @project_request.requestor_organisation_resource
 
-    mail to: @user.email, subject: "Your activity request has been accepted"
+    mail to: @user.email, subject: "Your project request has been accepted"
   end
 
   def user_request_acceptance(user_request, user)
