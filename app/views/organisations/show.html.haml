@@ -49,7 +49,7 @@
   .show-row
     .left-column.primary-list
       .hr.hr1
-      %h2 Activities
+      %h2 Projects
 
       - if @organisation.projects.count > 0
 
@@ -65,7 +65,7 @@
                   %i.icon-location
                 %span.text= pluralize(count, 'organisation')
       - else
-        .empty #{@organisation.name} is not a member of any activities yet.
+        .empty #{@organisation.name} is not a member of any projects yet.
 
 
     .right-column.secondary-list

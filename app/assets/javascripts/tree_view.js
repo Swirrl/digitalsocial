@@ -68,7 +68,7 @@
     };
 
     var circleRadius = function(node) {
-      var num = node.node_data.more_details['No of Activities'];
+      var num = node.node_data.more_details['No of Projects'];
 
       if(num <= 2) {
         return smallCircle;
@@ -260,7 +260,7 @@
 
 
       popup.style({'top': ypx, 'left': xpx });
-      popup.select('h3.type').text(function(n) { return isActivity(node) ? 'Activity' : node.node_data.resource_type; });
+      popup.select('h3.type').text(function(n) { return isActivity(node) ? 'Project' : node.node_data.resource_type; });
       popup.select('a.name').text(node.node_data.name).attr('href', node.node_data.uri_slug);
 
       var more_details = node.node_data.more_details;

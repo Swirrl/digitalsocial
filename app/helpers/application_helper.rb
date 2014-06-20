@@ -196,9 +196,9 @@ module ApplicationHelper
     content_for(:community_menu_highlighted, 'hilight')
     {:hilight => 'community',
      :items => [{
-                 :title => 'Activities',
+                 :title => 'Projects',
                  :target => projects_path,
-                 :hilight => 'activities'
+                 :hilight => 'projects'
                 },
                 {
                  :title => 'Organisations',

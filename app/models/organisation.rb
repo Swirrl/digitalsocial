@@ -334,7 +334,7 @@ class Organisation
 
   def more_details
     hash = {
-            'No of Activities' => self.project_resources.count
+            'No of Projects' => self.project_resources.count
            }
     hash['No of Staff'] = self.fte_range_resource.label if self.fte_range.present?
     hash
