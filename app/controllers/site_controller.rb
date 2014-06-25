@@ -23,6 +23,10 @@ class SiteController < ApplicationController
   def community
   end
 
+  def beta
+    render layout: 'white'
+  end
+
   private
 
   def set_title

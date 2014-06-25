@@ -14,6 +14,8 @@ Digitalsocial::Application.routes.draw do
 
   get '/:type/tree_view/:id' => 'tree_view#show', as: :tree_view_data
 
+  get '/beta' => 'site#beta'
+
   resources :blog_posts, only: [:index, :show], path: 'blog' do
     collection do
       get 'tag/:tag' => 'blog_posts#tag'
