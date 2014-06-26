@@ -1,17 +1,51 @@
 #header {
-  
+  background: #fff;
   padding: 28px 0 35px;
   font-family: $scene-medium;
-  font-size: 16px;
+  font-size: 15px;
 
   .nav-bar {
     display: block;
+    position: relative;
+
+    .search {
+      position: absolute;
+      right: 0;
+      top: 52px;
+      width: 702px;
+
+      a {
+        display: block;
+        text-decoration: none;
+        color: #333;
+        text-align: right;
+        margin-bottom: 8px;
+
+        i {
+          line-height: 1;
+          font-size: 20px;
+          margin-right: 0;
+        }
+      }
+
+      input {
+        border: 2px solid #eee;
+        outline: 0;
+        width: 678px;
+        margin: 0;
+        font-size: 14px;
+        font-family: $scene-medium;
+        padding: 12px;
+      }
+
+    }
 
     ul.links {
       float: right;
       list-style-type: none;
       border-bottom: 2px solid #eee;
       height: 40px;
+      margin-bottom: 0;
 
       li {
         float: left;
@@ -34,6 +68,20 @@
             border-bottom: 2px solid #555;
           }
         }
+
+        &.search {
+          margin-left: 22px;
+
+          a {
+            background: #333;
+            color: #fff;
+            padding-top: 6px;
+            padding-left: 6px;
+            padding-right: 6px;
+            margin-top: -6px;
+
+          }
+        }
       }
     }
 
@@ -41,3 +89,66 @@
 
 }
 
+#top {
+  padding: 12px 0;
+  background: #333;
+  color: #fff;
+  font-family: $scene-medium;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+
+  #top-content {
+    float: right;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.65);
+      margin: 0 6px;
+
+      &:hover {
+        color: #fff;        
+      }
+
+      &:last-child, &.current-user {
+        margin-right: 0;
+      }
+    }
+
+    .expanded {
+      position: relative;
+      z-index: 10;
+      top: 26px;
+
+
+      ul {
+        position: absolute;
+        background: #333;
+        right: 0;
+        list-style-type: none;
+        padding: 3px 0 6px;
+        width: 240px;
+
+        li {
+          a, &.label {
+            padding: 4px 16px;
+            display: block;
+            margin: 0;
+            //white-space: nowrap;
+          }
+
+          &.label {
+            font-size: 12px;
+          }
+
+          &.divider {
+            border-bottom: 2px solid #555;
+            margin: 6px 0;
+          }
+        }
+      }
+      
+    }
+  }
+  
+}

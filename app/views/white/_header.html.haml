@@ -7,17 +7,29 @@
         %li.active
           %a{ href: '/' } Home
         %li
-          %a{ href: '/' } About
+          %a{ href: 'http://content.digitalsocial.eu/about' } About
         %li
-          %a{ href: '/' } Organisations&Projects
+          %a{ href: '/organisations-and-projects' } Organisations&amp;Projects
         %li
-          %a{ href: '/' } Funding&Support
+          %a{ href: 'http://content.digitalsocial.eu/resource-category/funding-and-support' } Funding&amp;Support
         %li
-          %a{ href: '/' } Research
+          %a{ href: 'http://content.digitalsocial.eu/resource-category/research' } Research
         %li
-          %a{ href: '/' } Events
+          %a{ href: '/events' } Events
         %li
-          %a{ href: '/' } Blog
+          %a{ href: 'http://content.digitalsocial.eu/blog' } Blog
+      
+      .search
+        %a{ href: '#' }
+          %i.icon-search{ style: 'font-size: 20px;' }
+        %form{ action: '/organisations-and-projects', method: 'get' }
+          %input{ type: 'text', name: 'q', placeholder: 'Type your search term and press Enter...', style: 'display: none;' }
+
+        :javascript
+          $("#header .search a").click( function(e) {
+            e.preventDefault();
+            $("#header .search input").toggle().focus();
+          });
 
 
 
