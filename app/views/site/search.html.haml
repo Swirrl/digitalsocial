@@ -1,6 +1,12 @@
 #search
   .container
-    %h1 Organisations&amp;Projects - #{@letter || @query}
+    %h1
+      Organisations&amp;Projects -
+      - if @query
+        = pluralize(@results.length, 'result')
+        for "#{@query}"
+      - elsif @letter
+        = @letter
 
     .results-row
       - results = sorted_org_and_proj_results(@results)
@@ -21,6 +27,7 @@
                 = image_tag "icons/result-#{klass}.png"
                 %span= result['name']['value'].truncate(24)
 
-    .results-navigation
-      - ('A'..'Z').each do |x|
-        = link_to x, "/organisations-and-projects/#{x}"
+    - unless @query
+      .results-navigation
+        - ('A'..'Z').each do |x|
+          = link_to x, "/organisations-and-projects/#{x}"

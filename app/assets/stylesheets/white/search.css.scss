@@ -5,7 +5,6 @@
 
   .results-row {
     @include row;
-    margin-bottom: 48px;
 
     .results-column {
       @include columns(4);
@@ -54,6 +53,7 @@
 
   .results-navigation {
     text-align: center;
+    margin-top: 48px;
 
     a {
       color: #333;
