@@ -4,6 +4,7 @@
     %meta{charset: "utf-8"}
     %title= ["Digital Social Innovation", @title].compact.join(" | ")
 
+    = render "myfonts"
     = stylesheet_link_tag  "white/application"
 
     %link{rel:"stylesheet", href:"//cdn.leafletjs.com/leaflet-0.6.4/leaflet.css"}
@@ -31,7 +32,6 @@
     = javascript_include_tag "application"
 
     = csrf_meta_tags
-    = render "myfonts"
 
     %script{ src: "http://variable.io/p/nestadsi/beta/viz.js" }
     %link{ rel: "stylesheet", href: "http://variable.io/p/nestadsi/beta/viz.css" }
