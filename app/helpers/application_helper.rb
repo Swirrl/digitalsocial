@@ -260,4 +260,17 @@ module ApplicationHelper
                ]
     }
   end
+
+  def sorted_org_and_proj_results(results)
+    results.sort do |a, b|
+      a_label = a.is_a?(Hash) ? a['name']['value'].upcase.gsub(/[^\s\w]/, '') : a
+      b_label = b.is_a?(Hash) ? b['name']['value'].upcase.gsub(/[^\s\w]/, '') : b
+      a_label <=> b_label
+    end
+  end
+
+  def header_link_class(item)
+    @active_header == item ? 'active' : nil
+  end
+
 end

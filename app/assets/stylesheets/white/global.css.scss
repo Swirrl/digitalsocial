@@ -58,18 +58,19 @@ ol, ul {
   }
 }
 
+h1, h2, h3, h4, h5 {
+  font-family: $scene-bold;
+}
+
 h1 {
-  font-size: 48px;
+  font-size: 28px;
   //color: #fff;
-  margin-bottom: 32px;
-  margin-top: 32px;
-  font-weight: 300;
+  margin-bottom: 36px;
 }
 
 h2 {
   font-size: 36px;
   margin-bottom: 36px;
-  font-weight: 300;
 }
 
 h3 {

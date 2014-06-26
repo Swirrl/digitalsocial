@@ -27,6 +27,30 @@ class SiteController < ApplicationController
     render layout: 'white'
   end
 
+  def search
+    filter = ""
+
+    if params[:q].present?
+      @query = params[:q]
+      filter = "FILTER (regex(?name,'#{@query}','i'))"
+    else
+      @letter = params[:letter] ? params[:letter].upcase : 'A'
+      filter = "FILTER (regex(?name,'^#{@letter}','i'))"
+    end
+
+    query = "SELECT DISTINCT ?res ?name WHERE {
+      { ?res a <http://www.w3.org/ns/org#Organization> } UNION { ?res a <http://data.digitalsocial.eu/def/ontology/Activity> } .
+      ?res <http://www.w3.org/2000/01/rdf-schema#label> ?name .
+      #{filter}
+    } ORDER BY (?name)"
+
+    @results = Tripod::SparqlClient::Query.select(query)
+    #@results.sort! { |a, b| a['name']['value'].upcase.gsub(/\W/, '') <=> b['name']['value'].upcase.strip.gsub(/\W/, '') }
+
+    @active_header = 'search'
+    render layout: 'white'
+  end
+
   private
 
   def set_title

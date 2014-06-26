@@ -1,0 +1,26 @@
+#search
+  .container
+    %h1 Organisations&amp;Projects - #{@letter || @query}
+
+    .results-row
+      - results = sorted_org_and_proj_results(@results)
+      - column_results = results.each_slice( (results.size/3.0).ceil ).to_a
+
+      - column_results.each do |column|
+        .results-column
+          - column.each do |result|
+            - if result['res']['value'].split('/')[-2] == 'organization'
+              - klass = 'org'
+              - path = organisation_path(result['res']['value'].split('/').last)
+            - else
+              - klass = 'proj'
+              - path = project_path(result['res']['value'].split('/').last)
+
+            .result{ class: klass}
+              = link_to path, title: result['name']['value'] do
+                = image_tag "icons/result-#{klass}.png"
+                %span= result['name']['value'].truncate(24)
+
+    .results-navigation
+      - ('A'..'Z').each do |x|
+        = link_to x, "/organisations-and-projects/#{x}"

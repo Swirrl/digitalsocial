@@ -4,17 +4,17 @@
       %a{ href: '/' }= image_tag "logo/white/dsi-logo-small.png"
 
       %ul.links
-        %li.active
+        %li{ class: header_link_class('home') }
           %a{ href: '/' } Home
         %li
           %a{ href: 'http://content.digitalsocial.eu/about' } About
-        %li
+        %li{ class: header_link_class('search') }
           %a{ href: '/organisations-and-projects' } Organisations&amp;Projects
         %li
           %a{ href: 'http://content.digitalsocial.eu/resource-category/funding-and-support' } Funding&amp;Support
         %li
           %a{ href: 'http://content.digitalsocial.eu/resource-category/research' } Research
-        %li
+        %li{ class: header_link_class('events') }
           %a{ href: '/events' } Events
         %li
           %a{ href: 'http://content.digitalsocial.eu/blog' } Blog
@@ -23,7 +23,7 @@
         %a{ href: '#' }
           %i.icon-search{ style: 'font-size: 20px;' }
         %form{ action: '/organisations-and-projects', method: 'get' }
-          %input{ type: 'text', name: 'q', placeholder: 'Type your search term and press Enter...', style: 'display: none;' }
+          = text_field_tag :q, params[:q], placeholder: 'Type your search term and press Enter...', style: 'display: none;'
 
         :javascript
           $("#header .search a").click( function(e) {
