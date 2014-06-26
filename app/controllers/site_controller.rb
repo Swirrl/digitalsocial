@@ -48,6 +48,9 @@ class SiteController < ApplicationController
     #@results.sort! { |a, b| a['name']['value'].upcase.gsub(/\W/, '') <=> b['name']['value'].upcase.strip.gsub(/\W/, '') }
 
     @active_header = 'search'
+    @skip_container = true
+    @main_class = 'grey'
+    
     render layout: 'white'
   end
 

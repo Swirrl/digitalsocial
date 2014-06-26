@@ -37,6 +37,8 @@
     %link{ rel: "stylesheet", href: "http://variable.io/p/nestadsi/beta/viz.css" }
     
   %body
+    
+
     - if admin_signed_in?
       = render "admin/banner"
 
@@ -45,12 +47,16 @@
         Sorry - your browser is not supported. Some elements may not function or display as intended. Please upgrade to at least IE9, or a recent version of Chrome/Safari/Firefox.
 
     = render "white/top"
+    = render "flash", flash: flash
     = render "white/header"
 
-    #main.clearfix
-      = render "flash", flash: flash
-      = yield
+    #main.clearfix{ class: @main_class }
+      - if @skip_container
+        = yield
+      - else
+        .container= yield
 
+    = render "white/footer"
     = yield :scripts
 
     = render "analytics"

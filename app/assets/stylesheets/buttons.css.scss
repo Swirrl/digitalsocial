@@ -1,23 +1,19 @@
 .button {
-  background: $new-green;
-  color: #000;
+  background: darken($green, 5%);
+  color: #fff;
   padding: 18px 30px;
   border: 0;
+  //border-bottom: 2px solid darken($green, 15%);
   outline: 0;
   font-size: 24px;
-  font-family: $chaparral;
   cursor: pointer;
   //border-bottom: 5px solid $orange-shadow;
   font-weight: 600;
   display: inline-block;
   @include transition(all, 0.15s);
   text-decoration: none;
-
-
-
-  &.button-front-page {
-    background: $new-green;
-  }
+  font-family: $scene-medium;
+  @include border-radius(3px);
 
   &.button-red {
     background: $red;

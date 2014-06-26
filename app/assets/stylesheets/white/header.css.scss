@@ -37,6 +37,10 @@
         font-size: 14px;
         font-family: $scene-medium;
         padding: 12px;
+
+        &:focus {
+          background: #ffffe0;
+        }
       }
 
     }
@@ -118,7 +122,7 @@
 
     .expanded {
       position: relative;
-      z-index: 10;
+      z-index: 200;
       top: 26px;
 
 

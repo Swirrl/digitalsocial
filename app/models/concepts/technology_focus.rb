@@ -12,7 +12,7 @@ class Concepts::TechnologyFocus
   concept_scheme_label 'Activity Technology Focuses'
 
   def get_view_label
-    "#{self.label} <span style='display:block; font-weight:lighter; color:rgba(255,255,255,0.7); font-size: 16px; line-height: 1.2; margin-top: 3px;'>(#{self.description})</span>".html_safe
+    "#{self.label} <span style='display:block; color:rgba(0,0,0,0.4); font-size: 15px; line-height: 1.2; margin-top: 3px;'>(#{self.description})</span>".html_safe
   end
 
 end

@@ -27,7 +27,7 @@ form {
       span.highlight {
         //background: $new-green;
         //color: #000;
-        color: #fff;
+        color: rgba(0,0,0,0.4);
       }
 
       @include columns(7);
@@ -41,14 +41,14 @@ form {
       padding-top:20px;
       @include media-all-mobile {
         font-size:14px;
-        color: rgba(255,255,255,0.5);
+        color: rgba(0,0,0,0.4);
 
         // as it's underneath
         padding-top:0;
         margin-top:-30px;
         margin-bottom:40px;
       }
-      color: rgba(255,255,255,0.7);
+      color: rgba(0,0,0,0.4);
     }
   }
 
@@ -66,7 +66,7 @@ form {
     display: block;
 
     abbr[title] {
-      color: $new-green;
+      color: $red;
       border-bottom: 0;
     }
 
@@ -93,32 +93,18 @@ form {
     input[type="url"], textarea {
       padding: 12px;
       font-size: 100%;
-      font-family: $chaparral;
+      font-family: $scene-medium;
       border: 0;
-      background: $new-dark-blue;
+      //background: #fff;
       border: 2px solid rgba(0, 0, 0, 0.2);
       outline: none;
       @include transition(all, 0.15s);
       display: block;
       margin-bottom: 0;
-      color: #fff;
+      
 
       &:focus {
-        border: 2px solid rgba(0, 0, 0, 0.5);
-        //background: rgba(243, 146, 0, 0.1);
-
-        &::-webkit-input-placeholder { /* WebKit browsers */
-          color: rgba(255,255,255,0.5);
-        }
-        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-          color: rgba(255,255,255,0.5);
-        }
-        &::-moz-placeholder { /* Mozilla Firefox 19+ */
-          color: rgba(255,255,255,0.5);
-        }
-        &:-ms-input-placeholder { /* Internet Explorer 10+ */
-          color: rgba(255,255,255,0.5);
-        }
+        background: #ffffe0;
       }
 
     }
@@ -147,7 +133,7 @@ form {
 
   span.error {
     display: inline-block;
-    background-color: $error-red;
+    background-color: $red;
     color: #fff;
     padding: 6px 12px;
     margin-left: 2px;
@@ -157,10 +143,9 @@ form {
 
   .error-messages {
     @include columns(16);
-    border: 2px solid $error-red;
     margin-bottom: 48px;
     padding: 18px;
-    background: #fe8580;
+    background: $red;
     color: #fff;
     text-align: center;
     @include clearfix;
@@ -176,17 +161,4 @@ p.suggested-tags {
   margin-top:-30px;
   font-size:16px;
   margin-bottom: 48px;
-}
-
-::-webkit-input-placeholder { /* WebKit browsers */
-  color: rgba(255,255,255,0.5);
-}
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color: rgba(255,255,255,0.5);
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color: rgba(255,255,255,0.5);
-}
-:-ms-input-placeholder { /* Internet Explorer 10+ */
-  color: rgba(255,255,255,0.5);
 }

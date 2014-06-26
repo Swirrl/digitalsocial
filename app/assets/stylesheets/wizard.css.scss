@@ -9,7 +9,7 @@
   overflow: hidden;
   margin-left: 0;
   height: 46px;
-  margin-bottom: 30px;
+  margin-bottom: 48px;
   font-weight: 300;
   
 
@@ -102,14 +102,14 @@ ol.breadcrumbs {
   li {
     span {
       color: #fff;
-      background: #467db6;
-      font-size: 16px;
+      background: #ccc;
+      font-size: 15px;
 
       &:before {
-        border-left-color: $new-blue; /* Gaps between crumbs are page background colour */
+        border-left-color: #fff; /* Gaps between crumbs are page background colour */
       }
 
-      &:after { border-left-color: #467db6; }
+      &:after { border-left-color: #ccc; }
 
       &:hover {
         //background: #000 !important; /* Default hover */
@@ -122,26 +122,25 @@ ol.breadcrumbs {
 
     &.active {
       span {
-        background: #fff;
-        &:after { border-left-color: #fff; }
+        background: darken($blue, 20%);
+        &:after { border-left-color: darken($blue, 20%); }
         font-style: normal;
         font-weight: normal;
-        color: #000;
+        color: #fff;
       }
     }
 
     &.complete {
       span {
-        color: #000;
-        background: #abcef1;
-        &:after { border-left-color: #abcef1; }
+        color: #fff;
+        background: lighten($blue, 10%);
+        &:after { border-left-color: lighten($blue, 10%); }
       }
     }
   }
 }
 
 .wizard {
-  margin-top: 32px;
   margin-left: 0px;
 
   h3 {
@@ -188,11 +187,11 @@ ol.breadcrumbs {
 
     display: block;
     padding: 12px;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.05);
     position: relative;
 
     &:nth-child(even) {
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.1);
     }
 
     .image {
@@ -311,6 +310,7 @@ form .input.invite-row {
   @include columns(16);
   height: 500px;
   margin-bottom:36px !important;
+  border: 2px solid #ccc;
   @include media-all-mobile {
     height: 300px;
   }

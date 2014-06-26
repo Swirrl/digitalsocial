@@ -11,8 +11,37 @@
 
 @import "white/header";
 @import "white/search";
+@import "white/footer";
 
 @import "white/beta";
+
+@import "../variables";
+@import "user";
+//@import "user_info";
+//@import "footer";
+@import "pages";
+@import "dashboard";
+@import "index";
+@import "search-form";
+@import "show";
+
+@import "admin";
+
+@import "forms";
+@import "tag-it.css.scss"; // from vendor
+@import "tag_fields"; // our css to tweak the tag it stuff.
+
+@import "buttons";
+@import "wizard";
+
+//@import "home";
+//@import "home_filter_panel";
+//@import "home_map";
+//@import "home_nav_bar";
+//@import "home_panel";
+//@import "home_welcome_panel";
+@import "tree_view";
+@import "legend";
 
 
 

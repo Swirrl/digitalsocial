@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
     if devise_controller? && resource_name == :admin
       "admin"
     else
-      "application"
+      "white"
     end
   end
 

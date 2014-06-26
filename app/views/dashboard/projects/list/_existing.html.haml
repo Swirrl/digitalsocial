@@ -13,9 +13,9 @@
       \|
 
       - if project.only_organisation?(current_organisation)
-        = link_to "Delete activity", unjoin_project_path(project.guid), confirm: "Are you sure you wish to delete this activity?"
+        = link_to "Delete", unjoin_project_path(project.guid), confirm: "Are you sure you wish to delete this activity?", class: 'delete'
       - else
-        = link_to "Unjoin activity", unjoin_project_path(project.guid), confirm: "Are you sure you wish to remove your organisation from this activity?"
+        = link_to "Unjoin", unjoin_project_path(project.guid), confirm: "Are you sure you wish to remove your organisation from this activity?", class: 'delete'
 
     .organisations
       = render "dashboard/projects/list/count", project: project

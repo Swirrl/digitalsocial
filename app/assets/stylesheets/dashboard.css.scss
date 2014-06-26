@@ -30,6 +30,8 @@
     margin-bottom: 0;
     margin-left: -10px;
     margin-right: -11px;
+    border-bottom: 3px solid #eee;
+    height: 50px;
     //border-bottom: 3px solid $orange;
 
     li {
@@ -38,23 +40,21 @@
       margin-right: 60px;
       font-size: 26px;
       font-weight: 300;
-      opacity: 0.66;
 
       @include transition(opacity, 0.1s);
 
       a {
         text-decoration: none;
+        padding-bottom: 18px;
       }
 
       &:hover {
-        opacity: 1;
-        border-bottom: 3px solid #fff;
+        
       }
 
-      &.active {
-        border-bottom: 3px solid #fff;
-        font-weight: 600;
-        opacity: 1;
+      &.active a {
+        border-bottom: 3px solid $blue;
+        
       }
 
       &.right {
@@ -103,7 +103,7 @@
 
     li {
       padding: 24px;
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.05);
       list-style-type: none;
       margin-bottom: 18px;
       display: block;
@@ -128,6 +128,8 @@
 
         a {
           font-weight: 500;
+          color: #333;
+          text-decoration: none;
         }
 
         span.grey {
@@ -154,28 +156,28 @@
           padding-top: 7px;
 
           .bar {
-            @include border-radius(9px);
-            background: rgba(0,0,0,0.2);
+            @include border-radius(12px);
+            background: rgba(0,0,0,0.15);
             width: 100%;
-            height: 18px;
+            height: 24px;
             position: relative;
             overflow: hidden;
             margin-bottom: 12px;
           }
 
           .fill {
-            height: 18px;
-            background: #fff;
+            height: 24px;
+            background: $blue;
             width: 40%;
-            @include border-radius(9px);
+            @include border-radius(12px);
             text-align: right;
             line-height: 1;
 
             span.text {
-              color: $new-blue;
+              color: rgba(255,255,255,0.75);
               margin-right: 6px;
               font-size: 14px;
-              line-height: 18px;
+              line-height: 24px;
             }
           }
 
@@ -198,7 +200,7 @@
             i {
               width: 21px;
               font-size: 32px;
-              color: #fff;
+              color: #999;
               margin-right: 0;
               vertical-align: middle;
             }
@@ -206,7 +208,7 @@
           }
 
           span.text {
-            color: rgba(255,255,255,0.7);
+            color: rgba(0,0,0,0.35);
           }
 
         }
@@ -262,12 +264,12 @@
 
       .natures {
         float: right;
-        width: 360px;
+        width: 280px;
         display: none;
         margin-top: 6px;
 
         .input {
-          margin-bottom: 12px;
+          margin-bottom: 24px;
         }
         .button {
           float: right;
@@ -291,7 +293,7 @@
     }
 
     .sign-in {
-      color: rgba(255,255,255,0.7);
+      color: rgba(0,0,0,0.35);
     }
 
     .button {
@@ -340,7 +342,7 @@
       .details {
         float: left;
         line-height: 1.2;
-        width: 600px;
+        width: 620px;
         margin-left: 94px;
 
         @include media-all-mobile {
@@ -361,7 +363,7 @@
         }
 
         .address {
-          color: rgba(255,255,255,0.7);
+          color: rgba(0,0,0,0.35);
           margin-bottom: 6px;
           float: left;
           width: 308px;
@@ -382,7 +384,7 @@
 
         .users {
           float: left;
-          width: 250px;
+          width: 270px;
 
           @include media-all-mobile {
             float:none;
@@ -396,7 +398,7 @@
             i {
               width: 30px;
               font-size: 30px;
-              color: #fff;
+              color: rgba(0,0,0,0.35);
               margin-right: 0;
               vertical-align: middle;
             }
@@ -404,7 +406,7 @@
           }
 
           span.text {
-            color: rgba(255,255,255,0.7);
+            color: rgba(0,0,0,0.35);
           }
 
           p + p {
@@ -427,14 +429,14 @@
         }
         .button {
           font-size: 20px;
-          padding: 8px 24px;
+          padding: 6px 18px;
         }
       }
     }
   }
 
   .empty {
-    color: #fff;
+    color: #ccc;
     margin-bottom: 36px;
   }
 
@@ -458,7 +460,7 @@
   .user-account {
     @extend .row;
     @include columns(16);
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.05);
 
     form {
       margin: 36px;

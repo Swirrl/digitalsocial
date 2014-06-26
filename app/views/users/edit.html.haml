@@ -30,9 +30,9 @@
                     = link_to "Edit location", edit_location_organisation_path(org.guid)
                     \|
                     - if org.only_user?(current_user)
-                      = link_to "Delete organisation", unjoin_organisation_path(org.guid), confirm: "Are you sure you wish to delete this organisation?"
+                      = link_to "Delete", unjoin_organisation_path(org.guid), confirm: "Are you sure you wish to delete this organisation?", class: 'delete'
                     - else
-                      = link_to "Unjoin organisation", unjoin_organisation_path(org.guid), confirm: "Are you sure you wish to remove yourself from this organisation?"
+                      = link_to "Unjoin", unjoin_organisation_path(org.guid), confirm: "Are you sure you wish to remove yourself from this organisation?", class: 'delete'
 
                 .users
                   - count = org.users.count
