@@ -26,10 +26,19 @@
 
         :javascript
           $("#top a.current-user").click( function(e) {
+            e.stopPropagation();
             e.preventDefault();
             $("#top .expanded").toggle();
             $("#top i.icon-triangle-down").toggle();
             $("#top i.icon-triangle-up").toggle();
+          });
+
+          $("#top .expanded").click(function(e){
+            e.stopPropagation();
+          });
+
+          $("html").click(function() {
+            $("#top .expanded").hide();
           });
         
 

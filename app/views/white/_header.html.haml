@@ -31,6 +31,14 @@
             $("#header .search input").toggle().focus();
           });
 
+          $("#header .search").click(function(e) {
+            e.stopPropagation();
+          });
+
+          $("html").click(function() {
+            $("#header .search input").hide();
+          });
+
 
 
   
