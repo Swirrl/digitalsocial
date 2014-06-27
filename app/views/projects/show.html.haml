@@ -81,14 +81,15 @@
         %h2 Organisations
 
         - if @project.organisations.count > 0
-
           %ul
             - @project.organisation_resources.each do |o|
               %li
-                %p.name= link_to o.name, organisation_path(o), class: 'activity-name'
-                %p.nature= @project.natures_str_for_organisation(o)
-
-
+                .icon= link_to image_tag("icons/result-org.png"), o
+                .info
+                  .info-row.top
+                    .left= link_to o.name, o
+                    .right= @project.natures_str_for_organisation(o)
+                  
   .show-row.cta
 
     - if current_user && current_organisation && current_organisation.is_member_of_project?(@project)
