@@ -96,7 +96,7 @@
 
 #top {
   padding: 12px 0;
-  background: #333;
+  background: #111;
   color: #fff;
   font-family: $scene-medium;
   font-size: 13px;
@@ -125,10 +125,9 @@
       z-index: 200;
       top: 26px;
 
-
       ul {
         position: absolute;
-        background: #333;
+        background: #111;
         right: 0;
         list-style-type: none;
         padding: 3px 0 6px;

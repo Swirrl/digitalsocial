@@ -11,9 +11,13 @@
     margin-left: 0px;
   }
 
+  h1 {
+    font-size: 24px;
+  }
+
   h2 {
-    font-weight: 500;
-    margin-bottom: 48px;
+    margin-bottom: 42px;
+    font-size: 28px;
 
     strong {
       font-weight: 600;
@@ -31,21 +35,21 @@
     margin-left: -10px;
     margin-right: -11px;
     border-bottom: 3px solid #eee;
-    height: 50px;
+    height: 43px;
     //border-bottom: 3px solid $orange;
 
     li {
       display: block;
       float: left;
-      margin-right: 60px;
-      font-size: 26px;
-      font-weight: 300;
+      margin-right: 42px;
+      font-size: 20px;
 
       @include transition(opacity, 0.1s);
 
       a {
         text-decoration: none;
         padding-bottom: 18px;
+        color: #333;
       }
 
       &:hover {
@@ -53,7 +57,7 @@
       }
 
       &.active a {
-        border-bottom: 3px solid $blue;
+        border-bottom: 3px solid #333;
         
       }
 
@@ -110,9 +114,6 @@
       position: relative;
     }
 
-    a {
-      font-weight: 600;
-    }
 
   }
 

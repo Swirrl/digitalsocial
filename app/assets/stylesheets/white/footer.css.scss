@@ -1,3 +1,50 @@
 #footer {
-  height: 120px;
+  padding: 12px;
+  background: #111;
+
+  .logos {
+    text-align: center;
+    padding: 48px 0;
+
+    a {
+      vertical-align: middle;
+      padding: 12px 36px;
+      display: inline-block;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+    
+  }
+
+  .credits {
+    border-top: 2px solid rgba(255,255,255,0.25);
+    padding: 24px 0;
+    font-size: 14px;
+    color: #fff;
+    @include clearfix;
+    a { 
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .copy { float: left; }
+    .links { 
+      float: right;
+      a { margin-left: 12px; }
+    }
+  }
+
+  .contact {
+    padding: 12px 0 48px;
+    text-align: center;
+    a {
+      margin: 0 12px;
+    }
+  }
 }

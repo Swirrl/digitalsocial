@@ -1,1 +1,20 @@
 #footer
+  .container
+    .logos
+      = link_to image_tag("partners/white/nesta.png"), "http://www.nesta.org.uk/", title: 'Nesta'
+      = link_to image_tag("partners/white/esade.png"), "http://www.esade.edu/", title: 'Esade Business School'
+      = link_to image_tag("partners/white/future-everything.png"), "http://futureeverything.org/", title: 'FutureEverything'
+      = link_to image_tag("partners/white/iri.png"), "http://www.iri.centrepompidou.fr/en/", title: "Institut de Recherche et d'Innovation"
+      /= link_to image_tag("partners/white/waag.png"), "http://waag.org/en", title: "Waag Society"
+      = link_to image_tag("partners/white/swirrl.png"), "http://www.swirrl.com/", title: "Swirrl"
+
+    .contact
+      = link_to image_tag("footer/twitter.png"), "http://twitter.com/digi_si"
+      = link_to image_tag("footer/email.png"), "mailto:contact@digitalsocial.eu"
+
+    .credits
+      .copy &copy; 2014 Digital Social Innovation
+
+      .links
+        %a{ href: '/terms' } Terms of Use
+        %a{ href: '/privacy' } Privacy &amp; Cookies

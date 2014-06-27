@@ -2,104 +2,98 @@
 = render 'shared/sub_nav', navigation: community_menu
 
 .show
-  .show-row
-
-    .title
-      %h1= @project.name
-
-  .show-row
-    %figure.tree#tree-vis.project
-      %img.spinner{src: '/assets/spinner.gif'}
-      = render 'shared/tree_legend', root_name: @project.name
-
-  .show-row.push-down-margin
-    .left-column.details
-
-      %p.label Type of Activity
-      %p= @project.activity_type_label
-
-      %p.label Description
-      %p= @project.description || "Not supplied"
-
-      %p.label Duration
-      %p= @project.duration_str
-
-      %p.label Website
-      %p
-        - if @project.webpage.present?
-          = link_to @project.webpage, @project.webpage.to_s
-        - else
-          Not supplied
-
-
-    .right-column.details
-      %p.label= (@project && @project.activity_type_resource) ? @project.activity_type_resource.get_reach_label_text : "Reach"
-      %p= @project.reach_value_literal.to_s.present? ? @project.reach_value_literal.to_s : "Not supplied"
-
-      %p.label Areas of Society Impacted
-      - if @project.areas_of_society_list.present?
-        %ul
-          - @project.areas_of_society_list.split(', ').each do |aos|
-            %li= aos.titleize
-      - else
-        %p Not supplied
-
-      %p.label Technology Focus
-      - if @project.technology_focus_list.present?
-        %ul
-          - @project.technology_focus_list.split(', ').each do |tf|
-            %li= tf.titleize
-      - else
-        %p Not supplied
-
-      %p.label Technology Method
-      - if @project.technology_method_list.present?
-        %ul
-          - @project.technology_method_list.split(', ').each do |tm|
-            %li= tm.titleize
-      - else
-        %p Not supplied
-
-      %p.label Social Impact
-      %p= @project.social_impact || "Not supplied"
-
-      %p.label Areas of Digital Social Innovation
-      - if @project.areas_of_digital_social_innovation_list.present?
-        %ul
-          - @project.areas_of_digital_social_innovation_list.split(', ').each do |aodsi|
-            %li= aodsi.titleize
-      - else
-        %p Not supplied
-
+  .show-row.grey
+    .container
+      .title
+        = image_tag "icons/project-large.png"
+        %h1= @project.name
 
   .show-row.project-map
-
     #show-map{ style: 'width: 100%;' }
-
     = render "projects/show/map_js"
 
-  .show-row
-    .left-column.primary-list
-      .hr.hr1
-      %h2 Organisations
+  .show-row.project-details
+    .container
+      .column.details.primary
 
-      - if @project.organisations.count > 0
+        %p.label Type of Activity
+        %p= @project.activity_type_label
 
-        %ul
-          - @project.organisation_resources.each do |o|
-            %li
-              %p.name= link_to o.name, organisation_path(o), class: 'activity-name'
-              %p.nature= @project.natures_str_for_organisation(o)
+        %p.label Duration
+        %p= @project.duration_str
 
-    .right-column.secondary-list
-      .hr.hr1
+        %p.label Website
+        %p
+          - if @project.webpage.present?
+            = link_to @project.webpage, @project.webpage.to_s
+          - else
+            Not supplied
+
+        %p.label= (@project && @project.activity_type_resource) ? @project.activity_type_resource.get_reach_label_text : "Reach"
+        %p= @project.reach_value_literal.to_s.present? ? @project.reach_value_literal.to_s : "Not supplied"
+
+        %p.label Areas of Society Impacted
+        - if @project.areas_of_society_list.present?
+          %ul
+            - @project.areas_of_society_list.split(', ').each do |aos|
+              %li= aos.titleize
+        - else
+          %p Not supplied
+
+        %p.label Technology Focus
+        - if @project.technology_focus_list.present?
+          %ul
+            - @project.technology_focus_list.split(', ').each do |tf|
+              %li= tf.titleize
+        - else
+          %p Not supplied
+
+        %p.label Technology Method
+        - if @project.technology_method_list.present?
+          %ul
+            - @project.technology_method_list.split(', ').each do |tm|
+              %li= tm.titleize
+        - else
+          %p Not supplied
+
+        
+
+        %p.label Areas of Digital Social Innovation
+        - if @project.areas_of_digital_social_innovation_list.present?
+          %ul
+            - @project.areas_of_digital_social_innovation_list.split(', ').each do |aodsi|
+              %li= aodsi.titleize
+        - else
+          %p Not supplied
+ 
+
+
+      .column.details.secondary
+        %p.label Description
+        %p= @project.description || "Not supplied"
+
+        %p.label Social Impact
+        %p= @project.social_impact || "Not supplied"
+
+
+        
+      .column.associations
+        %h2 Organisations
+
+        - if @project.organisations.count > 0
+
+          %ul
+            - @project.organisation_resources.each do |o|
+              %li
+                %p.name= link_to o.name, organisation_path(o), class: 'activity-name'
+                %p.nature= @project.natures_str_for_organisation(o)
 
 
   .show-row.cta
 
     - if current_user && current_organisation && current_organisation.is_member_of_project?(@project)
 
-      %span #{current_organisation.name} is a partner on this activity.
+      %span <strong>#{current_organisation.name}</strong> is a partner on this activity
       = link_to "Edit activity", edit_project_path(@project), class: 'button'
     - else
       %span Are you a partner on this activity?

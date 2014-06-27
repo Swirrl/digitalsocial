@@ -7,7 +7,11 @@ h1 {
   margin-left: 0px;
 
   .title {
-    @include columns(16);
+    @include columns(8);
+
+    img {
+      margin-bottom: 9px;
+    }
   }
 
   .show-row {
@@ -23,7 +27,7 @@ h1 {
     }
 
     .left-column {
-      @include columns(8);
+      @include columns(7);
 
       clear:left;
       @include clearfix;
@@ -31,7 +35,7 @@ h1 {
 
     .right-column {
       @include columns(7);
-      @include offset(1);
+      @include offset(2);
       .hr {
         margin-right: -10px;
       }
@@ -53,6 +57,10 @@ h1 {
       font-family: helvetica, arial, sans-serif;
     }
 
+    p {
+      margin-bottom: 36px;
+    }
+
     p.label {
       margin-bottom: 6px;
       font-family: $scene-bold;
@@ -72,6 +80,84 @@ h1 {
     color: #fff;
     
     font-size: 36px;
+  }
+
+  .associations {
+    h2 {
+      font-size: 20px;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+
+      li {
+        padding: 12px 0;
+        @include clearfix;
+        font-size: 16px;
+
+        .icon {
+          float: left;
+          width: 37px;
+          margin-right: 18px;
+        }
+
+        .info {
+          float: left;
+          width: 359px;
+
+          .info-row {
+            padding: 10px 0 6px;
+            @include clearfix;
+
+            .left, .right {
+
+            }
+
+            .left {
+              float: left;
+            }
+
+            .right {
+              float: right;
+              text-align: right;
+              font-family: helvetica, arial, sans-serif;
+              font-size: 13px;
+              color: #bbb;
+            }
+
+            &.top {
+              border-bottom: 2px solid #eee;
+
+              .left {
+                width: 60%;
+
+                a { 
+                  color: #333;
+                  text-decoration: none;
+                }
+              }
+
+              .right {
+                width: 40%;
+              }
+            }
+
+            &.bottom {
+              .left {
+                width: 70%;
+                img {
+                  
+                }
+              }
+              .right {
+                width: 30%;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   .primary-list {
@@ -199,13 +285,12 @@ h1 {
   }
 
   .cta {
-    padding: 18px;
-    background: rgba(0,0,0,0.1);
+    padding: 24px 0;
+    background: #f1f3f2;
     text-align: center;
-    color: #fff;
+    color: #333;
     font-size: 20px;
-    
-    margin-left: 10px;
+    margin: 0;
 
     span {
       display: inline-block;
@@ -213,7 +298,7 @@ h1 {
     }
 
     .button {
-      margin-left: 18px;
+      margin-left: 24px;
     }
   }
 
@@ -223,9 +308,8 @@ h1 {
   }
 
   .project-map {
-    margin-top: -24px;
-    margin-bottom: 72px;
-    margin-left: 10px;
+    padding: 0;
+    margin-top: -20px;
   }
 
   .org-details {
@@ -250,6 +334,30 @@ h1 {
     .viz-3 {
       @include columns(6);
       @include offset(1);
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+  }
+
+  .project-details {
+    .primary {
+      @include columns(4);
+    }
+
+    .secondary {
+      @include columns(4);
+      @include offset(1);
+    }
+
+    .associations {
+      @include columns(6);
+      @include offset(1);
+    }
+
+    p, li {
+      font-size: 14px;
     }
   }
 

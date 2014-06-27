@@ -33,8 +33,9 @@
 
     = csrf_meta_tags
 
-    %script{ src: "http://variable.io/p/nestadsi/beta/viz.js" }
-    %link{ rel: "stylesheet", href: "http://variable.io/p/nestadsi/beta/viz.css" }
+    - if Rails.env.production?
+      %script{ src: "http://variable.io/p/nestadsi/beta/viz.js" }
+      %link{ rel: "stylesheet", href: "http://variable.io/p/nestadsi/beta/viz.css" }
     
   %body
     
@@ -50,7 +51,7 @@
     = render "flash", flash: flash
     = render "white/header"
 
-    #main.clearfix{ class: @main_class }
+    #main.clearfix{ class: @skip_container ? "#{@main_class} no-padding" : @main_class }
       - if @skip_container
         = yield
       - else

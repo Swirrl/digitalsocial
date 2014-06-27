@@ -1,7 +1,5 @@
 .dashboard.pending
   - if current_organisation
-    .title
-      %h1 #{current_organisation.name}'s Dashboard
     = render "dashboard/tabs", active: "Pending"
 
     - if current_organisation.has_respondables? || !current_organisation.primary_site

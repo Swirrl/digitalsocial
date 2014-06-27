@@ -66,6 +66,7 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find( Project.slug_to_uri(params[:id]) )
     @title = @project.name
+    @skip_container = true
   end
 
   def create

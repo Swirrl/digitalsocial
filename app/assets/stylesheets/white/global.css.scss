@@ -25,13 +25,18 @@ body {
 }
 
 .flash {
-  padding: 9px 0;
+  padding: 16px 0;
   margin: 0;
-  color: rgba(0,0,0,0.65);
+  color: rgba(255,255,255,0.9);
   line-height: 1.5;
   text-align: center;
-  font-size: 16px;
-  background: #FFE600;
+  font-size: 18px;
+  background: $green;
+
+  &.alert {
+    background: $red;
+    
+  }
 }
 
 a {
@@ -65,6 +70,7 @@ ol, ul {
 
 h1, h2, h3, h4, h5 {
   font-family: $scene-bold;
+  font-weight: normal;
 }
 
 h1 {
@@ -87,6 +93,11 @@ h1 + h2 {
   margin-top: -36px;
   font-size: 30px;
   margin-bottom: 48px;
+}
+
+strong {
+  font-weight: normal;
+  font-family: $scene-bold;
 }
 
 .container {
@@ -119,10 +130,14 @@ h1 + h2 {
 
 #main {
   display: block;
-  padding-top: 48px;
+  padding: 48px 0;
 
   &.grey {
     background: #f1f3f2;
+  }
+
+  &.no-padding {
+    padding: 0;
   }
 }
 

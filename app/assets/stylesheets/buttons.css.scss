@@ -1,14 +1,13 @@
 .button {
   background: darken($green, 5%);
-  color: #fff;
+  color: rgba(255,255,255,0.9);
   padding: 18px 30px;
   border: 0;
   //border-bottom: 2px solid darken($green, 15%);
   outline: 0;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
   //border-bottom: 5px solid $orange-shadow;
-  font-weight: 600;
   display: inline-block;
   @include transition(all, 0.15s);
   text-decoration: none;

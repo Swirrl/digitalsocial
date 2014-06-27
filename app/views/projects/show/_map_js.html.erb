@@ -3,8 +3,9 @@
 
     var defaultZoom = 13;
 
-    var map = L.mapbox.map('show-map', "<%= Digitalsocial::MAPBOX_SHOW_MAP_ID %>", {
-      scrollWheelZoom: false
+    var map = L.mapbox.map('show-map', "<%= Digitalsocial::MAPBOX_PROJECT_SHOW_MAP_ID %>", {
+      scrollWheelZoom: false,
+      maxZoom: 7
     });
 
     var minLat, maxLat, minLng, maxLng;
@@ -28,7 +29,7 @@
         else if (lng > maxLng) maxLng = lng;
 
         var marker = L.marker(new L.LatLng(lat, lng), {
-          icon: L.mapbox.marker.icon({'marker-color': 'a0d535'})
+          icon: L.mapbox.marker.icon({'marker-color': 'f8193f'})
         })
         .bindPopup('', {
           closeButton: false

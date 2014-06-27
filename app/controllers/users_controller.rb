@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(params[:user])
       sign_in @user, bypass: true
-      redirect_to edit_user_path # dashboard
+      redirect_to edit_user_path, notice: "Account details updated" # dashboard
     else
       render :edit
     end

@@ -9,16 +9,17 @@
   .show-row.grey
     .container
       .title
+        = image_tag "icons/organisation-large.png"
         %h1= @organisation.name
 
   .show-row.org-viz
     .container
       .viz-1
-        %p Foo
+        %h2 DSI Areas
       .viz-2
-        %p Foo
+        %h2 Technology Areas
       .viz-3
-        %p Foo
+        %h2 Collaborators
         
 
   .show-row.grey.org-details
@@ -53,57 +54,65 @@
           #show-map
           = render "organisations/show/map_js"
 
-  .show-row
+  .show-row.associations
     .container
-      .left-column.primary-list
-        .hr.hr1
-        %h2 Activities
+      .left-column
+        %h2 Projects
 
         - if @organisation.projects.count > 0
 
           %ul
             - @organisation.projects.resources.each do |p|
               %li
-                %p.name= link_to p.name, project_path(p), class: 'activity-name'
-                %p.nature= p.natures_str_for_organisation(@organisation)
+                .icon= link_to image_tag("icons/result-proj.png"), p
+                .info
+                  .info-row.top
+                    .left= link_to p.name, p
+                    .right= p.natures_str_for_organisation(@organisation)
+                  .info-row.bottom
+                    - count = p.organisations.count
+                    .left
+                      - count.times do
+                        = image_tag "icons/organisation-grey.png"
+                    .right= pluralize(count, 'Organisation')
 
-                - count = p.organisations.count
-                %p.count
-                  - count.times do
-                    %i.icon-location
-                  %span.text= pluralize(count, 'organisation')
         - else
           .empty #{@organisation.name} is not a member of any activities yet.
 
 
-      .right-column.secondary-list
-        .hr.hr1
+      .right-column.associations
         %h2 Partner Organisations
 
         - powc = @organisation.partner_organisations_with_count.sort_by{ |_, v| v[:count] }.reverse
 
-        - if powc.present?
+        - if powc.any?
           - max = powc[0].last[:count]
 
           %ul
             - powc.each do |k, v|
-              - progress = ((v[:count].to_f / max) * 100).round
               %li
-                %p.name= link_to v[:name], organisation_path(k)
-                .progress
-                  .bar
-                    .fill{ style: "width: #{progress}%;" }
-                      %span.text
-                        #{pluralize(v[:count], "activity")}
+                .icon= link_to image_tag("icons/result-org.png"), organisation_path(k)
+                .info
+                  .info-row.top
+                    .left= link_to v[:name], organisation_path(k)
+                  .info-row.bottom
+                    - count = v[:count]
+                    .left
+                      - count.times do
+                        = image_tag "icons/partner-grey.png"
+                    .right= pluralize(count, 'Project')
+
+        - else
+          .empty #{@organisation.name} has no partner organisations yet.
 
   .show-row.cta
 
     - if current_user && @organisation.users.include?(current_user)
 
-      %span You are a member of this organisation.
+      %span You are a member of <strong>#{@organisation.name}</strong>
       = link_to "Edit organisation", edit_organisation_path(@organisation), class: 'button'
     - else
-      %span Are you are a member of this organisation?
+      %span Are you are a member of <strong>#{@organisation.name}</strong>?
       - if current_user
         = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-black', confirm: 'Are you sure you wish to send a request to join this organisation?'
       - else
