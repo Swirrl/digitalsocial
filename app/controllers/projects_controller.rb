@@ -77,7 +77,7 @@ class ProjectsController < ApplicationController
 
     if @project.update_attributes(params[:project], transaction: transaction) && @project.save_reach_value(transaction: transaction)
       transaction.commit
-      redirect_to [:invite, @project], notice: "Activity was created. Use the form below to invite an organisation you worked with on this activity."
+      redirect_to [:invite, @project], notice: "Project was created. Use the form below to invite an organisation you worked with on this project."
     else
       transaction.abort
       render :new
@@ -95,7 +95,7 @@ class ProjectsController < ApplicationController
 
     if @project.update_attributes(params[:project], transaction: transaction) && @project.save_reach_value(transaction: transaction)
       transaction.commit
-      redirect_to [:dashboard, :projects], notice: "Activity successfully updated"
+      redirect_to [:dashboard, :projects], notice: "Project successfully updated"
     else
       transaction.abort
       render :edit
@@ -106,10 +106,10 @@ class ProjectsController < ApplicationController
     if @project.only_organisation?(current_organisation)
       @project.unjoin(current_organisation)
       @project.destroy
-      redirect_to [:dashboard, :projects], notice: "Activity successfully removed."
+      redirect_to [:dashboard, :projects], notice: "Project successfully removed."
     else
       @project.unjoin(current_organisation)
-      redirect_to [:dashboard, :projects], notice: "Activity successfully unjoined."
+      redirect_to [:dashboard, :projects], notice: "Project successfully unjoined."
     end
   end
 

@@ -11,10 +11,10 @@
           %span.grey (awaiting acceptance)
 
 
-  = link_to "+ Add/join another activity", [:new, :project], class: 'button button-black'
+  = link_to "+ Add/join another project", [:new, :project], class: 'button button-black'
 
 - else
   %p.empty
     = current_organisation.name
-    are not a member of any activities yet.
-  = link_to "+ Add/join an activity", [:new, :project], class: 'button'
+    are not a member of any projects yet.
+  = link_to "+ Add/join a project", [:new, :project], class: 'button'

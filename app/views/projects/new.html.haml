@@ -1,15 +1,15 @@
 .dashboard
 
   - if current_organisation
-    = render "dashboard/tabs", active: "Activities"
+    = render "dashboard/tabs", active: "Projects"
 
   .title
-    %h2 Add/Join an Activity
+    %h2 Add/Join a Project
 
   .wizard-intro
     :markdown
 
-      Please remember we are only interested in activities that are based in the EU and which cover all of the following features:
+      Please remember we are only interested in projects that are based in the EU and which cover all of the following features:
 
       * Focus on grass-roots or "bottom-up" communities of users
       * Use online/digital tools or methods in a disruptive way
@@ -24,4 +24,4 @@
     = render "projects/fields/advanced", f: f
 
     .wizard-button-wrapper
-      = f.button :submit, 'Create activity'.html_safe, class: 'button-black'
+      = f.button :submit, 'Create project'.html_safe, class: 'button-black'

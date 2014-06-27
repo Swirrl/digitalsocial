@@ -1,11 +1,11 @@
-- hilight_in_menu 'activities'
+- hilight_in_menu 'projects'
 = render 'shared/sub_nav', navigation: community_menu
 
 .index
   .title
-    %h1 Activities
+    %h1 Projects
 
-    = render 'shared/search_form', placeholder: 'Search by activity name...'
+    = render 'shared/search_form', placeholder: 'Search by project name...'
 
   - if @projects.any?
     %ul.activities
@@ -22,18 +22,18 @@
 
   - elsif params[:q].present?
     .no-results
-      No activities were found for the search term "#{params[:q]}".
+      No projects were found for the search term "#{params[:q]}".
 
   .cta
     - if current_user && current_organisation
       - if current_organisation.projects.count.zero?
-        #{current_organisation.name} is not a member of any activities
-        = link_to "Add/Join an activity", [:new, :project], class: 'button button-black'
+        #{current_organisation.name} is not a member of any projects
+        = link_to "Add/Join a project", [:new, :project], class: 'button button-black'
       - else
-        #{current_organisation.name} is a member of #{pluralize(current_organisation.projects.count, 'activity')}
-        = link_to "Add/Join another activity", [:new, :project], class: 'button button-black'
+        #{current_organisation.name} is a member of #{pluralize(current_organisation.projects.count, 'project')}
+        = link_to "Add/Join another project", [:new, :project], class: 'button button-black'
     - elsif @projects.any?
-      %span Are you a partner on any of these activities?
-      = link_to "Add/Join an activity", [:new, :project], class: 'button button-black'
+      %span Are you a partner on any of these projects?
+      = link_to "Add/Join a project", [:new, :project], class: 'button button-black'
     - else
-      = link_to "Add/Join an activity", [:new, :project], class: 'button button-black'
+      = link_to "Add/Join a project", [:new, :project], class: 'button button-black'

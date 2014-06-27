@@ -1,4 +1,4 @@
-- hilight_in_menu 'activities'
+- hilight_in_menu 'projects'
 = render 'shared/sub_nav', navigation: community_menu
 
 .show
@@ -16,7 +16,7 @@
     .container
       .column.details.primary
 
-        %p.label Type of Activity
+        %p.label Type of Project
         %p= @project.activity_type_label
 
         %p.label Duration
@@ -93,15 +93,15 @@
   .show-row.cta
 
     - if current_user && current_organisation && current_organisation.is_member_of_project?(@project)
+      %span <strong>#{current_organisation.name}</strong> is a partner on this project
+      = link_to "Edit project", edit_project_path(@project), class: 'button'
 
-      %span <strong>#{current_organisation.name}</strong> is a partner on this activity
-      = link_to "Edit activity", edit_project_path(@project), class: 'button'
     - else
-      %span Are you a partner on this activity?
+      %span Are you a partner on this project?
       - if current_user && current_organisation
-        = link_to "Join this activity", request_to_join_project_path(@project), class: 'button button-black', confirm: 'Are you sure you wish to send a request to join this activity?'
+        = link_to "Join this project", request_to_join_project_path(@project), class: 'button button-black', confirm: 'Are you sure you wish to send a request to join this project?'
       - else
-        = link_to "Join this activity", request_to_join_project_path(@project), class: 'button button-black'
+        = link_to "Join this project", request_to_join_project_path(@project), class: 'button button-black'
 
 = javascript_include_tag '//s7.addthis.com/js/300/addthis_widget.js'
 = render 'shared/tree_view_js'

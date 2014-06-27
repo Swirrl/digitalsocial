@@ -7,7 +7,7 @@
       = link_to project_invite.invitor_organisation_resource.name, project_invite.invitor_organisation_resource
       has invited your organisation to join their
       = link_to project_invite.project_resource.name, project_invite.project_resource
-      activity. 
+      project. 
       = maybe_display_provided_message_preamble project_invite
       %blockquote.personalised_message
         - if project_invite.invited_by_user.present?
@@ -25,6 +25,6 @@
 
   .natures
     = simple_form_for [:accept, project_invite] do |f|
-      = f.input :natures, as: :check_boxes, label: "What is your organisation's role in this activity", collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
+      = f.input :natures, as: :check_boxes, label: "What is your organisation's role in this project", collection: Concepts::ProjectMembershipNature.all.resources, value_method: :uri, required: true
       = f.button :submit, 'Confirm', class: 'button-black'
 

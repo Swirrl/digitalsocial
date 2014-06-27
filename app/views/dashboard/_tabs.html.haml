@@ -6,8 +6,8 @@
         - if current_organisation.pending_count > 0
           (#{current_organisation.pending_count})
 
-    %li{ class: active == 'Activities' ? 'active' : nil }
-      = link_to "Activities", [:dashboard, :projects]
+    %li{ class: active == 'Projects' ? 'active' : nil }
+      = link_to "Projects", [:dashboard, :projects]
     %li{ class: active == 'Users' ? 'active' : nil }
       = link_to "Users", [:dashboard, :users]
     %li{ class: active == 'Details' ? 'active' : nil }

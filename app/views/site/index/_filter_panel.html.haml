@@ -17,13 +17,13 @@
       %p.browse= link_to 'View all organisations &raquo;'.html_safe, '/organisations'
 
   .filter-section{ class: params[:filters].present? && params[:filters][:activity_type].to_a.any? ? 'expanded' : nil }
-    = filter_section_header(:activity_type).html_safe
+    = filter_section_header(:project_type).html_safe
     .expandable
       .options
         - Concepts::ActivityType.top_level_concepts.each do |at|
           = filter_option(at, 'activity_type')
 
-      %p.browse= link_to 'View all activities &raquo;'.html_safe, '/projects'
+      %p.browse= link_to 'View all projects &raquo;'.html_safe, '/projects'
 
   .filter-section{ class: params[:filters].present? && params[:filters][:areas_of_society].to_a.any? ? 'expanded' : nil }
     = filter_section_header(:areas_of_society, label: 'Domain').html_safe

@@ -3,7 +3,7 @@ Hello <%= @user.first_name %>,
 This is a summary of your pending items on digitalsocial.eu
 
 <% if @organisation.pending_project_invites.any? %>
-<%= @organisation.name %> has pending invites to the following activities:
+<%= @organisation.name %> has pending invites to the following projects:
 
 <% @organisation.pending_project_invites.each do |inv| %>
 * <%= inv.project_resource.name %>
@@ -11,7 +11,7 @@ This is a summary of your pending items on digitalsocial.eu
 <% end %>
 
 <% if @organisation.pending_project_requests_by_others.any? %>
-The following organisations have requested to join <%= @organisation.name %>'s activities:
+The following organisations have requested to join <%= @organisation.name %>'s projects:
 
 <% @organisation.pending_project_requests_by_others.each do |req| %>
 * <%= req.requestor_organisation_resource.name %> (<%= req.project_resource.name %>)

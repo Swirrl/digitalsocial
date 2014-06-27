@@ -2,7 +2,7 @@
 = render 'shared/sub_nav', navigation: community_menu
 
 - content_for :admin_actions do
-  = link_to "Remove this organisation", organisation_path(@organisation), method: :delete, confirm: "Are you sure you wish to remove this organisation?\n\rActivities associated solely with this organisation will also be removed."
+  = link_to "Remove this organisation", organisation_path(@organisation), method: :delete, confirm: "Are you sure you wish to remove this organisation?\n\rProjects associated solely with this organisation will also be removed."
   \|
 
 .show
@@ -77,7 +77,7 @@
                     .right= pluralize(count, 'Organisation')
 
         - else
-          .empty #{@organisation.name} is not a member of any activities yet.
+          .empty #{@organisation.name} is not a member of any projects yet.
 
 
       .right-column.associations
