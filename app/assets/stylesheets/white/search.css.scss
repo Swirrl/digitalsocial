@@ -51,15 +51,19 @@
   }
 
   .results-navigation {
-    text-align: center;
-    margin-top: 48px;
+    //text-align: center;
+    margin: 48px 0;
 
     a {
-      color: #333;
+      color: #999;
       text-decoration: none;
       font-family: $scene-medium;
-      margin: 0 3px;
+      margin: 0;// 3px;
       padding: 5px 6px;
+
+      &.active {
+        color: #333;
+      }
 
       &:hover {
         background: #ddd;

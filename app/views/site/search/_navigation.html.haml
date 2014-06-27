@@ -1,0 +1,3 @@
+.results-navigation
+  - ('A'..'Z').each do |x|
+    = link_to x, "/organisations-and-projects/#{x}", class: letter == x ? 'active' : nil

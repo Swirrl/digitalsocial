@@ -6,87 +6,95 @@
   \|
 
 .show
-  .show-row
-    .title
-      %h1= @organisation.name
+  .show-row.grey
+    .container
+      .title
+        %h1= @organisation.name
+
+  .show-row.org-viz
+    .container
+      .viz-1
+        %p Foo
+      .viz-2
+        %p Foo
+      .viz-3
+        %p Foo
+        
+
+  .show-row.grey.org-details
+    .container
+      .left-column.details
+
+        %p.label Address
+        %p= @organisation.address_str.present? ? @organisation.address_str(",<br>").html_safe : "Not supplied"
+
+        %p.label Type of Organisation
+        %p= @organisation.organisation_type_label || "Not supplied"
+
+        %p.label No. of Staff
+        %p= @organisation.fte_range_label || "Not supplied"
+
+        %p.label Website
+        %p
+          - if @organisation.webpage.present?
+            = link_to @organisation.webpage, @organisation.webpage.to_s
+          - else
+            Not supplied
+
+        %p.label Twitter
+        %p
+          - if @organisation.twitter_username.present?
+            = link_to @organisation.twitter_username, "https://twitter.com/#{@organisation.twitter_username.gsub(/^@/,'')}"
+          - else
+            Not supplied
+
+      - if @organisation.primary_site_resource.present?
+        .right-column.map
+          #show-map
+          = render "organisations/show/map_js"
 
   .show-row
-    %figure.tree#tree-vis.organisation
-      %img.spinner{src: '/assets/spinner.gif'}
-      = render 'shared/tree_legend', :root_name => @organisation.name
+    .container
+      .left-column.primary-list
+        .hr.hr1
+        %h2 Activities
 
-  .show-row.push-down-margin
-    .left-column.details
+        - if @organisation.projects.count > 0
 
-      %p.label Address
-      %p= @organisation.address_str.present? ? @organisation.address_str(",<br>").html_safe : "Not supplied"
+          %ul
+            - @organisation.projects.resources.each do |p|
+              %li
+                %p.name= link_to p.name, project_path(p), class: 'activity-name'
+                %p.nature= p.natures_str_for_organisation(@organisation)
 
-      %p.label Type of Organisation
-      %p= @organisation.organisation_type_label || "Not supplied"
-
-      %p.label No. of Staff
-      %p= @organisation.fte_range_label || "Not supplied"
-
-      %p.label Website
-      %p
-        - if @organisation.webpage.present?
-          = link_to @organisation.webpage, @organisation.webpage.to_s
+                - count = p.organisations.count
+                %p.count
+                  - count.times do
+                    %i.icon-location
+                  %span.text= pluralize(count, 'organisation')
         - else
-          Not supplied
-
-      %p.label Twitter
-      %p
-        - if @organisation.twitter_username.present?
-          = link_to @organisation.twitter_username, "https://twitter.com/#{@organisation.twitter_username.gsub(/^@/,'')}"
-        - else
-          Not supplied
-
-    - if @organisation.primary_site_resource.present?
-      .right-column.map
-        #show-map
-        = render "organisations/show/map_js"
-
-  .show-row
-    .left-column.primary-list
-      .hr.hr1
-      %h2 Activities
-
-      - if @organisation.projects.count > 0
-
-        %ul
-          - @organisation.projects.resources.each do |p|
-            %li
-              %p.name= link_to p.name, project_path(p), class: 'activity-name'
-              %p.nature= p.natures_str_for_organisation(@organisation)
-
-              - count = p.organisations.count
-              %p.count
-                - count.times do
-                  %i.icon-location
-                %span.text= pluralize(count, 'organisation')
-      - else
-        .empty #{@organisation.name} is not a member of any activities yet.
+          .empty #{@organisation.name} is not a member of any activities yet.
 
 
-    .right-column.secondary-list
-      .hr.hr1
-      %h2 Partner Organisations
+      .right-column.secondary-list
+        .hr.hr1
+        %h2 Partner Organisations
 
-      - powc = @organisation.partner_organisations_with_count.sort_by{ |_, v| v[:count] }.reverse
+        - powc = @organisation.partner_organisations_with_count.sort_by{ |_, v| v[:count] }.reverse
 
-      - if powc.present?
-        - max = powc[0].last[:count]
+        - if powc.present?
+          - max = powc[0].last[:count]
 
-        %ul
-          - powc.each do |k, v|
-            - progress = ((v[:count].to_f / max) * 100).round
-            %li
-              %p.name= link_to v[:name], organisation_path(k)
-              .progress
-                .bar
-                  .fill{ style: "width: #{progress}%;" }
-                    %span.text
-                      #{pluralize(v[:count], "activity")}
+          %ul
+            - powc.each do |k, v|
+              - progress = ((v[:count].to_f / max) * 100).round
+              %li
+                %p.name= link_to v[:name], organisation_path(k)
+                .progress
+                  .bar
+                    .fill{ style: "width: #{progress}%;" }
+                      %span.text
+                        #{pluralize(v[:count], "activity")}
 
   .show-row.cta
 

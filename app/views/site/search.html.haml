@@ -8,6 +8,9 @@
       - elsif @letter
         = @letter
 
+    - unless @query
+      = render "site/search/navigation", letter: @letter
+
     .results-row
       - results = sorted_org_and_proj_results(@results)
       - column_results = results.each_slice( (results.size/3.0).ceil ).to_a
@@ -28,6 +31,5 @@
                 %span= result['name']['value'].truncate(24)
 
     - unless @query
-      .results-navigation
-        - ('A'..'Z').each do |x|
-          = link_to x, "/organisations-and-projects/#{x}"
+      = render "site/search/navigation", letter: @letter
+      
