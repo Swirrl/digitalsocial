@@ -48,6 +48,7 @@ class OrganisationsController < ApplicationController
     @organisation = Organisation.find( Organisation.slug_to_uri(params[:id]) )
     @title = @organisation.name
     @skip_container = true
+    @active_header = 'search'
   end
 
   def unjoin

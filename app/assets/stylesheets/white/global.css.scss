@@ -145,6 +145,48 @@ strong {
   display: none;
 }
 
+#key {
+  position: absolute;
+  left: 0;
+  top: 147px;
+  z-index: 1001;
+
+  .handle {
+    width: 42px;
+    background: #111;
+    height: 195px;
+    color: #fff;
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 220px;
+    
+    .message {
+      font-size: 18px;
+      @include rotate(-90);
+      position: absolute;
+      left: -28px;
+      bottom: 50px;
+      width: 100px;
+      letter-spacing: 1px;
+    }
+
+    .hide {
+      display: none;
+    }
+    
+  }
+
+  .main {
+    position: absolute;
+    background: #111;
+    height: 600px;
+    width: 192px;
+    left: 0;
+    top: 0;
+  }
+}
+
 ::-webkit-input-placeholder {
   color: rgba(0,0,0,0.25);
 }

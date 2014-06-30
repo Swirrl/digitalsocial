@@ -67,6 +67,7 @@ class ProjectsController < ApplicationController
     @project = Project.find( Project.slug_to_uri(params[:id]) )
     @title = @project.name
     @skip_container = true
+    @active_header = 'search'
   end
 
   def create
