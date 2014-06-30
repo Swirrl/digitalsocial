@@ -11,7 +11,7 @@
   display: inline-block;
   @include transition(all, 0.15s);
   text-decoration: none;
-  font-family: $scene-medium;
+  font-family: $scene-bold;
   @include border-radius(3px);
 
   &.button-red {

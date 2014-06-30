@@ -11,6 +11,7 @@ class SiteController < ApplicationController
 
   def events
     #@page = Page.where(path: 'events').first
+    @active_header = 'events'
   end
 
   def about
