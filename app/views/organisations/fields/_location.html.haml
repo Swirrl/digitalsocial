@@ -36,7 +36,7 @@
     // hide the lat long fields
     $("#lat-lng").hide();
 
-    var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_SHOW_MAP_ID}', {scrollWheelZoom: false})
+    var map = L.mapbox.map('map', '#{Digitalsocial::MAPBOX_ORG_SHOW_MAP_ID}', {scrollWheelZoom: false})
       .setView(defaultCenter,defaultZoom);
 
     var marker = null;

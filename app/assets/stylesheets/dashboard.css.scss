@@ -168,7 +168,7 @@
 
           .fill {
             height: 24px;
-            background: $blue;
+            background: #111;
             width: 40%;
             @include border-radius(12px);
             text-align: right;
@@ -206,6 +206,10 @@
               vertical-align: middle;
             }
 
+          }
+
+          a {
+            color: #111;
           }
 
           span.text {

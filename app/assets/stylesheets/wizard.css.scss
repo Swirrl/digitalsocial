@@ -122,8 +122,8 @@ ol.breadcrumbs {
 
     &.active {
       span {
-        background: darken($blue, 20%);
-        &:after { border-left-color: darken($blue, 20%); }
+        background: #111;
+        &:after { border-left-color: #111; }
         font-style: normal;
         font-weight: normal;
         color: #fff;
@@ -133,8 +133,8 @@ ol.breadcrumbs {
     &.complete {
       span {
         color: #fff;
-        background: lighten($blue, 10%);
-        &:after { border-left-color: lighten($blue, 10%); }
+        background: #777;
+        &:after { border-left-color: #777; }
       }
     }
   }

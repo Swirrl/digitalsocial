@@ -88,7 +88,7 @@
 
     @include columns(16);
 
-    ul.timeline {
+    /*ul.timeline {
       list-style-type: none;
       padding: 0 0 4px;
       background: url(image-path("dot.png")) repeat-y 288px 0px;
@@ -171,6 +171,18 @@
 
         + li.month {
           margin-top: 88px;
+        }
+      }
+    } */
+
+    ul.timeline {
+      list-style-type: none;
+
+      .event {
+        margin-bottom: 24px;
+
+        p {
+          margin-bottom: 0;
         }
       }
     }

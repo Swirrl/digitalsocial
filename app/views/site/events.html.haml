@@ -11,20 +11,10 @@
     %br
     %br
 
-    - displayed_years = []
     %ul.timeline
-      - Event.order_by(:start_date => :asc).group_by { |m| m.start_date.beginning_of_month }.each do |month, events|
-        - unless displayed_years.include?(month.year)
-          %li.year
-            %span= month.year
-          - displayed_years.push(month.year)
-
-        %li.month
-          %span= month.strftime("%B")
-
-        - events.each do |event|
-          %li.event
-            .event-content
-              %p.name
-                %a{ href: event.url }= event.name
-              %p.date= event.date_string
+      - Event.order_by(:start_date => :asc).each do |event|
+        %li.event
+          %p.name
+            %a{ href: event.url }= event.name
+            \-
+            = event.date_string
