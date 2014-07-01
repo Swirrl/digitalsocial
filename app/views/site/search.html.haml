@@ -1,12 +1,11 @@
 #search
   .container
     %h1
-      Organisations&amp;Projects -
+      Organisations&amp;Projects
       - if @query
+        \-
         = pluralize(@results.length, 'result')
         for "#{@query}"
-      - elsif @letter
-        = @letter
 
     - unless @query
       = render "site/search/navigation", letter: @letter
