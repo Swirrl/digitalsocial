@@ -1,5 +1,5 @@
 .search
   - form_destination ||= nil
   - input_size ||= 20
-  = form_tag form_destination, method: :get do
+  = form_tag '/organisations-and-projects', method: :get do
     .input= text_field_tag :q, params[:q], placeholder: placeholder, autocomplete: :off, size: input_size

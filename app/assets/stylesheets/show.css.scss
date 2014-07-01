@@ -303,8 +303,10 @@ h1 {
   }
 
   .empty {
-    
-    color: #999;
+    font-family: helvetica,arial,sans-serif;
+    color: #bbb;
+    line-height: 1.3;
+    font-size: 14px;
   }
 
   .project-map {
@@ -367,6 +369,28 @@ h1 {
     p, li {
       font-size: 14px;
     }
+  }
+
+  .leaflet-popup-content-wrapper {
+    background: #111;
+    color: #888;
+
+    h3 {
+      font-size: 16px;
+      margin-bottom: 3px;
+      font-family: $scene-medium;
+      a {
+        color: #fff;
+      }
+    }
+
+    p.address {
+      margin: 0;
+    }
+  }
+
+  .leaflet-popup-tip {
+    background: #111;
   }
 
 }
