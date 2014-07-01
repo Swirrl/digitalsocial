@@ -82,17 +82,6 @@ class OrganisationsController < ApplicationController
       end
       format.html do
         redirect_to "/organisations-and-projects"
-        # page = params[:page].present? ? params[:page].to_i : 1
-        # limit = Kaminari.config.default_per_page
-        # offset = (page - 1) * limit
-
-        # if params[:q].present?
-        #   data = Organisation.search_by_name(params[:q]).limit(limit).offset(offset).resources.to_a
-        # else
-        #   data = Organisation.order_by_name.limit(limit).offset(offset).resources.to_a
-        # end
-        # total_count = @organisations.count
-        # @organisations = Kaminari.paginate_array(data, total_count: total_count).page(page).per(limit)
       end
     end
   end
