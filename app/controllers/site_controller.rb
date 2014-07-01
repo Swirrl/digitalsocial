@@ -32,7 +32,7 @@ class SiteController < ApplicationController
   end
 
   def beta
-    render layout: 'white'
+    @skip_container = true
   end
 
   def search

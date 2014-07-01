@@ -119,4 +119,6 @@
         = link_to "Join this organisation", request_to_join_organisation_path(@organisation), class: 'button button-black'
 
 = javascript_include_tag '//s7.addthis.com/js/300/addthis_widget.js'
-= render 'shared/tree_view_js'
+= javascript_include_tag 'http://variable.io/p/nestadsi/beta_organisation/org_viz.js'
+= stylesheet_link_tag 'http://variable.io/p/nestadsi/beta_organisation/org_viz.css'
+=# render 'shared/tree_view_js'
