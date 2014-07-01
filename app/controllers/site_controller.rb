@@ -12,6 +12,8 @@ class SiteController < ApplicationController
   def events
     #@page = Page.where(path: 'events').first
     @active_header = 'events'
+    @skip_container = true
+    @main_class = 'grey'
   end
 
   def about
@@ -22,6 +24,11 @@ class SiteController < ApplicationController
   end
 
   def community
+  end
+
+  def home
+    @active_header = 'home'
+    @skip_container = true
   end
 
   def beta

@@ -3,18 +3,19 @@
 
 
 #events
-  #content
-    .title
-      %h1 Events
-    %p Some upcoming events of interest in the field of Digital Social Innovation.
+  .container
+    #content
+      .title
+        %h1 Events
+      %p Some upcoming events of interest in the field of Digital Social Innovation.
 
-    %br
-    %br
+      %br
+      %br
 
-    %ul.timeline
-      - Event.order_by(:start_date => :asc).each do |event|
-        %li.event
-          %p.name
-            %a{ href: event.url }= event.name
-            \-
-            = event.date_string
+      %ul.timeline
+        - Event.order_by(:start_date => :asc).each do |event|
+          %li.event
+            %p.name
+              %a{ href: event.url }= event.name
+              \-
+              = event.date_string
