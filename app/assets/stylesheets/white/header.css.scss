@@ -11,16 +11,20 @@
     .search {
       position: absolute;
       right: 0;
-      top: 52px;
+      top: 41px;
       width: 702px;
       z-index: 100;
 
       a {
         display: block;
         text-decoration: none;
-        color: #333;
-        text-align: right;
-        margin-bottom: 8px;
+        color: #fff;
+        text-align: center;
+        background: #66acae;
+        width: 40px;
+        height: 40px;
+        line-height: 44px;
+        font-size: 28px;
 
         i {
           line-height: 1;
@@ -32,7 +36,7 @@
       input {
         border: 2px solid #eee;
         outline: 0;
-        width: 678px;
+        width: 636px;
         margin: 0;
         font-size: 14px;
         font-family: $scene-medium;

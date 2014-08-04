@@ -9,11 +9,11 @@
         %li
           %a{ href: 'http://content.digitalsocial.eu/about' } About
         %li{ class: header_link_class('search') }
-          %a{ href: '/organisations-and-projects' } Organisations&amp;Projects
+          %a{ href: '/organisations-and-projects' } Organisations &amp; Projects
         %li
-          %a{ href: 'http://content.digitalsocial.eu/resource-category/funding-and-support' } Funding&amp;Support
+          %a{ href: 'http://content.digitalsocial.eu/resource-category/funding-and-support' } Funding &amp; Support
         %li
-          %a{ href: 'http://content.digitalsocial.eu/resource-category/research' } Research
+          %a{ href: 'http://content.digitalsocial.eu/resource-category/research' } Resources
         %li{ class: header_link_class('events') }
           %a{ href: '/events' } Events
         %li
@@ -21,7 +21,7 @@
       
       .search
         %a{ href: '#' }
-          %i.icon-search{ style: 'font-size: 20px;' }
+          %i.icon-search{ style: 'font-size: 28px;' }
         %form{ action: '/organisations-and-projects', method: 'get' }
           = text_field_tag :q, params[:q], placeholder: 'Type your search term and press Enter...', style: 'display: none;'
 
