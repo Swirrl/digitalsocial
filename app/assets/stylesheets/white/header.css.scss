@@ -1,6 +1,6 @@
 #header {
   background: #fff;
-  padding: 28px 0 35px;
+  padding: 28px 0 18px;
   font-family: $scene-medium;
   font-size: 15px;
 
@@ -12,8 +12,8 @@
       position: absolute;
       right: 0;
       top: 41px;
-      width: 702px;
-      z-index: 100;
+      width: 710px;
+      z-index: 2001;
 
       a {
         display: block;
@@ -36,14 +36,15 @@
       input {
         border: 2px solid #eee;
         outline: 0;
-        width: 636px;
+        width: 644px;
         margin: 0;
         font-size: 14px;
         font-family: $scene-medium;
         padding: 12px;
+        margin-right: 10px;
 
         &:focus {
-          background: #ffffe0;
+          //background: #ffffe0;
         }
       }
 

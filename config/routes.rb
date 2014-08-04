@@ -1,5 +1,5 @@
 Digitalsocial::Application.routes.draw do
-  root to: 'site#index'
+  root to: 'site#beta'
   get '/events' => 'site#events'
   get '/terms', to: redirect('http://content.digitalsocial.eu/terms-of-use/')
   get '/privacy', to: redirect('http://content.digitalsocial.eu/privacy-cookies/')

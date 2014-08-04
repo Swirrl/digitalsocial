@@ -1,8 +1,8 @@
 class SiteController < ApplicationController
 
-  before_filter :set_title, except: [:index]
+  #before_filter :set_title, except: [:index]
 
-  before_filter :show_partners, except: [:index]
+  #before_filter :show_partners, except: [:index]
 
   def index
     @selected_panel = params[:selected_panel] || 'welcome_panel'
