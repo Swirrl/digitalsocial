@@ -97,22 +97,21 @@
 #top {
   padding: 12px 0;
   background: #111;
-  color: #fff;
+  //color: #fff;
   font-family: $scene-medium;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.35);
+  color: #999;
 
   #top-content {
     float: right;
 
     a {
-      color: #fff;
+      color: rgba(255,255,65,0.9);
       text-decoration: none;
-      color: rgba(255, 255, 255, 0.65);
       margin: 0 6px;
 
       &:hover {
-        color: #fff;        
+        color: rgba(255,255,65,1);   
       }
 
       &:last-child, &.current-user {

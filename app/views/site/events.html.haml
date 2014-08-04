@@ -1,21 +1,36 @@
 - hilight_in_menu 'events'
 = render 'shared/sub_nav', navigation: community_menu
 
-
 #events
-  .container
-    #content
+  
+  
+  .events-row.grey
+    .container
       .title
         %h1 Events
       %p Some upcoming events of interest in the field of Digital Social Innovation.
 
-      %br
-      %br
+  .events-row
+    .container
 
+      - displayed_years = []
       %ul.timeline
-        - Event.order_by(:start_date => :asc).each do |event|
-          %li.event
-            %p.name
-              %a{ href: event.url }= event.name
-              \-
-              = event.date_string
+        - Event.order_by(:start_date => :asc).group_by { |m| m.start_date.beginning_of_month }.each do |month, events|
+          - unless displayed_years.include?(month.year)
+            %li.year
+              %span= month.year
+            - displayed_years.push(month.year)
+
+
+          - events.each do |event|
+            %li.event{ class: cycle('odd', 'even') }
+              .event-content
+                %p.date= event.date_string
+                .divider
+                  %a.plus{ href: event.url } +
+                  .circle
+                %p.name
+                  %a{ href: event.url }= event.name
+                
+
+        %li.middle-line

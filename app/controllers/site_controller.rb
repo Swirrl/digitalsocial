@@ -13,7 +13,7 @@ class SiteController < ApplicationController
     #@page = Page.where(path: 'events').first
     @active_header = 'events'
     @skip_container = true
-    @main_class = 'grey'
+    #@main_class = 'grey'
   end
 
   def about
