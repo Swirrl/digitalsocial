@@ -37,6 +37,15 @@
     .links { 
       float: right;
       a { margin-left: 12px; }
+      line-height: 32px;
+    }
+
+    .cc {
+      vertical-align: middle;
+      display: inline-block;
+      height: 32px;
+      width: 32px;
+      margin-left: 6px;
     }
   }
 
