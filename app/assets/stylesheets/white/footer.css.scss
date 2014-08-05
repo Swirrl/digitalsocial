@@ -43,9 +43,14 @@
     .cc {
       vertical-align: middle;
       display: inline-block;
-      height: 32px;
-      width: 32px;
-      margin-left: 6px;
+      height: 24px;
+      width: 24px;
+      margin-right: 2px;
+
+      img {
+        height: 24px;
+        width: 24px;
+      }
     }
   }
 
