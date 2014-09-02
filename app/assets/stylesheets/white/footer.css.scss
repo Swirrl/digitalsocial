@@ -10,14 +10,16 @@
       vertical-align: middle;
       padding: 12px 22px;
       display: inline-block;
+      width: 140px;
 
-      &:first-child {
+      &:first-child, &:last-child {
         padding-left: 0;
       }
 
-      &:last-child {
-        padding-right: 0;
-      }
+    }
+
+    + .logos {
+      padding-top: 0;
     }
     
   }
