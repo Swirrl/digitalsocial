@@ -11,6 +11,7 @@
 
   = simple_form_for @organisation, url: [:organisations, :build, :update_organisation] do |f|
 
+    = render 'error_messages', object: f.object
     = render 'organisations/fields/advanced', f: f
 
     .wizard-button-wrapper

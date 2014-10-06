@@ -1,6 +1,6 @@
 .field-with-notes.remove-if-org
   .field
-    = f.input :invited_organisation_name, label: 'Organisation Name', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }
+    = f.input :invited_organisation_name, label: 'Organisation Name', input_html: { class: 'organisation-auto-suggest', autocomplete: :off }, required: true
   .notes
     %p
       Start typing an organisation name and we'll suggest members of the DSI network.
@@ -11,8 +11,8 @@
 
 .field-with-notes
   .fields
-    = f.input :invited_user_name, required: false, label: "Contact's Name"
-    = f.input :invited_email, required: false, label: "Contact's email"
+    = f.input :invited_user_name, required: true, label: "Contact's Name"
+    = f.input :invited_email, required: true, label: "Contact's email"
   .notes
     %p.change-email-help-on-org-select
       If the organisation you're trying to add doesn't appear in our suggestions, please add a contact email so we can let your partner organisation know that #{@project.name} is now part of the DSI network, and invite them to sign up themselves.

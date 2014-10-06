@@ -107,3 +107,95 @@ Here is an example fuseki configuration:
          ja:context [ ja:cxtName "arq:queryTimeout" ;  ja:cxtValue "10000,10000" ] ;
          tdb:unionDefaultGraph true ;
          .
+
+Editing reminder emails
+-----------------------
+
+To change the email content, edit the files in `app/views/request_mailer`.
+
+The table below summarises all the emails that are sent out:
+
+
+| File (`.text.erb`) | Purpose | When |
+| ------------- |-------------  | -----|---|
+| `organisation_invite` | To notify a user that they have been invited to join an organisation. | Immediately |
+| `project_new_organisation_invite` | To notify a user that does not already exist in the system that they have been invited to join a project. | Immediately |
+| `project_request_acceptance` | To notify all users of an organisation that their invitation to a project was accepted. | Immediately |
+| `projectless_user_reminder` | To remind all users of organisations without at least 1 project that they should add one. | Cron *(Every Tuesday at 10:30am)*
+| `request_digest` | To remind all users with any pending items, a summary of those items. | Cron *(Every Tuesday at 10:15am)* |
+| `unconfirmed_user_reminder` | To remind an unconfirmed user to log in (i.e. someone who has been invited but is yet to log in for the first time and set their password). | Cron *(Every Tuesday at 10:30am)*. |
+| `user_request_acceptance` | To notify a user that their request to join an organisation was accepted. | Immediately |
+
+Downloading a list of users
+---------------------------
+
+To download a CSV of existing users, visit `/admin/users.csv`. You must be logged in as an `Admin`.
+
+This path will provide a CSV containing the users' first name, email address, and list of their organisations.
+
+For example:
+
+    Ric,ric@swirrl.com,Swirrl
+    Bill,bill@swirrl.com,Swirrl
+    John,john.smith@megacorp.com,Megacorp
+    
+To change the fields of this CSV, edit the `User.to_csv` method in the `User` model.
+
+
+
+Making survey questions compulsory/optional
+-------------------------------------------
+
+### About you (Step 1)
+
+The `User` is created on this step. `first_name`, `email` and `password` are all required here. These validations can be found in the `User` model. It is strongly recommended you do not remove these.
+
+View for this step can be found at `app/views/organisations/build/new_user.html.haml`.
+
+### Org Basics (Step 2)
+
+This step initializes a new `OrganisationPresenter` (found in `app/presenters`).
+
+The presenter then creates the `Organisation`, `Site` and `Address` records from the submitted form. Edit the presence validation in this presenter to require the appropriate fields in the form.
+
+View for this step can be found at `app/views/organisations/build/new_organisation.html.haml`.
+
+### Org details (Step 3)
+
+This step edits an existing `Organisation`. Add validations to the `Organisation` model.
+
+Note that any validations added here will also be applied to Step 2. To avoid this, ensure that it only applies to a persisted record.
+
+E.g. in `app/models/user.rb`
+
+    validates :twitter_username, presence: true, unless: :new_record?
+
+View for this step can be found at `app/views/organisations/build/edit_organisation.html.haml`.
+
+### 1st project (Step 4)
+
+This step creates a new `Project`.
+
+Add any validations for these fields in `app/models/project.rb`.
+
+View for this step can be found at `app/views/organisations/build/new_project.html.haml`.
+
+### Project details (Step 5)
+
+This step updates the `Project` created in the previous step. Any validations applied for this step must have the `unless :first_step?` clause. This ensures that any validations applied here do not prevent Step 4 from progressing.
+
+View for this step can be found at `app/views/organisation/build/edit_project.html.haml`.
+
+### Project invites (Step 6)
+
+This step initializes a new `ProjectInvitePresenter` (found in `app/presenters`).
+
+The presenter then creates the `ProjectInvite` and, if they do not already exist, a new `User` and `Organisation`. Edit the presence validation in this presenter to require the appropriate fields in the form.
+
+View for this step can be found at `app/views/organisations/build/invite_organisations.html.haml`.
+
+### Making fields appear required
+
+If an `if` or `unless` clause has been applied to a validation, SimpleForm will not automatically make the field appear required.
+
+To resolve this, add `required: true` to the appropriate field in the view.
