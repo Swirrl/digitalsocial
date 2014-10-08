@@ -199,3 +199,125 @@ View for this step can be found at `app/views/organisations/build/invite_organis
 If an `if` or `unless` clause has been applied to a validation, SimpleForm will not automatically make the field appear required.
 
 To resolve this, add `required: true` to the appropriate field in the view.
+
+Accessing the underlying data using SPARQL
+------------------------------------------
+
+The data on organisations and associated projects can be retrieved by SPARQL queries.  Here is a selection of example queries that might help you get started with retrieving data. These can be tested via the [SPARQL console](http://data.digitalsocial.eu/sparql).  For full details of the available options for SPARQL and other APIs, see the [Developer Documentation](http://data.digitalsocial.eu/docs).
+
+### Organisations
+
+A list of organisations
+
+    SELECT ?org WHERE {?org a <http://www.w3.org/ns/org#Organization>}
+
+A list of the properties associated with an organisation
+
+    SELECT DISTINCT ?prop WHERE 
+        {?org a <http://www.w3.org/ns/org#Organization> .
+        ?org ?prop ?o}
+
+A list of organisations and values of their properties
+
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX dsi: <http://data.digitalsocial.eu/def/ontology/>
+    PREFIX org: <http://www.w3.org/ns/org#>
+
+    SELECT ?org ?label ?webpage ?numstaff ?twitter ?orgtype ?logo_url ?site WHERE 
+        {?org a <http://www.w3.org/ns/org#Organization> ;
+          rdfs:label ?label .
+     OPTIONAL { ?org foaf:page ?webpage }
+     OPTIONAL { ?org dsi:numberOfFTEStaff ?numstaff }
+     OPTIONAL { ?org dsi:twitterAccount ?twitter }
+     OPTIONAL { ?org dsi:organizationType ?orgtype}
+     OPTIONAL { ?org foaf:logo ?logo_url }
+     OPTIONAL { ?org org:hasPrimarySite ?site }
+    }
+
+The address and location information for an organisation is associated with the value of the org:hasPrimarySite property.
+
+    PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+    PREFIX org: <http://www.w3.org/ns/org#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT ?label ?lat ?long WHERE {
+        ?org a org:Organization ;
+            org:hasPrimarySite ?site ;
+            rdfs:label ?label .
+        ?site geo:lat ?lat ;
+            geo:long ?long .
+    }
+
+
+### Connecting organisations and activities
+
+Organisations are connected to projects (or 'activities') via an 'ActivityMembership' resource.
+
+All ActivityMembership resources:
+
+    PREFIX dsi: <http://data.digitalsocial.eu/def/ontology/>
+    
+    SELECT * WHERE {?org_act a dsi:ActivityMembership}
+
+As well as connecting an organisation and an activity, the ActivityMembership describes the type of role that the organisation played in the activity.
+
+    PREFIX dsi: <http://data.digitalsocial.eu/def/ontology/>
+    
+    SELECT ?org ?activity ?role WHERE {
+        ?org_act a dsi:ActivityMembership ;
+           dsi:organization ?org ;
+           dsi:activity ?activity ;
+           dsi:role ?role
+       }
+
+### Activities
+
+A list of the properties associated with an activity.
+
+    PREFIX dsi: <http://data.digitalsocial.eu/def/ontology/>
+    
+    SELECT DISTINCT ?prop WHERE 
+        {?activity a dsi:Activity .
+            ?activity ?prop ?o}
+     
+
+A list of all activities and the organisations involved in them.
+
+    PREFIX dsi: <http://data.digitalsocial.eu/def/ontology/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT DISTINCT ?activity ?organisation WHERE {
+        ?org_act dsi:organization ?org .
+        ?org_act dsi:activity ?act .
+        ?org rdfs:label ?organisation .
+        ?act rdfs:label ?activity } ORDER BY ?activity
+
+A list of activities with their associated properties.
+
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX dsi: <http://data.digitalsocial.eu/def/ontology/>
+    PREFIX org: <http://www.w3.org/ns/org#>
+    PREFIX dct: <http://purl.org/dc/terms/>
+
+    SELECT ?activity ?label ?webpage ?description ?organisation ?activity_type 
+        ?area_of_society ?tech_focus ?tech_method ?innovation_area ?social_impact WHERE 
+        {?activity a dsi:Activity .
+            ?activity rdfs:label ?label .
+            OPTIONAL { ?activity ?page ?webpage }
+            OPTIONAL { ?activity dct:description ?description }
+            OPTIONAL { ?activity dsi:recordedBy ?organisation }
+            OPTIONAL { ?activity dsi:activityType ?activity_type }
+            OPTIONAL { ?activity dsi:areaOfSociety ?area_of_society}
+            OPTIONAL { ?activity dsi:technologyFocus ?tech_focus }
+            OPTIONAL { ?activity dsi:technologyMethod ?tech_method }
+            OPTIONAL { ?activity dsi:areaOfDigitalSocialInnovation ?innovation_area }
+            OPTIONAL { ?activity dsi:socialImpact ?social_impact }
+            
+        } 
+
+
+
+
+
