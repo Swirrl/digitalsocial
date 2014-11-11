@@ -67,7 +67,7 @@
 
 .field-with-notes
   .field
-    = f.input :areas_of_digital_social_innovation_array, as: :check_boxes, collection: Concepts::AreaOfDigitalSocialInnovation.all.resources, label: 'Areas of Digital Social Innovation'#, required: true, :label_method => :get_view_label
+    = f.input :areas_of_digital_social_innovation_array, as: :check_boxes, collection: Concepts::AreaOfDigitalSocialInnovation.all.resources, label: 'Areas of Digital Social Innovation', required: true#, :label_method => :get_view_label
   .notes
     :markdown
       In order to better identify yourself to funding bodies and other organisations in the DSI community please select one or more DSI thematic areas that best describe the core projects of your organisation.

@@ -37,6 +37,8 @@ class Organisations::BuildController < ApplicationController
       set_current_organisation( @organisation.organisation_guid ) # so that the following steps are for the right org.
       redirect_to [:organisations, :build, :edit_organisation]
     else
+      Rails.logger.debug "*"*100
+      Rails.logger.debug @organisation.errors.length
       render :new_organisation
     end
   end

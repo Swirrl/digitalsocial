@@ -27,7 +27,7 @@ class Project
 
   validates :name, :activity_type, presence: true
   validates :areas_of_society_list, :technology_focus_array, :technology_method_list,
-    :social_impact, presence: true, :unless => :first_page?
+    :social_impact, :areas_of_digital_social_innovation_array, presence: true, :unless => :first_page?
 
   validate :ensure_scoped_organisation_has_membership
 

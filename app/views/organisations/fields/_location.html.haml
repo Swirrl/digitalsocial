@@ -2,8 +2,8 @@
   .fields
     = f.input :street_address, as: :string, input_html: { class: 'geo' }
     = f.input :locality, as: :string, input_html: { class: 'geo' }, label: 'Locality (e.g. town or city)'
-    = f.input :region, as: :string, input_html: { class: 'geo' }, label: 'Region (e.g. county or province)'
-    = f.input :country, input_html: { class: 'geo' }, priority: Digitalsocial::EU_COUNTRIES
+    = f.input :region, as: :string, label: 'Region (e.g. county or province)'
+    = f.input :country, priority: Digitalsocial::EU_COUNTRIES, prompt: "Select a country..."
     = f.input :postal_code, as: :string
   .notes
     :markdown
@@ -55,13 +55,10 @@
     function formFieldChanged() {
       var streetAddress = $('#organisation_presenter_street_address').val();
       var locality = $('#organisation_presenter_locality').val();
-      var country = $('#organisation_presenter_country').val();
 
       // if we've got a street address, locality and country, then do the geo coding...
-      if(streetAddress.length > 0 &&
-          (locality.length > 0) &&
-          country.length > 0 ) {
-        geoCode(streetAddress, locality, country);
+      if(streetAddress.length > 0 && locality.length > 0) {
+        geoCode(streetAddress, locality);
       }
     }
 
@@ -75,14 +72,13 @@
       return geoQuery;
     }
 
-    function geoCode(streetAddress, locality, country, postalCode) {
+    function geoCode(streetAddress, locality) {
 
       var url = 'http://nominatim.openstreetmap.org/search';
 
       geoQuery = '';
       geoQuery = addSectionToGeoQuery(geoQuery, streetAddress);
       geoQuery = addSectionToGeoQuery(geoQuery, locality);
-      geoQuery = addSectionToGeoQuery(geoQuery, country);
 
       url += '?q=' + encodeURIComponent(geoQuery);
       url += '&email=#{Digitalsocial::NOMINATIM_EMAIL}';
