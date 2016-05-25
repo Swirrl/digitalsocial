@@ -199,6 +199,7 @@ class Organisation
   def webpage_label=(domain)
     domain.strip!
     domain.gsub!(/^http:\/\//, "")
+    domain.gsub!(/^https:\/\//,"")
     self.webpage = domain.present? ? "http://#{domain}" : nil
   end
 
