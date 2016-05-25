@@ -203,7 +203,7 @@ class Organisation
   end
 
   def webpage_label
-    self.webpage.to_s.gsub(/^http:\/\//, "") if self.webpage.present?
+    self.webpage.to_s.gsub(/^http:\/\//, "").gsub(/^https:\/\//,"") if self.webpage.present?
   end
 
   def users
